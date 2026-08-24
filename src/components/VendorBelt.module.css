@@ -1,0 +1,40 @@
+.track {
+  animation: belt 52s linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes belt {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.cell {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96px;
+  padding: 0 clamp(26px, 3vw, 52px);
+  border-inline-end: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.logo {
+  max-height: 74px;
+  max-width: 168px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.8);
+  transition: filter 0.45s ease;
+}
+
+.logo:hover {
+  filter: grayscale(0) opacity(1);
+}

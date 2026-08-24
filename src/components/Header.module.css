@@ -1,0 +1,12 @@
+.navLink:hover {
+  color: #111111 !important;
+}
+
+.langToggle:hover {
+  color: #111111;
+  border-color: rgba(17, 17, 17, 0.52);
+}
+
+.cta:hover {
+  background: #3a3a38 !important;
+}
