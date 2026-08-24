@@ -16,9 +16,9 @@ export function Footer() {
             <Image
               src="/arak-logo-black.png"
               alt="ARAK Lighting Solutions"
-              height={38}
-              width={155}
-              style={{ height: "38px", width: "auto" }}
+              height={54}
+              width={223}
+              style={{ height: "54px", width: "auto" }}
             />
             <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.58)", margin: "26px 0 0", maxWidth: "34ch" }}>
               A Lighting Company and Smart Lighting Solutions Provider, Riyadh, Kingdom of Saudi Arabia. Since 1976.
@@ -53,6 +53,9 @@ export function Footer() {
             <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)" }}>Facade lighting</span>
             <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)" }}>KNX lighting controls</span>
             <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)" }}>Home automation</span>
+            <Link href="/services/smart-poles" style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)", cursor: "pointer" }} className={styles.link}>
+              Smart poles
+            </Link>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
             <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.68)", marginBottom: "6px" }}>

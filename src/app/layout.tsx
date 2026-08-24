@@ -26,7 +26,7 @@ const plexSansArabic = IBM_Plex_Sans_Arabic({
 export const metadata: Metadata = {
   title: "ARAK Lighting Solutions",
   description:
-    "Forty-five years of fixtures, lighting design, KNX controls and home automation — delivered across hotels, airports, palaces and national projects in Saudi Arabia.",
+    "Forty-five years of fixtures, lighting design, KNX controls and home automation, delivered across hotels, airports, palaces and national projects in Saudi Arabia.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

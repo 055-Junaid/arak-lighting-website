@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { VendorBelt } from "@/components/VendorBelt";
+import { BrandGrid } from "@/components/BrandGrid";
+import { ClientGrid } from "@/components/ClientGrid";
 import styles from "./page.module.css";
 
 export default function HomePage() {
@@ -13,18 +16,17 @@ export default function HomePage() {
     <main>
       <section style={{ position: "relative", height: "min(88vh,900px)", minHeight: "620px", overflow: "hidden", background: "#FFFFFF" }}>
         <div style={{ position: "absolute", inset: "0" }}>
-          <PhotoSlot src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop" alt="Hero — dark architectural interior, dramatic lighting (landscape, 2400×1400)" />
+          <PhotoSlot src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1800&auto=format&fit=crop" alt="Hero: dark architectural interior with dramatic lighting (landscape, 2400×1400)" />
         </div>
         <div style={{ position: "absolute", inset: "0", background: "linear-gradient(100deg,#FFFFFF 3%,rgba(255,255,255,.92) 38%,rgba(255,255,255,.3) 80%)", pointerEvents: "none" }}></div>
         <div style={{ position: "absolute", top: "0", left: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
         <div style={{ position: "relative", height: "100%", maxWidth: "1360px", margin: "0 auto", padding: "0 48px", display: "flex", flexDirection: "column", justifyContent: "center", pointerEvents: "none" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-            <div style={{ width: "52px", height: "1px", background: "#111111" }}></div>
             <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "حلول الإضاءة الذكية · الرياض" : "Smart Lighting Solutions · Riyadh"}</span>
           </div>
           <h1 style={{ font: "600 clamp(46px,7vw,104px)/0.98 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام ١٩٧٦" : "Lighting the Kingdom since 1976"}</h1>
           <p style={{ font: "300 clamp(17px,1.5vw,21px)/1.6 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)", margin: "34px 0 0", maxWidth: "52ch" }}>
-            Forty-five years of fixtures, lighting design, KNX controls and home automation — delivered across hotels, airports, palaces and national projects.
+            Forty-five years of fixtures, lighting design, KNX controls and home automation, delivered across hotels, airports, palaces and national projects.
           </p>
           <div style={{ display: "flex", gap: "14px", marginTop: "46px", pointerEvents: "auto" }}>
             <Link href="/contact" style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#FFFFFF", background: "#111111", padding: "19px 30px", cursor: "pointer" }} className={styles.h1}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</Link>
@@ -51,13 +53,13 @@ export default function HomePage() {
           </div>
           <div style={{ padding: "46px 0 46px 46px", borderInlineEnd: "1px solid rgba(17,17,17,.13)" }}>
             <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              36
+              41
             </div>
             <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{lang === "ar" ? "ماركة عالمية شريكة" : "Partner brands"}</div>
           </div>
           <div style={{ padding: "46px 0 46px 46px" }}>
             <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              9
+              10
             </div>
             <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{lang === "ar" ? "خطوط خدمة" : "Service lines"}</div>
           </div>
@@ -67,7 +69,6 @@ export default function HomePage() {
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(0,1fr)", gap: "96px", alignItems: "start" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
-              <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
               <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "من نحن" : "Who we are"}</span>
             </div>
             <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{lang === "ar" ? "نتألق منذ عام ١٩٧٦" : "Shining brightly since 1976"}</h2>
@@ -76,13 +77,13 @@ export default function HomePage() {
               <span style={{ color: "#111111" }}>
                 أراك
               </span>
-               — I See You in Arabic — is a Lighting Company and a Smart Lighting Solutions Provider that started as an extension of Abdul Rahman Abdul Kadir Corporation in 1976 and is now a pioneering Saudi Establishment that embodies Saudi values.
+              , which means “I See You” in Arabic, is a Lighting Company and a Smart Lighting Solutions Provider that started as an extension of Abdul Rahman Abdul Kadir Corporation in 1976 and is now a pioneering Saudi Establishment that embodies Saudi values.
             </p>
             <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.68)", margin: "26px 0 0", maxWidth: "62ch" }}>
               From supplying lighting fixtures to installing full-on Home Automation Systems, we pride ourselves to have successfully marked the industry with more than 45 years of know-how, leadership, and shimmering lights.
             </p>
             <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.68)", margin: "26px 0 0", maxWidth: "62ch" }}>
-              Throughout the years, ARAK has positioned itself alongside the industry’s pioneering national companies, becoming a certified partner of several reputable international companies, such as Philips.
+              Throughout the years, ARAK has positioned itself alongside the industry’s pioneering national companies, becoming a certified partner of several reputable international companies.
             </p>
             <Link href="/about" style={{ display: "inline-flex", alignItems: "center", gap: "12px", font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", marginTop: "44px", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.h3}>{lang === "ar" ? "قصتنا الكاملة" : "Our full story →"}</Link>
           </div>
@@ -96,13 +97,12 @@ export default function HomePage() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", marginBottom: "74px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "ما نقدمه" : "What we do"}</span>
               </div>
               <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "خدماتنا" : "Our services"}</h2>
             </div>
             <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0", maxWidth: "44ch" }}>
-              Specification, supply, commissioning and after-sale support — under one contract, from one Riyadh team.
+              Specification, supply, commissioning and after-sale support under one contract, from one Riyadh team.
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", columnGap: "clamp(28px,3.6vw,60px)" }}>
@@ -139,7 +139,7 @@ export default function HomePage() {
               </span>
               <h3 style={{ font: "500 23px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "20px 0 0", letterSpacing: "-0.01em" }}>{lang === "ar" ? "الإضاءة الخارجية" : "Outdoor Lighting"}</h3>
               <p style={{ font: "400 15px/1.65 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.62)", margin: "14px 0 0" }}>
-                Streets, landscapes, car parks and compounds — from bollards to high-mast poles.
+                Streets, landscapes, car parks and compounds, from bollards to high-mast poles.
               </p>
             </div>
             <div style={{ padding: "32px 0 40px", borderTop: "1px solid rgba(17,17,17,.18)", display: "flex", flexDirection: "column", minHeight: "158px" }} className={styles.h8}>
@@ -188,6 +188,29 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+          <Link href="/services/smart-poles" className={styles.poleStrip}>
+            <div className={styles.poleStripArt}>
+              <Image
+                src="/smart-poles/ctx-street.jpg"
+                alt="Smart poles along a landscaped city boulevard"
+                fill
+                sizes="(max-width: 900px) 100vw, 42vw"
+                style={{ objectFit: "cover" }}
+              />
+              <div className={styles.poleStripVeil} />
+            </div>
+            <div className={styles.poleStripCopy}>
+              <span className={styles.poleStripNo}>10</span>
+              <h3 className={styles.poleStripTitle}>{lang === "ar" ? "الأعمدة الذكية" : "Smart Poles"}</h3>
+              <p className={styles.poleStripBody}>
+                Lighting, 5G, cameras, sensors, signage and emergency call on a single mast. Twenty designs from our partner C&deg;LB, supplied and integrated across the Kingdom.
+              </p>
+              <span className={styles.poleStripCta}>
+                {lang === "ar" ? "استكشف الأعمدة الذكية" : "Explore smart poles"}
+                <span aria-hidden="true">&rarr;</span>
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
@@ -197,7 +220,6 @@ export default function HomePage() {
           </div>
           <div style={{ padding: "120px clamp(48px,6vw,110px)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-              <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
               <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الأنظمة الذكية" : "Smart systems"}</span>
             </div>
             <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "22ch" }}>{lang === "ar" ? "أنظمة التحكم بالإضاءة والأتمتة المنزلية" : "Lighting Controls & Home Automation Systems"}</h2>
@@ -207,7 +229,7 @@ export default function HomePage() {
                   KNX / EIB
                 </h3>
                 <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "14px 0 0" }}>
-                  Our KNX/EIB products are based on the simple yet proven KNX/EIB technology, which is now considered a worldwide standard for building control and all types of smart automation of commercial, residential, or industrial buildings — covering lighting and shutter control, heating, ventilation, security and energy management.
+                  Our KNX/EIB products are based on the simple yet proven KNX/EIB technology, which is now considered a worldwide standard for building control and all types of smart automation of commercial, residential, or industrial buildings. It covers lighting and shutter control, heating, ventilation, security and energy management.
                 </p>
               </div>
               <div style={{ borderTop: "1px solid rgba(17,17,17,.14)", paddingTop: "26px" }}>
@@ -223,7 +245,7 @@ export default function HomePage() {
                   Lighting Control System
                 </h3>
                 <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "14px 0 0" }}>
-                  Seamless control and monitoring of all lighting circuits in the building and outdoor lightings — chosen for major projects of all sizes for its flexibility, robustness, wide interfacing capabilities, and significant potential for energy saving.
+                  Seamless control and monitoring of all lighting circuits in the building and outdoor lightings. It is chosen for major projects of all sizes for its flexibility, robustness, wide interfacing capabilities, and significant potential for energy saving.
                 </p>
               </div>
             </div>
@@ -235,7 +257,6 @@ export default function HomePage() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", marginBottom: "70px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "أعمالنا" : "Selected work"}</span>
               </div>
               <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "مشاريع مختارة" : "Projects"}</h2>
@@ -287,284 +308,43 @@ export default function HomePage() {
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
         <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: "80px", alignItems: "start" }}>
-            <div style={{ position: "sticky", top: "130px" }}>
+          <div className={styles.sectionHead}>
+            <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الماركات" : "Brands"}</span>
               </div>
               <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "شركاؤنا" : "Our partners"}</h2>
-              <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "26px 0 0" }}>
-                A certified partner of reputable international manufacturers, from decorative houses to control platforms.
-              </p>
             </div>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h14}>
-                Philips
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h15}>
-                ABB
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h16}>
-                Lutron
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h17}>
-                Zennio
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h18}>
-                Hager
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h19}>
-                Leviton
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h20}>
-                GEWISS
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h21}>
-                Interra
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h22}>
-                Reggiani
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h23}>
-                LEDS C4
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h24}>
-                Disano Illuminazione
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h25}>
-                LUG
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h26}>
-                planlicht
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h27}>
-                Arkoslight
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h28}>
-                RZB Lighting
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h29}>
-                Trevos
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h30}>
-                Zalux
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h31}>
-                Fumagalli
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h32}>
-                Norlys
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h33}>
-                JISO Iluminación
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h34}>
-                Viokef Lighting
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h35}>
-                Lucio
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h36}>
-                LuxeLED
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h37}>
-                LipaLight
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h38}>
-                C°LB
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h39}>
-                C-Luce
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h40}>
-                Hormen
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h41}>
-                espica
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h42}>
-                Niviss
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h43}>
-                p.u.k.
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h44}>
-                ACB
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h45}>
-                Vetreria Artistica Rosa
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h46}>
-                ESP
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h47}>
-                Denko
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h48}>
-                TM Technologie
-              </span>
-              <span style={{ font: "400 15px/1 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", border: "1px solid rgba(17,17,17,.14)", padding: "15px 19px" }} className={styles.h49}>
-                EML
-              </span>
-            </div>
+            <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
+              A certified partner of reputable international manufacturers, from decorative houses to control platforms.
+            </p>
           </div>
+          <BrandGrid />
         </div>
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
         <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: "80px", alignItems: "start" }}>
+          <div className={styles.sectionHead}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الثقة" : "Trusted by"}</span>
               </div>
               <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "عملاؤنا" : "Our clients"}</h2>
-              <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "26px 0 0" }}>
-                A few of the hotels, banks, ministries, hospitals and universities we have supplied.
-              </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2,minmax(0,1fr))", columnGap: "clamp(32px,4vw,72px)" }}>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                The Ritz-Carlton
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Four Seasons Hotels and Resorts
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Mövenpick Hotels & Resorts
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Four Points by Sheraton
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Burj Rafal Hotel
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Makarem
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Alawwal Bank
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Bank Aljazira
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Emirates NBD
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                King Faisal Specialist Hospital & Research Centre
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                King Saud University
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Ministry of Environment, Water & Agriculture
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Ministry of National Guard
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Royal Saudi Air Force
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Alsalam Aerospace Industries
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                DACO — Dammam Airports Company
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                FLOW — Riyadh Metro Operator
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Al Bawani
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Commitco for Construction
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Alkhorayef Commercial
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Tamimi Group of Companies
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Almajal G4S
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Altakhassusi
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                SACO
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Panda
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Cartier
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Jodur
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Al Rafi
-              </div>
-              <div style={{ padding: "16px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "58px" }}>
-                Solitaire
-              </div>
-            </div>
+            <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
+              A few of the hotels, banks, ministries, hospitals and universities we have supplied.
+            </p>
           </div>
+          <ClientGrid />
         </div>
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
         <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-            <div style={{ width: "34px", height: "1px", background: "#111111" }}></div>
             <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الاعتماد" : "Accreditation"}</span>
           </div>
           <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0 0 60px" }}>{lang === "ar" ? "مورد معتمد لدى" : "Registered vendor with"}</h2>
           <VendorBelt />
-          <div style={{ marginTop: "96px", borderTop: "1px solid rgba(17,17,17,.13)", paddingTop: "70px" }}>
-            <h3 style={{ font: "500 13px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".24em", textTransform: "uppercase", color: "rgba(17,17,17,.58)", margin: "0 0 40px" }}>{lang === "ar" ? "نعمل مع" : "We work with"}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,minmax(0,1fr))", columnGap: "clamp(28px,3.6vw,60px)" }}>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Government Entities
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Semi Government Entities
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Airports and Hotels
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Facilities Management Companies
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Residential Contractors
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Commercial Contractors
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Industrial Contractors
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Architectural and Lighting Consultants
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Electrical Consultants
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Real Estate Developers
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                Oil and Gas Industry
-              </div>
-              <div style={{ padding: "18px 0", borderTop: "1px solid rgba(17,17,17,.11)", font: "400 15px/1.45 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.78)", display: "flex", alignItems: "center", minHeight: "62px" }}>
-                ESCO’s
-              </div>
-            </div>
-          </div>
         </div>
       </section>
       <section style={{ background: "#111111" }}>
@@ -573,7 +353,6 @@ export default function HomePage() {
             Light is not so much something that reveals as it is itself the revelation.
           </blockquote>
           <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "44px" }}>
-            <div style={{ width: "34px", height: "1px", background: "rgba(255,255,255,.5)" }}></div>
             <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".28em", textTransform: "uppercase", color: "rgba(255,255,255,.7)" }}>
               James Turrell
             </span>

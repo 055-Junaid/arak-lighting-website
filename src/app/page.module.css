@@ -11,42 +11,6 @@
 .h11:hover { border-top-color:#111111 }
 .h12:hover { border-top-color:#111111 }
 .h13:hover { color:#3A3A38 }
-.h14:hover { border-color:#111111;color:#111111 }
-.h15:hover { border-color:#111111;color:#111111 }
-.h16:hover { border-color:#111111;color:#111111 }
-.h17:hover { border-color:#111111;color:#111111 }
-.h18:hover { border-color:#111111;color:#111111 }
-.h19:hover { border-color:#111111;color:#111111 }
-.h20:hover { border-color:#111111;color:#111111 }
-.h21:hover { border-color:#111111;color:#111111 }
-.h22:hover { border-color:#111111;color:#111111 }
-.h23:hover { border-color:#111111;color:#111111 }
-.h24:hover { border-color:#111111;color:#111111 }
-.h25:hover { border-color:#111111;color:#111111 }
-.h26:hover { border-color:#111111;color:#111111 }
-.h27:hover { border-color:#111111;color:#111111 }
-.h28:hover { border-color:#111111;color:#111111 }
-.h29:hover { border-color:#111111;color:#111111 }
-.h30:hover { border-color:#111111;color:#111111 }
-.h31:hover { border-color:#111111;color:#111111 }
-.h32:hover { border-color:#111111;color:#111111 }
-.h33:hover { border-color:#111111;color:#111111 }
-.h34:hover { border-color:#111111;color:#111111 }
-.h35:hover { border-color:#111111;color:#111111 }
-.h36:hover { border-color:#111111;color:#111111 }
-.h37:hover { border-color:#111111;color:#111111 }
-.h38:hover { border-color:#111111;color:#111111 }
-.h39:hover { border-color:#111111;color:#111111 }
-.h40:hover { border-color:#111111;color:#111111 }
-.h41:hover { border-color:#111111;color:#111111 }
-.h42:hover { border-color:#111111;color:#111111 }
-.h43:hover { border-color:#111111;color:#111111 }
-.h44:hover { border-color:#111111;color:#111111 }
-.h45:hover { border-color:#111111;color:#111111 }
-.h46:hover { border-color:#111111;color:#111111 }
-.h47:hover { border-color:#111111;color:#111111 }
-.h48:hover { border-color:#111111;color:#111111 }
-.h49:hover { border-color:#111111;color:#111111 }
 .h50:hover { filter:grayscale(0) opacity(1) }
 .h51:hover { filter:grayscale(0) opacity(1) }
 .h52:hover { filter:grayscale(0) opacity(1) }
@@ -74,3 +38,99 @@
 .h74:hover { filter:grayscale(0) opacity(1) }
 .h75:hover { filter:grayscale(0) opacity(1) }
 .h76:hover { background:#3A3A38 }
+
+/* Smart Poles feature strip, sits below the nine-card services grid. */
+.poleStrip {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  background: #111111;
+  margin-top: clamp(20px, 2.4vw, 34px);
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.poleStrip:hover {
+  color: #ffffff;
+}
+
+.poleStripArt {
+  position: relative;
+  min-height: 300px;
+}
+
+.poleStripVeil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(17, 17, 17, 0.55) 0%, rgba(17, 17, 17, 0) 45%, rgba(17, 17, 17, 0.75) 100%);
+}
+
+.poleStripCopy {
+  padding: clamp(34px, 3.6vw, 62px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.poleStripNo {
+  font: 400 12px/1 var(--font-sora), sans-serif;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.poleStripTitle {
+  font: 500 clamp(26px, 2.6vw, 38px) / 1.12 var(--font-sora), sans-serif;
+  letter-spacing: -0.025em;
+  margin: 18px 0 0;
+}
+
+.poleStripBody {
+  font: 400 15px/1.7 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.66);
+  margin: 16px 0 0;
+  max-width: 52ch;
+}
+
+.poleStripCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-top: 32px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.34);
+  align-self: flex-start;
+  transition: gap 0.3s ease, border-color 0.3s ease;
+}
+
+.poleStrip:hover .poleStripCta {
+  gap: 18px;
+  border-bottom-color: #ffffff;
+}
+
+@media (max-width: 900px) {
+  .poleStrip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .poleStripArt {
+    min-height: 240px;
+  }
+  .poleStripVeil {
+    background: linear-gradient(0deg, rgba(17, 17, 17, 0.75) 0%, rgba(17, 17, 17, 0) 60%);
+  }
+}
+
+/* Full-width section header: title left, standfirst right, aligned on the baseline. */
+.sectionHead {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,46ch);
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 54px;
+}
+
+@media (max-width:900px) {
+  .sectionHead { grid-template-columns:1fr; gap:22px; align-items:start; margin-bottom:34px }
+}

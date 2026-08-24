@@ -21,7 +21,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   return (
     <LangContext.Provider value={{ lang, dir, toggleLang }}>
-      <div dir={dir} style={{ background: "#FFFFFF", minHeight: "100vh", overflowX: "hidden" }}>
+      <div dir={dir} style={{ background: "#FFFFFF", minHeight: "100vh" }}>
         {children}
       </div>
     </LangContext.Provider>

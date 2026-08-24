@@ -1,0 +1,209 @@
+.spotlight {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  column-gap: clamp(40px, 5vw, 84px);
+  align-items: start;
+}
+
+/* ---------- Index ---------- */
+
+.index {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.tab {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  width: 100%;
+  text-align: start;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+  padding: 19px 6px 19px 0;
+  font: inherit;
+  color: inherit;
+  position: relative;
+  transition: padding-inline-start 0.3s ease;
+}
+
+/* The rule that inks in under the active line. */
+.tab::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 0;
+  background: #111111;
+  transition: width 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.tabOn::after {
+  width: 100%;
+}
+
+.tabNo {
+  font: 300 13px/1 var(--font-sora), sans-serif;
+  letter-spacing: 0.2em;
+  color: rgba(17, 17, 17, 0.38);
+  flex: none;
+  transition: color 0.3s ease;
+}
+
+.tabName {
+  font: 500 clamp(19px, 1.7vw, 24px) / 1.24 var(--font-sora), sans-serif;
+  letter-spacing: -0.015em;
+  color: rgba(17, 17, 17, 0.52);
+  transition: color 0.3s ease;
+}
+
+.tab:hover .tabName,
+.tab:focus-visible .tabName {
+  color: rgba(17, 17, 17, 0.82);
+}
+
+.tabOn .tabName {
+  color: #111111;
+}
+
+.tabOn .tabNo {
+  color: #111111;
+}
+
+.tab:focus-visible {
+  outline: 1px solid #111111;
+  outline-offset: 3px;
+}
+
+.hint {
+  font: 500 10px/1.5 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.38);
+  margin-top: 26px;
+}
+
+/* ---------- Stage ---------- */
+
+/* Every panel occupies the same grid cell, so the stage is as tall as the
+   longest one and nothing shifts when the selection changes. Keeping them all
+   mounted also leaves the full copy in the document for crawlers. */
+.stage {
+  display: grid;
+  position: relative;
+}
+
+.panel {
+  grid-area: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  padding: clamp(32px, 3.4vw, 54px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.34s ease,
+    visibility 0.34s ease;
+}
+
+.panelOn {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Placeholder photography: present but deliberately faint, so the copy leads. */
+.panelPhoto {
+  position: absolute;
+  inset: 0;
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.panelPhoto :global(img) {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+}
+
+.panelWash {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.86) 100%);
+  pointer-events: none;
+}
+
+.panelBody {
+  position: relative;
+}
+
+.panelNo {
+  font: 300 clamp(40px, 4.4vw, 62px) / 1 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: rgba(17, 17, 17, 0.22);
+}
+
+.panelTitle {
+  font: 600 clamp(26px, 2.8vw, 40px) / 1.1 var(--font-sora), sans-serif;
+  letter-spacing: -0.028em;
+  color: #111111;
+  margin: 14px 0 0;
+}
+
+.panelLead {
+  font: 300 clamp(16px, 1.4vw, 19px) / 1.55 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.8);
+  margin: 16px 0 0;
+  max-width: 40ch;
+}
+
+.panelText {
+  font: 400 15px/1.75 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.66);
+  margin: 20px 0 0;
+  max-width: 54ch;
+}
+
+.panelList {
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 30px;
+}
+
+.panelList li {
+  font: 400 13.5px/1.45 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.62);
+  padding: 13px 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .tab::after,
+  .tabNo,
+  .tabName,
+  .panel {
+    transition: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  .spotlight {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 34px;
+  }
+  .tab {
+    padding-block: 15px;
+  }
+  .panelList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
