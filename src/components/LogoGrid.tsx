@@ -15,14 +15,21 @@ export function LogoGrid({ items, basePath }: { items: LogoItem[]; basePath: str
         <div key={item.name} className={styles.cell}>
           {item.file ? (
             <>
-              <Image
-                src={`${basePath}/${item.file}`}
-                alt={item.name}
-                title={item.name}
-                width={210}
-                height={84}
-                className={styles.logo}
-              />
+              {/* Fixed-height band so logos align across a row no matter how
+                  many lines the caption beneath them runs to. */}
+              <span className={styles.logoWrap}>
+                <Image
+                  src={`${basePath}/${item.file}`}
+                  alt={item.name}
+                  title={item.name}
+                  width={210}
+                  height={84}
+                  // The optimiser rejects SVG unless dangerouslyAllowSVG is set;
+                  // vectors need no resizing anyway, so serve them as-is.
+                  unoptimized={item.file.endsWith(".svg")}
+                  className={styles.logo}
+                />
+              </span>
               <span className={styles.name}>{item.name}</span>
             </>
           ) : (

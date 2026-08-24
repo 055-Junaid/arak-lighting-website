@@ -1,117 +1,72 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLang } from "@/lib/lang";
 import { PROJECT_ROWS } from "@/lib/projects-data";
 import styles from "./ProjectsTable.module.css";
 
 type Filter = "all" | "fittings" | "controls";
 
-function filterStyle(active: boolean) {
-  return {
-    color: active ? "#FFFFFF" : "rgba(17,17,17,.7)",
-    background: active ? "#111111" : "transparent",
-  };
-}
+const FILTERS: [Filter, string, string][] = [
+  ["all", "All", "الكل"],
+  ["fittings", "Light fittings", "وحدات الإضاءة"],
+  ["controls", "Controls & automation", "أنظمة التحكم والأتمتة"],
+];
+
+const matches = (category: string, filter: Filter) => filter === "all" || category === filter;
 
 export function ProjectsTable() {
+  const { lang } = useLang();
+  const ar = lang === "ar";
   const [filter, setFilter] = useState<Filter>("all");
 
   const rows = useMemo(
-    () => PROJECT_ROWS.filter((r) => filter === "all" || r.category === filter),
+    () => PROJECT_ROWS.filter((r) => matches(r.category, filter)),
     [filter]
   );
 
   return (
     <>
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "40px" }}>
-        <span
-          onClick={() => setFilter("all")}
-          style={{
-            font: "500 11px/1 var(--font-plex-sans),sans-serif",
-            letterSpacing: ".16em",
-            textTransform: "uppercase",
-            padding: "13px 18px",
-            cursor: "pointer",
-            border: "1px solid rgba(17,17,17,.16)",
-            ...filterStyle(filter === "all"),
-          }}
-        >
-          All
-        </span>
-        <span
-          onClick={() => setFilter("fittings")}
-          style={{
-            font: "500 11px/1 var(--font-plex-sans),sans-serif",
-            letterSpacing: ".16em",
-            textTransform: "uppercase",
-            padding: "13px 18px",
-            cursor: "pointer",
-            border: "1px solid rgba(17,17,17,.16)",
-            ...filterStyle(filter === "fittings"),
-          }}
-        >
-          Light fittings
-        </span>
-        <span
-          onClick={() => setFilter("controls")}
-          style={{
-            font: "500 11px/1 var(--font-plex-sans),sans-serif",
-            letterSpacing: ".16em",
-            textTransform: "uppercase",
-            padding: "13px 18px",
-            cursor: "pointer",
-            border: "1px solid rgba(17,17,17,.16)",
-            ...filterStyle(filter === "controls"),
-          }}
-        >
-          Controls &amp; automation
-        </span>
+      <div className={styles.filters}>
+        {FILTERS.map(([value, label, labelAr]) => (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setFilter(value)}
+            className={[styles.filter, filter === value ? styles.filterActive : ""]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            {ar ? labelAr : label}
+            <span className={styles.filterCount}>
+              {PROJECT_ROWS.filter((r) => matches(r.category, value)).length}
+            </span>
+          </button>
+        ))}
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1.5fr 1fr 1.3fr 1.6fr",
-          gap: "24px",
-          padding: "0 4px 18px",
-          borderBottom: "1px solid rgba(17,17,17,.28)",
-        }}
-      >
-        <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.58)" }}>
-          Project
-        </span>
-        <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.58)" }}>
-          Location
-        </span>
-        <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.58)" }}>
-          Contractor / client
-        </span>
-        <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.58)" }}>
-          Scope
-        </span>
-      </div>
-
-      {rows.map((row, i) => (
-        <div
-          key={`${row.name}-${row.loc}-${i}`}
-          className={styles.row}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1fr 1.3fr 1.6fr",
-            gap: "24px",
-            padding: "22px 4px",
-            borderBottom: "1px solid rgba(17,17,17,.13)",
-          }}
-        >
-          <span style={{ font: "400 15px/1.5 var(--font-plex-sans),sans-serif", color: "#111111" }}>{row.name}</span>
-          <span style={{ font: "400 15px/1.5 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.62)" }}>{row.loc}</span>
-          <span style={{ font: "400 15px/1.5 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.62)" }}>{row.client}</span>
-          <span style={{ font: "400 15px/1.5 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.62)" }}>{row.scope}</span>
+      <div className={styles.list}>
+        <div className={styles.head}>
+          <span className={styles.headCell}>{ar ? "م" : "No."}</span>
+          <span className={styles.headCell}>{ar ? "المشروع" : "Project"}</span>
+          <span className={styles.headCell}>{ar ? "الموقع" : "Location"}</span>
+          <span className={styles.headCell}>{ar ? "نطاق العمل" : "Scope"}</span>
         </div>
-      ))}
 
-      <p style={{ font: "400 14px/1.6 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.52)", margin: "32px 0 0" }}>
-        {rows.length} references listed. Full project list available on request.
+        {rows.map((row, i) => (
+          <div key={`${row.name}-${row.loc}`} className={styles.row}>
+            <span className={styles.index}>{String(i + 1).padStart(2, "0")}</span>
+            <span className={styles.name}>{row.name}</span>
+            <span className={styles.loc}>{row.loc}</span>
+            <span className={styles.scope}>{row.scope}</span>
+          </div>
+        ))}
+      </div>
+
+      <p className={styles.note}>
+        {ar
+          ? `${rows.length} مرجعًا إضافيًا. القائمة الكاملة للمشاريع متاحة عند الطلب.`
+          : `${rows.length} further references. Full project list available on request.`}
       </p>
     </>
   );

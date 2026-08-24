@@ -1,7 +1,7 @@
 export interface Service {
   no: string;
   slug: string;
-  /** Faint backdrop for the spotlight panel. Placeholder until ARAK site photography is available. */
+  /** Faint backdrop for the spotlight panel. Taken from the delivered project that best shows the service. */
   photo: string;
   en: string;
   ar: string;
@@ -19,7 +19,7 @@ export const SERVICES: Service[] = [
   {
     no: "01",
     slug: "indoor-lighting",
-    photo: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/ritz-carlton/01.jpg",
     en: "Indoor Lighting",
     ar: "الإضاءة الداخلية",
     lead: "Decorative and architectural fittings for the rooms people actually live and work in.",
@@ -34,7 +34,7 @@ export const SERVICES: Service[] = [
   {
     no: "02",
     slug: "lighting-design",
-    photo: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/solitaire-mall/07.jpg",
     en: "Lighting Design",
     ar: "تصميم الإضاءة",
     lead: "Drawings you can build from and numbers you can defend in a design review.",
@@ -49,7 +49,7 @@ export const SERVICES: Service[] = [
   {
     no: "03",
     slug: "facade-lighting",
-    photo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/solitaire-mall/03.jpg",
     en: "Facade Lighting",
     ar: "إضاءة الواجهات",
     lead: "A building's night identity, engineered to survive a Saudi summer.",
@@ -64,7 +64,7 @@ export const SERVICES: Service[] = [
   {
     no: "04",
     slug: "outdoor-lighting",
-    photo: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/solitaire-mall/12.jpg",
     en: "Outdoor Lighting",
     ar: "الإضاءة الخارجية",
     lead: "Everything from a garden bollard to a high-mast on a national road.",
@@ -79,7 +79,7 @@ export const SERVICES: Service[] = [
   {
     no: "05",
     slug: "lighting-controls",
-    photo: "https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/milling-mc2/03.jpg",
     en: "Lighting Controls",
     ar: "أنظمة التحكم بالإضاءة",
     lead: "Every circuit, indoors and out, on one open standard.",
@@ -94,7 +94,7 @@ export const SERVICES: Service[] = [
   {
     no: "06",
     slug: "lighting-installation",
-    photo: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/athletic-showroom/03.jpg",
     en: "Lighting Installation",
     ar: "تركيب الإضاءة",
     lead: "Our own technical crews on site, not a subcontractor we have never met.",
@@ -109,7 +109,7 @@ export const SERVICES: Service[] = [
   {
     no: "07",
     slug: "project-management",
-    photo: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/solitaire-mall/02.jpg",
     en: "Project Management",
     ar: "إدارة المشاريع",
     lead: "One point of contact who owns the schedule from purchase order to snag list.",
@@ -124,7 +124,7 @@ export const SERVICES: Service[] = [
   {
     no: "08",
     slug: "projection-mapping",
-    photo: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/solitaire-mall/13.jpg",
     en: "3D Projection Mapping",
     ar: "الإسقاط الضوئي ثلاثي الأبعاد",
     lead: "Content mapped to real geometry, for the nights that have to be remembered.",
@@ -139,7 +139,7 @@ export const SERVICES: Service[] = [
   {
     no: "09",
     slug: "home-automation",
-    photo: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?q=80&w=1600&auto=format&fit=crop",
+    photo: "/projects/four-points/01.jpg",
     en: "Home Automation Systems",
     ar: "أنظمة الأتمتة المنزلية",
     lead: "One commissioned system, not a shelf of apps that do not talk to each other.",

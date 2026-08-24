@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Sora, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { LanguageProvider } from "@/lib/lang";
+import { COLOR_MODE_BOOT_SCRIPT } from "@/lib/color-mode";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ColorToggle } from "@/components/ColorToggle";
 import "./globals.css";
 
 const sora = Sora({
@@ -26,7 +28,7 @@ const plexSansArabic = IBM_Plex_Sans_Arabic({
 export const metadata: Metadata = {
   title: "ARAK Lighting Solutions",
   description:
-    "Forty-five years of fixtures, lighting design, KNX controls and home automation, delivered across hotels, airports, palaces and national projects in Saudi Arabia.",
+    "Five decades of fixtures, lighting design, KNX control, home automation and smart poles, delivered across hotels, airports, palaces and national projects in Saudi Arabia.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -36,11 +38,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       className={`${sora.variable} ${plexSans.variable} ${plexSansArabic.variable}`}
     >
+      <head>
+        {/* Applies a saved "lights on" choice before first paint, so a
+            returning visitor never sees a flash of black and white. */}
+        <script dangerouslySetInnerHTML={{ __html: COLOR_MODE_BOOT_SCRIPT }} />
+      </head>
       <body>
         <LanguageProvider>
           <Header />
           {children}
           <Footer />
+          <ColorToggle />
         </LanguageProvider>
       </body>
     </html>

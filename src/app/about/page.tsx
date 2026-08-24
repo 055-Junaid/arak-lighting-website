@@ -16,7 +16,7 @@ export default function AboutPage() {
       </section>
       <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "90px 48px 0" }}>
         <div style={{ height: "min(60vh,620px)" }}>
-          <PhotoSlot src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1800&auto=format&fit=crop" alt="Office, showroom or team photograph (landscape, 2400×1200)" />
+          <PhotoSlot src="/projects/ritz-carlton/03.jpg" alt="The double staircase atrium at The Ritz-Carlton, Riyadh" priority />
         </div>
       </section>
       <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px" }}>
@@ -80,7 +80,7 @@ export default function AboutPage() {
             <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
               <h3 style={{ font: "500 24px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.015em" }}>{lang === "ar" ? "التمكين" : "Empowerment"}</h3>
               <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "18px 0 0" }}>
-                We, at ARAK, believe in the limitless potential of our employees. And since we are always keen on reinforcing our 45+ years of hands-on expertise, we regularly encourage them to tap into that potential through engaging them in seminars, fostering personal and professional growth.
+                We, at ARAK, believe in the limitless potential of our employees. And since we are always keen on reinforcing our 50+ years of hands-on expertise, we regularly encourage them to tap into that potential through engaging them in seminars, fostering personal and professional growth.
               </p>
             </div>
             <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
@@ -104,7 +104,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div style={{ height: "520px" }}>
-            <PhotoSlot src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1800&auto=format&fit=crop" alt="Team at work / warehouse / site (portrait, 1200×1500)" />
+            <PhotoSlot src="/projects/solitaire-mall/07.jpg" alt="The crystal cascade lighting scheme at Solitaire Mall, Riyadh" />
           </div>
         </div>
       </section>

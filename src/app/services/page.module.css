@@ -231,6 +231,11 @@
   pointer-events: none;
 }
 
+/* Arabic flips the column this scrim is shading, so the scrim flips with it. */
+:global([dir="rtl"]) .featureArtVeil {
+  background: linear-gradient(270deg, rgba(17, 17, 17, 1) 0%, rgba(17, 17, 17, 0.55) 18%, rgba(17, 17, 17, 0) 52%);
+}
+
 /* ---------- Process ---------- */
 
 .process {

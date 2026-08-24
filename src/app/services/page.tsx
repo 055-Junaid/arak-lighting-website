@@ -170,8 +170,8 @@ export default function ServicesPage() {
             </div>
             <div className={styles.controlArt}>
               <PhotoSlot
-                src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=1800&auto=format&fit=crop"
-                alt="Control panel and touch interface being commissioned on site (portrait, 1200×1600)"
+                src="/projects/milling-mc2/05.jpg"
+                alt="ABB KNX actuators on the DIN rail of a lighting control panel, Milling Company MC-2"
               />
             </div>
           </div>

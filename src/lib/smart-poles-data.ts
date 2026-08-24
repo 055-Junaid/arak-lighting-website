@@ -255,6 +255,6 @@ export const ARAK_ROLE = [
   {
     no: "05",
     title: "Operation and maintenance",
-    body: "Spares, firmware, fault response and reporting after handover. Forty-five years of after-sale support on lighting is the reason clients let us put this much of the street on one pole.",
+    body: "Spares, firmware, fault response and reporting after handover. Fifty years of after-sale support on lighting is the reason clients let us put this much of the street on one pole.",
   },
 ];
