@@ -109,31 +109,43 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section style={{ borderBlock: "1px solid rgba(17,17,17,.13)", display: "block" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "0 48px", display: "grid", gridTemplateColumns: "repeat(4,1fr)" }}>
-          <div style={{ padding: "46px 0", borderInlineEnd: "1px solid rgba(17,17,17,.13)" }}>
-            <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              1976
+      {/* Smart Poles band, in place of the old four-figure stat bar. */}
+      <section className={styles.poleBand}>
+        <div className={styles.poleBandShell}>
+          <div>
+            <div className={styles.poleBandEyebrow}>
+              <span>{ar ? "الأعمدة الذكية" : "Smart poles"}</span>
+              <span aria-hidden="true">·</span>
+              <span>{ar ? "سلسلة C°LB" : "C°LB series"}</span>
             </div>
-            <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{lang === "ar" ? "سنة التأسيس" : "Founded"}</div>
+            <h2 className={styles.poleBandTitle}>
+              {ar
+                ? "أعمدة ذكية على البنية القائمة في الشارع"
+                : "Smart poles, built on the street you already have"}
+            </h2>
+            <p className={styles.poleBandBody}>
+              {ar
+                ? "إنارة الشوارع هي البنية التحتية الوحيدة التي تقف كل خمسين مترًا، بالكهرباء عند قاعدتها وإطلالة مباشرة على الطريق. نحوّل هذا العمود إلى منصة تجمع الإضاءة وشبكات الجيل الخامس والكاميرات وأجهزة الاستشعار واللوحات الرقمية ونداء الطوارئ، نورّدها وندمجها في مختلف أنحاء المملكة."
+                : "Street lighting is the only infrastructure that already stands every fifty metres, with power at the base and a clear view of the road. We turn that mast into a platform carrying light, 5G, cameras, sensors, signage and emergency call, supplied and integrated across the Kingdom."}
+            </p>
+            <Link href="/services/smart-poles" className={styles.poleBandCta}>
+              {ar ? "استعرض سلسلة الأعمدة الذكية" : "See the smart pole series"}
+              <span aria-hidden="true">{ar ? "←" : "→"}</span>
+            </Link>
           </div>
-          <div style={{ padding: "46px 0", paddingInlineStart: "46px", borderInlineEnd: "1px solid rgba(17,17,17,.13)" }}>
-            <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              20
+          <div className={styles.poleBandFacts}>
+            <div className={styles.poleBandFact}>
+              <div className={styles.poleBandNum}>20</div>
+              <div className={styles.poleBandLabel}>{ar ? "تصميم عمود" : "Pole designs"}</div>
             </div>
-            <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{ar ? "تصميم عمود ذكي" : "Smart pole designs"}</div>
-          </div>
-          <div style={{ padding: "46px 0", paddingInlineStart: "46px", borderInlineEnd: "1px solid rgba(17,17,17,.13)" }}>
-            <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              41
+            <div className={styles.poleBandFact}>
+              <div className={styles.poleBandNum}>07</div>
+              <div className={styles.poleBandLabel}>{ar ? "أنظمة على العمود" : "Systems per mast"}</div>
             </div>
-            <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{lang === "ar" ? "ماركة عالمية شريكة" : "Partner brands"}</div>
-          </div>
-          <div style={{ padding: "46px 0", paddingInlineStart: "46px" }}>
-            <div style={{ font: "300 clamp(40px,4vw,58px)/1 var(--font-sora),sans-serif", color: "#111111", letterSpacing: "-0.03em" }}>
-              10
+            <div className={styles.poleBandFact}>
+              <div className={styles.poleBandNum}>01</div>
+              <div className={styles.poleBandLabel}>{ar ? "قاعدة واحدة" : "Foundation"}</div>
             </div>
-            <div style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".22em", textTransform: "uppercase", color: "rgba(17,17,17,.62)", marginTop: "14px" }}>{lang === "ar" ? "خطوط خدمة" : "Service lines"}</div>
           </div>
         </div>
       </section>

@@ -481,3 +481,116 @@
     height: clamp(300px, 58vw, 440px);
   }
 }
+
+/* ───────────────────────────────────────────────────────────
+   Smart Poles band. Sits directly under the hero, where the old
+   four-figure stat bar used to run, and keeps that bar's rules and
+   divided-number rhythm so the page cadence is unchanged.
+   ─────────────────────────────────────────────────────────── */
+.poleBand {
+  border-block: 1px solid rgba(17, 17, 17, 0.13);
+  background: #ffffff;
+}
+
+.poleBandShell {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-block: clamp(52px, 5vw, 72px);
+  padding-inline: clamp(24px, 3.4vw, 48px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: clamp(38px, 5vw, 84px);
+  align-items: center;
+}
+
+.poleBandEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+}
+
+.poleBandTitle {
+  font: 600 clamp(27px, 2.9vw, 42px) / 1.1 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: #111111;
+  margin: 26px 0 0;
+  max-width: 21ch;
+  text-wrap: balance;
+}
+
+.poleBandBody {
+  font: 400 16px/1.75 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.68);
+  margin: 20px 0 0;
+  max-width: 56ch;
+}
+
+.poleBandCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #111111;
+  padding: 19px 30px;
+  margin-top: 36px;
+  transition: background 0.3s ease, gap 0.3s ease;
+}
+
+.poleBandCta:hover {
+  background: #3a3a38;
+  color: #ffffff;
+  gap: 18px;
+}
+
+.poleBandFacts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* The rules that used to divide the stat bar, kept on the figures. */
+.poleBandFact {
+  padding-inline-start: clamp(18px, 2.2vw, 32px);
+  border-inline-start: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.poleBandNum {
+  font: 300 clamp(32px, 3.2vw, 46px) / 1 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: #111111;
+}
+
+.poleBandLabel {
+  font: 500 11px/1.55 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.62);
+  margin-top: 14px;
+}
+
+@media (max-width: 1080px) {
+  .poleBandShell {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(34px, 5vw, 48px);
+  }
+  /* Stacked, the leading rule would sit on the page margin. */
+  .poleBandFact:first-child {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .poleBandFact {
+    padding-inline-start: 14px;
+  }
+  .poleBandLabel {
+    letter-spacing: 0.16em;
+  }
+}
