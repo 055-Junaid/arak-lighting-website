@@ -42,3 +42,9 @@ next-env.d.ts
 
 # claude code worktrees / session scratch
 .claude/
+
+# opennext & cloudflare wrangler
+.open-next/
+.wrangler/
+.dev.vars
+
