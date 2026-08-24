@@ -1,0 +1,766 @@
+.page {
+  --ink: #111111;
+  --muted: rgba(17, 17, 17, 0.66);
+  --faint: rgba(17, 17, 17, 0.5);
+  --hair: rgba(17, 17, 17, 0.13);
+  --paper: #f6f5f3;
+}
+
+.shell {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-inline: clamp(24px, 3.4vw, 48px);
+}
+
+.eyebrow {
+  display: block;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+}
+
+.band {
+  border-top: 1px solid var(--hair);
+  padding-block: clamp(72px, 8vw, 118px);
+}
+
+.bandPaper {
+  background: var(--paper);
+}
+
+.bandDark {
+  background: #111111;
+  border-top: 0;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(44px, 5vw, 70px);
+}
+
+.sectionTitle {
+  font: 600 clamp(30px, 3.6vw, 52px) / 1.06 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 20px 0 0;
+  max-width: 18ch;
+}
+
+.sectionNote {
+  font: 400 16px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 0;
+  max-width: 42ch;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(72px, 8vw, 116px) clamp(48px, 5vw, 72px);
+}
+
+.heroGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(90% 70% at 78% -20%, rgba(17, 17, 17, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+}
+
+/* Title on the left, lead and buttons on the right, both sitting on the same
+   baseline so the stat strip below reads as one ruled band. */
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
+  gap: clamp(32px, 4vw, 72px);
+  align-items: end;
+}
+
+.heroTitle {
+  font: 600 clamp(38px, 5.4vw, 84px) / 1.02 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 26px 0 0;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+
+.heroLead {
+  font: 300 clamp(17px, 1.5vw, 21px) / 1.65 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 0;
+  max-width: 52ch;
+  border-top: 1px solid var(--hair);
+  padding-top: 30px;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(30px, 3vw, 40px);
+}
+
+.primaryCta,
+.ghostCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 18px 28px;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    gap 0.3s ease;
+}
+
+.primaryCta {
+  color: #ffffff;
+  background: var(--ink);
+}
+
+.primaryCta:hover {
+  background: #2c2c2a;
+  color: #ffffff;
+  gap: 18px;
+}
+
+.ghostCta {
+  color: var(--ink);
+  border: 1px solid rgba(17, 17, 17, 0.28);
+}
+
+.ghostCta:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  gap: 18px;
+}
+
+/* ---------- Stat strip ---------- */
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--hair);
+  margin-top: clamp(48px, 5vw, 72px);
+}
+
+.statCell {
+  flex: 1 1 180px;
+  padding: 26px 28px 26px 0;
+  border-inline-end: 1px solid var(--hair);
+}
+
+.statCell:last-child {
+  border-inline-end: 0;
+}
+
+.statCell + .statCell {
+  padding-inline-start: 28px;
+}
+
+.statValue {
+  font: 300 clamp(30px, 3.2vw, 46px) / 1 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+/* Keeps "45+" from being reordered to "+45" in the Arabic layout, while the
+   cell itself stays aligned with the rest of the RTL page. */
+.statFigure {
+  display: inline-block;
+  direction: ltr;
+}
+
+.statLabel {
+  font: 500 11px/1.4 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.55);
+  margin-top: 12px;
+}
+
+/* ---------- Full-bleed plate ---------- */
+
+.plate {
+  position: relative;
+}
+
+.plateArt {
+  height: clamp(320px, 58vh, 620px);
+}
+
+.plateCaption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 18px 0 0;
+}
+
+.plateCaptionMain {
+  font: 500 13px/1.4 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.72);
+}
+
+.plateCaptionNote {
+  font: 400 14px/1.5 var(--font-plex-sans), sans-serif;
+  color: var(--faint);
+}
+
+/* ---------- The name ---------- */
+
+.name {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+
+.nameMarkWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: clamp(220px, 26vw, 340px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.nameMarkGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 70% at 50% 40%, rgba(255, 255, 255, 0.14) 0%, rgba(17, 17, 17, 0) 70%);
+  pointer-events: none;
+}
+
+.nameMark {
+  position: relative;
+  /* No tracking: it pushes the hamza off the alef at display sizes. */
+  font: 300 clamp(84px, 12vw, 180px) / 1 var(--font-plex-sans-arabic), var(--font-plex-sans), sans-serif;
+  color: #ffffff;
+}
+
+.nameTranslation {
+  position: absolute;
+  bottom: 22px;
+  inset-inline-start: 22px;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.nameEyebrow {
+  display: block;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.nameTitle {
+  font: 600 clamp(28px, 3.4vw, 50px) / 1.08 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 22px 0 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.nameBody {
+  font: 300 clamp(16px, 1.4vw, 19px) / 1.68 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.76);
+  margin: 26px 0 0;
+  max-width: 54ch;
+}
+
+.nameBodySmall {
+  font: 400 15px/1.75 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.56);
+  margin: 20px 0 0;
+  max-width: 56ch;
+}
+
+/* ---------- Chapters ---------- */
+
+.chapters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(24px, 2.6vw, 40px);
+}
+
+.chapter {
+  position: relative;
+  padding-top: 26px;
+  border-top: 1px solid rgba(17, 17, 17, 0.22);
+}
+
+.chapter::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--ink);
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.chapter:hover::after {
+  width: 100%;
+}
+
+.chapterNo {
+  font: 300 30px/1 var(--font-sora), sans-serif;
+  letter-spacing: -0.02em;
+  color: rgba(17, 17, 17, 0.32);
+}
+
+.chapterTitle {
+  font: 500 20px/1.26 var(--font-sora), sans-serif;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 20px 0 0;
+}
+
+.chapterBody {
+  font: 400 14.5px/1.72 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 14px 0 0;
+}
+
+/* ---------- Founder ---------- */
+
+.founder {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: clamp(40px, 5vw, 88px);
+  align-items: start;
+}
+
+.founderAside {
+  position: sticky;
+  top: 120px;
+}
+
+.founderLabel {
+  font: 500 13px/1.4 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+  margin: 0;
+}
+
+.founderMark {
+  margin-top: 30px;
+  font: 300 clamp(64px, 7vw, 104px) / 0.8 var(--font-sora), sans-serif;
+  color: rgba(17, 17, 17, 0.14);
+  user-select: none;
+}
+
+.founderLead {
+  font: 300 clamp(19px, 1.8vw, 26px) / 1.58 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.84);
+  margin: 0;
+  max-width: 58ch;
+}
+
+.founderBody {
+  font: 400 17px/1.78 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 30px 0 0;
+  max-width: 62ch;
+}
+
+.founderPull {
+  position: relative;
+  margin: clamp(38px, 4vw, 54px) 0 0;
+  padding: 32px 0 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.2);
+}
+
+.founderPullText {
+  font: 500 clamp(21px, 2vw, 30px) / 1.42 var(--font-sora), sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0;
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.signature {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+}
+
+.signatureName {
+  font: 500 15px/1.3 var(--font-sora), sans-serif;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.signatureRole {
+  font: 500 11px/1.3 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.5);
+}
+
+/* ---------- Vision & mission ---------- */
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 34px);
+}
+
+/* Reveal wraps each card in a div of its own, so the wrapper has to stretch
+   before the card inside it can match its neighbour's height. */
+.pillars > * {
+  height: 100%;
+}
+
+.pillar {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  padding: clamp(34px, 3.6vw, 56px);
+  border: 1px solid var(--hair);
+  background: #ffffff;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.45s ease;
+}
+
+.pillar:hover {
+  transform: translateY(-4px);
+  border-color: rgba(17, 17, 17, 0.3);
+}
+
+.pillarDark {
+  background: #111111;
+  border-color: #111111;
+}
+
+.pillarDark:hover {
+  border-color: #111111;
+}
+
+.pillarGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 70% at 84% 0%, rgba(255, 255, 255, 0.12) 0%, rgba(17, 17, 17, 0) 62%);
+  pointer-events: none;
+}
+
+.pillarNo {
+  position: relative;
+  font: 300 13px/1 var(--font-sora), sans-serif;
+  letter-spacing: 0.22em;
+  color: rgba(17, 17, 17, 0.4);
+}
+
+.pillarDark .pillarNo {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.pillarTitle {
+  position: relative;
+  font: 600 clamp(28px, 3vw, 42px) / 1.1 var(--font-sora), sans-serif;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 18px 0 0;
+}
+
+.pillarDark .pillarTitle {
+  color: #ffffff;
+}
+
+.pillarBody {
+  position: relative;
+  font: 400 16.5px/1.76 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 24px 0 0;
+  max-width: 46ch;
+}
+
+.pillarDark .pillarBody {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Values ---------- */
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(36px, 4vw, 64px) clamp(40px, 5vw, 80px);
+}
+
+.value {
+  position: relative;
+  padding-top: 28px;
+  border-top: 1px solid rgba(17, 17, 17, 0.16);
+}
+
+.value::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--ink);
+  transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.value:hover::after {
+  width: 100%;
+}
+
+.valueHead {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.valueNo {
+  font: 400 12px/1 var(--font-sora), sans-serif;
+  letter-spacing: 0.14em;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.valueTitle {
+  font: 500 24px/1.25 var(--font-sora), sans-serif;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.valueBody {
+  font: 400 16px/1.74 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 18px 0 0;
+}
+
+/* ---------- People ---------- */
+
+.people {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(40px, 5vw, 84px);
+  align-items: center;
+}
+
+.peopleArt {
+  height: clamp(420px, 62vh, 640px);
+}
+
+.peopleList {
+  margin: clamp(34px, 3.6vw, 46px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pledge {
+  border-top: 1px solid var(--hair);
+  padding: 24px 0;
+}
+
+.pledgeTitle {
+  font: 500 18px/1.3 var(--font-sora), sans-serif;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.pledgeBody {
+  font: 400 15px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 10px 0 0;
+  max-width: 52ch;
+}
+
+/* ---------- Accreditation ---------- */
+
+/* The marquee pulls itself 48px past the shell on both sides. Clipping at the
+   section keeps that bleed from turning into a horizontal scrollbar on narrow
+   screens, without cutting the belt back to the text column. */
+.beltBand {
+  overflow: hidden;
+}
+
+/* ---------- Closing ---------- */
+
+.close {
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+}
+
+.closeGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(110% 90% at 50% -20%, rgba(255, 255, 255, 0.14) 0%, rgba(17, 17, 17, 0) 62%);
+  pointer-events: none;
+}
+
+.closeInner {
+  position: relative;
+  padding-block: clamp(88px, 10vw, 140px);
+  text-align: center;
+}
+
+.closeTitle {
+  font: 600 clamp(32px, 4.4vw, 64px) / 1.06 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin: 24px auto 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.closeLead {
+  font: 300 clamp(16px, 1.4vw, 20px) / 1.65 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 26px auto 0;
+  max-width: 52ch;
+}
+
+.closeEyebrow {
+  display: block;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.closeActions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(36px, 4vw, 48px);
+}
+
+.closeCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #111111;
+  background: #ffffff;
+  padding: 18px 30px;
+  transition:
+    background 0.3s ease,
+    gap 0.3s ease;
+}
+
+.closeCta:hover {
+  background: rgba(255, 255, 255, 0.86);
+  color: #111111;
+  gap: 18px;
+}
+
+.closeGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 18px 30px;
+  transition:
+    border-color 0.3s ease,
+    gap 0.3s ease;
+}
+
+.closeGhost:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  gap: 18px;
+}
+
+.closeAddress {
+  font: 400 14px/1.7 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.45);
+  margin: clamp(40px, 4vw, 56px) auto 0;
+  max-width: 44ch;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1080px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+  .heroTitle {
+    max-width: 17ch;
+  }
+  .chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 44px;
+  }
+  .name {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .founder {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .founderAside {
+    position: static;
+  }
+  .founderMark {
+    display: none;
+  }
+  .pillars {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .people {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .peopleArt {
+    height: 460px;
+    order: -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .chapters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .values {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .statCell {
+    flex-basis: 45%;
+  }
+  .heroActions .primaryCta,
+  .heroActions .ghostCta {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

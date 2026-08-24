@@ -1,114 +1,373 @@
 "use client";
 
+import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
+import { Reveal } from "@/components/Reveal";
+import { VendorBelt } from "@/components/VendorBelt";
+import { CHAPTERS, PLEDGES, STATS, VALUES } from "@/lib/about-data";
+import styles from "./page.module.css";
 
 export default function AboutPage() {
   const { lang } = useLang();
+  const ar = lang === "ar";
 
   return (
-    <main>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px 0" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
-          <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "عن الشركة" : "About"}</span>
+    <main className={styles.page}>
+      {/* Hero */}
+      <section className={styles.hero}>
+        <div className={styles.heroGlow} />
+        <div className={`${styles.shell} ${styles.heroInner}`}>
+          <Reveal>
+            <div className={styles.heroGrid}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "عن الشركة" : "About ARAK"}</span>
+                <h1 className={styles.heroTitle}>
+                  {ar
+                    ? "خمسة وأربعون عاماً من الضوء، مشروعاً تلو الآخر"
+                    : "Forty-five years of light, one project at a time."}
+                </h1>
+              </div>
+              <div>
+                <p className={styles.heroLead}>
+                  ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation.
+                  Forty-five years later it is a Saudi lighting company and smart lighting solutions
+                  provider, carrying more than forty international brands and delivering fittings,
+                  controls and automation into hotels, airports, hospitals, palaces and national
+                  projects across the Kingdom.
+                </p>
+                <div className={styles.heroActions}>
+                  <Link href="/projects" className={styles.primaryCta}>
+                    {ar ? "شاهد أعمالنا" : "See the work"}
+                    <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                  <a
+                    href="/docs/Arak%20Company%20Profile%202024.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.ghostCta}
+                  >
+                    {ar ? "الملف التعريفي" : "Company profile"}
+                    <span aria-hidden="true">&darr;</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <div className={styles.stats}>
+              {STATS.map((s) => (
+                <div key={s.value + s.en} className={styles.statCell}>
+                  <div className={styles.statValue}>
+                    <span className={styles.statFigure}>{s.value}</span>
+                  </div>
+                  <div className={styles.statLabel}>{ar ? s.ar : s.en}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
-        <h1 style={{ font: "600 clamp(40px,5.6vw,88px)/1.02 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "20ch", textWrap: "balance" }}>{lang === "ar" ? "حضور سعودي رائد في مجال الإضاءة" : "A pioneering Saudi presence in light"}</h1>
       </section>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "90px 48px 0" }}>
-        <div style={{ height: "min(60vh,620px)" }}>
-          <PhotoSlot src="/projects/ritz-carlton/03.jpg" alt="The double staircase atrium at The Ritz-Carlton, Riyadh" priority />
-        </div>
-      </section>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "340px 1fr", gap: "80px", alignItems: "start" }}>
-          <div>
-            <h2 style={{ font: "500 13px/1.4 var(--font-plex-sans),sans-serif", letterSpacing: ".24em", textTransform: "uppercase", color: "#6E6E6B", margin: "0" }}>{lang === "ar" ? "كلمة المؤسس" : "Message from the Founder"}</h2>
+
+      {/* Full-bleed plate */}
+      <section className={styles.plate}>
+        <Reveal>
+          <div className={styles.plateArt}>
+            <PhotoSlot
+              src="/projects/ritz-carlton/01.jpg"
+              alt="The grand hall of The Ritz-Carlton, Riyadh, with its chandelier, double staircase and ornamented ceilings lit by fittings supplied by ARAK"
+              priority
+            />
           </div>
-          <div>
-            <p style={{ font: "300 clamp(19px,1.8vw,25px)/1.62 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.82)", margin: "0", maxWidth: "62ch" }}>
-              With a long history and legacy of 40+ years, ARAK Lighting became a leading national company in the field of lighting. Throughout the years, with hard work and persistence, the company has positioned itself alongside the industry’s pioneering national companies, becoming a certified partner of several reputable international brands. Due to elevated knowledge and big love for lights, ARAK Lighting became an embodiment of the highest standards in the lighting industry that strives to keep climbing up the ladder of excellence, quality and a forever growing interest in all new light technologies.
-            </p>
-            <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.62)", margin: "34px 0 0", maxWidth: "62ch" }}>
-              Being a leading national company, ARAK Lighting keeps innovating internally and growing with its mission and values. The company keeps expanding its product portfolio in the field of lighting and lighting controls to continue offering the best customer experience solutions in line with the Kingdom’s 2030 vision.
-            </p>
-            <p style={{ font: "500 clamp(19px,1.7vw,24px)/1.5 var(--font-sora),sans-serif", color: "#111111", margin: "44px 0 0", maxWidth: "44ch", letterSpacing: "-0.015em" }}>
-              Ease your mind with us and know that ARAK Lighting will forever be there to light your way!
-            </p>
-            <div style={{ marginTop: "40px", paddingTop: "24px", borderTop: "1px solid rgba(17,17,17,.16)", display: "inline-block" }}>
-              <span style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".2em", textTransform: "uppercase", color: "rgba(17,17,17,.7)" }}>
-                Abdul Rahman Abdul Kader
+          <div className={styles.shell}>
+            <div className={styles.plateCaption}>
+              <span className={styles.plateCaptionMain}>
+                {ar ? "الريتز كارلتون · الرياض" : "The Ritz-Carlton, Riyadh"}
+              </span>
+              <span className={styles.plateCaptionNote}>
+                {ar
+                  ? "توريد وحدات الإنارة للمناطق العامة"
+                  : "Light fittings supplied for the hotel's public areas"}
               </span>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", columnGap: "clamp(40px,5vw,100px)" }}>
-          <div style={{ borderTop: "1px solid rgba(17,17,17,.18)", paddingTop: "34px" }}>
-            <h2 style={{ font: "600 clamp(28px,3vw,42px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.025em", color: "#111111", margin: "0" }}>{lang === "ar" ? "رؤيتنا" : "Our Vision"}</h2>
-            <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.64)", margin: "28px 0 0" }}>
-              Is to become the leader in the Lighting Industry nationally and regionally, and the go-to Smart Lighting Solutions Provider in KSA. We, at ARAK, aim to expand to new markets and regions, through partnering with high-end international brands and constantly upgrading our services & diversifying our products.
-            </p>
-          </div>
-          <div style={{ borderTop: "1px solid rgba(17,17,17,.18)", paddingTop: "34px" }}>
-            <h2 style={{ font: "600 clamp(28px,3vw,42px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.025em", color: "#111111", margin: "0" }}>{lang === "ar" ? "مهمتنا" : "Our Mission"}</h2>
-            <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.64)", margin: "28px 0 0" }}>
-              Is to always offer state-of-the-art products and service in compliance with the highest of international standards. We aim to continuously deliver cutting-edge products and services, consistently adhering to the most stringent global benchmarks. Our unwavering dedication to upholding the highest international standards remains at the core of our commitment to excellence.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-            <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "قيمنا" : "Our values"}</span>
-          </div>
-          <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0 0 74px" }}>{lang === "ar" ? "لماذا أراك؟" : "Why ARAK?"}</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: "64px 80px" }}>
-            <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
-              <h3 style={{ font: "500 24px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.015em" }}>{lang === "ar" ? "الشفافية" : "Transparency"}</h3>
-              <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "18px 0 0" }}>
-                We strive to always work with the best quality providers in the market. And because transparency is one of our assets at ARAK, we put great effort into showcasing all features of our products and breaking down all processes of our services so our esteemed clients would rest assured they are in great hands.
+
+      {/* The name */}
+      <section className={`${styles.band} ${styles.bandDark}`}>
+        <div className={styles.shell}>
+          <div className={styles.name}>
+            <Reveal>
+              <div className={styles.nameMarkWrap}>
+                <div className={styles.nameMarkGlow} />
+                <span className={styles.nameMark} lang="ar" dir="rtl">
+                  أراك
+                </span>
+                <span className={styles.nameTranslation}>I see you</span>
+              </div>
+            </Reveal>
+            <Reveal delay={100}>
+              <span className={styles.nameEyebrow}>{ar ? "الاسم" : "The name"}</span>
+              <h2 className={styles.nameTitle}>
+                {ar ? "أراك تعني أنني أراك" : "Our name is a promise to pay attention."}
+              </h2>
+              <p className={styles.nameBody}>
+                أراك means <em>I see you</em> in Arabic. It is a fair description of what lighting
+                actually does for a building, and of how we prefer to work: looking closely at the
+                room, the client and the drawing in front of us before anyone talks about a fixture
+                schedule.
               </p>
-            </div>
-            <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
-              <h3 style={{ font: "500 24px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.015em" }}>{lang === "ar" ? "الإبداع" : "Creativity"}</h3>
-              <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "18px 0 0" }}>
-                Because even the most successful recipe for greatness can’t be complete without a dash of creativity and a load of passion. Simply put, we see our work as the craftsmanship that requires exquisite attention to detail, beauty, and efficiency.
+              <p className={styles.nameBodySmall}>
+                The company grew out of a family trading house into a pioneering Saudi establishment
+                that still runs on Saudi values. Everything below is what that turned into over
+                forty-five years.
               </p>
-            </div>
-            <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
-              <h3 style={{ font: "500 24px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.015em" }}>{lang === "ar" ? "التمكين" : "Empowerment"}</h3>
-              <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "18px 0 0" }}>
-                We, at ARAK, believe in the limitless potential of our employees. And since we are always keen on reinforcing our 50+ years of hands-on expertise, we regularly encourage them to tap into that potential through engaging them in seminars, fostering personal and professional growth.
-              </p>
-            </div>
-            <div style={{ borderTop: "1px solid rgba(17,17,17,.16)", paddingTop: "28px" }}>
-              <h3 style={{ font: "500 24px/1.25 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.015em" }}>{lang === "ar" ? "الجودة" : "Quality"}</h3>
-              <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "18px 0 0" }}>
-                We provide nothing but the best products offered worldwide and nothing but the best pre-sale and post-sale services. Our commitment to excellence extends beyond just products and services; it permeates every aspect of our customer experience.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px", display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "80px", alignItems: "center" }}>
-          <div>
-            <h2 style={{ font: "600 clamp(28px,3vw,44px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.025em", color: "#111111", margin: "0" }}>{lang === "ar" ? "رعاية الموظفين" : "Good care of employees"}</h2>
-            <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.64)", margin: "28px 0 0" }}>
-              We, at ARAK, has always taken good care of our employees by helping them obtain the best skills through workshops and assessments and providing them with high-level courses to help them extend their knowledge and thus providing the best and most appropriate services to each and every client.
-            </p>
-            <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.64)", margin: "24px 0 0" }}>
-              Hard work and effort had always been recognizable by the company, which is why the workplace environment is professional and friendly, and why everyone has a special role in achieving the goals of the company.
-            </p>
-          </div>
-          <div style={{ height: "520px" }}>
-            <PhotoSlot src="/projects/solitaire-mall/07.jpg" alt="The crystal cascade lighting scheme at Solitaire Mall, Riyadh" />
+            </Reveal>
           </div>
         </div>
       </section>
 
+      {/* Chapters */}
+      <section className={styles.band}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "مسيرتنا" : "How we got here"}</span>
+                <h2 className={styles.sectionTitle}>{ar ? "أربعة فصول" : "Four chapters"}</h2>
+              </div>
+              <p className={styles.sectionNote}>
+                Not a timeline of press releases. Four shifts in what the company actually sold, in
+                the order they happened.
+              </p>
+            </div>
+          </Reveal>
+          <div className={styles.chapters}>
+            {CHAPTERS.map((c, i) => (
+              <Reveal key={c.no} delay={i * 80}>
+                <article className={styles.chapter}>
+                  <div className={styles.chapterNo}>{c.no}</div>
+                  <h3 className={styles.chapterTitle}>{ar ? c.ar : c.en}</h3>
+                  <p className={styles.chapterBody}>{c.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Founder */}
+      <section className={`${styles.band} ${styles.bandPaper}`}>
+        <div className={styles.shell}>
+          <div className={styles.founder}>
+            <Reveal>
+              <div className={styles.founderAside}>
+                <h2 className={styles.founderLabel}>
+                  {ar ? "كلمة المؤسس" : "Message from the Founder"}
+                </h2>
+                <div className={styles.founderMark} aria-hidden="true">
+                  &ldquo;
+                </div>
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <p className={styles.founderLead}>
+                With a long history and legacy of 40+ years, ARAK Lighting became a leading national
+                company in the field of lighting. Throughout the years, with hard work and
+                persistence, the company has positioned itself alongside the industry&rsquo;s
+                pioneering national companies, becoming a certified partner of several reputable
+                international brands.
+              </p>
+              <p className={styles.founderBody}>
+                Due to elevated knowledge and a big love for lights, ARAK Lighting became an
+                embodiment of the highest standards in the lighting industry, one that strives to
+                keep climbing the ladder of excellence and quality with a forever growing interest
+                in all new light technologies.
+              </p>
+              <p className={styles.founderBody}>
+                Being a leading national company, ARAK Lighting keeps innovating internally and
+                growing with its mission and values. The company keeps expanding its product
+                portfolio in lighting and lighting controls to continue offering the best customer
+                experience solutions, in line with the Kingdom&rsquo;s 2030 vision.
+              </p>
+              <div className={styles.founderPull}>
+                <p className={styles.founderPullText}>
+                  Ease your mind with us, and know that ARAK Lighting will forever be there to light
+                  your way.
+                </p>
+                <div className={styles.signature}>
+                  <span className={styles.signatureName}>Abdul Rahman Abdul Kader</span>
+                  <span className={styles.signatureRole}>{ar ? "المؤسس" : "Founder"}</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Vision & mission */}
+      <section className={styles.band}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "إلى أين نتجه" : "Where we are going"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "الرؤية والمهمة" : "Vision and mission"}
+                </h2>
+              </div>
+              <p className={styles.sectionNote}>
+                One says where the company intends to end up. The other says what it refuses to
+                compromise on along the way.
+              </p>
+            </div>
+          </Reveal>
+          <div className={styles.pillars}>
+            <Reveal>
+              <article className={`${styles.pillar} ${styles.pillarDark}`}>
+                <div className={styles.pillarGlow} />
+                <span className={styles.pillarNo}>01</span>
+                <h3 className={styles.pillarTitle}>{ar ? "رؤيتنا" : "Our Vision"}</h3>
+                <p className={styles.pillarBody}>
+                  To become the leader in the lighting industry nationally and regionally, and the
+                  go-to smart lighting solutions provider in the Kingdom. We aim to expand into new
+                  markets and regions by partnering with high-end international brands, constantly
+                  upgrading our services and diversifying what we can supply.
+                </p>
+              </article>
+            </Reveal>
+            <Reveal delay={90}>
+              <article className={styles.pillar}>
+                <span className={styles.pillarNo}>02</span>
+                <h3 className={styles.pillarTitle}>{ar ? "مهمتنا" : "Our Mission"}</h3>
+                <p className={styles.pillarBody}>
+                  To always offer state-of-the-art products and service in compliance with the
+                  highest international standards. Cutting-edge hardware delivered consistently, to
+                  the most stringent global benchmarks, is the core of a commitment to excellence
+                  that has not changed since 1976.
+                </p>
+              </article>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Values */}
+      <section className={`${styles.band} ${styles.bandPaper}`}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "قيمنا" : "Our values"}</span>
+                <h2 className={styles.sectionTitle}>{ar ? "لماذا أراك؟" : "Why ARAK?"}</h2>
+              </div>
+              <p className={styles.sectionNote}>
+                Four things clients can hold us to, and the reason most of them come back with the
+                next building.
+              </p>
+            </div>
+          </Reveal>
+          <div className={styles.values}>
+            {VALUES.map((v, i) => (
+              <Reveal key={v.no} delay={(i % 2) * 90}>
+                <article className={styles.value}>
+                  <div className={styles.valueHead}>
+                    <span className={styles.valueNo}>{v.no}</span>
+                    <h3 className={styles.valueTitle}>{ar ? v.ar : v.en}</h3>
+                  </div>
+                  <p className={styles.valueBody}>{v.body}</p>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* People */}
+      <section className={styles.band}>
+        <div className={styles.shell}>
+          <div className={styles.people}>
+            <Reveal>
+              <div className={styles.peopleArt}>
+                <PhotoSlot
+                  src="/projects/athletic-showroom/03.jpg"
+                  alt="An ARAK-lit retail showroom in Riyadh with track spots, linear runs and shelf-integrated strips, seen from the shop floor"
+                />
+              </div>
+            </Reveal>
+            <Reveal delay={90}>
+              <span className={styles.eyebrow}>{ar ? "فريقنا" : "Our people"}</span>
+              <h2 className={styles.sectionTitle}>
+                {ar ? "من ينفّذ العمل فعلياً" : "The people who actually do the work"}
+              </h2>
+              <p className={styles.sectionNote} style={{ marginTop: "24px", maxWidth: "52ch" }}>
+                A lighting company is only as good as the person on the phone when a fitting arrives
+                damaged or a bus address will not respond. So we invest in that person first.
+              </p>
+              <ul className={styles.peopleList}>
+                {PLEDGES.map((p) => (
+                  <li key={p.en} className={styles.pledge}>
+                    <h3 className={styles.pledgeTitle}>{ar ? p.ar : p.en}</h3>
+                    <p className={styles.pledgeBody}>{p.body}</p>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Accreditation */}
+      <section className={`${styles.band} ${styles.beltBand}`}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "الاعتماد" : "Accreditation"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "مورد معتمد لدى" : "Registered vendor with"}
+                </h2>
+              </div>
+              <p className={styles.sectionNote}>
+                Prequalified with the national developers, operators and authorities delivering the
+                Kingdom&rsquo;s largest programmes.
+              </p>
+            </div>
+          </Reveal>
+          <VendorBelt />
+        </div>
+      </section>
+
+      {/* Closing */}
+      <section className={styles.close}>
+        <div className={styles.closeGlow} />
+        <div className={`${styles.shell} ${styles.closeInner}`}>
+          <Reveal>
+            <span className={styles.closeEyebrow}>{ar ? "لنبدأ" : "Start here"}</span>
+            <h2 className={styles.closeTitle}>
+              {ar ? "لنُضئ مشروعك القادم" : "Bring us the building. We will bring the light."}
+            </h2>
+            <p className={styles.closeLead}>
+              Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back
+              with a lighting study and a quotation.
+            </p>
+            <div className={styles.closeActions}>
+              <Link href="/contact" className={styles.closeCta}>
+                {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link href="/services" className={styles.closeGhost}>
+                {ar ? "استكشف خدماتنا" : "Explore the services"}
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+            <p className={styles.closeAddress}>
+              Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513, Kingdom of Saudi Arabia
+            </p>
+          </Reveal>
+        </div>
+      </section>
     </main>
   );
 }
