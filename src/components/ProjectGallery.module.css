@@ -1,0 +1,161 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Every tile is the same 4:3 window; the photo fills it and is cropped to fit.
+   The uncropped frame is one click away in the lightbox. */
+.tile {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: #f0efec;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+}
+
+.tile img {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+  transition:
+    filter 0.5s ease,
+    transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.tile:hover img,
+.tile:focus-visible img {
+  filter: none;
+  transform: scale(1.03);
+}
+
+.tile:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 76px 72px;
+  /* Vertical space the padding takes, used to size the stage below. */
+  --chrome: 152px;
+  background: rgba(12, 12, 11, 0.975);
+  animation: fade 0.25s ease;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/*
+ * The stage is the photo's own aspect ratio at the largest size that still
+ * fits: never wider than the photo's real pixels, never wider than the
+ * overlay, never taller than the overlay. Sizing by width alone keeps it
+ * deterministic — percentage max-heights don't resolve reliably here.
+ * --ar / --arnum / --iw come from the image and are set inline.
+ */
+.stage {
+  position: relative;
+  margin: auto;
+  aspect-ratio: var(--ar);
+  width: min(var(--iw), 100%, calc((100vh - var(--chrome)) * var(--arnum)));
+  width: min(var(--iw), 100%, calc((100dvh - var(--chrome)) * var(--arnum)));
+}
+
+.stage img {
+  object-fit: contain;
+}
+
+.control {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: #ffffff;
+  font: 300 20px/1 var(--font-plex-sans), sans-serif;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.control:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.close {
+  top: 22px;
+  inset-inline-end: 24px;
+}
+
+.previous {
+  inset-inline-start: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.next {
+  inset-inline-end: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.counter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 26px;
+  text-align: center;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 1000px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .gallery {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .backdrop {
+    padding: 68px 16px 64px;
+    --chrome: 132px;
+  }
+
+  .previous {
+    inset-inline-start: 12px;
+  }
+
+  .next {
+    inset-inline-end: 12px;
+  }
+
+  .close {
+    inset-inline-end: 12px;
+    top: 14px;
+  }
+}

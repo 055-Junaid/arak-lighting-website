@@ -29,8 +29,35 @@ a:hover {
   color: #ffffff;
 }
 
+/* next/font publishes each family as a variable on <html>. Copy the two Latin
+   ones under their own names so the Arabic block below can rewrite the
+   originals without a variable referring to itself. */
+:root {
+  --font-latin-sans: var(--font-plex-sans);
+  --font-latin-display: var(--font-sora);
+}
+
+/* Arabic pages. Almost every rule on this site sets the `font:` shorthand —
+   inline or in a module — and a shorthand carries its own font-family, so a
+   plain `font-family` here would lose to all of them. Rewriting the variables
+   those shorthands read is what actually puts IBM Plex Sans Arabic on the page.
+   Plex Arabic has to lead the list: next/font's metric-matched fallbacks are
+   local Arial, which carries Arabic glyphs and would otherwise claim the script
+   before it ever reached Plex Arabic. Latin runs (KNX, 1976, ARAK) resolve to
+   Plex Arabic's own Latin, which is the same superfamily. */
 [dir="rtl"] {
-  font-family: var(--font-plex-sans-arabic), var(--font-plex-sans), sans-serif;
+  --font-plex-sans: var(--font-plex-sans-arabic), var(--font-latin-sans);
+  --font-sora: var(--font-plex-sans-arabic), var(--font-latin-display);
+  font-family: var(--font-plex-sans), sans-serif;
+}
+
+/* Tracking is a Latin device. Arabic is cursive, so spacing glyphs apart pulls
+   joined letters off one another and reads as broken type — the eyebrows and
+   button labels here are all tracked out for the English. Inline styles are
+   what we are overriding, which is what the !important is for. */
+[dir="rtl"],
+[dir="rtl"] * {
+  letter-spacing: normal !important;
 }
 
 @keyframes beam {
@@ -43,4 +70,19 @@ a:hover {
   100% {
     opacity: 0.25;
   }
+}
+
+/* --- Colour switch -------------------------------------------------------
+   Every photograph, logo and map on the site rests desaturated. The header
+   switch sets data-color="on" on <html> and lifts all of them to full colour
+   in one move — the site's own lights coming up. Per-component rules use
+   plain class selectors, so !important is what lets this single rule win. */
+img,
+iframe {
+  transition: filter 0.55s ease;
+}
+
+html[data-color="on"] img,
+html[data-color="on"] iframe {
+  filter: none !important;
 }
