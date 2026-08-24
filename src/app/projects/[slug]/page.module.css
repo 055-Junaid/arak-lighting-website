@@ -1,0 +1,148 @@
+.wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-inline: 48px;
+}
+
+.intro {
+  padding-top: 96px;
+}
+
+.back {
+  display: inline-block;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.55);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.back:hover {
+  color: #111111;
+}
+
+.title {
+  font: 600 clamp(36px, 4.8vw, 74px) / 1.03 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: #111111;
+  margin: 34px 0 0;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.blurb {
+  font: 300 clamp(17px, 1.45vw, 20px) / 1.68 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.68);
+  margin: 30px 0 0;
+  max-width: 62ch;
+}
+
+/* Facts strip: the same three fields the reference list carries. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 64px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(17, 17, 17, 0.16);
+}
+
+.factLabel {
+  display: block;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.45);
+  margin-bottom: 14px;
+}
+
+.factValue {
+  font: 400 15px/1.55 var(--font-plex-sans), sans-serif;
+  color: #111111;
+}
+
+.gallerySection {
+  padding-top: 76px;
+  padding-bottom: 130px;
+}
+
+.galleryHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.galleryLabel {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+}
+
+.rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(17, 17, 17, 0.13);
+}
+
+/* Previous / next, so the pages chain rather than dead-ending. */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 34px 0 120px;
+  border-top: 1px solid rgba(17, 17, 17, 0.16);
+}
+
+.pagerLink {
+  text-decoration: none;
+  color: inherit;
+  max-width: 42%;
+}
+
+.pagerLabel {
+  display: block;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.45);
+  margin-bottom: 12px;
+}
+
+.pagerName {
+  font: 500 19px/1.3 var(--font-sora), sans-serif;
+  color: #111111;
+  transition: color 0.25s ease;
+}
+
+.pagerLink:hover .pagerName {
+  color: #6e6e6b;
+}
+
+.pagerNext {
+  text-align: end;
+  margin-inline-start: auto;
+}
+
+@media (max-width: 860px) {
+  .wrap {
+    padding-inline: 24px;
+  }
+
+  .intro {
+    padding-top: 72px;
+  }
+
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    margin-top: 46px;
+  }
+
+  .pagerLink {
+    max-width: 100%;
+  }
+}

@@ -1,164 +1,229 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
+import { Reveal } from "@/components/Reveal";
+import { ServiceSpotlight } from "@/components/ServiceSpotlight";
+import {
+  CONTROL_SYSTEMS,
+  PROCESS,
+  SECTORS,
+  SERVICES,
+  SMART_POLES,
+} from "@/lib/services-data";
 import styles from "./page.module.css";
+
+const HERO_META = [
+  { value: "1976", en: "Lighting since", ar: "نعمل منذ" },
+  { value: "10", en: "Service lines", ar: "خطوط خدمة" },
+  { value: "40+", en: "Partner brands", ar: "علامة شريكة" },
+  { value: "1", en: "Contract, start to finish", ar: "عقد واحد" },
+];
 
 export default function ServicesPage() {
   const { lang } = useLang();
+  const ar = lang === "ar";
 
   return (
-    <main>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px 0" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
-          <div style={{ width: "52px", height: "1px", background: "#111111" }}></div>
-          <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "خدماتنا" : "Services"}</span>
-        </div>
-        <h1 style={{ font: "600 clamp(40px,5.6vw,88px)/1.02 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "18ch", textWrap: "balance" }}>{lang === "ar" ? "من التوريد إلى التشغيل" : "From supply to commissioning"}</h1>
-        <p style={{ font: "300 clamp(17px,1.5vw,21px)/1.65 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.68)", margin: "34px 0 0", maxWidth: "58ch" }}>
-          Nine service lines that cover a project end to end — specify the scheme, supply the fittings, wire the control system, and stay on for after-sale support.
-        </p>
+    <main className={styles.page}>
+      {/* Hero */}
+      <section className={`${styles.shell} ${styles.hero}`}>
+        <Reveal>
+          <span className={styles.eyebrow}>{ar ? "خدماتنا" : "Services"}</span>
+          <h1 className={styles.heroTitle}>
+            {ar ? "من التوريد إلى التشغيل" : "Everything a lighting scope needs, under one contract."}
+          </h1>
+          <p className={styles.heroLead}>
+            Ten service lines that cover a project from the first sketch to the last switch. We
+            specify the scheme, supply the fittings, wire the control system, commission it on site
+            and stay on the phone long after handover.
+          </p>
+        </Reveal>
+        <Reveal delay={120}>
+          <div className={styles.heroMeta}>
+            {HERO_META.map((m) => (
+              <div key={m.value + m.en} className={styles.metaCell}>
+                <div className={styles.metaValue}>{m.value}</div>
+                <div className={styles.metaLabel}>{ar ? m.ar : m.en}</div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </section>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "100px 48px 0" }}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h1}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              01
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Indoor Lighting
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Decorative and architectural fittings for villas, palaces, hotels, offices and retail — sourced from our European partner houses and stocked for Saudi projects.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h2}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              02
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Lighting Design
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Concept studies, calculations and fixture schedules produced alongside architects, lighting consultants and electrical engineers.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h3}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              03
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Facade Lighting
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Exterior and architectural schemes with IP-rated, heat-tolerant hardware suited to Gulf conditions.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h4}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              04
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Outdoor Lighting
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Roads, landscapes, compounds, car parks and sports areas — bollards, poles, floodlights and in-ground fittings.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h5}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              05
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Lighting Controls
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              KNX/EIB control of every lighting circuit indoors and out, with scenes, sensors, dimming and energy monitoring.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h6}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              06
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Lighting Installation
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Installation, configuration, commissioning and handover carried out by ARAK technical teams.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h7}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              07
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Project Management
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Submittals, procurement, logistics and site coordination across multi-phase and multi-city programmes.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderTop: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h8}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              08
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              3D Projection Mapping
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Projected content mapped to building geometry for openings, seasons and cultural programming.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "100px 1fr 1.1fr", gap: "48px", padding: "44px 0", borderBlock: "1px solid rgba(17,17,17,.14)", alignItems: "start" }} className={styles.h9}>
-            <span style={{ font: "300 34px/1 var(--font-sora),sans-serif", color: "#111111" }}>
-              09
-            </span>
-            <h3 style={{ font: "500 clamp(24px,2.2vw,32px)/1.2 var(--font-sora),sans-serif", color: "#111111", margin: "0", letterSpacing: "-0.02em" }}>
-              Home Automation Systems
-            </h3>
-            <p style={{ font: "400 16px/1.72 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              Lighting, curtains, HVAC, IP intercom, smart locks, WiFi and network systems delivered as one commissioned system.
-            </p>
-          </div>
-        </div>
-      </section>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "80px", alignItems: "start" }}>
-          <div>
-            <h2 style={{ font: "600 clamp(28px,3vw,44px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.025em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{lang === "ar" ? "أنظمة التحكم والأتمتة" : "Controls & automation, in detail"}</h2>
-            <div style={{ marginTop: "44px", display: "flex", flexDirection: "column", gap: "34px" }}>
-              <div style={{ borderTop: "1px solid rgba(17,17,17,.14)", paddingTop: "24px" }}>
-                <h3 style={{ font: "500 19px/1.3 var(--font-sora),sans-serif", color: "#111111", margin: "0" }}>
-                  KNX / EIB technology
-                </h3>
-                <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "12px 0 0" }}>
-                  A worldwide standard for building control across commercial, residential and industrial buildings. The product range covers lighting and shutter control, heating, ventilation, security and energy management.
-                </p>
+
+      {/* Service cards */}
+      <section className={`${styles.band} ${styles.bandPaper}`}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "ما نقدمه" : "What we do"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "خطوط الخدمة" : "The service lines"}
+                </h2>
               </div>
-              <div style={{ borderTop: "1px solid rgba(17,17,17,.14)", paddingTop: "24px" }}>
-                <h3 style={{ font: "500 19px/1.3 var(--font-sora),sans-serif", color: "#111111", margin: "0" }}>
-                  Guest Room Management System
-                </h3>
-                <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "12px 0 0" }}>
-                  Ensures all guests’ room needs are satisfied — lighting, cooling/heating, curtains and hotel room services through intuitive buttons, touch screens or panel interfaces.
-                </p>
-              </div>
-              <div style={{ borderTop: "1px solid rgba(17,17,17,.14)", paddingTop: "24px" }}>
-                <h3 style={{ font: "500 19px/1.3 var(--font-sora),sans-serif", color: "#111111", margin: "0" }}>
-                  Lighting Control System
-                </h3>
-                <p style={{ font: "400 15px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "12px 0 0" }}>
-                  Flexible, robust and widely interfaceable, with significant potential for energy saving on projects of any size.
-                </p>
-              </div>
+              <p className={styles.sectionNote}>
+                Each line can be bought on its own or folded into a single scope. Most of our
+                national projects use four or five of them at once.
+              </p>
             </div>
-          </div>
-          <div style={{ height: "660px" }}>
-            <PhotoSlot src="https://images.unsplash.com/photo-1517502884422-41eaead166d4?q=80&w=1800&auto=format&fit=crop" alt="Control panel, touch screen or commissioning on site (portrait, 1200×1600)" />
+          </Reveal>
+
+          <Reveal>
+            <ServiceSpotlight services={SERVICES} ar={ar} />
+          </Reveal>
+
+          {/* Smart poles feature */}
+          <Reveal delay={80}>
+            <article className={styles.feature}>
+              <div className={styles.featureCopy}>
+                <span className={styles.featureBadge}>
+                  {ar ? "محور تركيزنا القادم" : "Where we are heading next"}
+                </span>
+                <span className={styles.featureNo}>{SMART_POLES.no}</span>
+                <h3 className={styles.featureTitle}>{ar ? SMART_POLES.ar : SMART_POLES.en}</h3>
+                <p className={styles.featureLead}>{SMART_POLES.lead}</p>
+                <p className={styles.featureBody}>{SMART_POLES.body}</p>
+                <ul className={styles.featureList}>
+                  {SMART_POLES.includes.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+                <Link href={SMART_POLES.href} className={styles.featureCta}>
+                  {ar ? "استكشف الأعمدة الذكية" : "Explore smart poles"}
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+              <div className={styles.featureArt}>
+                <Image
+                  src="/smart-poles/ctx-street.jpg"
+                  alt="Smart poles lining a landscaped city boulevard, carrying luminaires, cameras and digital signage"
+                  fill
+                  sizes="(max-width: 1080px) 100vw, 46vw"
+                  style={{ objectFit: "cover" }}
+                />
+                <div className={styles.featureArtVeil} />
+              </div>
+            </article>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className={styles.band}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "طريقة عملنا" : "How we work"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "من الفكرة إلى التسليم" : "Five steps, one team"}
+                </h2>
+              </div>
+              <p className={styles.sectionNote}>
+                The same sequence runs on a private villa and on a national airport. Only the
+                paperwork gets heavier.
+              </p>
+            </div>
+          </Reveal>
+          <div className={styles.process}>
+            {PROCESS.map((step, i) => (
+              <Reveal key={step.no} delay={i * 80}>
+                <div className={styles.step}>
+                  <div className={styles.stepNo}>{step.no}</div>
+                  <h3 className={styles.stepTitle}>{ar ? step.ar : step.en}</h3>
+                  <p className={styles.stepBody}>{step.body}</p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
+      {/* Controls detail */}
+      <section className={`${styles.band} ${styles.bandPaper}`}>
+        <div className={styles.shell}>
+          <div className={styles.controls}>
+            <div>
+              <Reveal>
+                <span className={styles.eyebrow}>{ar ? "بالتفصيل" : "In detail"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "أنظمة التحكم والأتمتة" : "Controls and automation"}
+                </h2>
+                <p className={styles.sectionNote} style={{ marginTop: "22px", maxWidth: "50ch" }}>
+                  Controls are where a lighting scheme either earns its budget or quietly wastes it.
+                  This is the part of our work that runs longest after handover.
+                </p>
+              </Reveal>
+              <div style={{ marginTop: "44px" }}>
+                {CONTROL_SYSTEMS.map((c, i) => (
+                  <Reveal key={c.title} delay={i * 70}>
+                    <div className={styles.controlItem}>
+                      <h3 className={styles.controlTitle}>{c.title}</h3>
+                      <p className={styles.controlBody}>{c.body}</p>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+            <div className={styles.controlArt}>
+              <PhotoSlot
+                src="/projects/milling-mc2/05.jpg"
+                alt="ABB KNX actuators on the DIN rail of a lighting control panel, Milling Company MC-2"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sectors */}
+      <section className={styles.band}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "نعمل مع" : "We work with"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? "القطاعات التي نخدمها" : "Who we deliver for"}
+                </h2>
+              </div>
+              <p className={styles.sectionNote}>
+                Registered as a vendor with Aramco, NEOM, Qiddiya, Roshn, STC, Riyadh Airports, the
+                Red Sea Development Company and the Saudi Electricity Company, among others.
+              </p>
+            </div>
+          </Reveal>
+          <div className={styles.sectors}>
+            {SECTORS.map((s, i) => (
+              <Reveal key={s} delay={(i % 3) * 60}>
+                <div className={styles.sector}>{s}</div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className={styles.band} style={{ paddingBlock: 0 }}>
+        <div className={`${styles.shell} ${styles.cta}`}>
+          <div className={styles.ctaGlow} />
+          <Reveal>
+            <h2 className={styles.ctaTitle}>
+              {ar ? "لنُضئ مشروعك القادم" : "Tell us what the space has to do."}
+            </h2>
+            <p className={styles.ctaLead}>
+              Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back
+              with a lighting study and a quotation.
+            </p>
+            <Link href="/contact" className={styles.ctaButton}>
+              {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </Reveal>
+        </div>
+      </section>
     </main>
   );
 }

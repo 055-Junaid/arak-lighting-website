@@ -17,7 +17,7 @@
 
 .credit {
   position: absolute;
-  right: 10px;
+  inset-inline-end: 10px;
   bottom: 10px;
   font: 400 11px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.04em;

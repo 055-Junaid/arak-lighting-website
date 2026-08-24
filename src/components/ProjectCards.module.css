@@ -1,0 +1,112 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Placeholder for a project whose photography has not been supplied yet. */
+.pending {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: #ecebe7;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.pendingLabel {
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.meta {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+  transition: border-top-color 0.3s ease;
+}
+
+.card:hover .meta,
+.link:hover .meta {
+  border-top-color: #111111;
+}
+
+.name {
+  font: 500 21px/1.3 var(--font-sora), sans-serif;
+  letter-spacing: -0.01em;
+  color: #111111;
+  margin: 0;
+}
+
+.loc {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+  margin: 12px 0 0;
+}
+
+.scope {
+  font: 400 14px/1.6 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.58);
+  margin: 10px 0 0;
+}
+
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Photo count, so it reads as a set rather than a single shot. */
+.count {
+  position: absolute;
+  inset-inline-start: 14px;
+  bottom: 14px;
+  z-index: 1;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  color: #ffffff;
+  background: rgba(17, 17, 17, 0.62);
+  padding: 7px 10px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card:hover .count {
+  opacity: 1;
+  transform: none;
+}

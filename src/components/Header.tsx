@@ -38,13 +38,13 @@ export function Header() {
           gap: "clamp(20px,2.5vw,40px)",
         }}
       >
-        <Link href="/" style={{ height: 34, flex: "none", display: "flex", alignItems: "center" }}>
+        <Link href="/" style={{ height: 58, flex: "none", display: "flex", alignItems: "center" }}>
           <Image
             src="/arak-logo-black.png"
             alt="ARAK Lighting Solutions"
-            height={34}
-            width={140}
-            style={{ height: "34px", width: "auto", cursor: "pointer" }}
+            height={58}
+            width={239}
+            style={{ height: "58px", width: "auto", cursor: "pointer" }}
             priority
           />
         </Link>

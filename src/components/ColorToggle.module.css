@@ -1,0 +1,152 @@
+/* Floating switch, parked over the bottom corner of every page. It sits in
+   the corner opposite the reading direction so it never lands on copy, and
+   above the sticky header's stacking context. */
+.dock {
+  position: fixed;
+  bottom: clamp(18px, 2.4vw, 34px);
+  right: clamp(18px, 2.4vw, 34px);
+  z-index: 70;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 14px;
+  /* Hairline keeps the pill readable where it floats over the black footer. */
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #111111;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 14px 40px rgba(17, 17, 17, 0.26);
+  /* Arrives just after the page settles: the movement is what makes a corner
+     control get noticed at all. */
+  animation: dockIn 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s both;
+}
+
+.dock:hover {
+  background: #3a3a38;
+}
+
+.dock:focus-visible {
+  outline: 2px solid #111111;
+  outline-offset: 3px;
+}
+
+/* First-timers, lights still off: a slow amber breath around the pill. Stops
+   for good the moment the switch is worked. */
+.dock[data-nudge="true"] {
+  animation:
+    dockIn 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s both,
+    breathe 3.2s ease-in-out 1.8s infinite;
+}
+
+.bulb {
+  display: block;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: rgba(255, 255, 255, 0.55);
+  transition:
+    color 0.45s ease,
+    filter 0.45s ease;
+}
+
+.label {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Square-cornered, like every other control on the site. */
+.track {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  flex: none;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  transition:
+    background 0.45s ease,
+    border-color 0.45s ease;
+}
+
+.thumb {
+  position: absolute;
+  top: 3px;
+  inset-inline-start: 3px;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background 0.45s ease;
+}
+
+/* Lights on: the filament picks up the one warm accent on an otherwise
+   monochrome site, and the thumb slides across. */
+.dock[aria-checked="true"] .bulb {
+  color: #e9a23b;
+  filter: drop-shadow(0 0 6px rgba(233, 162, 59, 0.8));
+}
+
+.dock[aria-checked="true"] .track {
+  background: rgba(233, 162, 59, 0.22);
+  border-color: rgba(233, 162, 59, 0.75);
+}
+
+.dock[aria-checked="true"] .thumb {
+  background: #e9a23b;
+  transform: translateX(18px);
+}
+
+:global([dir="rtl"]) .dock[aria-checked="true"] .thumb {
+  transform: translateX(-18px);
+}
+
+@keyframes dockIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 14px 40px rgba(17, 17, 17, 0.26),
+      0 0 0 0 rgba(233, 162, 59, 0);
+  }
+  50% {
+    box-shadow:
+      0 14px 40px rgba(17, 17, 17, 0.26),
+      0 0 0 9px rgba(233, 162, 59, 0.13);
+  }
+}
+
+@media (max-width: 560px) {
+  .dock {
+    gap: 10px;
+    padding: 11px 12px;
+  }
+
+  .label {
+    letter-spacing: 0.12em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock,
+  .dock[data-nudge="true"] {
+    animation: none;
+  }
+
+  .thumb,
+  .bulb,
+  .track {
+    transition: none;
+  }
+}

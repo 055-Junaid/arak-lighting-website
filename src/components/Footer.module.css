@@ -1,3 +1,51 @@
 .link:hover {
   color: #111111 !important;
 }
+
+/* Icon-only social links: the marks alone, no handles, per the footer's
+   quieter register compared with the contact page. */
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(17, 17, 17, 0.18);
+  color: rgba(17, 17, 17, 0.6);
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.social svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.social:hover {
+  background: #111111;
+  border-color: #111111;
+  color: #ffffff;
+}
+
+.mapCue {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.6);
+  align-self: flex-start;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.24);
+  padding-bottom: 6px;
+  margin-top: -2px;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.mapCue:hover {
+  color: #111111;
+  border-bottom-color: #111111;
+}

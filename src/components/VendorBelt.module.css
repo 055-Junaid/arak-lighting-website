@@ -15,6 +15,22 @@
   }
 }
 
+/* An over-wide track hangs off the left edge in Arabic instead of the right, so
+   the belt has to travel the other way — sliding it left there just walks the
+   logos out of the frame and leaves the strip blank for the rest of the cycle. */
+:global([dir="rtl"]) .track {
+  animation-name: beltRtl;
+}
+
+@keyframes beltRtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(50%);
+  }
+}
+
 .cell {
   flex: none;
   display: flex;
