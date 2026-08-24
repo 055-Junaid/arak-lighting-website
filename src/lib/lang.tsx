@@ -30,6 +30,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   // earlier would put the two out of step and trip a hydration mismatch.
   useEffect(() => {
     try {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (localStorage.getItem(LANG_STORAGE_KEY) === "ar") setLang("ar");
     } catch {
       // Private browsing or blocked storage — English for this session.
