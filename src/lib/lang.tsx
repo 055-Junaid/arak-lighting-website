@@ -1,65 +1,32 @@
 "use client";
 
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useContext, type ReactNode } from "react";
+import type { Locale } from "./site";
 
-export type Lang = "en" | "ar";
-
-/** Remembers the visitor's choice, so a reload doesn't drop them back to English. */
-export const LANG_STORAGE_KEY = "arak-lang";
+export type Lang = Locale;
 
 interface LangContextValue {
   lang: Lang;
   dir: "ltr" | "rtl";
-  toggleLang: () => void;
 }
 
 const LangContext = createContext<LangContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
-
-  // Restored after mount rather than during the first render: the server has
-  // no access to localStorage and always renders English, so reading it any
-  // earlier would put the two out of step and trip a hydration mismatch.
-  useEffect(() => {
-    try {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (localStorage.getItem(LANG_STORAGE_KEY) === "ar") setLang("ar");
-    } catch {
-      // Private browsing or blocked storage — English for this session.
-    }
-  }, []);
-
-  const toggleLang = useCallback(() => {
-    setLang((current) => {
-      const next: Lang = current === "ar" ? "en" : "ar";
-      try {
-        localStorage.setItem(LANG_STORAGE_KEY, next);
-      } catch {
-        // Non-fatal: the switch still works for this session.
-      }
-      return next;
-    });
-  }, []);
-
+/**
+ * Publishes the page's language to the components below it.
+ *
+ * The language is a property of the URL now, not of the visitor: /about is
+ * English and /ar/about is Arabic, each served from its own root layout. That
+ * replaces the previous arrangement, where the language lived in React state
+ * and localStorage — which meant Arabic existed only after JavaScript ran, so
+ * every Arabic page was invisible to search engines and impossible to link to.
+ *
+ * There is no toggle function here any more. Switching language is a
+ * navigation, and the header does it with a link.
+ */
+export function LanguageProvider({ lang, children }: { lang: Lang; children: ReactNode }) {
   const dir = lang === "ar" ? "rtl" : "ltr";
-
-  return (
-    <LangContext.Provider value={{ lang, dir, toggleLang }}>
-      {/* `lang` alongside `dir` is what tells the browser to pick Arabic
-          shaping and line-breaking, and screen readers which voice to use. */}
-      <div dir={dir} lang={lang} style={{ background: "#FFFFFF", minHeight: "100vh" }}>
-        {children}
-      </div>
-    </LangContext.Provider>
-  );
+  return <LangContext.Provider value={{ lang, dir }}>{children}</LangContext.Provider>;
 }
 
 export function useLang() {

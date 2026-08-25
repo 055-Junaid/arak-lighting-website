@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
+import { localePath } from "@/lib/site";
 import { FEATURED_PROJECTS, type FeaturedProject } from "@/lib/projects-data";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Reveal } from "@/components/Reveal";
@@ -37,7 +38,7 @@ export function ProjectCards({
         <Reveal key={project.slug} delay={(i % 3) * 70} className={styles.card}>
           {project.image ? (
             // Only projects with photography have a page worth opening.
-            <Link href={`/projects/${project.slug}`} className={styles.link}>
+            <Link href={localePath(`/projects/${project.slug}`, lang)} className={styles.link}>
               <Card project={project} priority={i < 3} ar={lang === "ar"} />
             </Link>
           ) : (
