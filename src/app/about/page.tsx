@@ -69,31 +69,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Full-bleed plate */}
-      <section className={styles.plate}>
-        <Reveal>
-          <div className={styles.plateArt}>
-            <PhotoSlot
-              src="/projects/ritz-carlton/01.jpg"
-              alt="The grand hall of The Ritz-Carlton, Riyadh, with its chandelier, double staircase and ornamented ceilings lit by fittings supplied by ARAK"
-              priority
-            />
-          </div>
-          <div className={styles.shell}>
-            <div className={styles.plateCaption}>
-              <span className={styles.plateCaptionMain}>
-                {ar ? "الريتز كارلتون · الرياض" : "The Ritz-Carlton, Riyadh"}
-              </span>
-              <span className={styles.plateCaptionNote}>
-                {ar
-                  ? "توريد وحدات الإنارة للمناطق العامة"
-                  : "Light fittings supplied for the hotel's public areas"}
-              </span>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
       {/* The name */}
       <section className={`${styles.band} ${styles.bandDark}`}>
         <div className={styles.shell}>
