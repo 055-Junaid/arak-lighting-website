@@ -344,3 +344,34 @@ export const ARAK_ROLE = [
     arBody: "قطع الغيار والبرامج الثابتة والاستجابة للأعطال والتقارير بعد التسليم. خمسون عامًا من الدعم بعد البيع في مجال الإضاءة هي السبب الذي يجعل عملاءنا يضعون هذا القدر من الشارع على عمود واحد.",
   },
 ];
+
+/**
+ * Family names in both languages. Lives here rather than in either page so
+ * the grid's filter chips and the detail pages always agree.
+ */
+export const FAMILY_LABEL: Record<PoleFamily, { en: string; ar: string }> = {
+  city: { en: "Smart city mast", ar: "عمود المدينة الذكية" },
+  pedestrian: { en: "Pedestrian and park", ar: "الممرات والحدائق" },
+  heritage: { en: "Heritage and ornamental", ar: "التراثية والزخرفية" },
+};
+
+/** Narrows an arbitrary string to a family, for reading one out of the URL. */
+export function isPoleFamily(value: string | undefined): value is PoleFamily {
+  return value === "city" || value === "pedestrian" || value === "heritage";
+}
+
+export const getPole = (slug: string) => POLES.find((p) => p.slug === slug);
+
+/**
+ * Neighbours in catalogue order, for the previous/next links at the foot of a
+ * pole page. Wraps at both ends so the series is a loop rather than a
+ * dead end on the twentieth design.
+ */
+export function getPoleNeighbours(slug: string) {
+  const at = POLES.findIndex((p) => p.slug === slug);
+  if (at === -1) return { previous: undefined, next: undefined };
+  return {
+    previous: POLES[(at - 1 + POLES.length) % POLES.length],
+    next: POLES[(at + 1) % POLES.length],
+  };
+}

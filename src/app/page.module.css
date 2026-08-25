@@ -553,29 +553,27 @@
 
 .ctrlGrid {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(44px, 5vw, 88px);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(44px, 5vw, 80px);
   align-items: start;
 }
 
-.ctrlArt {
+.ctrlIntro {
   position: sticky;
   top: 120px;
-  height: clamp(440px, 54vh, 600px);
 }
 
+/* Four systems in a 2x2 block, so the copy column carries the band on its
+   own now that the photograph has gone. */
 .ctrlList {
-  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(30px, 3vw, 42px) clamp(24px, 2.6vw, 38px);
 }
 
 .ctrlItem {
   border-top: 1px solid rgba(17, 17, 17, 0.14);
   padding-top: 22px;
-  margin-top: 26px;
-}
-
-.ctrlItem:first-child {
-  margin-top: 0;
 }
 
 .ctrlItemTitle {
@@ -613,12 +611,17 @@
 @media (max-width: 900px) {
   .ctrlGrid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 38px;
+    gap: 44px;
   }
-  /* Stacked, the photo leads and the pin is meaningless. */
-  .ctrlArt {
+  /* Stacked, the intro leads and the pin is meaningless. */
+  .ctrlIntro {
     position: static;
-    height: clamp(300px, 58vw, 440px);
+  }
+}
+
+@media (max-width: 640px) {
+  .ctrlList {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

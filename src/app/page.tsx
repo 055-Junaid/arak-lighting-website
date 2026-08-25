@@ -52,8 +52,8 @@ const HOME_SERVICES = [
     ar: "الإضاءة الخارجية",
     enText: "Streets, landscapes, car parks and compounds, from bollards to high-mast poles.",
     arText: "الشوارع والمسطحات والمواقف والمجمّعات، من الأعمدة القصيرة إلى الصواري العالية.",
-    photo: "/projects/riyadh-air/02.jpg",
-    alt: "The plaza and external lighting at the Riyadh Air head office",
+    photo: "/projects/solitaire-mall/10.jpg",
+    alt: "Step lighting, landscape uplights and plaza lighting on the external approach to Solitaire Mall, Riyadh",
   },
   {
     no: "05",
@@ -61,8 +61,8 @@ const HOME_SERVICES = [
     ar: "أنظمة التحكم بالإضاءة",
     enText: "KNX/EIB systems, scene control, daylight and presence sensing, energy management.",
     arText: "أنظمة KNX/EIB، والتحكم بالمشاهد، واستشعار الضوء والحركة، وإدارة الطاقة.",
-    photo: "/projects/milling-mc2/03.jpg",
-    alt: "A KNX lighting control panel commissioned by ARAK at Milling Company MC-2",
+    photo: "/projects/delfino/01.jpg",
+    alt: "The planted ceiling and table lighting at Delfino Mayfair, Riyadh, running on the EIB / KNX scene control ARAK supplied",
   },
   {
     no: "06",
@@ -70,8 +70,8 @@ const HOME_SERVICES = [
     ar: "تركيب الإضاءة",
     enText: "Site installation, commissioning and handover by our own technical crews.",
     arText: "التركيب في الموقع والتشغيل والتسليم عبر فرقنا الفنية.",
-    photo: "/projects/athletic-showroom/03.jpg",
-    alt: "Track and linear lighting installed in a retail showroom fit-out",
+    photo: "/projects/four-points/01.jpg",
+    alt: "The Four Points by Sheraton, Riyadh, lit at night — ARAK supplied and commissioned the hotel's lighting control system",
   },
 ];
 
@@ -310,52 +310,54 @@ export default function HomePage() {
       <section className={styles.ctrlBand}>
         <div className={styles.ctrlShell}>
           <div className={styles.ctrlGrid}>
-            <div className={styles.ctrlArt}>
-              <PhotoSlot
-                src="/projects/milling-mc2/06.jpg"
-                alt="A KNX lighting control panel supplied and commissioned by ARAK"
-              />
-            </div>
-            <div>
+            <div className={styles.ctrlIntro}>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{ar ? "الأنظمة الذكية" : "Smart systems"}</span>
               </div>
-              <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "22ch" }}>{ar ? "أنظمة التحكم بالإضاءة والأتمتة المنزلية" : "Lighting Controls & Home Automation Systems"}</h2>
-              <p style={{ font: "400 16px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "26px 0 0", maxWidth: "48ch" }}>
+              <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.1 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{ar ? "أنظمة التحكم بالإضاءة والأتمتة المنزلية" : "Lighting Controls & Home Automation Systems"}</h2>
+              <p style={{ font: "400 16px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "26px 0 0", maxWidth: "42ch" }}>
                 {ar
                   ? "أنظمة التحكم هي ما يجعل مشروع الإضاءة يستحق ميزانيته أو يهدرها بصمت. نقوم بالتوصيف والتوريد والتشغيل، ونبقى مع النظام بعد التسليم بوقت طويل."
                   : "Controls are where a lighting scheme either earns its budget or quietly wastes it. We specify, supply and commission the platform, then stay with it long after handover."}
               </p>
-              <div className={styles.ctrlList}>
-                <div className={styles.ctrlItem}>
-                  <h3 className={styles.ctrlItemTitle}>KNX / EIB</h3>
-                  <p className={styles.ctrlItemBody}>
-                    {ar
-                      ? "المعيار العالمي للتحكم بالمباني: الإضاءة والستائر والتكييف والأمن وإدارة الطاقة على ناقل واحد."
-                      : "The worldwide standard for building control: lighting, shutters, HVAC, security and energy management on a single bus."}
-                  </p>
-                </div>
-                <div className={styles.ctrlItem}>
-                  <h3 className={styles.ctrlItemTitle}>{ar ? "نظام إدارة غرف الضيوف" : "Guest Room Management"}</h3>
-                  <p className={styles.ctrlItemBody}>
-                    {ar
-                      ? "الإضاءة والتبريد والستائر وخدمات الغرفة عبر أزرار بسيطة وشاشات لمس ولوحات تحكم."
-                      : "Lighting, cooling, curtains and room services on intuitive buttons, touch screens and panel interfaces."}
-                  </p>
-                </div>
-                <div className={styles.ctrlItem}>
-                  <h3 className={styles.ctrlItemTitle}>{ar ? "نظام التحكم بالإضاءة" : "Lighting Control System"}</h3>
-                  <p className={styles.ctrlItemBody}>
-                    {ar
-                      ? "مراقبة جميع دوائر الإضاءة الداخلية والخارجية وتشغيلها من منصة واحدة، من الفيلا إلى المشروع الوطني."
-                      : "Every indoor and outdoor circuit monitored and driven from one platform, sized from a villa to a national project."}
-                  </p>
-                </div>
-              </div>
-              <Link href="/services" className={styles.ctrlCta}>
+              <Link href="/services#controls" className={styles.ctrlCta}>
                 {ar ? "تفاصيل أنظمة التحكم" : "Controls in detail"}
                 <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
+            </div>
+            <div className={styles.ctrlList}>
+              <div className={styles.ctrlItem}>
+                <h3 className={styles.ctrlItemTitle}>KNX / EIB</h3>
+                <p className={styles.ctrlItemBody}>
+                  {ar
+                    ? "المعيار العالمي للتحكم بالمباني: الإضاءة والستائر والتكييف والأمن وإدارة الطاقة على ناقل واحد."
+                    : "The worldwide standard for building control: lighting, shutters, HVAC, security and energy management on a single bus."}
+                </p>
+              </div>
+              <div className={styles.ctrlItem}>
+                <h3 className={styles.ctrlItemTitle}>{ar ? "نظام إدارة غرف الضيوف" : "Guest Room Management"}</h3>
+                <p className={styles.ctrlItemBody}>
+                  {ar
+                    ? "الإضاءة والتبريد والستائر وخدمات الغرفة عبر أزرار بسيطة وشاشات لمس ولوحات تحكم."
+                    : "Lighting, cooling, curtains and room services on intuitive buttons, touch screens and panel interfaces."}
+                </p>
+              </div>
+              <div className={styles.ctrlItem}>
+                <h3 className={styles.ctrlItemTitle}>{ar ? "نظام التحكم بالإضاءة" : "Lighting Control System"}</h3>
+                <p className={styles.ctrlItemBody}>
+                  {ar
+                    ? "مراقبة جميع دوائر الإضاءة الداخلية والخارجية وتشغيلها من منصة واحدة، من الفيلا إلى المشروع الوطني."
+                    : "Every indoor and outdoor circuit monitored and driven from one platform, sized from a villa to a national project."}
+                </p>
+              </div>
+              <div className={styles.ctrlItem}>
+                <h3 className={styles.ctrlItemTitle}>{ar ? "إدارة الطاقة والتقارير" : "Energy management"}</h3>
+                <p className={styles.ctrlItemBody}>
+                  {ar
+                    ? "قياس الاستهلاك على مستوى الدائرة، والجدولة، والاستفادة من ضوء النهار، مع تسجيل الاستهلاك وإصدار التقارير."
+                    : "Circuit-level metering, scheduling and daylight harvesting, with consumption logged and reported for the operating budget."}
+                </p>
+              </div>
             </div>
           </div>
         </div>

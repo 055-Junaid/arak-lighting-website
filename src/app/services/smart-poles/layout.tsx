@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Smart Poles | ARAK Lighting Solutions",
+export const metadata = pageMetadata({
+  title: "Smart Poles",
   description:
     "LED lighting, 5G micro base stations, HD surveillance, environmental sensors, public broadcast, digital signage and emergency call on a single mast. Twenty C°LB smart pole designs, supplied, installed, integrated and maintained by ARAK across Saudi Arabia.",
-};
+  path: "/services/smart-poles",
+});
 
 export default function SmartPolesLayout({
   children,

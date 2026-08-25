@@ -1,0 +1,85 @@
+import { COMPANY, SITE_NAME, SITE_TAGLINE, SITE_URL, url } from "@/lib/site";
+import { SOCIALS } from "@/lib/social-data";
+
+/**
+ * Schema.org description of the company, emitted once on every page.
+ *
+ * This is what puts the showroom address, the phone number and the founding
+ * year into a Google knowledge panel and a local result, rather than leaving
+ * search engines to infer them from body copy. `LocalBusiness` is the right
+ * type here over a bare `Organization` because ARAK has a single trading
+ * address the public can visit.
+ *
+ * Rendered from a server component, so it costs the client nothing.
+ */
+export function StructuredData() {
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "LocalBusiness"],
+        "@id": url("/#organization"),
+        name: SITE_NAME,
+        legalName: COMPANY.legalName,
+        description: SITE_TAGLINE,
+        url: SITE_URL,
+        foundingDate: COMPANY.founded,
+        email: COMPANY.email,
+        telephone: COMPANY.phone,
+        logo: {
+          "@type": "ImageObject",
+          url: url("/arak-logo-black.png"),
+        },
+        image: url("/opengraph-image"),
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: COMPANY.street,
+          addressLocality: COMPANY.city,
+          postalCode: COMPANY.postalCode,
+          addressCountry: COMPANY.country,
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: COMPANY.latitude,
+          longitude: COMPANY.longitude,
+        },
+        areaServed: {
+          "@type": "Country",
+          name: "Saudi Arabia",
+        },
+        // The handles the footer and contact page already link to. Declaring
+        // them here is what lets a search engine tie the accounts to the
+        // company rather than treating them as unrelated profiles.
+        sameAs: SOCIALS.map((s) => s.href),
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          telephone: COMPANY.phone,
+          email: COMPANY.email,
+          areaServed: "SA",
+          availableLanguage: ["en", "ar"],
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": url("/#website"),
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: { "@id": url("/#organization") },
+        inLanguage: "en",
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      // Serialised rather than templated so the payload is always valid JSON.
+      // `<` is escaped because a literal `</script>` inside the string would
+      // otherwise close this tag early.
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(graph).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}

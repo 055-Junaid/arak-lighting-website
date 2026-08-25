@@ -142,8 +142,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Controls detail */}
-      <section className={`${styles.band} ${styles.bandPaper}`}>
+      {/* Controls detail. Anchored: the home page controls band links here. */}
+      <section id="controls" className={`${styles.band} ${styles.bandPaper}`}>
         <div className={styles.shell}>
           <div className={styles.controls}>
             <div>
@@ -170,8 +170,8 @@ export default function ServicesPage() {
             </div>
             <div className={styles.controlArt}>
               <PhotoSlot
-                src="/projects/milling-mc2/05.jpg"
-                alt="ABB KNX actuators on the DIN rail of a lighting control panel, Milling Company MC-2"
+                src="/projects/delfino/04.jpg"
+                alt="The KNX control screen at Delfino Mayfair, Riyadh, with the restaurant's lighting scenes, curtain, blind and air control on one interface"
               />
             </div>
           </div>

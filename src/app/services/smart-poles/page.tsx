@@ -2,18 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
 import { useLang } from "@/lib/lang";
 import { Reveal } from "@/components/Reveal";
 import {
   ARAK_ROLE,
-  POLES,
-  POLE_FAMILIES,
   POLE_FUNCTIONS,
   POLE_LAYERS,
-  type Pole,
-  type PoleFamily,
 } from "@/lib/smart-poles-data";
+import { PoleSeries } from "./PoleSeries";
 import styles from "./page.module.css";
 
 const PITCH = [
@@ -36,12 +32,6 @@ const PITCH = [
     arBody: "مرّة في الطاقة التي يوفّرها رأس LED وملفّ تحكّم ذكي مقارنةً بتركيب تقليدي، ومرّة في اللوحات والتمديدات وأعمال الموقع التي لا تُنفَّذ أصلًا لأن العمود يحمل الشبكة بالفعل.",
   },
 ];
-
-const FAMILY_LABEL: Record<PoleFamily, { en: string; ar: string }> = {
-  city: { en: "Smart city mast", ar: "عمود المدينة الذكية" },
-  pedestrian: { en: "Pedestrian and park", ar: "الممرات والحدائق" },
-  heritage: { en: "Heritage and ornamental", ar: "التراثية والزخرفية" },
-};
 
 const CONTEXT_SHOTS = [
   {
@@ -113,28 +103,6 @@ const ANATOMY_END = [
 export default function SmartPolesPage() {
   const { lang } = useLang();
   const ar = lang === "ar";
-  const [family, setFamily] = useState<PoleFamily | "all">("all");
-  const [open, setOpen] = useState<Pole | null>(null);
-
-  const poles = useMemo(
-    () => (family === "all" ? POLES : POLES.filter((p) => p.family === family)),
-    [family]
-  );
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(null);
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
   return (
     <main className={styles.page}>
       {/* Hero */}
@@ -322,48 +290,13 @@ export default function SmartPolesPage() {
               </div>
               <p className={`${styles.sectionNote} ${styles.sectionNoteLight}`}>
                 {ar
-                  ? "من أعمدة المدن الذكية الكاملة إلى التيجان الزخرفية للأحياء التراثية. كل تصميم يحمل الحزمة نفسها من الخدمات. اختر تصميمًا لقراءة تفاصيله."
-                  : "From full smart-city masts down to ornamental crowns for heritage districts. Every design takes the same service payload. Select one to read its detail."}
+                  ? "من أعمدة المدن الذكية الكاملة إلى التيجان الزخرفية للأحياء التراثية. كل تصميم يحمل الحزمة نفسها من الخدمات. افتح أي تصميم لقراءة تفاصيله."
+                  : "From full smart-city masts down to ornamental crowns for heritage districts. Every design takes the same service payload. Open any design for its full detail."}
               </p>
             </div>
           </Reveal>
 
-          <Reveal>
-            <div className={styles.filters}>
-              {POLE_FAMILIES.map((f) => (
-                <button
-                  key={f.id}
-                  type="button"
-                  onClick={() => setFamily(f.id)}
-                  className={`${styles.filter} ${family === f.id ? styles.filterOn : ""}`}
-                >
-                  {ar ? f.ar : f.en}
-                </button>
-              ))}
-            </div>
-          </Reveal>
-
-          <div className={styles.series}>
-            {poles.map((p, i) => (
-              <Reveal key={p.slug} delay={(i % 4) * 70}>
-                <button type="button" className={styles.pole} onClick={() => setOpen(p)}>
-                  <div className={styles.poleArt}>
-                    <Image
-                      src={`/smart-poles/${p.slug}.jpg`}
-                      alt={ar ? `عمود ${p.name} الذكي، ${p.arTagline}` : `${p.name} smart pole, ${p.tagline.toLowerCase()}`}
-                      fill
-                      sizes="(max-width: 680px) 50vw, (max-width: 1080px) 33vw, 24vw"
-                    />
-                  </div>
-                  <div className={styles.poleMeta}>
-                    <h3 className={styles.poleName}>{p.name}</h3>
-                    <p className={styles.poleTag}>{ar ? p.arTagline : p.tagline}</p>
-                    <span className={styles.poleMore}>{ar ? "التفاصيل" : "View detail"}</span>
-                  </div>
-                </button>
-              </Reveal>
-            ))}
-          </div>
+          <PoleSeries ar={ar} />
         </div>
       </section>
 
@@ -492,46 +425,6 @@ export default function SmartPolesPage() {
         </div>
       </section>
 
-      {/* Pole detail dialog */}
-      {open && (
-        <div
-          className={styles.overlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label={ar ? `عمود ${open.name} الذكي` : `${open.name} smart pole`}
-          onClick={() => setOpen(null)}
-        >
-          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
-            <button
-              type="button"
-              className={styles.close}
-              onClick={() => setOpen(null)}
-              aria-label="Close"
-            >
-              &times;
-            </button>
-            <div className={styles.dialogArt}>
-              <Image
-                src={`/smart-poles/${open.slug}.jpg`}
-                alt={ar ? `عمود ${open.name} الذكي` : `${open.name} smart pole`}
-                fill
-                sizes="(max-width: 1080px) 100vw, 40vw"
-              />
-            </div>
-            <div className={styles.dialogCopy}>
-              <span className={styles.dialogFamily}>{FAMILY_LABEL[open.family][ar ? "ar" : "en"]}</span>
-              <h3 className={styles.dialogName}>{open.name}</h3>
-              <p className={styles.dialogTag}>{ar ? open.arTagline : open.tagline}</p>
-              <p className={styles.dialogBody}>{ar ? open.arBody : open.body}</p>
-              <p className={styles.dialogFoot}>
-                {ar
-                  ? "توريد وتركيب وتكامل وصيانة من أراك. وتُحدَّد الارتفاعات والتشطيبات وحزمة الأجهزة حسب كل مشروع."
-                  : "Supplied, installed, integrated and maintained by ARAK. Heights, finishes and the device payload are configured per project."}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 }
