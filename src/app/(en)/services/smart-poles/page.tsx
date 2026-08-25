@@ -117,6 +117,15 @@ const ANATOMY_END = [
   },
 ];
 
+/**
+ * The hero rail. Deliberately the same eight labels as the anatomy key, in the
+ * same order: the rail is a preview of that diagram, so if one ever gains or
+ * loses a line the other has to follow, and deriving it here is what makes
+ * that automatic. Labels only, no numbers, since nothing in the hero is
+ * pointing at a drawing yet.
+ */
+const HERO_CARRIES = [...ANATOMY_START, ...ANATOMY_END];
+
 export default function SmartPolesPage() {
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -134,53 +143,65 @@ export default function SmartPolesPage() {
         />
         <div className={styles.heroVeil} />
         <div className={`${styles.shell} ${styles.heroInner}`}>
-          <div className={styles.crumb}>
-            <Link href={localePath("/services", lang)}>{ar ? "خدماتنا" : "Services"}</Link>
-            <span aria-hidden="true">/</span>
-            <span className={styles.crumbNow}>{ar ? "الأعمدة الذكية" : "Smart Poles"}</span>
+          <div className={styles.heroCopy}>
+            <div className={styles.crumb}>
+              <Link href={localePath("/services", lang)}>{ar ? "خدماتنا" : "Services"}</Link>
+              <span aria-hidden="true">/</span>
+              <span className={styles.crumbNow}>{ar ? "الأعمدة الذكية" : "Smart Poles"}</span>
+            </div>
+            <h1 className={styles.heroTitle}>
+              {ar ? "نصمّمه لك أنت." : "We design it for you."}
+            </h1>
+            <p className={styles.heroLead}>
+              {ar
+                ? "ليس عمودًا جاهزًا من الرفّ. كل عمود من أراك يُصمَّم لشارعك، وقابل للتخصيص بالكامل: الارتفاع والتشطيب وكل ما يحمله."
+                : "Not off the shelf. Every ARAK pole is designed for your street and fully customizable: the height, the finish, and everything it carries."}
+            </p>
+            <div className={styles.heroTag}>
+              {ar ? (
+                <>أراك &nbsp;&middot;&nbsp; سلسلة أعمدة الإضاءة الذكية C&deg;LB &nbsp;&middot;&nbsp; عشرون تصميمًا</>
+              ) : (
+                <>ARAK &nbsp;&middot;&nbsp; C&deg;LB Smart Light Pole Series &nbsp;&middot;&nbsp; Twenty designs</>
+              )}
+            </div>
           </div>
-          <h1 className={styles.heroTitle}>
-            {ar ? "نصمّمه لك أنت." : "We design it for you."}
-          </h1>
-          <p className={styles.heroLead}>
-            {ar
-              ? "لا نبيعك عمودًا جاهزًا من الرفّ. في أراك يُرسَم كل عمود ذكي للشارع الذي سيقف فيه: الارتفاع والشكل والتشطيب وكل ما يحمله الجسم الإضاءة والشبكة والكاميرات وأجهزة الاستشعار واللوحات وزرّ نداء الطوارئ  قابل للتخصيص بالكامل. ابدأ من عشرين تصميمًا، أو نرسم لك تصميمًا جديدًا."
-              : "We do not sell you a pole off the shelf. At ARAK every smart pole is drawn for the street it will stand on: the height, the form, the finish and everything the shaft carries light, network, cameras, sensors, signage and the emergency call button is fully customizable. Start from twenty designs, or we draw a new one for you."}
-          </p>
-          <div className={styles.heroTag}>
-            {ar ? (
-              <>أراك &nbsp;&middot;&nbsp; سلسلة أعمدة الإضاءة الذكية C&deg;LB &nbsp;&middot;&nbsp; عشرون تصميمًا</>
-            ) : (
-              <>ARAK &nbsp;&middot;&nbsp; C&deg;LB Smart Light Pole Series &nbsp;&middot;&nbsp; Twenty designs</>
-            )}
+          <div className={styles.heroAside}>
+            <p className={styles.heroAsideHead}>
+              {ar ? "على عمودٍ واحد" : "On one mast"}
+            </p>
+            <ul className={styles.heroCarries}>
+              {HERO_CARRIES.map((item) => (
+                <li key={item.no}>{ar ? item.ar : item.en}</li>
+              ))}
+            </ul>
+            {/* Plain anchor driven by hand: the App Router updates the hash on a
+                same-page Link but does not scroll to it, so the shortcut would
+                silently do nothing. The href stays for middle-click and a11y. */}
+            <a
+              href="#designs"
+              className={styles.heroJump}
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.getElementById("designs");
+                if (!el) return;
+                const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+                history.replaceState(null, "", "#designs");
+              }}
+            >
+              <span className={styles.heroJumpNum}>20</span>
+              <span className={styles.heroJumpLabel}>
+                {ar ? "تصميم عمود" : "pole designs"}
+              </span>
+              <span className={styles.heroJumpCta}>
+                {ar ? "استعرض السلسلة" : "see the series"}
+                <span className={styles.heroJumpArrow} aria-hidden="true">
+                  &darr;
+                </span>
+              </span>
+            </a>
           </div>
         </div>
-        {/* Plain anchor driven by hand: the App Router updates the hash on a
-            same-page Link but does not scroll to it, so the shortcut would
-            silently do nothing. The href stays for middle-click and a11y. */}
-        <a
-          href="#designs"
-          className={styles.heroJump}
-          onClick={(e) => {
-            e.preventDefault();
-            const el = document.getElementById("designs");
-            if (!el) return;
-            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-            history.replaceState(null, "", "#designs");
-          }}
-        >
-          <span className={styles.heroJumpNum}>20</span>
-          <span className={styles.heroJumpLabel}>
-            {ar ? "تصميم عمود" : "pole designs"}
-          </span>
-          <span className={styles.heroJumpCta}>
-            {ar ? "استعرض السلسلة" : "see the series"}
-            <span className={styles.heroJumpArrow} aria-hidden="true">
-              &darr;
-            </span>
-          </span>
-        </a>
       </section>
 
       {/* Basics — the plain answer, before any argument is made */}

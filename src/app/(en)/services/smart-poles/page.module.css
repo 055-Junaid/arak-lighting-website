@@ -57,10 +57,80 @@
     linear-gradient(270deg, rgba(13, 15, 18, 0.72) 0%, rgba(13, 15, 18, 0) 62%);
 }
 
+/* Two columns, both sitting on the same baseline at the bottom of the picture:
+   the headline on one side, and on the other a rail that names what the mast
+   carries. The photograph is a single dark pole, which left the whole right
+   half of the frame empty; the rail fills it with the one thing a visitor
+   wants next, and the twenty-designs shortcut stacks under it rather than
+   floating loose in the corner. `auto` on the second track lets the rail size
+   to its longest label instead of taking a fixed share of the width. */
 .heroInner {
   position: relative;
   width: 100%;
   padding-block: clamp(70px, 9vw, 120px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  column-gap: clamp(36px, 5vw, 80px);
+}
+
+/* Lifted clear of the bottom edge. The rail and the shortcut stay anchored
+   down there, which is what holds the composition together; the headline
+   reads better sitting above that line rather than on it. Removed again when
+   the two columns stack, where the offset would only open a hole between the
+   copy and the shortcut. */
+.heroCopy {
+  min-width: 0;
+  padding-bottom: clamp(28px, 4.5vw, 72px);
+}
+
+.heroAside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: end;
+  gap: 26px;
+}
+
+:global([dir="rtl"]) .heroAside {
+  align-items: flex-start;
+  text-align: start;
+}
+
+.heroAsideHead {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* A rule per line rather than a bullet: eight items read as a specification
+   here, and the hairlines carry the eye down them without adding any ink the
+   photograph has to fight. */
+.heroCarries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  /* Full width of the rail rather than shrink-to-fit, so the rules and the
+     shortcut below them share the same two edges. In Arabic the longest label
+     is shorter than the shortcut, and without this the rules stopped short of
+     the gutter while the box beneath them reached it. */
+  width: 100%;
+}
+
+.heroCarries li {
+  font: 400 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.74);
+  padding-block: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  white-space: nowrap;
+}
+
+.heroCarries li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .crumb {
@@ -709,15 +779,11 @@
 /* ─────────────────────────────────────────────────────────────
    Hero jump: the twenty designs sit five sections down, and a
    first-time visitor has no reason to scroll that far. This is
-   the shortcut, parked in the corner opposite the headline so
-   it never fights the type. inset-inline-end carries it to the
-   other corner in Arabic on its own.
+   the shortcut. It sits at the foot of the hero rail, opposite
+   the headline, so it never fights the type; the grid puts the
+   rail on the other side in Arabic on its own.
    ───────────────────────────────────────────────────────────── */
 .heroJump {
-  position: absolute;
-  z-index: 2;
-  inset-inline-end: var(--gutter);
-  bottom: clamp(38px, 5.4vw, 76px);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -787,14 +853,37 @@
   transform: translateY(3px);
 }
 
+/* Below this the frame is portrait and there is no second column to put a
+   rail in. The list goes rather than stacking eight more rows onto an already
+   tall hero: the anatomy key one section down is the same eight labels, so
+   nothing is lost, only deferred. The shortcut stays, under the copy. */
 @media (max-width: 900px) {
-  /* Stacked under the copy rather than floating over it. */
-  .heroJump {
-    position: static;
-    align-self: flex-start;
+  .heroInner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .heroCopy {
+    padding-bottom: 0;
+  }
+  .heroAsideHead,
+  .heroCarries {
+    display: none;
+  }
+  .heroAside {
     align-items: flex-start;
     text-align: start;
     margin-top: 34px;
+  }
+  :global([dir="rtl"]) .heroAside {
+    align-items: flex-end;
+    text-align: end;
+  }
+  .heroJump {
+    align-items: flex-start;
+    text-align: start;
+  }
+  :global([dir="rtl"]) .heroJump {
+    align-items: flex-end;
+    text-align: end;
   }
 }
 
