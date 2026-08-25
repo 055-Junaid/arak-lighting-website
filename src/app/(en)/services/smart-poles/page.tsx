@@ -110,7 +110,7 @@ export default function SmartPolesPage() {
       <section className={styles.hero}>
         <Image
           src="/smart-poles/hero.jpg"
-          alt={ar ? "أعمدة ذكية على طريق في الرياض تصطفّ على جانبيه أشجار النخيل عند الشروق" : "Smart poles along a palm-lined Riyadh road at sunrise"}
+          alt={ar ? "عمود إنارة ذكي مضاء منفردًا بين أبراج المدينة عند الغسق" : "A single lit smart light pole standing between city towers at dusk"}
           fill
           priority
           sizes="100vw"
@@ -124,12 +124,12 @@ export default function SmartPolesPage() {
             <span className={styles.crumbNow}>{ar ? "الأعمدة الذكية" : "Smart Poles"}</span>
           </div>
           <h1 className={styles.heroTitle}>
-            {ar ? "عمود واحد. مدينة كاملة." : "One pole. The whole street on it."}
+            {ar ? "نصمّمه لك أنت." : "We design it for you."}
           </h1>
           <p className={styles.heroLead}>
             {ar
-              ? "الضوء لم يكن يومًا سوى المهمّة الأولى. فالعمود الذكي يحمل كذلك الشبكة والكاميرات وأجهزة الاستشعار واللوحات وزرّ نداء الطوارئ، على قاعدةٍ يملكها الشارع أصلًا."
-              : "Light was only ever the first job. A smart pole also carries the network, the cameras, the sensors, the signage and the emergency call button, on a foundation the street already has."}
+              ? "لا نبيعك عمودًا جاهزًا من الرفّ. في أراك يُرسَم كل عمود ذكي للشارع الذي سيقف فيه: الارتفاع والشكل والتشطيب وكل ما يحمله الجسم — الإضاءة والشبكة والكاميرات وأجهزة الاستشعار واللوحات وزرّ نداء الطوارئ — قابل للتخصيص بالكامل. ابدأ من عشرين تصميمًا، أو نرسم لك تصميمًا جديدًا."
+              : "We do not sell you a pole off the shelf. At ARAK every smart pole is drawn for the street it will stand on: the height, the form, the finish and everything the shaft carries — light, network, cameras, sensors, signage and the emergency call button — is fully customizable. Start from twenty designs, or we draw a new one for you."}
           </p>
           <div className={styles.heroTag}>
             {ar ? (
