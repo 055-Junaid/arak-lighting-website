@@ -2,7 +2,6 @@
 .h2:hover { border-color:#111111;color:#111111 }
 .h3:hover { color:#3A3A38 }
 .h13:hover { color:#3A3A38 }
-.h76:hover { background:#3A3A38 }
 
 /* Smart Poles feature strip, sits below the six-card services grid. */
 .poleStrip {
@@ -647,5 +646,167 @@
   }
   .poleBandLabel {
     letter-spacing: 0.16em;
+  }
+}
+
+/* ---------- Closing movement ----------
+   The Turrell quote and the call to act sit on one dark ground so the page
+   lands on a single dark beat before the light footer, the way /about closes.
+   The tokens below are the ones that page already uses, so the two endings
+   read as the same design rather than two attempts at it. */
+
+.finale {
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+}
+
+.finaleGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(110% 90% at 50% -20%, rgba(255, 255, 255, 0.14) 0%, rgba(17, 17, 17, 0) 62%);
+  pointer-events: none;
+}
+
+.finaleShell {
+  position: relative;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-inline: clamp(24px, 3.4vw, 48px);
+  text-align: center;
+}
+
+.quote {
+  padding-block: clamp(92px, 10vw, 148px);
+}
+
+.quoteText {
+  font: 300 clamp(28px, 4.2vw, 60px) / 1.16 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin: 0 auto;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.quoteAttrib {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: clamp(32px, 3.6vw, 46px);
+}
+
+/* A drawn rule reads as attribution without the quotation marks doing it. */
+.quoteRule {
+  width: 40px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.quoteName {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  font-style: normal;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.close {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-block: clamp(88px, 9.5vw, 140px);
+}
+
+.closeEyebrow {
+  display: block;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.closeTitle {
+  font: 600 clamp(32px, 4.4vw, 64px) / 1.06 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin: 24px auto 0;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.closeLead {
+  font: 300 clamp(16px, 1.4vw, 20px) / 1.65 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 26px auto 0;
+  max-width: 52ch;
+}
+
+.closeActions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(36px, 4vw, 48px);
+}
+
+.closeCta,
+.closeGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 18px 30px;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    gap 0.3s ease;
+}
+
+.closeCta {
+  color: #111111;
+  background: #ffffff;
+}
+
+.closeCta:hover {
+  background: rgba(255, 255, 255, 0.86);
+  color: #111111;
+  gap: 18px;
+}
+
+.closeGhost {
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.closeGhost:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  gap: 18px;
+}
+
+.closeCta:focus-visible,
+.closeGhost:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+/* The arrow points the way the page is read, so it mirrors with the language. */
+:global([dir="rtl"]) .closeArrow {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 620px) {
+  /* Side by side the two buttons wrap to uneven widths; full-bleed is tidier. */
+  .closeActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .quoteName,
+  .closeEyebrow {
+    letter-spacing: 0.2em;
   }
 }
