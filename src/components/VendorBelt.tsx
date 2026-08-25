@@ -1,7 +1,11 @@
 import Image from "next/image";
 import styles from "./VendorBelt.module.css";
 
-const VENDORS = [
+/**
+ * Also read by the home page, which sets these as a static grid inside the
+ * credentials block rather than as this marquee. The About page keeps the belt.
+ */
+export const VENDORS = [
   { file: "neom.png", name: "NEOM" },
   { file: "qiddiya.png", name: "Qiddiya" },
   { file: "roshn.png", name: "Roshn" },

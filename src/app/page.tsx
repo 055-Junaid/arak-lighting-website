@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { ProjectCards } from "@/components/ProjectCards";
-import { VendorBelt } from "@/components/VendorBelt";
+import { VENDORS } from "@/components/VendorBelt";
+import { LogoGrid } from "@/components/LogoGrid";
 import { BrandGrid } from "@/components/BrandGrid";
 import { ClientGrid } from "@/components/ClientGrid";
 import styles from "./page.module.css";
@@ -325,49 +326,55 @@ export default function HomePage() {
           <ProjectCards slugs={["solitaire-mall", "ritz-carlton", "riyadh-air"]} />
         </div>
       </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
+      {/* ── Credentials ────────────────────────────────────────────
+          Three sections — brands, clients, accreditation — each with its
+          own heading and its own visual language, running to some 1,600px
+          of near-identical grey grid. They answer one question between
+          them, so they are one block now, ordered by how much weight the
+          credential actually carries. Accreditation leads: being a
+          registered vendor with Aramco and NEOM is what lets ARAK bid the
+          work at all, and it used to sit ninth of eleven sections.
+          Every mark is still on the page; the walls open rather than
+          being trimmed. */}
+      <section className={styles.credBand}>
+        <div className={styles.shell}>
           <div className={styles.sectionHead}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الماركات" : "Brands"}</span>
+                <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{ar ? "الاعتماد" : "Credentials"}</span>
               </div>
-              <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "شركاؤنا" : "Our partners"}</h2>
+              <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{ar ? "من نعمل معهم" : "Who we work for"}</h2>
             </div>
             <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
               {ar
-                ? "شريك معتمد لمصنّعين عالميين مرموقين، من بيوت الإضاءة التجميلية إلى منصات التحكم."
-                : "A certified partner of reputable international manufacturers, from decorative houses to control platforms."}
+                ? "مسجّلون لدى المشاريع الوطنية الكبرى، ونورّد للفنادق والوزارات والمستشفيات، ونحمل ٤١ علامة عالمية."
+                : "Registered with the Kingdom's giga-projects, supplying its hotels, ministries and hospitals, and carrying forty-one manufacturer lines."}
             </p>
           </div>
-          <BrandGrid />
-        </div>
-      </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
-          <div className={styles.sectionHead}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-                <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الثقة" : "Trusted by"}</span>
-              </div>
-              <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "عملاؤنا" : "Our clients"}</h2>
+
+          <div className={styles.credTier}>
+            <div className={styles.credHead}>
+              <span className={styles.credLabel}>{ar ? "مورد معتمد لدى" : "Registered vendor with"}</span>
+              <span className={styles.credCount}>13</span>
             </div>
-            <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
-              {ar
-                ? "نخبة من الفنادق والبنوك والوزارات والمستشفيات والجامعات التي زوّدناها."
-                : "A few of the hotels, banks, ministries, hospitals and universities we have supplied."}
-            </p>
+            <LogoGrid items={VENDORS} basePath="/vendors" />
           </div>
-          <ClientGrid />
-        </div>
-      </section>
-      <section style={{ borderTop: "1px solid rgba(17,17,17,.13)" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-            <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "الاعتماد" : "Accreditation"}</span>
+
+          <div className={styles.credTier}>
+            <div className={styles.credHead}>
+              <span className={styles.credLabel}>{ar ? "عملاؤنا" : "Clients"}</span>
+              <span className={styles.credCount}>33</span>
+            </div>
+            <ClientGrid />
           </div>
-          <h2 style={{ font: "600 clamp(30px,3.2vw,46px)/1.08 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0 0 60px" }}>{lang === "ar" ? "مورد معتمد لدى" : "Registered vendor with"}</h2>
-          <VendorBelt />
+
+          <div className={styles.credTier}>
+            <div className={styles.credHead}>
+              <span className={styles.credLabel}>{ar ? "الماركات التي نمثلها" : "Brands we carry"}</span>
+              <span className={styles.credCount}>41</span>
+            </div>
+            <BrandGrid />
+          </div>
         </div>
       </section>
       <section style={{ background: "#111111" }}>

@@ -103,6 +103,61 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Credentials. One block in place of the three that used to run
+   brands, then clients, then accreditation — same question, three
+   answers, three visual languages, ~1,600px of near-identical grid.
+   Tiers are ordered by the weight the credential carries, and each
+   wall opens rather than being trimmed.
+   ───────────────────────────────────────────────────────────── */
+.credBand {
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  background: #f6f5f3;
+  /* Read by the fade at the foot of a clipped wall, so it dissolves into
+     this section's ground rather than a hardcoded white. */
+  --wall-bg: #f6f5f3;
+}
+
+.shell {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding-block: clamp(72px, 8.5vw, 120px);
+  padding-inline: clamp(20px, 3.4vw, 48px);
+}
+
+.credTier {
+  margin-top: clamp(46px, 5vw, 68px);
+}
+
+.credHead {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.18);
+  margin-bottom: 10px;
+}
+
+.credLabel {
+  font: 600 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.credCount {
+  font: 400 12px/1 var(--font-sora), sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: rgba(17, 17, 17, 0.42);
+}
+
+@media (max-width: 620px) {
+  .credLabel {
+    letter-spacing: 0.16em;
+    font-size: 11px;
+  }
+}
+
 /* Full-width section header: title left, standfirst right, aligned on the baseline. */
 .sectionHead {
   display: grid;
