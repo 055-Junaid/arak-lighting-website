@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
+import { localePath } from "@/lib/site";
 import { SOCIALS, MAPS_PLACE_URL } from "@/lib/social-data";
 import styles from "./Footer.module.css";
 
@@ -60,7 +61,7 @@ export function Footer() {
           <nav className={styles.col} aria-label={ar ? "روابط الموقع" : "Site"}>
             <span className={styles.colHead}>{ar ? "الموقع" : "Site"}</span>
             {SITE_LINKS.map((l) => (
-              <Link key={l.href} href={l.href} className={styles.link}>
+              <Link key={l.href} href={localePath(l.href, lang)} className={styles.link}>
                 {ar ? l.ar : l.en}
               </Link>
             ))}
@@ -73,7 +74,7 @@ export function Footer() {
                 {ar ? s.ar : s.en}
               </span>
             ))}
-            <Link href="/services/smart-poles" className={styles.link}>
+            <Link href={localePath("/services/smart-poles", lang)} className={styles.link}>
               {ar ? "الأعمدة الذكية" : "Smart poles"}
             </Link>
           </div>

@@ -1,4 +1,14 @@
-import { COMPANY, SITE_NAME, SITE_TAGLINE, SITE_URL, url } from "@/lib/site";
+import {
+  COMPANY,
+  SITE_NAME,
+  SITE_NAME_AR,
+  SITE_TAGLINE,
+  SITE_TAGLINE_AR,
+  SITE_URL,
+  url,
+  localePath,
+  type Locale,
+} from "@/lib/site";
 import { SOCIALS } from "@/lib/social-data";
 
 /**
@@ -12,16 +22,18 @@ import { SOCIALS } from "@/lib/social-data";
  *
  * Rendered from a server component, so it costs the client nothing.
  */
-export function StructuredData() {
+export function StructuredData({ lang }: { lang: Locale }) {
+  const ar = lang === "ar";
   const graph = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": ["Organization", "LocalBusiness"],
         "@id": url("/#organization"),
-        name: SITE_NAME,
+        name: ar ? SITE_NAME_AR : SITE_NAME,
+        alternateName: ar ? SITE_NAME : SITE_NAME_AR,
         legalName: COMPANY.legalName,
-        description: SITE_TAGLINE,
+        description: ar ? SITE_TAGLINE_AR : SITE_TAGLINE,
         url: SITE_URL,
         foundingDate: COMPANY.founded,
         email: COMPANY.email,
@@ -61,12 +73,15 @@ export function StructuredData() {
         },
       },
       {
+        // One WebSite node per language, each at its own id and url, so the
+        // two are described as translations rather than as one site that
+        // happens to change language.
         "@type": "WebSite",
-        "@id": url("/#website"),
-        url: SITE_URL,
-        name: SITE_NAME,
+        "@id": url(`${localePath("/", lang)}#website`),
+        url: url(localePath("/", lang)),
+        name: ar ? SITE_NAME_AR : SITE_NAME,
         publisher: { "@id": url("/#organization") },
-        inLanguage: "en",
+        inLanguage: ar ? "ar" : "en",
       },
     ],
   };
