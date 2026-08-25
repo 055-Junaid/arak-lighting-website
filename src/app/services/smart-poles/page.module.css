@@ -35,7 +35,12 @@
 
 .heroImg {
   object-fit: cover;
-  object-position: 62% 30%;
+  /* The hero box swings from 3.1:1 on an ultrawide desktop to 0.54:1 on a
+     phone, so this anchor has to survive both. 15% down keeps the luminaire
+     clear of the top edge on the widest crop, where 43% of the height is
+     lost; 72% across centres the pole on the narrowest, where 70% of the
+     width is. */
+  object-position: 72% 15%;
   filter: grayscale(1) contrast(1.04);
 }
 
