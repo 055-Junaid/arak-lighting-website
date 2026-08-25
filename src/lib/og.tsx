@@ -1,6 +1,5 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { LOGO_WHITE, SORA_REGULAR, SORA_SEMIBOLD, bytes } from "./og-assets";
 
 /**
  * The shared Open Graph card. Every route's `opengraph-image.tsx` is a thin
@@ -16,30 +15,20 @@ import { join } from "node:path";
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = "image/png";
 
-const asset = (file: string) => join(process.cwd(), "src/assets", file);
-
-/**
- * Satori reads font data through a DataView, which rejects a Node Buffer —
- * it needs the underlying ArrayBuffer, sliced to the Buffer's own view so a
- * pooled allocation does not hand over its neighbours' bytes too.
- */
-const toArrayBuffer = (b: Buffer): ArrayBuffer =>
-  b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength) as ArrayBuffer;
-
 /**
  * Satori needs real font binaries — it cannot use next/font, whose output is
- * hashed woff2 that only the browser ever sees. These two are static
- * instances cut from the Sora variable font, so the card is set in the same
- * face as the site's headings.
+ * hashed woff2 that only the browser ever sees. These two are static instances
+ * cut from the Sora variable font, so the card is set in the same face as the
+ * site's headings.
+ *
+ * The bytes are inlined rather than read from disk: Cloudflare Workers have no
+ * filesystem, and a node:fs read here returned a 500 for every card on the
+ * deployed worker while working fine under `next build`.
  */
-async function brandFonts() {
-  const [regular, semibold] = await Promise.all([
-    readFile(asset("fonts/Sora-Regular.ttf")),
-    readFile(asset("fonts/Sora-SemiBold.ttf")),
-  ]);
+function brandFonts() {
   return [
-    { name: "Sora", data: toArrayBuffer(regular), weight: 400 as const, style: "normal" as const },
-    { name: "Sora", data: toArrayBuffer(semibold), weight: 600 as const, style: "normal" as const },
+    { name: "Sora", data: bytes(SORA_REGULAR), weight: 400 as const, style: "normal" as const },
+    { name: "Sora", data: bytes(SORA_SEMIBOLD), weight: 600 as const, style: "normal" as const },
   ];
 }
 
@@ -54,12 +43,9 @@ export async function ogCard({
   /** One supporting line. Kept short; long text shrinks the title's impact. */
   note?: string;
 }) {
-  const [fonts, logoBytes] = await Promise.all([
-    brandFonts(),
-    readFile(asset("arak-logo-white-og.png")),
-  ]);
-  // Satori resolves `src` as a string; a Buffer is not a source it accepts.
-  const logo = `data:image/png;base64,${logoBytes.toString("base64")}`;
+  const fonts = brandFonts();
+  // Satori resolves `src` as a string, so the wordmark goes in as a data URI.
+  const logo = `data:image/png;base64,${LOGO_WHITE}`;
 
   return new ImageResponse(
     (
