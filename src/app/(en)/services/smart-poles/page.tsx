@@ -72,33 +72,49 @@ const CONTEXT_SHOTS = [
  * follows in the section below. Split 4/4 so the two columns balance.
  */
 const ANATOMY_START = [
-  { no: "01", en: "Smart lighting", ar: "الإضاءة الذكية",
+  {
+    no: "01", en: "Smart lighting", ar: "الإضاءة الذكية",
     enText: "The LED head, dimmed and scheduled from the control centre.",
-    arText: "رأس LED يُخفَت ويُجدوَل من مركز التحكّم." },
-  { no: "02", en: "Cameras", ar: "الكاميرات",
+    arText: "رأس LED يُخفَت ويُجدوَل من مركز التحكّم."
+  },
+  {
+    no: "02", en: "Cameras", ar: "الكاميرات",
     enText: "Fixed and PTZ, at the height that captures plates and faces.",
-    arText: "ثابتة ومتحرّكة PTZ، على الارتفاع الذي يلتقط اللوحات والوجوه." },
-  { no: "03", en: "Environmental sensors", ar: "أجهزة استشعار البيئة",
+    arText: "ثابتة ومتحرّكة PTZ، على الارتفاع الذي يلتقط اللوحات والوجوه."
+  },
+  {
+    no: "03", en: "Environmental sensors", ar: "أجهزة استشعار البيئة",
     enText: "Particulates, temperature, humidity and noise.",
-    arText: "الجسيمات ودرجة الحرارة والرطوبة والضجيج." },
-  { no: "04", en: "Emergency call", ar: "نداء الطوارئ",
+    arText: "الجسيمات ودرجة الحرارة والرطوبة والضجيج."
+  },
+  {
+    no: "04", en: "Emergency call", ar: "نداء الطوارئ",
     enText: "One button, straight through to the operations centre.",
-    arText: "زرّ واحد يصلك مباشرةً بمركز العمليات." },
+    arText: "زرّ واحد يصلك مباشرةً بمركز العمليات."
+  },
 ];
 
 const ANATOMY_END = [
-  { no: "05", en: "5G small cell", ar: "خلية الجيل الخامس",
+  {
+    no: "05", en: "5G small cell", ar: "خلية الجيل الخامس",
     enText: "Mounting for the small cells dense coverage needs.",
-    arText: "حامل للخلايا الصغيرة التي تتطلّبها التغطية الكثيفة." },
-  { no: "06", en: "Public WiFi", ar: "واي فاي عام",
+    arText: "حامل للخلايا الصغيرة التي تتطلّبها التغطية الكثيفة."
+  },
+  {
+    no: "06", en: "Public WiFi", ar: "واي فاي عام",
     enText: "Access points fed from the pole's own fibre run.",
-    arText: "نقاط وصول تُغذّى من مسار ألياف العمود نفسه." },
-  { no: "07", en: "Digital display", ar: "الشاشة الرقمية",
+    arText: "نقاط وصول تُغذّى من مسار ألياف العمود نفسه."
+  },
+  {
+    no: "07", en: "Digital display", ar: "الشاشة الرقمية",
     enText: "Wayfinding, public information or event programming.",
-    arText: "الإرشاد أو المعلومات العامة أو برامج الفعاليات." },
-  { no: "08", en: "Public address", ar: "البثّ العام",
+    arText: "الإرشاد أو المعلومات العامة أو برامج الفعاليات."
+  },
+  {
+    no: "08", en: "Public address", ar: "البثّ العام",
     enText: "Addressable speakers for announcements and alerts.",
-    arText: "سمّاعات قابلة للعنونة للإعلانات والتنبيهات." },
+    arText: "سمّاعات قابلة للعنونة للإعلانات والتنبيهات."
+  },
 ];
 
 export default function SmartPolesPage() {
@@ -128,8 +144,8 @@ export default function SmartPolesPage() {
           </h1>
           <p className={styles.heroLead}>
             {ar
-              ? "لا نبيعك عمودًا جاهزًا من الرفّ. في أراك يُرسَم كل عمود ذكي للشارع الذي سيقف فيه: الارتفاع والشكل والتشطيب وكل ما يحمله الجسم — الإضاءة والشبكة والكاميرات وأجهزة الاستشعار واللوحات وزرّ نداء الطوارئ — قابل للتخصيص بالكامل. ابدأ من عشرين تصميمًا، أو نرسم لك تصميمًا جديدًا."
-              : "We do not sell you a pole off the shelf. At ARAK every smart pole is drawn for the street it will stand on: the height, the form, the finish and everything the shaft carries — light, network, cameras, sensors, signage and the emergency call button — is fully customizable. Start from twenty designs, or we draw a new one for you."}
+              ? "لا نبيعك عمودًا جاهزًا من الرفّ. في أراك يُرسَم كل عمود ذكي للشارع الذي سيقف فيه: الارتفاع والشكل والتشطيب وكل ما يحمله الجسم الإضاءة والشبكة والكاميرات وأجهزة الاستشعار واللوحات وزرّ نداء الطوارئ  قابل للتخصيص بالكامل. ابدأ من عشرين تصميمًا، أو نرسم لك تصميمًا جديدًا."
+              : "We do not sell you a pole off the shelf. At ARAK every smart pole is drawn for the street it will stand on: the height, the form, the finish and everything the shaft carries light, network, cameras, sensors, signage and the emergency call button is fully customizable. Start from twenty designs, or we draw a new one for you."}
           </p>
           <div className={styles.heroTag}>
             {ar ? (
