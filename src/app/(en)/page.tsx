@@ -104,7 +104,7 @@ export default function HomePage() {
     <main>
       <section className={styles.hero} style={{ position: "relative", overflow: "hidden", background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
         <div className={styles.heroArt}>
-          <Image src="/home/riyadh-air-hq-v3.jpg" alt={ar ? "المقر الرئيسي لطيران الرياض في الرياض، مشروع إضاءة نفّذته أراك" : "Riyadh Air head office in Riyadh, a lighting project delivered by ARAK"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 46%" }} />
+          <Image src="/home/riyadh-arterial-hero.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
@@ -157,12 +157,11 @@ export default function HomePage() {
             </div>
           </div>
           {/* The corner used to hold a 50+ mark, which was the third time the
-              first screen said the same thing. It now credits the photograph,
-              turning the backdrop from wallpaper into a delivered project. */}
+              first screen said the same thing. It names the backdrop instead.
+              Down to the series alone: it stays a label, never a claim that
+              the street in the picture is one we delivered. */}
           <div className={styles.heroSeal}>
-            <span className={styles.creditLabel}>{ar ? "في الصورة" : "Pictured"}</span>
-            <span className={styles.creditName}>{ar ? "المقر الرئيسي لطيران الرياض" : "Riyadh Air Head Office"}</span>
-            <span className={styles.creditMeta}>{ar ? "الرياض · إضاءة الواجهة والمسطحات بتنفيذ أراك" : "Riyadh · facade and landscape lighting by ARAK"}</span>
+            <span className={styles.creditName}>{ar ? "أعمدة ذكية · سلسلة C°LB" : "Smart poles · C°LB series"}</span>
           </div>
         </div>
       </section>
