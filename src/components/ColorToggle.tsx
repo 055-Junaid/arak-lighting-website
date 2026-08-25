@@ -20,7 +20,7 @@ export function ColorToggle() {
 
   // Two words, set in the same micro-caps as the rest of the site's labels.
   // The bulb and the track carry the state; the label carries the action.
-  const label = ar ? (color ? "أطفئ الإضاءة" : "شغّل الإضاءة") : color ? "Lights off" : "Lights on";
+  const label = ar ? (color ? "شغّل الإضاءة" : "أطفئ الإضاءة") : color ? "Lights on" : "Lights off";
 
   const hint = ar
     ? color
