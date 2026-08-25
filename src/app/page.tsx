@@ -156,14 +156,11 @@ export default function HomePage() {
             </div>
           </div>
           {/* The corner used to hold a 50+ mark, which was the third time the
-              first screen said the same thing. It credits the backdrop instead.
-              While the hero is a visualisation rather than a delivered site,
-              this has to say so — the old credit named a real project, and
-              left on an illustration it would be claiming one we did not shoot. */}
+              first screen said the same thing. It names the backdrop instead.
+              Down to the series alone: it stays a label, never a claim that
+              the street in the picture is one we delivered. */}
           <div className={styles.heroSeal}>
-            <span className={styles.creditLabel}>{ar ? "في الصورة" : "Pictured"}</span>
             <span className={styles.creditName}>{ar ? "أعمدة ذكية · سلسلة C°LB" : "Smart poles · C°LB series"}</span>
-            <span className={styles.creditMeta}>{ar ? "الرياض · تصوّر توضيحي" : "Riyadh · illustrative visualisation"}</span>
           </div>
         </div>
       </section>
