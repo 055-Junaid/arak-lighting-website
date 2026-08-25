@@ -22,7 +22,7 @@
 }
 
 .title {
-  font: 600 clamp(38px, 5.6vw, 84px) / 1.02 var(--font-sora), sans-serif;
+  font: 600 clamp(34px, 4.6vw, 68px) / 1.05 var(--font-sora), sans-serif;
   letter-spacing: -0.035em;
   color: var(--ink);
   margin: 0;

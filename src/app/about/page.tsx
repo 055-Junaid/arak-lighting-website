@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
@@ -21,7 +20,7 @@ export default function AboutPage() {
         <div className={`${styles.shell} ${styles.heroInner}`}>
           <Reveal>
             <div className={styles.heroGrid}>
-              <div>
+              <div className={styles.heroCol}>
                 <span className={styles.eyebrow}>{ar ? "عن الشركة" : "About ARAK"}</span>
                 <h1 className={styles.heroTitle}>
                   {ar
@@ -29,7 +28,7 @@ export default function AboutPage() {
                     : "Fifty years of light, one project at a time."}
                 </h1>
               </div>
-              <div>
+              <div className={styles.heroCol}>
                 <p className={styles.heroLead}>
                   ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation.
                   Fifty years later it is a Saudi lighting company and smart lighting solutions
@@ -77,14 +76,6 @@ export default function AboutPage() {
             <Reveal>
               <div className={styles.nameMarkWrap}>
                 <div className={styles.nameMarkGlow} />
-                <Image
-                  src="/arak-icon-white.png"
-                  alt=""
-                  width={44}
-                  height={33}
-                  className={styles.nameMarkIcon}
-                  aria-hidden="true"
-                />
                 <span className={styles.nameMark} lang="ar" dir="rtl">
                   أراك
                 </span>

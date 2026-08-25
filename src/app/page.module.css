@@ -242,52 +242,133 @@
   justify-content: center;
 }
 
-/* ── The fifty-year mark ─────────────────────────────────────── */
+/* ── The corner mark ─────────────────────────────────────────
+   Holds the photograph credit. Absolutely placed rather than sharing
+   the hero's flex row: as a row item its width was subtracted from
+   the text column, squeezing the headline onto an extra line. Bottom
+   padding keeps it clear of the floating lights switch.
+   ───────────────────────────────────────────────────────────── */
 .heroSeal {
-  position: relative;
-  flex: none;
-  align-self: flex-end;
-  /* Deep enough that the floating lights switch in the bottom-right corner
-     never crowds the caption under the mark. */
-  padding-block-end: clamp(96px, 13vh, 150px);
+  position: absolute;
+  inset-block-end: clamp(96px, 13vh, 150px);
+  inset-inline-end: 48px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   text-align: end;
+  max-width: 30ch;
 }
 
-.sealNum {
-  position: relative;
-  font: 200 clamp(52px, 5vw, 84px) / 0.9 var(--font-sora), sans-serif;
-  letter-spacing: -0.05em;
+/* ── Hero eyebrow: the name, and what it means ──────────────── */
+.heroEyebrow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+}
+
+/* The name carries the ink; everything after it is annotation. */
+.heroName {
   color: #111111;
+  letter-spacing: 0.34em;
 }
 
-.sealPlus {
-  font-weight: 300;
-  font-size: 0.5em;
-  vertical-align: 0.46em;
-  margin-inline-start: 0.04em;
+/* Arabic script has no uppercase and its own optical size, so the transform
+   and the wide Latin tracking both come back off for this one word. */
+.heroNameAr {
+  font-family: var(--font-plex-sans), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(17, 17, 17, 0.78);
+}
+
+.heroGloss {
+  letter-spacing: 0.18em;
+  text-transform: none;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  color: #6e6e6b;
+}
+
+.heroDot {
+  color: rgba(17, 17, 17, 0.28);
   letter-spacing: 0;
 }
 
-.sealCaption {
-  position: relative;
-  font: 500 11px/1 var(--font-plex-sans), sans-serif;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.82);
-  margin-top: 20px;
-  white-space: nowrap;
+/* ── Capability rail ─────────────────────────────────────────
+   Bare words separated by rules rather than pills: the page has no
+   other rounded shapes, and six chips would have been the loudest
+   thing in a hero built on hairlines.
+   ───────────────────────────────────────────────────────────── */
+.heroCaps {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  max-width: 48ch;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 24px;
 }
 
-/* Keep the mark clear of the viewport edge on narrower desktops. */
+.heroCap {
+  font: 500 11px/1.3 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.66);
+  padding-top: 12px;
+  border-top: 1px solid rgba(17, 17, 17, 0.22);
+}
+
+/* ── Photograph credit ───────────────────────────────────────
+   Replaces the old 50+ seal, which repeated the headline's date and
+   the paragraph's "five decades" a third time. Same corner, same
+   clearance over the colour toggle; it now tells the visitor that
+   the building behind the type is work ARAK delivered.
+   ───────────────────────────────────────────────────────────── */
+.creditLabel {
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.creditName {
+  font: 500 clamp(16px, 1.35vw, 19px) / 1.25 var(--font-sora), sans-serif;
+  letter-spacing: -0.015em;
+  color: #111111;
+  margin-top: 14px;
+  max-width: 16ch;
+}
+
+.creditMeta {
+  font: 400 12px/1.6 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.7);
+  margin-top: 10px;
+  max-width: 26ch;
+}
+
+/* Keep the credit clear of the viewport edge on narrower desktops. */
 @media (max-width: 1280px) {
-  .sealNum {
-    font-size: clamp(48px, 4.6vw, 70px);
+  .creditName {
+    font-size: 16px;
   }
-  .sealCaption {
-    letter-spacing: 0.18em;
+  .creditMeta {
+    max-width: 22ch;
+  }
+}
+
+@media (max-width: 1100px) {
+  .heroCaps {
+    max-width: 34ch;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -303,19 +384,24 @@
   :global([dir="rtl"]) .heroVeil {
     background: linear-gradient(188deg, #ffffff 2%, rgba(255, 255, 255, 0.93) 30%, rgba(255, 255, 255, 0.72) 52%, rgba(255, 255, 255, 0.4) 74%, rgba(255, 255, 255, 0.2) 100%);
   }
-  .sealNum {
-    font-size: clamp(56px, 15vw, 88px);
-  }
   .heroRow {
     flex-direction: column;
     align-items: stretch;
     padding: clamp(88px, 14vw, 140px) 28px clamp(56px, 9vw, 84px);
   }
+  /* Stacked, the credit is a caption under the column rather than a
+     mark in the corner, so it loses the toggle clearance it needed
+     when it floated over the bottom-right of the photograph. */
   .heroSeal {
+    position: static;
     align-self: flex-start;
     align-items: flex-start;
     text-align: start;
-    margin-top: 56px;
+    margin-top: 48px;
+    max-width: none;
+  }
+  .creditName {
+    max-width: 24ch;
   }
 }
 

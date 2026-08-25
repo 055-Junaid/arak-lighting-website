@@ -75,6 +75,20 @@ const HOME_SERVICES = [
   },
 ];
 
+/**
+ * The capability rail in the hero. Six of the ten service lines, chosen as the
+ * ones a stranger can picture without explanation, in company-profile order.
+ * Deliberately shorter than HOME_SERVICES below: this is a glance, not a menu.
+ */
+const HERO_CAPS = [
+  { en: "Indoor Lighting", ar: "الإضاءة الداخلية" },
+  { en: "Facade Lighting", ar: "إضاءة الواجهات" },
+  { en: "Outdoor Lighting", ar: "الإضاءة الخارجية" },
+  { en: "Lighting Design", ar: "تصميم الإضاءة" },
+  { en: "KNX Controls", ar: "أنظمة التحكم KNX" },
+  { en: "Smart Poles", ar: "الأعمدة الذكية" },
+];
+
 export default function HomePage() {
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -89,25 +103,59 @@ export default function HomePage() {
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
         <div className={styles.heroRow}>
           <div className={styles.heroCol}>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
-              <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "حلول الإضاءة الذكية · الرياض" : "Smart Lighting Solutions · Riyadh"}</span>
+            {/* The name itself is the hook. "ARAK" appears nowhere in the old
+                hero copy but the logo, and the fact that أراك means "I see you"
+                — the most memorable thing about the brand — sat 900px down the
+                page. Arabic readers get no reveal from a translation of their
+                own word, so that column carries the positioning instead. */}
+            <div className={styles.heroEyebrow}>
+              {ar ? (
+                <>
+                  <span className={styles.heroName}>أراك</span>
+                  <span aria-hidden="true" className={styles.heroDot}>·</span>
+                  <span>حلول الإضاءة الذكية</span>
+                  <span aria-hidden="true" className={styles.heroDot}>·</span>
+                  <span>الرياض</span>
+                </>
+              ) : (
+                <>
+                  <span className={styles.heroName}>ARAK</span>
+                  <span aria-hidden="true" className={styles.heroDot}>·</span>
+                  <span lang="ar" dir="rtl" className={styles.heroNameAr}>أراك</span>
+                  <span aria-hidden="true" className={styles.heroDot}>·</span>
+                  <span className={styles.heroGloss}>&ldquo;I see you&rdquo; in Arabic</span>
+                </>
+              )}
             </div>
-            <h1 style={{ font: "600 clamp(46px,7vw,104px)/0.98 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام ١٩٧٦" : "Lighting the Kingdom since 1976"}</h1>
+            <h1 style={{ font: "600 clamp(42px,6vw,88px)/1.0 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام ١٩٧٦" : "Lighting the Kingdom since 1976"}</h1>
+            {/* The old lead opened "Five decades…" directly beneath a headline
+                that already says 1976, and a seal that said 50+. It now spends
+                its one sentence on the scope of work instead. */}
             <p style={{ font: "300 clamp(17px,1.5vw,21px)/1.6 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)", margin: "34px 0 0", maxWidth: "52ch" }}>
               {ar
-                ? "خمسة عقود من تجهيزات الإضاءة، وتصميم الإضاءة، وأنظمة التحكم KNX، والأتمتة المنزلية — في الفنادق والمطارات والقصور والمشاريع الوطنية."
-                : "Five decades of fixtures, lighting design, KNX control and home automation, delivered across hotels, airports, palaces and national projects."}
+                ? "نُصمّمها ونورّدها ونركّبها ونبقى معها بعد التسليم — أنظمة إضاءة وتحكّم لفنادق المملكة ومطاراتها وقصورها ومشاريعها الوطنية."
+                : "We design it, supply it, install it and stay with it after handover. Lighting and control systems for the Kingdom's hotels, airports, palaces and national projects."}
             </p>
+            {/* Ten service lines read as prose take eight seconds. As a rail
+                they take one, and they answer the question the headline raises:
+                lighting the Kingdom with what, exactly. */}
+            <ul className={styles.heroCaps}>
+              {HERO_CAPS.map((cap) => (
+                <li key={cap.en} className={styles.heroCap}>{ar ? cap.ar : cap.en}</li>
+              ))}
+            </ul>
             <div style={{ display: "flex", gap: "14px", marginTop: "46px", pointerEvents: "auto" }}>
               <Link href="/contact" style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#FFFFFF", background: "#111111", padding: "19px 30px", cursor: "pointer" }} className={styles.h1}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</Link>
               <Link href="/projects" style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#111111", border: "1px solid rgba(17,17,17,.28)", padding: "19px 30px", cursor: "pointer" }} className={styles.h2}>{lang === "ar" ? "عرض المشاريع" : "View projects"}</Link>
             </div>
           </div>
+          {/* The corner used to hold a 50+ mark, which was the third time the
+              first screen said the same thing. It now credits the photograph,
+              turning the backdrop from wallpaper into a delivered project. */}
           <div className={styles.heroSeal}>
-            <span className={styles.sealNum}>
-              50<span className={styles.sealPlus}>+</span>
-            </span>
-            <span className={styles.sealCaption}>{ar ? "سنة من الخبرة" : "Years of expertise"}</span>
+            <span className={styles.creditLabel}>{ar ? "في الصورة" : "Pictured"}</span>
+            <span className={styles.creditName}>{ar ? "المقر الرئيسي لطيران الرياض" : "Riyadh Air Head Office"}</span>
+            <span className={styles.creditMeta}>{ar ? "الرياض · إضاءة الواجهة والمسطحات بتنفيذ أراك" : "Riyadh · facade and landscape lighting by ARAK"}</span>
           </div>
         </div>
       </section>
@@ -157,7 +205,7 @@ export default function HomePage() {
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
               <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "من نحن" : "Who we are"}</span>
             </div>
-            <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{lang === "ar" ? "نتألق منذ عام ١٩٧٦" : "Shining brightly since 1976"}</h2>
+            <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{lang === "ar" ? "نتألق منذ خمسين عامًا" : "Shining brightly for 50 years"}</h2>
             <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.68)", margin: "36px 0 0", maxWidth: "62ch" }}>
               {ar ? (
                 "«أراك» شركة إضاءة ومزوّد لحلول الإضاءة الذكية، بدأت امتدادًا لمؤسسة عبدالرحمن عبدالقادر عام ١٩٧٦م، وهي اليوم مؤسسة سعودية رائدة تجسّد القيم السعودية."

@@ -84,7 +84,7 @@
 }
 
 .heroTitle {
-  font: 600 clamp(42px, 6.6vw, 104px) / 0.98 var(--font-sora), sans-serif;
+  font: 600 clamp(36px, 5vw, 76px) / 1.02 var(--font-sora), sans-serif;
   letter-spacing: -0.04em;
   color: #ffffff;
   margin: 28px 0 0;

@@ -69,17 +69,28 @@
   position: relative;
 }
 
-/* Title on the left, lead and buttons on the right, both sitting on the same
-   baseline so the stat strip below reads as one ruled band. */
+/* Title on the left, lead and buttons on the right, hung from a rule that
+   runs the full width. They were bottom-aligned, which balanced only while
+   the title ran to three lines: at two, the whole height difference collected
+   as dead space above the eyebrow. Hanging both columns from the top keeps
+   them tied together whatever the title does. */
 .heroGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr);
   gap: clamp(32px, 4vw, 72px);
-  align-items: end;
+  align-items: start;
+}
+
+/* The lead already carried a hairline over it; the title column now picks up
+   the same one, so the two read as one rule across the hero rather than a
+   stub hanging over the right half. */
+.heroCol {
+  border-top: 1px solid var(--hair);
+  padding-top: 30px;
 }
 
 .heroTitle {
-  font: 600 clamp(38px, 5.4vw, 84px) / 1.02 var(--font-sora), sans-serif;
+  font: 600 clamp(34px, 4.4vw, 66px) / 1.05 var(--font-sora), sans-serif;
   letter-spacing: -0.035em;
   color: var(--ink);
   margin: 26px 0 0;
@@ -92,8 +103,6 @@
   color: var(--muted);
   margin: 0;
   max-width: 52ch;
-  border-top: 1px solid var(--hair);
-  padding-top: 30px;
 }
 
 .heroActions {
@@ -217,14 +226,6 @@
   color: #ffffff;
 }
 
-.nameMarkIcon {
-  position: absolute;
-  top: 22px;
-  inset-inline-end: 22px;
-  width: clamp(28px, 3vw, 40px);
-  height: auto;
-  opacity: 0.55;
-}
 
 .nameTranslation {
   position: absolute;
@@ -686,6 +687,12 @@
   .heroGrid {
     grid-template-columns: minmax(0, 1fr);
     gap: 34px;
+  }
+  /* Stacked, a rule over each column is two stray lines; the title keeps it
+     and the lead follows on underneath. */
+  .heroCol + .heroCol {
+    border-top: 0;
+    padding-top: 0;
   }
   .heroTitle {
     max-width: 17ch;
