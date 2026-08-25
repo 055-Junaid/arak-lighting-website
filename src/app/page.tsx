@@ -8,6 +8,7 @@ import { ProjectCards } from "@/components/ProjectCards";
 import { VendorBelt } from "@/components/VendorBelt";
 import { BrandGrid } from "@/components/BrandGrid";
 import { ClientGrid } from "@/components/ClientGrid";
+import { Reveal } from "@/components/Reveal";
 import styles from "./page.module.css";
 
 /**
@@ -370,30 +371,48 @@ export default function HomePage() {
           <VendorBelt />
         </div>
       </section>
-      <section style={{ background: "#111111" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "130px 48px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
-          <blockquote style={{ font: "300 clamp(30px,4.4vw,62px)/1.14 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#FFFFFF", margin: "0", maxWidth: "24ch", textWrap: "balance" }}>
-            {ar
-              ? "الضوء ليس ما يكشف الأشياء بقدر ما هو الكشف ذاته."
-              : "Light is not so much something that reveals as it is itself the revelation."}
-          </blockquote>
-          <div style={{ display: "flex", alignItems: "center", gap: "14px", marginTop: "44px" }}>
-            <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".28em", textTransform: "uppercase", color: "rgba(255,255,255,.7)" }}>
-              {ar ? "جيمس ترل" : "James Turrell"}
-            </span>
-          </div>
+      {/* Closing movement. The quote and the call to act share one dark ground,
+          so the page resolves on a single beat before the light footer the way
+          /about and /services close, rather than a lone dark stripe fading back
+          out to white. A hairline, not a change of colour, keeps them readable
+          as two separate thoughts. */}
+      <section className={styles.finale}>
+        <div className={styles.finaleGlow} aria-hidden="true" />
+        <div className={`${styles.finaleShell} ${styles.quote}`}>
+          <Reveal>
+            <blockquote className={styles.quoteText}>
+              {ar
+                ? "الضوء ليس ما يكشف الأشياء بقدر ما هو الكشف ذاته."
+                : "Light is not so much something that reveals as it is itself the revelation."}
+            </blockquote>
+            <div className={styles.quoteAttrib}>
+              <span className={styles.quoteRule} aria-hidden="true" />
+              <cite className={styles.quoteName}>{ar ? "جيمس ترل" : "James Turrell"}</cite>
+            </div>
+          </Reveal>
         </div>
-      </section>
-      <section style={{ position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: "0", background: "radial-gradient(120% 90% at 50% -10%,rgba(17,17,17,.07) 0%,rgba(255,255,255,0) 62%)", pointerEvents: "none" }}></div>
-        <div style={{ position: "relative", maxWidth: "1360px", margin: "0 auto", padding: "140px 48px", textAlign: "center" }}>
-          <h2 style={{ font: "600 clamp(34px,4.6vw,68px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0 auto", maxWidth: "22ch", textWrap: "balance" }}>{lang === "ar" ? "لنُضئ مشروعك القادم" : "Let’s light your next project"}</h2>
-          <p style={{ font: "300 clamp(16px,1.4vw,20px)/1.65 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "28px auto 0", maxWidth: "52ch" }}>
-            {ar
-              ? "أرسل لنا المخططات أو جدول وحدات الإضاءة أو الفكرة المبدئية فحسب، وسيعود إليك فريقنا في الرياض بدراسة إضاءة وعرض سعر."
-              : "Send us drawings, a fixture schedule, or just the brief. Our Riyadh team will come back with a lighting study and a quotation."}
-          </p>
-          <Link href="/contact" style={{ display: "inline-block", font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#FFFFFF", background: "#111111", padding: "21px 36px", marginTop: "48px", cursor: "pointer" }} className={styles.h76}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</Link>
+        <div className={`${styles.finaleShell} ${styles.close}`}>
+          <Reveal>
+            <span className={styles.closeEyebrow}>{ar ? "لنبدأ" : "Start here"}</span>
+            <h2 className={styles.closeTitle}>
+              {ar ? "لنُضئ مشروعك القادم" : "Let’s light your next project"}
+            </h2>
+            <p className={styles.closeLead}>
+              {ar
+                ? "أرسل لنا المخططات أو جدول وحدات الإضاءة أو الفكرة المبدئية فحسب، وسيعود إليك فريقنا في الرياض بدراسة إضاءة وعرض سعر."
+                : "Send us drawings, a fixture schedule, or just the brief. Our Riyadh team will come back with a lighting study and a quotation."}
+            </p>
+            <div className={styles.closeActions}>
+              <Link href="/contact" className={styles.closeCta}>
+                {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
+                <span className={styles.closeArrow} aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link href="/projects" className={styles.closeGhost}>
+                {ar ? "شاهد أعمالنا" : "See the work"}
+                <span className={styles.closeArrow} aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
 
