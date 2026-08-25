@@ -5,13 +5,13 @@ import { SITE_NAME, SITE_URL, localeAlternates } from "@/lib/site";
 import "../globals.css";
 
 const sora = Sora({
-  variable: "--font-sora",
+  variable: "--font-sora-src",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
+  variable: "--font-plex-sans-src",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
 });

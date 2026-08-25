@@ -85,25 +85,43 @@ a:hover {
   color: var(--white);
 }
 
-/* next/font publishes each family as a variable on <html>. Copy the two Latin
-   ones under their own names so the Arabic block below can rewrite the
-   originals without a variable referring to itself. */
+/* --- Type families ------------------------------------------------------
+   next/font publishes each family as a CSS variable, and the Arabic tree has
+   to rewrite two of them: almost every rule on this site sets the `font:`
+   shorthand — inline or in a module — and a shorthand carries its own
+   font-family, so a plain `font-family` on the Arabic root would lose to all
+   of them. Rewriting the variables those shorthands read is what actually
+   puts IBM Plex Sans Arabic on the page.
+
+   So the names the layouts publish (`-src`) are deliberately not the names
+   the stylesheets read. A variable that is both the source and the thing
+   being overridden cannot be written without referring to itself, and a
+   custom-property cycle is not a silent no-op: CSS resolves it by throwing
+   every variable in the cycle away. That is what used to happen here — the
+   aliases and the Arabic rewrite both landed on <html>, since :root and
+   [dir="rtl"] select the same element on an Arabic page — and every `font:`
+   shorthand on that page then referenced an empty variable, went invalid at
+   computed-value time, and took its own font-size, weight and line-height
+   down with it. Arabic headings rendered at the inherited 16px, in Times.
+   The `-src` variables are only ever read, never redefined, so there is no
+   longer a cycle to fall into.
+
+   --font-plex-sans-arabic keeps its published name: nothing overrides it, and
+   the two rules that ask for Arabic by name (the about page's name mark, the
+   header's language link) read it directly on both trees. */
 :root {
-  --font-latin-sans: var(--font-plex-sans);
-  --font-latin-display: var(--font-sora);
+  --font-sora: var(--font-sora-src);
+  --font-plex-sans: var(--font-plex-sans-src);
 }
 
-/* Arabic pages. Almost every rule on this site sets the `font:` shorthand —
-   inline or in a module — and a shorthand carries its own font-family, so a
-   plain `font-family` here would lose to all of them. Rewriting the variables
-   those shorthands read is what actually puts IBM Plex Sans Arabic on the page.
+/* Arabic pages, and any Arabic run marked dir="rtl" inside an English one.
    Plex Arabic has to lead the list: next/font's metric-matched fallbacks are
-   local Arial, which carries Arabic glyphs and would otherwise claim the script
-   before it ever reached Plex Arabic. Latin runs (KNX, 1976, ARAK) resolve to
-   Plex Arabic's own Latin, which is the same superfamily. */
+   local Arial, which carries Arabic glyphs and would otherwise claim the
+   script before it ever reached Plex Arabic. Latin runs (KNX, 1976, ARAK)
+   fall through to the Latin face behind it. */
 [dir="rtl"] {
-  --font-plex-sans: var(--font-plex-sans-arabic), var(--font-latin-sans);
-  --font-sora: var(--font-plex-sans-arabic), var(--font-latin-display);
+  --font-plex-sans: var(--font-plex-sans-arabic), var(--font-plex-sans-src);
+  --font-sora: var(--font-plex-sans-arabic), var(--font-sora-src);
   font-family: var(--font-plex-sans), sans-serif;
 }
 
@@ -114,6 +132,24 @@ a:hover {
 [dir="rtl"],
 [dir="rtl"] * {
   letter-spacing: normal !important;
+}
+
+/* Leading. Every display size on this site is set tight — 1.0 on the home
+   hero, 1.06 on the section titles, 0.9 on the largest mark — because Latin
+   caps have nothing above them and Sora's ink measures about 0.95em tall, so
+   it sits inside a 1.0 line box with room to spare. Arabic does not: Plex
+   Arabic's ink runs to roughly 1.44em on a line carrying both a tashkeel mark
+   and a descending ي or ء, and its own font box is 1.5em. At 1.0 the marks of
+   one line land in the bowls of the line above.
+
+   1.35 is the floor those headings need, and it is applied rather than
+   inherited for the same reason as the tracking above: the sizes it has to
+   beat are written into `font:` shorthands, most of them inline. Body copy is
+   already set at 1.6–1.75 and is left alone; so is anything that is not a
+   heading, which keeps the stat figures and the pole names on their own
+   tightly-measured single lines. */
+[dir="rtl"] :is(h1, h2, h3, h4, h5, h6, blockquote) {
+  line-height: 1.35 !important;
 }
 
 @keyframes beam {
