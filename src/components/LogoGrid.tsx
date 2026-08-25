@@ -15,6 +15,8 @@ const PEEK = 56;
 
 export type LogoItem = {
   name: string;
+  /** Arabic name. Falls back to `name` for marks that have no Arabic form. */
+  ar?: string;
   /** File inside `basePath`. Omit when we hold no usable mark — the name is set as a wordmark instead. */
   file?: string;
 };
@@ -102,10 +104,10 @@ export function LogoGrid({
                     className={styles.logo}
                   />
                 ) : (
-                  <span className={styles.wordmark}>{item.name}</span>
+                  <span className={styles.wordmark}>{ar ? item.ar ?? item.name : item.name}</span>
                 )}
               </span>
-              <span className={styles.name}>{item.name}</span>
+              <span className={styles.name}>{ar ? item.ar ?? item.name : item.name}</span>
             </div>
           ))}
         </div>

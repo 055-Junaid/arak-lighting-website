@@ -56,9 +56,9 @@ export function ProjectsTable() {
         {rows.map((row, i) => (
           <div key={`${row.name}-${row.loc}`} className={styles.row}>
             <span className={styles.index}>{String(i + 1).padStart(2, "0")}</span>
-            <span className={styles.name}>{row.name}</span>
-            <span className={styles.loc}>{row.loc}</span>
-            <span className={styles.scope}>{row.scope}</span>
+            <span className={styles.name}>{ar ? row.arName : row.name}</span>
+            <span className={styles.loc}>{ar ? row.arLoc : row.loc}</span>
+            <span className={styles.scope}>{ar ? row.arScope : row.scope}</span>
           </div>
         ))}
       </div>

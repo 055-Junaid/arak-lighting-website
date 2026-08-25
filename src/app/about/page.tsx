@@ -30,11 +30,9 @@ export default function AboutPage() {
               </div>
               <div className={styles.heroCol}>
                 <p className={styles.heroLead}>
-                  ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation.
-                  Fifty years later it is a Saudi lighting company and smart lighting solutions
-                  provider, carrying more than forty international brands and delivering fittings,
-                  controls and automation into hotels, airports, hospitals, palaces and national
-                  projects across the Kingdom.
+                  {ar
+                    ? "بدأت أراك عام 1976 امتدادًا لمؤسسة عبدالرحمن عبدالقادر. وبعد خمسين عامًا صارت شركة إضاءة سعودية ومزوّدًا لحلول الإضاءة الذكية، تحمل أكثر من أربعين علامة عالمية وتورّد وحدات الإضاءة وأنظمة التحكّم والأتمتة إلى الفنادق والمطارات والمستشفيات والقصور والمشاريع الوطنية في مختلف أنحاء المملكة."
+                    : "ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation. Fifty years later it is a Saudi lighting company and smart lighting solutions provider, carrying more than forty international brands and delivering fittings, controls and automation into hotels, airports, hospitals, palaces and national projects across the Kingdom."}
                 </p>
                 <div className={styles.heroActions}>
                   <Link href="/projects" className={styles.primaryCta}>
@@ -88,15 +86,27 @@ export default function AboutPage() {
                 {ar ? "أراك تعني أنني أراك" : "Our name is a promise to pay attention."}
               </h2>
               <p className={styles.nameBody}>
-                أراك means <em>I see you</em> in Arabic. It is a fair description of what lighting
-                actually does for a building, and of how we prefer to work: looking closely at the
-                room, the client and the drawing in front of us before anyone talks about a fixture
-                schedule.
+                {ar ? (
+                  // No gloss in Arabic: explaining that أراك means "I see you"
+                  // to an Arabic reader would be explaining their own language.
+                  <>
+                    «أراك» وصفٌ منصف لما تفعله الإضاءة بالمبنى فعلًا، ولطريقتنا المفضّلة في العمل:
+                    أن ننظر مليًّا إلى الغرفة وإلى العميل وإلى المخطط الذي أمامنا، قبل أن يتحدّث أحد
+                    عن جدول وحدات الإضاءة.
+                  </>
+                ) : (
+                  <>
+                    أراك means <em>I see you</em> in Arabic. It is a fair description of what
+                    lighting actually does for a building, and of how we prefer to work: looking
+                    closely at the room, the client and the drawing in front of us before anyone
+                    talks about a fixture schedule.
+                  </>
+                )}
               </p>
               <p className={styles.nameBodySmall}>
-                The company grew out of a family trading house into a pioneering Saudi establishment
-                that still runs on Saudi values. Everything below is what that turned into over
-                fifty years.
+                {ar
+                  ? "نمت الشركة من بيت تجارة عائلي إلى مؤسسة سعودية رائدة ما تزال تقوم على القيم السعودية. وكل ما يلي هو ما آل إليه ذلك على مدى خمسين عامًا."
+                  : "The company grew out of a family trading house into a pioneering Saudi establishment that still runs on Saudi values. Everything below is what that turned into over fifty years."}
               </p>
             </Reveal>
           </div>
@@ -113,8 +123,9 @@ export default function AboutPage() {
                 <h2 className={styles.sectionTitle}>{ar ? "أربعة فصول" : "Four chapters"}</h2>
               </div>
               <p className={styles.sectionNote}>
-                Not a timeline of press releases. Four shifts in what the company actually sold, in
-                the order they happened.
+                {ar
+                  ? "ليست سلسلة بيانات صحفية، بل أربعة تحوّلات في ما كانت الشركة تبيعه فعلًا، بالترتيب الذي وقعت فيه."
+                  : "Not a timeline of press releases. Four shifts in what the company actually sold, in the order they happened."}
               </p>
             </div>
           </Reveal>
@@ -124,7 +135,7 @@ export default function AboutPage() {
                 <article className={styles.chapter}>
                   <div className={styles.chapterNo}>{c.no}</div>
                   <h3 className={styles.chapterTitle}>{ar ? c.ar : c.en}</h3>
-                  <p className={styles.chapterBody}>{c.body}</p>
+                  <p className={styles.chapterBody}>{ar ? c.arBody : c.body}</p>
                 </article>
               </Reveal>
             ))}
@@ -148,28 +159,25 @@ export default function AboutPage() {
             </Reveal>
             <Reveal delay={80}>
               <p className={styles.founderLead}>
-                With a long history and legacy of 40+ years, ARAK Lighting became a leading national
-                company in the field of lighting. Throughout the years, with hard work and
-                persistence, the company has positioned itself alongside the industry&rsquo;s
-                pioneering national companies, becoming a certified partner of several reputable
-                international brands.
+                {ar
+                  ? "بتاريخ وإرث يمتدّان أكثر من أربعين عامًا، صارت أراك للإنارة شركة وطنية رائدة في مجال الإضاءة. وعلى مرّ السنين، وبالعمل الجادّ والمثابرة، وضعت الشركة نفسها في مصافّ الشركات الوطنية الرائدة في القطاع، وأصبحت شريكًا معتمدًا لعدد من العلامات العالمية المرموقة."
+                  : "With a long history and legacy of 40+ years, ARAK Lighting became a leading national company in the field of lighting. Throughout the years, with hard work and persistence, the company has positioned itself alongside the industry’s pioneering national companies, becoming a certified partner of several reputable international brands."}
               </p>
               <p className={styles.founderBody}>
-                Due to elevated knowledge and a big love for lights, ARAK Lighting became an
-                embodiment of the highest standards in the lighting industry, one that strives to
-                keep climbing the ladder of excellence and quality with a forever growing interest
-                in all new light technologies.
+                {ar
+                  ? "وبفضل المعرفة العميقة والشغف الكبير بالضوء، غدت أراك للإنارة تجسيدًا لأعلى المعايير في صناعة الإضاءة، تسعى إلى مواصلة الارتقاء في سلّم التميّز والجودة، باهتمام لا ينقطع بكل ما هو جديد في تقنيات الإضاءة."
+                  : "Due to elevated knowledge and a big love for lights, ARAK Lighting became an embodiment of the highest standards in the lighting industry, one that strives to keep climbing the ladder of excellence and quality with a forever growing interest in all new light technologies."}
               </p>
               <p className={styles.founderBody}>
-                Being a leading national company, ARAK Lighting keeps innovating internally and
-                growing with its mission and values. The company keeps expanding its product
-                portfolio in lighting and lighting controls to continue offering the best customer
-                experience solutions, in line with the Kingdom&rsquo;s 2030 vision.
+                {ar
+                  ? "وبوصفها شركة وطنية رائدة، تواصل أراك للإنارة الابتكار داخليًا والنموّ مع رسالتها وقيمها. وتمضي في توسيع محفظة منتجاتها في الإضاءة وأنظمة التحكّم بها، لتظلّ تقدّم أفضل حلول تجربة العميل، بما ينسجم مع رؤية المملكة 2030."
+                  : "Being a leading national company, ARAK Lighting keeps innovating internally and growing with its mission and values. The company keeps expanding its product portfolio in lighting and lighting controls to continue offering the best customer experience solutions, in line with the Kingdom’s 2030 vision."}
               </p>
               <div className={styles.founderPull}>
                 <p className={styles.founderPullText}>
-                  Ease your mind with us, and know that ARAK Lighting will forever be there to light
-                  your way.
+                  {ar
+                    ? "اطمئنّ معنا، واعلم أن أراك للإنارة ستظلّ دائمًا هناك لتُضيء طريقك."
+                    : "Ease your mind with us, and know that ARAK Lighting will forever be there to light your way."}
                 </p>
                 <div className={styles.signature}>
                   <span className={styles.signatureName}>Abdul Rahman Abdul Kader</span>
@@ -193,8 +201,9 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className={styles.sectionNote}>
-                One says where the company intends to end up. The other says what it refuses to
-                compromise on along the way.
+                {ar
+                  ? "إحداهما تقول إلى أين تريد الشركة أن تصل، والأخرى تقول ما الذي ترفض التنازل عنه في الطريق."
+                  : "One says where the company intends to end up. The other says what it refuses to compromise on along the way."}
               </p>
             </div>
           </Reveal>
@@ -205,10 +214,9 @@ export default function AboutPage() {
                 <span className={styles.pillarNo}>01</span>
                 <h3 className={styles.pillarTitle}>{ar ? "رؤيتنا" : "Our Vision"}</h3>
                 <p className={styles.pillarBody}>
-                  To become the leader in the lighting industry nationally and regionally, and the
-                  go-to smart lighting solutions provider in the Kingdom. We aim to expand into new
-                  markets and regions by partnering with high-end international brands, constantly
-                  upgrading our services and diversifying what we can supply.
+                  {ar
+                    ? "أن نصبح الرائد في صناعة الإضاءة وطنيًا وإقليميًا، والوجهة الأولى لحلول الإضاءة الذكية في المملكة. ونتطلّع إلى التوسّع في أسواق ومناطق جديدة بالشراكة مع علامات عالمية راقية، مع تطوير خدماتنا باستمرار وتنويع ما نستطيع توريده."
+                    : "To become the leader in the lighting industry nationally and regionally, and the go-to smart lighting solutions provider in the Kingdom. We aim to expand into new markets and regions by partnering with high-end international brands, constantly upgrading our services and diversifying what we can supply."}
                 </p>
               </article>
             </Reveal>
@@ -217,10 +225,9 @@ export default function AboutPage() {
                 <span className={styles.pillarNo}>02</span>
                 <h3 className={styles.pillarTitle}>{ar ? "مهمتنا" : "Our Mission"}</h3>
                 <p className={styles.pillarBody}>
-                  To always offer state-of-the-art products and service in compliance with the
-                  highest international standards. Cutting-edge hardware delivered consistently, to
-                  the most stringent global benchmarks, is the core of a commitment to excellence
-                  that has not changed since 1976.
+                  {ar
+                    ? "أن نقدّم دائمًا منتجات وخدمات في طليعة التقنية، وفق أعلى المعايير الدولية. فتوريد أحدث الأجهزة على نحو ثابت، وبأشدّ المقاييس العالمية صرامة، هو جوهر التزام بالتميّز لم يتغيّر منذ عام 1976."
+                    : "To always offer state-of-the-art products and service in compliance with the highest international standards. Cutting-edge hardware delivered consistently, to the most stringent global benchmarks, is the core of a commitment to excellence that has not changed since 1976."}
                 </p>
               </article>
             </Reveal>
@@ -238,8 +245,9 @@ export default function AboutPage() {
                 <h2 className={styles.sectionTitle}>{ar ? "لماذا أراك؟" : "Why ARAK?"}</h2>
               </div>
               <p className={styles.sectionNote}>
-                Four things clients can hold us to, and the reason most of them come back with the
-                next building.
+                {ar
+                  ? "أربعة أمور يستطيع العملاء محاسبتنا عليها، وهي سبب عودة معظمهم إلينا في المبنى التالي."
+                  : "Four things clients can hold us to, and the reason most of them come back with the next building."}
               </p>
             </div>
           </Reveal>
@@ -251,7 +259,7 @@ export default function AboutPage() {
                     <span className={styles.valueNo}>{v.no}</span>
                     <h3 className={styles.valueTitle}>{ar ? v.ar : v.en}</h3>
                   </div>
-                  <p className={styles.valueBody}>{v.body}</p>
+                  <p className={styles.valueBody}>{ar ? v.arBody : v.body}</p>
                 </article>
               </Reveal>
             ))}
@@ -267,7 +275,7 @@ export default function AboutPage() {
               <div className={styles.peopleArt}>
                 <PhotoSlot
                   src="/projects/athletic-showroom/03.jpg"
-                  alt="An ARAK-lit retail showroom in Riyadh with track spots, linear runs and shelf-integrated strips, seen from the shop floor"
+                  alt={ar ? "معرض تجزئة في الرياض أضاءته أراك بكشّافات على مسارات وخطوط ضوئية وشرائط مدمجة في الرفوف، من داخل صالة العرض" : "An ARAK-lit retail showroom in Riyadh with track spots, linear runs and shelf-integrated strips, seen from the shop floor"}
                 />
               </div>
             </Reveal>
@@ -277,14 +285,15 @@ export default function AboutPage() {
                 {ar ? "من ينفّذ العمل فعلياً" : "The people who actually do the work"}
               </h2>
               <p className={styles.sectionNote} style={{ marginTop: "24px", maxWidth: "52ch" }}>
-                A lighting company is only as good as the person on the phone when a fitting arrives
-                damaged or a bus address will not respond. So we invest in that person first.
+                {ar
+                  ? "قيمة شركة الإضاءة من قيمة الشخص الذي يردّ على الهاتف حين تصل وحدة إضاءة تالفة أو يتوقّف عنوان على الناقل عن الاستجابة. ولذلك نستثمر في هذا الشخص أوّلًا."
+                  : "A lighting company is only as good as the person on the phone when a fitting arrives damaged or a bus address will not respond. So we invest in that person first."}
               </p>
               <ul className={styles.peopleList}>
                 {PLEDGES.map((p) => (
                   <li key={p.en} className={styles.pledge}>
                     <h3 className={styles.pledgeTitle}>{ar ? p.ar : p.en}</h3>
-                    <p className={styles.pledgeBody}>{p.body}</p>
+                    <p className={styles.pledgeBody}>{ar ? p.arBody : p.body}</p>
                   </li>
                 ))}
               </ul>
@@ -305,8 +314,9 @@ export default function AboutPage() {
                 </h2>
               </div>
               <p className={styles.sectionNote}>
-                Prequalified with the national developers, operators and authorities delivering the
-                Kingdom&rsquo;s largest programmes.
+                {ar
+                  ? "مؤهَّلون مسبقًا لدى المطوّرين والمشغّلين والجهات الوطنية التي تنفّذ أكبر برامج المملكة."
+                  : "Prequalified with the national developers, operators and authorities delivering the Kingdom’s largest programmes."}
               </p>
             </div>
           </Reveal>
@@ -324,8 +334,9 @@ export default function AboutPage() {
               {ar ? "لنُضئ مشروعك القادم" : "Bring us the building. We will bring the light."}
             </h2>
             <p className={styles.closeLead}>
-              Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back
-              with a lighting study and a quotation.
+              {ar
+                ? "أرسل المخططات أو جدول وحدات الإضاءة أو الفكرة وحدها، وسيعود إليك فريقنا في الرياض بدراسة إضاءة وعرض سعر."
+                : "Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back with a lighting study and a quotation."}
             </p>
             <div className={styles.closeActions}>
               <Link href="/contact" className={styles.closeCta}>
@@ -338,7 +349,9 @@ export default function AboutPage() {
               </Link>
             </div>
             <p className={styles.closeAddress}>
-              Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513, Kingdom of Saudi Arabia
+              {ar
+                ? "مخرج 2، طريق الدائري الشمالي الفرعي، حطين، الرياض 13513، المملكة العربية السعودية"
+                : "Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513, Kingdom of Saudi Arabia"}
             </p>
           </Reveal>
         </div>

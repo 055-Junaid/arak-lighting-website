@@ -15,6 +15,9 @@ import styles from "./ServiceSpotlight.module.css";
  */
 export function ServiceSpotlight({ services, ar }: { services: Service[]; ar: boolean }) {
   const [active, setActive] = useState(0);
+  // Panels whose photograph has been needed at least once. Starts with the
+  // one that renders on load.
+  const [seen, setSeen] = useState<Set<number>>(() => new Set([0]));
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const stage = useRef<HTMLDivElement>(null);
 
@@ -27,12 +30,13 @@ export function ServiceSpotlight({ services, ar }: { services: Service[]; ar: bo
     else if (event.key === "End") next = last;
     if (next === null) return;
     event.preventDefault();
-    setActive(next);
+    select(next);
     tabs.current[next]?.focus();
   };
 
   const select = (index: number, scrollIntoView = false) => {
     setActive(index);
+    setSeen((current) => (current.has(index) ? current : new Set(current).add(index)));
     if (scrollIntoView && window.matchMedia("(max-width: 1080px)").matches) {
       stage.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
@@ -78,22 +82,35 @@ export function ServiceSpotlight({ services, ar }: { services: Service[]; ar: bo
             className={`${styles.panel} ${active === i ? styles.panelOn : ""}`}
           >
             <div className={styles.panelPhoto}>
-              <Image
-                src={service.photo}
-                alt=""
-                aria-hidden="true"
-                fill
-                sizes="(max-width: 1080px) 100vw, 55vw"
-              />
+              {/* Only the panel on stage carries its photograph. All ten
+                  panels stay mounted so the stage never resizes and the copy
+                  stays in the document — but mounting ten <Image>s meant the
+                  browser fetched nine backdrops nobody was looking at, every
+                  one of them a full-width project photo. `seen` keeps a panel's
+                  image once it has been shown, so going back to a service is
+                  instant rather than re-fetching.
+
+                  Low quality is deliberate and invisible: this sits at 13%
+                  opacity behind a white wash. */}
+              {seen.has(i) && (
+                <Image
+                  src={service.photo}
+                  alt=""
+                  aria-hidden="true"
+                  fill
+                  quality={45}
+                  sizes="(max-width: 1080px) 100vw, 55vw"
+                />
+              )}
             </div>
             <div className={styles.panelWash} />
             <div className={styles.panelBody}>
               <div className={styles.panelNo}>{service.no}</div>
               <h3 className={styles.panelTitle}>{ar ? service.ar : service.en}</h3>
-              <p className={styles.panelLead}>{service.lead}</p>
-              <p className={styles.panelText}>{service.body}</p>
+              <p className={styles.panelLead}>{ar ? service.arLead : service.lead}</p>
+              <p className={styles.panelText}>{ar ? service.arBody : service.body}</p>
               <ul className={styles.panelList}>
-                {service.includes.map((item) => (
+                {(ar ? service.arIncludes : service.includes).map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>

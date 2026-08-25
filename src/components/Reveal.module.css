@@ -1,10 +1,15 @@
+/* No `will-change` here on purpose. It used to sit on the base rule, which
+   meant every Reveal on the page — thirty of them on /services, more on the
+   home page — held its own compositor layer for the life of the document,
+   long after its one animation had finished. Browsers already promote an
+   element for the duration of an opacity/transform transition, which is
+   exactly and only when the hint would have helped. */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition:
     opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 .shown {

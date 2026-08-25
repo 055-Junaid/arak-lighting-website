@@ -27,6 +27,7 @@ const HOME_SERVICES = [
     arText: "وحدات إضاءة تجميلية ومعمارية للمساحات السكنية والفندقية والتجارية.",
     photo: "/projects/ritz-carlton/01.jpg",
     alt: "Chandelier and ornamented ceiling in the grand hall of The Ritz-Carlton, Riyadh",
+    arAlt: "ثريا وسقف مزخرف في القاعة الكبرى بفندق الريتز كارلتون، الرياض",
   },
   {
     no: "02",
@@ -36,6 +37,7 @@ const HOME_SERVICES = [
     arText: "دراسات ضوئية ومخططات وجداول وحدات إضاءة، نُعدّها مع الاستشاريين والمعماريين.",
     photo: "/projects/solitaire-mall/04.jpg",
     alt: "The crystal cascade over the atrium at Solitaire Mall, Riyadh",
+    arAlt: "شلال الكريستال فوق البهو في سوليتير مول، الرياض",
   },
   {
     no: "03",
@@ -45,6 +47,7 @@ const HOME_SERVICES = [
     arText: "أنظمة إضاءة خارجية تمنح المباني هويةً ليلية، مصمّمة لتناسب المناخ السعودي.",
     photo: "/projects/seder-hq/01.jpg",
     alt: "The SEDER headquarters in Riyadh lit at night, a facade lighting scheme by ARAK",
+    arAlt: "مبنى سدر الرئيسي في الرياض مضاءً ليلًا، ضمن مشروع إضاءة واجهات نفّذته أراك",
   },
   {
     no: "04",
@@ -54,6 +57,7 @@ const HOME_SERVICES = [
     arText: "الشوارع والمسطحات والمواقف والمجمّعات، من الأعمدة القصيرة إلى الصواري العالية.",
     photo: "/projects/solitaire-mall/10.jpg",
     alt: "Step lighting, landscape uplights and plaza lighting on the external approach to Solitaire Mall, Riyadh",
+    arAlt: "إضاءة الدرج وإضاءة المسطحات السفلية وإضاءة الساحة في المدخل الخارجي لسوليتير مول، الرياض",
   },
   {
     no: "05",
@@ -63,6 +67,7 @@ const HOME_SERVICES = [
     arText: "أنظمة KNX/EIB، والتحكم بالمشاهد، واستشعار الضوء والحركة، وإدارة الطاقة.",
     photo: "/projects/delfino/01.jpg",
     alt: "The planted ceiling and table lighting at Delfino Mayfair, Riyadh, running on the EIB / KNX scene control ARAK supplied",
+    arAlt: "السقف المزروع وإضاءة الطاولات في دلفينو مايفير، الرياض، تعمل على نظام مشاهد EIB / KNX الذي وردّته أراك",
   },
   {
     no: "06",
@@ -72,6 +77,7 @@ const HOME_SERVICES = [
     arText: "التركيب في الموقع والتشغيل والتسليم عبر فرقنا الفنية.",
     photo: "/projects/four-points/01.jpg",
     alt: "The Four Points by Sheraton, Riyadh, lit at night — ARAK supplied and commissioned the hotel's lighting control system",
+    arAlt: "فندق فور بوينتس باي شيراتون، الرياض، مضاءً ليلًا — وردّت أراك نظام التحكّم بالإضاءة وشغّلته",
   },
 ];
 
@@ -97,7 +103,7 @@ export default function HomePage() {
     <main>
       <section className={styles.hero} style={{ position: "relative", overflow: "hidden", background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
         <div className={styles.heroArt}>
-          <Image src="/home/riyadh-air-hq-v3.jpg" alt="Riyadh Air head office in Riyadh, a lighting project delivered by ARAK" fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 46%" }} />
+          <Image src="/home/riyadh-air-hq-v3.jpg" alt={ar ? "المقر الرئيسي لطيران الرياض في الرياض، مشروع إضاءة نفّذته أراك" : "Riyadh Air head office in Riyadh, a lighting project delivered by ARAK"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "center 46%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
@@ -127,7 +133,7 @@ export default function HomePage() {
                 </>
               )}
             </div>
-            <h1 style={{ font: "600 clamp(42px,6vw,88px)/1.0 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام ١٩٧٦" : "Lighting the Kingdom since 1976"}</h1>
+            <h1 style={{ font: "600 clamp(42px,6vw,88px)/1.0 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام 1976" : "Lighting the Kingdom since 1976"}</h1>
             {/* The old lead opened "Five decades…" directly beneath a headline
                 that already says 1976, and a seal that said 50+. It now spends
                 its one sentence on the scope of work instead. */}
@@ -208,7 +214,7 @@ export default function HomePage() {
             <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0", maxWidth: "20ch" }}>{lang === "ar" ? "نتألق منذ خمسين عامًا" : "Shining brightly for 50 years"}</h2>
             <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.68)", margin: "36px 0 0", maxWidth: "62ch" }}>
               {ar ? (
-                "«أراك» شركة إضاءة ومزوّد لحلول الإضاءة الذكية، بدأت امتدادًا لمؤسسة عبدالرحمن عبدالقادر عام ١٩٧٦م، وهي اليوم مؤسسة سعودية رائدة تجسّد القيم السعودية."
+                "«أراك» شركة إضاءة ومزوّد لحلول الإضاءة الذكية، بدأت امتدادًا لمؤسسة عبدالرحمن عبدالقادر عام 1976م، وهي اليوم مؤسسة سعودية رائدة تجسّد القيم السعودية."
               ) : (
                 <>
                   “ARAK” <span style={{ color: "#111111" }}>أراك</span>, which means “I See You” in
@@ -232,7 +238,7 @@ export default function HomePage() {
             <span aria-hidden="true">{ar ? "←" : "→"}</span></Link>
           </div>
           <div style={{ height: "560px" }}>
-            <PhotoSlot src="/projects/solitaire-mall/06.jpg" alt="The crystal cascade lighting scheme at Solitaire Mall, Riyadh" />
+            <PhotoSlot src="/projects/solitaire-mall/06.jpg" alt={ar ? "مشروع إضاءة شلال الكريستال في سوليتير مول، الرياض" : "The crystal cascade lighting scheme at Solitaire Mall, Riyadh"} />
           </div>
         </div>
       </section>
@@ -257,7 +263,7 @@ export default function HomePage() {
                 <div className={styles.svcFrame}>
                   <Image
                     src={service.photo}
-                    alt={service.alt}
+                    alt={ar ? service.arAlt : service.alt}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
                     className={styles.svcImg}
@@ -275,7 +281,7 @@ export default function HomePage() {
             <div className={styles.poleStripArt}>
               <Image
                 src="/smart-poles/ctx-street.jpg"
-                alt="Smart poles along a landscaped city boulevard"
+                alt={ar ? "أعمدة ذكية على امتداد شارع مدينيّ منسّق" : "Smart poles along a landscaped city boulevard"}
                 fill
                 sizes="(max-width: 900px) 100vw, 42vw"
                 style={{ objectFit: "cover" }}
@@ -398,7 +404,7 @@ export default function HomePage() {
             </div>
             <p style={{ font: "400 16px/1.7 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "0" }}>
               {ar
-                ? "مسجّلون لدى المشاريع الوطنية الكبرى، ونورّد للفنادق والوزارات والمستشفيات، ونحمل ٤١ علامة عالمية."
+                ? "مسجّلون لدى المشاريع الوطنية الكبرى، ونورّد للفنادق والوزارات والمستشفيات، ونحمل أكثر من 40 علامة عالمية."
                 : "Registered with the Kingdom's giga-projects, supplying its hotels, ministries and hospitals, and carrying forty-one manufacturer lines."}
             </p>
           </div>

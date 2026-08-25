@@ -49,17 +49,17 @@ export function ProjectDetail({
           {/* Back points the way the page reads. */}
           <span aria-hidden="true">{ar ? "→" : "←"}</span> {ar ? "جميع المشاريع" : "All projects"}
         </Link>
-        <h1 className={styles.title}>{project.name}</h1>
-        <p className={styles.blurb}>{project.blurb}</p>
+        <h1 className={styles.title}>{ar ? project.arName : project.name}</h1>
+        <p className={styles.blurb}>{ar ? project.arBlurb : project.blurb}</p>
 
         <div className={styles.facts}>
           <div>
             <span className={styles.factLabel}>{ar ? "الموقع" : "Location"}</span>
-            <span className={styles.factValue}>{project.loc}</span>
+            <span className={styles.factValue}>{ar ? project.arLoc : project.loc}</span>
           </div>
           <div>
             <span className={styles.factLabel}>{ar ? "نطاق العمل" : "Scope"}</span>
-            <span className={styles.factValue}>{project.scope}</span>
+            <span className={styles.factValue}>{ar ? project.arScope : project.scope}</span>
           </div>
           <div>
             <span className={styles.factLabel}>{ar ? "التخصص" : "Discipline"}</span>
@@ -81,7 +81,7 @@ export function ProjectDetail({
           <span className={styles.galleryLabel}>{photographs}</span>
           <span className={styles.rule} />
         </div>
-        <ProjectGallery images={project.gallery} projectName={project.name} />
+        <ProjectGallery images={project.gallery} projectName={ar ? project.arName : project.name} />
       </section>
 
       <section className={styles.wrap}>

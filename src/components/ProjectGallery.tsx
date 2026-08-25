@@ -69,7 +69,7 @@ export function ProjectGallery({
           >
             <Image
               src={image.src}
-              alt={`${projectName} — photograph ${i + 1} of ${images.length}`}
+              alt={ar ? `${projectName} — صورة ${i + 1} من ${images.length}` : `${projectName} — photograph ${i + 1} of ${images.length}`}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
               priority={i < 3}
@@ -141,7 +141,7 @@ export function ProjectGallery({
           >
             <Image
               src={active.src}
-              alt={`${projectName} — photograph ${open + 1} of ${images.length}`}
+              alt={ar ? `${projectName} — صورة ${open + 1} من ${images.length}` : `${projectName} — photograph ${open + 1} of ${images.length}`}
               fill
               sizes="(max-width: 640px) 100vw, 90vw"
               // Clicks on the photo itself shouldn't dismiss the overlay.

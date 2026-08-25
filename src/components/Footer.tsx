@@ -35,7 +35,7 @@ export function Footer() {
             <Image src="/arak-logo-black.png" alt="ARAK Lighting Solutions" height={54} width={154} />
             <p>
               {ar
-                ? "شركة إضاءة ومزوّد لحلول الإضاءة الذكية، الرياض، المملكة العربية السعودية. منذ عام ١٩٧٦."
+                ? "شركة إضاءة ومزوّد لحلول الإضاءة الذكية، الرياض، المملكة العربية السعودية. منذ عام 1976."
                 : "A Lighting Company and Smart Lighting Solutions Provider, Riyadh, Kingdom of Saudi Arabia. Since 1976."}
             </p>
             <div className={styles.socials}>
@@ -87,7 +87,7 @@ export function Footer() {
               className={styles.link}
             >
               {ar
-                ? "مخرج ٢، طريق الدائري الشمالي الفرعي، حطين، الرياض ١٣٥١٣"
+                ? "مخرج 2، طريق الدائري الشمالي الفرعي، حطين، الرياض 13513"
                 : "Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513"}
             </a>
             <a href={MAPS_PLACE_URL} target="_blank" rel="noopener noreferrer" className={styles.mapCue}>

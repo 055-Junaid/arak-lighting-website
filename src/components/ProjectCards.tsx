@@ -67,7 +67,7 @@ function Card({
           <>
             <PhotoSlot
               src={project.image}
-              alt={`${project.name}, ${project.loc}`}
+              alt={ar ? `${project.arName}، ${project.arLoc}` : `${project.name}, ${project.loc}`}
               priority={priority}
             />
             {extras > 0 && <span className={styles.count}>+{extras}</span>}
@@ -81,9 +81,9 @@ function Card({
         )}
       </div>
       <div className={styles.meta}>
-        <h3 className={styles.name}>{project.name}</h3>
-        <p className={styles.loc}>{project.loc}</p>
-        <p className={styles.scope}>{project.scope}</p>
+        <h3 className={styles.name}>{ar ? project.arName : project.name}</h3>
+        <p className={styles.loc}>{ar ? project.arLoc : project.loc}</p>
+        <p className={styles.scope}>{ar ? project.arScope : project.scope}</p>
       </div>
     </>
   );
