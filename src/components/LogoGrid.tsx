@@ -25,10 +25,11 @@ export type LogoItem = {
  * none of it is trimmed away; the clip only decides how much of it is standing
  * up at once.
  *
- * The captions are gone. For most of these the logo already sets the name, so
- * a label under each one had you reading the same word twice in two type
- * styles, seventy-odd times, which is what made the wall read as a table
- * rather than a credential. The name survives as `title` and `alt`.
+ * Each mark carries its name. Many of these are institutional seals — the
+ * ministries, the universities, the air force — which stay unreadable at wall
+ * scale however they are sized, and for those the name is the credential
+ * rather than the crest. The logo is `alt=""` so a screen reader is not read
+ * the same name twice.
  *
  * The row height is measured rather than assumed, because the grid is
  * `auto-fill` and the number of columns — and so the number of rows — changes
@@ -86,23 +87,25 @@ export function LogoGrid({
         <div className={styles.grid} ref={gridRef}>
           {items.map((item) => (
             <div key={item.name} className={styles.cell}>
-              {item.file ? (
-                <Image
-                  src={`${basePath}/${item.file}`}
-                  alt={item.name}
-                  title={item.name}
-                  width={220}
-                  height={90}
-                  // The optimiser rejects SVG unless dangerouslyAllowSVG is set;
-                  // vectors need no resizing anyway, so serve them as-is.
-                  unoptimized={item.file.endsWith(".svg")}
-                  className={styles.logo}
-                />
-              ) : (
-                <span className={styles.wordmark} title={item.name}>
-                  {item.name}
-                </span>
-              )}
+              {/* Fixed band so the marks align across a row however many lines
+                  the name beneath them runs to. */}
+              <span className={styles.logoWrap}>
+                {item.file ? (
+                  <Image
+                    src={`${basePath}/${item.file}`}
+                    alt=""
+                    width={220}
+                    height={90}
+                    // The optimiser rejects SVG unless dangerouslyAllowSVG is set;
+                    // vectors need no resizing anyway, so serve them as-is.
+                    unoptimized={item.file.endsWith(".svg")}
+                    className={styles.logo}
+                  />
+                ) : (
+                  <span className={styles.wordmark}>{item.name}</span>
+                )}
+              </span>
+              <span className={styles.name}>{item.name}</span>
             </div>
           ))}
         </div>
