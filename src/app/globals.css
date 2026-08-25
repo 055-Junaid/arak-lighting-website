@@ -86,3 +86,19 @@ html[data-color="on"] img,
 html[data-color="on"] iframe {
   filter: none !important;
 }
+
+/* --- Reduced motion safety net ------------------------------------------
+   Individual components guard themselves, but the hero beam, the vendor
+   marquee and the gallery had no cover at all. This catches everything,
+   including CSS smooth scrolling. The marquee duplicates its logo list, so
+   landing on its end frame shows an identical row rather than a blank belt. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

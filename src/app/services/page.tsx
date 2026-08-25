@@ -98,8 +98,8 @@ export default function ServicesPage() {
               </div>
               <div className={styles.featureArt}>
                 <Image
-                  src="/smart-poles/ctx-street.jpg"
-                  alt="Smart poles lining a landscaped city boulevard, carrying luminaires, cameras and digital signage"
+                  src="/smart-poles/ctx-boulevard-riyadh.jpg"
+                  alt="A lit arterial road in Riyadh at night"
                   fill
                   sizes="(max-width: 1080px) 100vw, 46vw"
                   style={{ objectFit: "cover" }}
