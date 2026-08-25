@@ -178,7 +178,7 @@
   color: var(--ink);
 }
 
-/* Keeps "45+" from being reordered to "+45" in the Arabic layout, while the
+/* Keeps "50+" from being reordered to "+50" in the Arabic layout, while the
    cell itself stays aligned with the rest of the RTL page. */
 .statFigure {
   display: inline-block;

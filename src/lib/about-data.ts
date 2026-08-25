@@ -12,7 +12,7 @@ export interface Stat {
 /** Headline figures, all of them corroborated elsewhere on the site. */
 export const STATS: Stat[] = [
   { value: "1976", en: "Founded in Riyadh", ar: "تأسست في الرياض" },
-  { value: "45+", en: "Years of know-how", ar: "سنوات من الخبرة" },
+  { value: "50+", en: "Years of know-how", ar: "سنوات من الخبرة" },
   { value: "41", en: "Partner brands", ar: "علامة شريكة" },
   { value: "10", en: "Service lines", ar: "خطوط خدمة" },
 ];
@@ -79,7 +79,7 @@ export const VALUES: Value[] = [
     no: "03",
     en: "Empowerment",
     ar: "التمكين",
-    body: "We believe in the limitless potential of our people. Reinforcing 45+ years of hands-on expertise means sending them to seminars, backing their training and letting them own the technical call on their own projects.",
+    body: "We believe in the limitless potential of our people. Reinforcing 50+ years of hands-on expertise means sending them to seminars, backing their training and letting them own the technical call on their own projects.",
   },
   {
     no: "04",

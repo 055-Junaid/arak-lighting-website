@@ -24,14 +24,14 @@ export default function AboutPage() {
                 <span className={styles.eyebrow}>{ar ? "عن الشركة" : "About ARAK"}</span>
                 <h1 className={styles.heroTitle}>
                   {ar
-                    ? "خمسة وأربعون عاماً من الضوء، مشروعاً تلو الآخر"
-                    : "Forty-five years of light, one project at a time."}
+                    ? "خمسون عاماً من الضوء، مشروعاً تلو الآخر"
+                    : "Fifty years of light, one project at a time."}
                 </h1>
               </div>
               <div>
                 <p className={styles.heroLead}>
                   ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation.
-                  Forty-five years later it is a Saudi lighting company and smart lighting solutions
+                  Fifty years later it is a Saudi lighting company and smart lighting solutions
                   provider, carrying more than forty international brands and delivering fittings,
                   controls and automation into hotels, airports, hospitals, palaces and national
                   projects across the Kingdom.
@@ -121,7 +121,7 @@ export default function AboutPage() {
               <p className={styles.nameBodySmall}>
                 The company grew out of a family trading house into a pioneering Saudi establishment
                 that still runs on Saudi values. Everything below is what that turned into over
-                forty-five years.
+                fifty years.
               </p>
             </Reveal>
           </div>
