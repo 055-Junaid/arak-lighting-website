@@ -19,10 +19,17 @@ const plexSans = IBM_Plex_Sans({
   weight: ["300", "400", "500", "600"],
 });
 
+// Not preloaded. All four weights are needed once the page flips to Arabic, but
+// an English page only ever renders one Arabic glyph — the "ع" on the language
+// toggle — so preloading pushed 138 KB of Plex Arabic ahead of first paint to
+// serve a single character. Dropping the preload leaves the @font-face rules in
+// place, so the browser still fetches whichever weights the page actually uses,
+// just on demand and off the critical path.
 const plexSansArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-plex-sans-arabic",
   subsets: ["arabic"],
   weight: ["300", "400", "500", "600"],
+  preload: false,
 });
 
 export const metadata: Metadata = {

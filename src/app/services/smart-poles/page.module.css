@@ -1,23 +1,21 @@
 .page {
-  --ink: #111111;
-  --muted: rgba(17, 17, 17, 0.66);
-  --hair: rgba(17, 17, 17, 0.13);
-  --paper: #f6f5f3;
-  /* The catalogue renders sit on this exact grey, so the cards match it seamlessly. */
+  /* The catalogue renders sit on this exact grey, so the cards match it
+     seamlessly. Page-specific, so it stays here; everything else this page
+     paints with comes from the tokens in globals.css. */
   --render-bg: #383838;
 }
 
 .shell {
-  max-width: 1360px;
+  max-width: var(--shell-max);
   margin: 0 auto;
-  padding-inline: clamp(24px, 3.4vw, 48px);
+  padding-inline: var(--gutter);
 }
 
 .eyebrow {
   font: 500 11px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #6e6e6b;
+  color: var(--eyebrow);
 }
 
 .eyebrowLight {
@@ -38,6 +36,7 @@
 .heroImg {
   object-fit: cover;
   object-position: 62% 30%;
+  filter: grayscale(1) contrast(1.04);
 }
 
 .heroVeil {
@@ -339,12 +338,20 @@
 
 .poleArt img {
   object-fit: contain;
-  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  filter: grayscale(1) contrast(1.04);
+  /* The global `transition: filter` in globals.css loses to this shorthand,
+     so filter has to be named here or the colour switch would snap. */
+  transition:
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.5s ease;
 }
 
+/* Pointing at one render shows that pole in colour, the same way a project
+   tile behaves. The switch still lifts all twenty at once. */
 .pole:hover .poleArt img,
 .pole:focus-visible .poleArt img {
   transform: scale(1.05);
+  filter: none;
 }
 
 .poleMeta {
@@ -425,6 +432,13 @@
 .dialogArt img {
   object-fit: contain;
   padding: 24px;
+  filter: grayscale(1) contrast(1.04);
+}
+
+/* Opening a pole is the same "show me this one" intent as hovering its card,
+   so the render answers in colour. */
+.dialogArt:hover img {
+  filter: none;
 }
 
 .dialogCopy {
@@ -555,11 +569,15 @@
 
 .shotFrame img {
   object-fit: cover;
-  transition: transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+  filter: grayscale(1) contrast(1.04);
+  transition:
+    transform 0.9s cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter 0.5s ease;
 }
 
 .shot:hover .shotFrame img {
   transform: scale(1.04);
+  filter: none;
 }
 
 .shotCap {
@@ -695,7 +713,7 @@
 .heroJump {
   position: absolute;
   z-index: 2;
-  inset-inline-end: clamp(24px, 3.4vw, 48px);
+  inset-inline-end: var(--gutter);
   bottom: clamp(38px, 5.4vw, 76px);
   display: flex;
   flex-direction: column;
@@ -824,6 +842,7 @@
 
 .anatomyPole img {
   object-fit: contain;
+  filter: grayscale(1) contrast(1.04);
 }
 
 /* Spread across the full height of the shaft rather than bunching in the

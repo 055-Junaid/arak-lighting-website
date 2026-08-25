@@ -3,168 +3,152 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useLang } from "@/lib/lang";
 import styles from "./Header.module.css";
 
-const ON = "#111111";
-const OFF = "rgba(17,17,17,.55)";
+type NavItem = { href: "/" | "/about" | "/services" | "/projects" | "/contact"; en: string; ar: string };
+
+const NAV: NavItem[] = [
+  { href: "/", en: "Home", ar: "الرئيسية" },
+  { href: "/about", en: "About", ar: "عن الشركة" },
+  { href: "/services", en: "Services", ar: "خدماتنا" },
+  { href: "/projects", en: "Projects", ar: "مشاريعنا" },
+  { href: "/contact", en: "Contact", ar: "اتصل بنا" },
+];
 
 export function Header() {
   const pathname = usePathname();
   const { lang, toggleLang } = useLang();
-  const langDirLabel = lang === "ar" ? "EN" : "ع";
+  const ar = lang === "ar";
+  const [open, setOpen] = useState(false);
+  const burger = useRef<HTMLButtonElement>(null);
 
-  const colorFor = (path: string) => (pathname === path ? ON : OFF);
+  // Escape closes it and hands focus back to the button that opened it, so a
+  // keyboard user is not dropped at the top of the document. Back/forward
+  // closes it too — the drawer links close themselves on click, but a history
+  // move is the one navigation they don't see.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      burger.current?.focus();
+    };
+    const onPop = () => setOpen(false);
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("popstate", onPop);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPop);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  // A viewport that grows past the breakpoint puts the full nav back on
+  // screen; leaving `open` set would keep the drawer stacked on top of it.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 961px)");
+    const onChange = () => {
+      if (mq.matches) setOpen(false);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 60,
-        background: "rgba(255,255,255,.88)",
-        backdropFilter: "blur(14px)",
-        borderBottom: "1px solid rgba(17,17,17,.13)",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "1360px",
-          margin: "0 auto",
-          padding: "0 clamp(24px,3vw,48px)",
-          height: "82px",
-          display: "flex",
-          alignItems: "center",
-          gap: "clamp(20px,2.5vw,40px)",
-        }}
-      >
-        <Link href="/" style={{ height: 58, flex: "none", display: "flex", alignItems: "center" }}>
+    <header className={styles.header}>
+      <div className={styles.inner}>
+        <Link href="/" className={styles.logo} aria-label="ARAK Lighting Solutions — home">
+          {/* Sized in Header.module.css rather than inline, so the 520px rule
+              can shrink it. Setting only one axis inline is what Next warns
+              about; the module sets both. */}
           <Image
             src="/arak-logo-black.png"
             alt="ARAK Lighting Solutions"
             height={58}
-            width={239}
-            style={{ height: "58px", width: "auto", cursor: "pointer" }}
+            width={166}
             priority
           />
         </Link>
-        <nav
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "clamp(18px,2vw,34px)",
-            marginInlineStart: "auto",
-            minWidth: 0,
-            overflow: "hidden",
-          }}
-        >
-          <Link
-            href="/"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              color: colorFor("/"),
-            }}
-            className={styles.navLink}
-          >
-            {lang === "ar" ? "الرئيسية" : "Home"}
-          </Link>
-          <Link
-            href="/about"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              color: colorFor("/about"),
-            }}
-            className={styles.navLink}
-          >
-            {lang === "ar" ? "عن الشركة" : "About"}
-          </Link>
-          <Link
-            href="/services"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              color: colorFor("/services"),
-            }}
-            className={styles.navLink}
-          >
-            {lang === "ar" ? "خدماتنا" : "Services"}
-          </Link>
-          <Link
-            href="/projects"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              color: colorFor("/projects"),
-            }}
-            className={styles.navLink}
-          >
-            {lang === "ar" ? "مشاريعنا" : "Projects"}
-          </Link>
-          <Link
-            href="/contact"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".16em",
-              textTransform: "uppercase",
-              cursor: "pointer",
-              color: colorFor("/contact"),
-            }}
-            className={styles.navLink}
-          >
-            {lang === "ar" ? "اتصل بنا" : "Contact"}
-          </Link>
+
+        <nav className={styles.nav} aria-label={ar ? "التنقل الرئيسي" : "Main"}>
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={pathname === item.href ? "page" : undefined}
+              className={`${styles.navLink} ${pathname === item.href ? styles.navLinkOn : ""}`}
+            >
+              {ar ? item.ar : item.en}
+            </Link>
+          ))}
         </nav>
-        <div style={{ display: "flex", alignItems: "center", gap: "clamp(10px,1.2vw,18px)", flex: "none" }}>
+
+        <div className={styles.actions}>
           <button
             type="button"
             onClick={toggleLang}
-            style={{
-              font: "500 15px/1 var(--font-plex-sans-arabic),var(--font-plex-sans),sans-serif",
-              letterSpacing: ".08em",
-              color: "rgba(17,17,17,.7)",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minWidth: "40px",
-              height: "34px",
-              padding: "0 10px",
-              border: "1px solid rgba(17,17,17,.16)",
-              background: "transparent",
-            }}
             className={styles.langToggle}
+            lang={ar ? "en" : "ar"}
+            aria-label={ar ? "Switch to English" : "التبديل إلى العربية"}
           >
-            {langDirLabel}
+            {ar ? "EN" : "ع"}
           </button>
-          <Link
-            href="/contact"
-            style={{
-              font: "500 12px/1 var(--font-plex-sans),sans-serif",
-              letterSpacing: ".14em",
-              textTransform: "uppercase",
-              color: "#FFFFFF",
-              background: "#111111",
-              padding: "14px 20px",
-              cursor: "pointer",
-              display: "inline-block",
-              whiteSpace: "nowrap",
-            }}
-            className={styles.cta}
-          >
-            {lang === "ar" ? "احجز استشارة إضاءة" : "Book a consultation"}
+
+          <Link href="/contact" className={styles.cta}>
+            {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
           </Link>
+
+          <button
+            ref={burger}
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={`${styles.burger} ${open ? styles.burgerOn : ""}`}
+            aria-expanded={open}
+            aria-controls="site-menu"
+            aria-label={ar ? (open ? "إغلاق القائمة" : "فتح القائمة") : open ? "Close menu" : "Open menu"}
+          >
+            <span className={styles.burgerBars} aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
         </div>
       </div>
+
+      {open && (
+        <>
+          {/* Dismiss target. A button rather than a bare div so it is reachable
+              by keyboard and announced, instead of being a trap for anyone not
+              using a pointer. */}
+          <button
+            type="button"
+            className={styles.scrim}
+            onClick={() => setOpen(false)}
+            aria-label={ar ? "إغلاق القائمة" : "Close menu"}
+          />
+          <nav id="site-menu" className={styles.drawer} aria-label={ar ? "التنقل الرئيسي" : "Main"}>
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                aria-current={pathname === item.href ? "page" : undefined}
+                className={`${styles.drawerLink} ${pathname === item.href ? styles.drawerLinkOn : ""}`}
+              >
+                {ar ? item.ar : item.en}
+              </Link>
+            ))}
+            <Link href="/contact" onClick={() => setOpen(false)} className={styles.drawerCta}>
+              {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
+            </Link>
+          </nav>
+        </>
+      )}
     </header>
   );
 }

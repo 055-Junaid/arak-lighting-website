@@ -1,15 +1,7 @@
-.page {
-  --ink: #111111;
-  --muted: rgba(17, 17, 17, 0.66);
-  --faint: rgba(17, 17, 17, 0.5);
-  --hair: rgba(17, 17, 17, 0.13);
-  --paper: #f6f5f3;
-}
-
 .shell {
-  max-width: 1360px;
+  max-width: var(--shell-max);
   margin: 0 auto;
-  padding-inline: clamp(24px, 3.4vw, 48px);
+  padding-inline: var(--gutter);
 }
 
 .eyebrow {
@@ -17,7 +9,7 @@
   font: 500 11px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #6e6e6b;
+  color: var(--eyebrow);
 }
 
 .band {
@@ -193,37 +185,6 @@
   margin-top: 12px;
 }
 
-/* ---------- Full-bleed plate ---------- */
-
-.plate {
-  position: relative;
-}
-
-.plateArt {
-  height: clamp(320px, 58vh, 620px);
-}
-
-.plateCaption {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  padding: 18px 0 0;
-}
-
-.plateCaptionMain {
-  font: 500 13px/1.4 var(--font-plex-sans), sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.72);
-}
-
-.plateCaptionNote {
-  font: 400 14px/1.5 var(--font-plex-sans), sans-serif;
-  color: var(--faint);
-}
-
 /* ---------- The name ---------- */
 
 .name {
@@ -254,6 +215,15 @@
   /* No tracking: it pushes the hamza off the alef at display sizes. */
   font: 300 clamp(84px, 12vw, 180px) / 1 var(--font-plex-sans-arabic), var(--font-plex-sans), sans-serif;
   color: #ffffff;
+}
+
+.nameMarkIcon {
+  position: absolute;
+  top: 22px;
+  inset-inline-end: 22px;
+  width: clamp(28px, 3vw, 40px);
+  height: auto;
+  opacity: 0.55;
 }
 
 .nameTranslation {
@@ -363,7 +333,7 @@
   font: 500 13px/1.4 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #6e6e6b;
+  color: var(--eyebrow);
   margin: 0;
 }
 

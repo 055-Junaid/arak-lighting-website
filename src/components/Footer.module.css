@@ -49,3 +49,108 @@
   color: #111111;
   border-bottom-color: #111111;
 }
+
+/* ---------- Structure ----------
+   Moved out of inline styles so it can actually respond. The four columns
+   used to be a hardcoded `1.4fr 1fr 1fr 1fr` with no breakpoint at all, which
+   on a phone resolved to 134/57/77/74px — three columns too narrow to hold
+   their own link text. */
+
+.footer {
+  border-top: 1px solid var(--hair);
+  background: var(--paper);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: clamp(52px, 7vw, 80px) var(--gutter) calc(44px + env(safe-area-inset-bottom));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: clamp(32px, 4vw, 60px);
+}
+
+.brand p {
+  font: 400 15px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 26px 0 0;
+  max-width: 34ch;
+}
+
+.brand img {
+  height: 54px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.colHead {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.68);
+  margin-bottom: 6px;
+}
+
+/* Links wrap rather than overflow, and long service names break instead of
+   pushing the column wider than its track. */
+.link,
+.item {
+  font: 400 15px/1.5 var(--font-plex-sans), sans-serif;
+  color: var(--body);
+  overflow-wrap: break-word;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.legal {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding-top: 26px;
+  border-top: 1px solid var(--hair);
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.legal span {
+  font: 400 13px/1.5 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+}
+
+/* tab — the three link columns pair up under the brand block, which keeps
+   its 34ch measure instead of being squeezed into a quarter of the width. */
+@media (max-width: 680px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* phone — one column. Two 165px columns still broke the longer service
+   names across three lines each. */
+@media (max-width: 520px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .legal {
+    gap: 12px;
+  }
+}

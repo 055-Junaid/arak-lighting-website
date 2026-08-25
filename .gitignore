@@ -48,3 +48,6 @@ next-env.d.ts
 .wrangler/
 .dev.vars
 
+
+# local pre-optimisation image backups
+/_originals/

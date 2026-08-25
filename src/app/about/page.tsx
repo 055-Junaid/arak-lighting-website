@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { PhotoSlot } from "@/components/PhotoSlot";
@@ -76,6 +77,14 @@ export default function AboutPage() {
             <Reveal>
               <div className={styles.nameMarkWrap}>
                 <div className={styles.nameMarkGlow} />
+                <Image
+                  src="/arak-icon-white.png"
+                  alt=""
+                  width={44}
+                  height={33}
+                  className={styles.nameMarkIcon}
+                  aria-hidden="true"
+                />
                 <span className={styles.nameMark} lang="ar" dir="rtl">
                   أراك
                 </span>

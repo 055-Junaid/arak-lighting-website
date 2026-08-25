@@ -1,7 +1,163 @@
-.field:focus {
-  border-color: #111111 !important;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Two-up on desktop, one-up on a phone. This pair used to be a hardcoded
+   `1fr 1fr` with no breakpoint, which put two 205px inputs side by side on a
+   390px screen. */
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 520px) {
+  .pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.labelText {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.58);
+}
+
+.optional {
+  text-transform: none;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+}
+
+.field {
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font: 400 16px/1.2 var(--font-plex-sans), sans-serif;
+  padding: 17px 16px;
+  width: 100%;
+  /* 16px minimum stops iOS Safari zooming the page on focus. */
+  transition: border-color 0.25s ease;
+}
+
+.field::placeholder {
+  color: var(--faint);
+}
+
+.field:hover {
+  border-color: rgba(17, 17, 17, 0.4);
+}
+
+.field:focus-visible {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+/* Native select needs its colours stated outright or Windows dark mode
+   renders white-on-white. */
+.select {
+  background-color: var(--white);
+  color: var(--ink);
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: right 20px center, right 14px center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-inline-end: 40px;
+}
+
+[dir="rtl"] .select {
+  background-position: left 20px center, left 14px center;
+}
+
+.textarea {
+  font: 400 16px/1.6 var(--font-plex-sans), sans-serif;
+  resize: vertical;
+  min-height: 140px;
+}
+
+.invalid {
+  border-color: #a3231f;
+}
+
+.invalid:focus-visible {
+  border-color: #a3231f;
+  box-shadow: inset 0 0 0 1px #a3231f;
+}
+
+.error {
+  font: 400 13px/1.5 var(--font-plex-sans), sans-serif;
+  color: #a3231f;
+}
+
+.submit {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 20px 32px;
+  cursor: pointer;
+  align-self: flex-start;
+  margin-top: 8px;
+  touch-action: manipulation;
+  transition: background-color 0.25s ease;
 }
 
 .submit:hover {
-  background: #3a3a38 !important;
+  background: var(--ink-hover);
+  border-color: var(--ink-hover);
+}
+
+.submit:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .submit {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+/* Status line. Sits under the button and is announced, so the outcome is not
+   something you have to notice visually. */
+.status {
+  font: 400 14px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.status a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+.status a:hover {
+  border-bottom-color: var(--ink);
+}
+
+.statusNote {
+  border-inline-start: 2px solid var(--hair);
+  padding-inline-start: 14px;
+}
+
+.count {
+  font: 400 13px/1.5 var(--font-plex-sans), sans-serif;
+  color: var(--faint);
 }

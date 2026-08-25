@@ -13,7 +13,7 @@ export interface Stat {
 export const STATS: Stat[] = [
   { value: "1976", en: "Founded in Riyadh", ar: "تأسست في الرياض" },
   { value: "50+", en: "Years of know-how", ar: "سنوات من الخبرة" },
-  { value: "41", en: "Partner brands", ar: "علامة شريكة" },
+  { value: "40+", en: "Partner brands", ar: "علامة شريكة" },
   { value: "10", en: "Service lines", ar: "خطوط خدمة" },
 ];
 

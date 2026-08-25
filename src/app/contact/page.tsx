@@ -10,12 +10,14 @@ export default function ContactPage() {
 
   return (
     <main>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "110px 48px 130px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
-          <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "تواصل معنا" : "Contact"}</span>
+      <section className={styles.section}>
+        <div className={styles.label}>
+          <span className={styles.eyebrow}>{lang === "ar" ? "تواصل معنا" : "Contact"}</span>
         </div>
-        <h1 style={{ font: "600 clamp(40px,5.6vw,84px)/1.02 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "18ch", textWrap: "balance" }}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</h1>
-        <p style={{ font: "400 17px/1.75 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.66)", margin: "28px 0 0", maxWidth: "56ch" }}>
+        <h1 className={styles.title}>
+          {lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}
+        </h1>
+        <p className={styles.lead}>
           {lang === "ar"
             ? "شاركنا تفاصيل مشروعك وسنعاود التواصل معك. يمكنك أيضاً التواصل معنا مباشرة عبر البيانات أدناه أو زيارة صالة العرض في الرياض."
             : "Share a few details about your project and we will get back to you. You can also reach us directly using the details below, or visit the Riyadh showroom."}
@@ -90,7 +92,7 @@ export default function ContactPage() {
           <div className={styles.mapHead}>
             <div>
               <div className={styles.rowLabel}>{lang === "ar" ? "الموقع" : "Find us"}</div>
-              <div style={{ font: "400 17px/1.6 var(--font-plex-sans),sans-serif", color: "#111111", marginTop: "12px" }}>
+              <div className={styles.mapName}>
                 {lang === "ar" ? "أراك للإنارة · الرياض" : "ARAK Lighting · Riyadh"}
               </div>
             </div>

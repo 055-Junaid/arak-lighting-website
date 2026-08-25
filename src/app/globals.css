@@ -1,8 +1,64 @@
 @import "tailwindcss";
 
+/* --- Design tokens -------------------------------------------------------
+   One definition for the whole site. These used to be declared three times
+   over — identically — in the about, services and smart-poles page modules,
+   while the header, footer, contact and projects pages carried the same
+   values as literals. That is how those four ended up without the responsive
+   behaviour the page modules had: there was no shared contract to inherit.
+
+   Ink alphas are named for the job they do, not the number they are, so a
+   future change to "body text" is one edit rather than fifteen. */
 :root {
   --font-plex-sans-fallback: sans-serif;
+
+  /* Ink */
+  --ink: #111111;
+  --ink-hover: #3a3a38;
+  --body: rgba(17, 17, 17, 0.72);
+  --muted: rgba(17, 17, 17, 0.66);
+  --faint: rgba(17, 17, 17, 0.5);
+  --eyebrow: #6e6e6b;
+
+  /* Lines. --hair is the section divider, --rule the heavier border on
+     fields and controls that have to read as interactive. */
+  --hair: rgba(17, 17, 17, 0.13);
+  --rule: rgba(17, 17, 17, 0.2);
+
+  /* Ground */
+  --paper: #f6f5f3;
+  --white: #ffffff;
+
+  /* Layout. --gutter is the page's side padding at every width: it is what
+     stops a 48px inset from eating a quarter of a 390px phone. */
+  --shell-max: 1360px;
+  --gutter: clamp(20px, 3.4vw, 48px);
+  --band-y: clamp(72px, 8vw, 118px);
+
+  /* The header's own height. The mobile nav drawer hangs off the bottom of
+     it, so the two read the same number and can never drift apart. */
+  --header-h: 82px;
 }
+
+@media (max-width: 520px) {
+  :root {
+    --header-h: 68px;
+  }
+}
+
+/* --- Breakpoint contract -------------------------------------------------
+   Four widths, and a reason for each. New responsive CSS uses these and
+   nothing else; the twelve ad-hoc widths still in the older page modules
+   (520/560/620/640/680/860/900/980/1000/1080/1280) are being folded into
+   this scale as those files are touched.
+
+     1080px  desk    two-column editorial layouts give up the second column
+      960px  lap     the header runs out of room for the full nav
+      680px  tab     three- and four-up grids drop to two
+      520px  phone   two-up grids drop to one
+
+   Media queries cannot read custom properties, so these are written out.
+   The names above are the vocabulary; the numbers are the contract. */
 
 html {
   scroll-behavior: smooth;
@@ -10,23 +66,23 @@ html {
 
 body {
   margin: 0;
-  background: #ffffff;
+  background: var(--white);
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-plex-sans), sans-serif;
 }
 
 a {
-  color: #111111;
+  color: var(--ink);
   text-decoration: none;
 }
 
 a:hover {
-  color: #3a3a38;
+  color: var(--ink-hover);
 }
 
 ::selection {
-  background: #111111;
-  color: #ffffff;
+  background: var(--ink);
+  color: var(--white);
 }
 
 /* next/font publishes each family as a variable on <html>. Copy the two Latin

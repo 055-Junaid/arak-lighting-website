@@ -1,12 +1,295 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--hair);
+}
+
+.inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.5vw, 40px);
+}
+
+.logo {
+  height: 58px;
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 58px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ---------- Desktop nav ---------- */
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2vw, 34px);
+  margin-inline-start: auto;
+  min-width: 0;
+}
+
+.navLink {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--faint);
+  transition: color 0.3s ease;
+}
+
 .navLink:hover {
-  color: #111111 !important;
+  color: var(--ink);
+}
+
+.navLinkOn {
+  color: var(--ink);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.2vw, 18px);
+  flex: none;
+}
+
+.langToggle {
+  font: 500 15px/1 var(--font-plex-sans-arabic), var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.08em;
+  color: var(--body);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  background: transparent;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .langToggle:hover {
-  color: #111111;
+  color: var(--ink);
   border-color: rgba(17, 17, 17, 0.52);
 }
 
+.cta {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  padding: 14px 20px;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
 .cta:hover {
-  background: #3a3a38 !important;
+  background: var(--ink-hover);
+  color: var(--white);
+}
+
+/* ---------- Burger ---------- */
+
+/* Hidden on desktop, and hidden from assistive tech with it: when the full
+   nav is on screen a second copy of the same five links is noise. */
+.burger {
+  display: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.burger:hover {
+  border-color: rgba(17, 17, 17, 0.52);
+}
+
+/* Three bars that fold into a cross. Transforms only, so the whole thing
+   runs on the compositor. */
+.burgerBars {
+  position: relative;
+  width: 18px;
+  height: 12px;
+}
+
+.burgerBars span {
+  position: absolute;
+  inset-inline: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+.burgerBars span:nth-child(1) {
+  top: 0;
+  transform-origin: center;
+}
+
+.burgerBars span:nth-child(2) {
+  top: 5.25px;
+}
+
+.burgerBars span:nth-child(3) {
+  bottom: 0;
+  transform-origin: center;
+}
+
+.burgerOn .burgerBars span:nth-child(1) {
+  transform: translateY(5.25px) rotate(45deg);
+}
+
+.burgerOn .burgerBars span:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerOn .burgerBars span:nth-child(3) {
+  transform: translateY(-5.25px) rotate(-45deg);
+}
+
+/* ---------- Drawer ---------- */
+
+.scrim {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: 55;
+  background: rgba(17, 17, 17, 0.38);
+  backdrop-filter: blur(3px);
+  border: 0;
+  padding: 0;
+  animation: scrimIn 0.25s ease;
+}
+
+@keyframes scrimIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.drawer {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--header-h);
+  z-index: 58;
+  background: var(--white);
+  border-bottom: 1px solid var(--hair);
+  padding: 8px var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  max-height: calc(100dvh - var(--header-h));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: drawerIn 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@keyframes drawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.drawerLink {
+  display: block;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--hair);
+  font: 500 13px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  transition: color 0.3s ease;
+}
+
+.drawerLink:hover {
+  color: var(--ink);
+}
+
+.drawerLinkOn {
+  color: var(--ink);
+}
+
+.drawerCta {
+  display: block;
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: var(--ink);
+  color: var(--white);
+  text-align: center;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.drawerCta:hover {
+  background: var(--ink-hover);
+  color: var(--white);
+}
+
+/* ---------- Responsive ----------
+   960 (lap) is the width at which the logo, five nav items, the language
+   toggle and the CTA stop fitting on one line. Past that the nav becomes a
+   drawer and the header keeps only the logo, the toggle and the burger —
+   the CTA lives at the bottom of the drawer instead, where it is a full-width
+   target rather than a 14px-padded button competing for the last 80px. */
+@media (max-width: 960px) {
+  .nav,
+  .cta {
+    display: none;
+  }
+
+  .burger {
+    display: inline-flex;
+  }
+
+  .actions {
+    margin-inline-start: auto;
+  }
+}
+
+/* --header-h drops to 68px at this width — see globals.css, which owns the
+   token so the drawer's `top` and the header's `height` can never disagree. */
+@media (max-width: 520px) {
+  .logo,
+  .logo img {
+    height: 42px;
+  }
+}
+
+/* The drawer is a nav, not an animation showcase. */
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .scrim {
+    animation: none;
+  }
+
+  .burgerBars span {
+    transition: none;
+  }
 }
