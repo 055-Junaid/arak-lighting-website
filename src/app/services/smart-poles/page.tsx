@@ -109,7 +109,7 @@ export default function SmartPolesPage() {
       <section className={styles.hero}>
         <Image
           src="/smart-poles/hero.jpg"
-          alt={ar ? "أعمدة إنارة ذكية على طريق رئيسي خالٍ في الرياض عند الشروق، وخلفها أبراج المدينة" : "Smart poles along an empty Riyadh arterial at sunrise, the city towers behind them"}
+          alt={ar ? "أعمدة ذكية على طريق في الرياض تصطفّ على جانبيه أشجار النخيل عند الشروق" : "Smart poles along a palm-lined Riyadh road at sunrise"}
           fill
           priority
           sizes="100vw"
