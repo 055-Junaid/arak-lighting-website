@@ -21,9 +21,12 @@ export const OG_CONTENT_TYPE = "image/png";
  * cut from the Sora variable font, so the card is set in the same face as the
  * site's headings.
  *
- * The bytes are inlined rather than read from disk: Cloudflare Workers have no
- * filesystem, and a node:fs read here returned a 500 for every card on the
- * deployed worker while working fine under `next build`.
+ * The bytes are inlined rather than read from disk. That started as a hard
+ * constraint on Cloudflare Workers, which have no filesystem — a node:fs read
+ * here returned a 500 for every card while working fine under `next build`.
+ * It stays now the site builds for Netlify because a serverless bundle only
+ * carries the files Next's output tracing found, and tracing cannot follow a
+ * path built at runtime. See src/lib/og-assets.ts.
  */
 function brandFonts() {
   return [

@@ -13,10 +13,15 @@ const header = `/* GENERATED FILE — do not edit by hand.
  * The Open Graph card's font and wordmark bytes, inlined as base64.
  *
  * They used to be read from src/assets with node:fs at render time. That works
- * under \`next build\`, but Cloudflare Workers have no filesystem: the deployed
- * worker resolved them to /bundle/src/assets/... and every card returned a 500.
- * Inlining puts them in the JS bundle, where the runtime can actually reach
- * them.
+ * locally under \`next build\` and then fails once deployed: Cloudflare Workers,
+ * where this site first shipped, have no filesystem at all, and every card
+ * came back a 500.
+ *
+ * The site now builds for Netlify, whose functions do have a filesystem — but
+ * inlining stays, because the failure mode it avoids is not specific to
+ * workerd. A serverless bundle only contains the files Next's output tracing
+ * decided to include, and tracing cannot see a path assembled at runtime. Bytes
+ * in the JS bundle are always there. This is the boring, portable choice.
  *
  * Regenerate with scripts/build-og-assets.mjs after changing either asset.
  */
@@ -28,7 +33,7 @@ for (const [name, path] of Object.entries(FILES)) {
   const buf = await readFile(path);
   out += `/** ${path.split("/").pop()} — ${buf.length.toLocaleString()} bytes */\nexport const ${name} =\n  "${buf.toString("base64")}";\n\n`;
 }
-out += `/** base64 -> bytes, using the Web API that exists in both Node and workerd. */
+out += `/** base64 -> bytes, using the Web API that exists in every runtime we target. */
 export function bytes(b64: string): ArrayBuffer {
   const bin = atob(b64);
   const buf = new Uint8Array(bin.length);

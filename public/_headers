@@ -1,24 +1,34 @@
-# Cache-Control for static assets, applied by Cloudflare Workers Assets.
+# Cache-Control for the static assets under public/.
 #
-# This file is why images are fast. Without it every /_next/image response
-# ships with NO Cache-Control at all, so nothing is cached anywhere and each
-# page view re-runs the whole pipeline: Worker invocation -> fetch the full
-# original through the ASSETS binding -> Cloudflare Images transform -> stream
-# it back. The About page alone renders ~86 logos, so that was ~86 uncached
-# transforms per visit.
+# Netlify serves _headers from the publish directory, so this file has to live
+# in public/ — Next copies it into .next at build time. Keep it here.
 #
-# The reason is in @opennextjs/cloudflare's image handler
-# (node_modules/@opennextjs/cloudflare/dist/cli/templates/images.js): it marks
-# its optimised output cacheable only when the *source* asset is either a
-# hashed /_next/static/media import or already carries `immutable` upstream.
-# This site addresses its images by /public path, so neither held, and the
-# optimiser fell through to the no-header branch. Declaring the sources
-# immutable here is what flips that on for the optimised responses too.
+# WHAT THIS DOES AND DOES NOT COVER
+# ---------------------------------
+# These rules apply to the files themselves: the logo marks, the project
+# photographs, the company profile. They set how long a *browser* holds its
+# own copy.
 #
-# TRADE-OFF — read before replacing an image: `immutable` means browsers and
-# the edge may keep a copy effectively forever. Overwriting a file in place
-# will NOT reach anyone who already has it. To change a picture, give the new
-# file a new name and update the reference; do not overwrite the old path.
+# They do NOT apply to anything served by a function, which on Netlify
+# includes SSR routes and /_next/image. Those responses carry their own
+# headers. That is fine here: Netlify Image CDN caches each transform on its
+# edge and reuses it for every later request for the same transformation,
+# independently of what the source file's Cache-Control says. So the optimised
+# images are shared between visitors whether or not this file exists.
+#
+# (This file was originally written for Cloudflare Workers, where it was doing
+# something quite different and much more load-bearing: the OpenNext Cloudflare
+# image handler only marked its output cacheable when the source already said
+# `immutable`, and workers.dev bypasses the CDN cache entirely, so without
+# these rules every optimised image was rebuilt per request. None of that
+# mechanism applies on Netlify — do not reason from it.)
+#
+# TRADE-OFF — read before replacing an image: `immutable` means a browser may
+# keep its copy effectively forever. Overwriting a file in place will NOT reach
+# anyone who already has it. To change a picture, give the new file a new name
+# and update the reference; do not overwrite the old path. Re-compressing an
+# image is not a content change and is safe to do in place, since the old and
+# new files show the same picture.
 
 /projects/*
   Cache-Control: public, max-age=31536000, immutable

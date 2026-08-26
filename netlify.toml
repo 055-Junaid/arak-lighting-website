@@ -1,0 +1,26 @@
+# Netlify build settings.
+#
+# Netlify detects Next.js and suggests exactly these values, so this file is
+# not strictly required — it is here so the build is described in the repo
+# rather than only in the site's dashboard, and so a change to it goes through
+# review like any other change.
+#
+# The Next.js runtime (the OpenNext Netlify adapter) is installed automatically
+# at build time and is not a dependency here. That is deliberate: Netlify keeps
+# it current with each Next.js release, and pinning it in package.json opts out
+# of those updates.
+#
+# Node version comes from .node-version (22), which Netlify reads directly.
+
+[build]
+  command = "next build"
+  publish = ".next"
+
+[[headers]]
+  # Belt and braces alongside public/_headers, which Next copies into .next at
+  # build time. Anything served by a function — SSR routes and /_next/image —
+  # is unaffected by both; those responses carry their own headers.
+  for = "/_next/static/*"
+
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

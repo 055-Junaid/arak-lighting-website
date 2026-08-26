@@ -4,21 +4,18 @@
  *
  * WHY THESE ARE NOT LEFT TO next/image
  * -----------------------------------
- * Every /_next/image request costs a Worker invocation: the original is pulled
- * through the ASSETS binding into the isolate and handed to Cloudflare Images
- * to transform. That is a fair trade for a 2560px project photograph. It is a
- * bad trade for a logo, where the source is already small and the transform
- * saves almost nothing — the home page carries 84 of them, so it was paying 84
- * invocations to shave a few KB in total.
+ * Every /_next/image request is a function invocation that reads the source,
+ * decodes it and re-encodes it. That is a fair trade for a 2560px project
+ * photograph. It is a bad trade for a logo, where the source is already small
+ * and the transform saves almost nothing — the home page carries 84 of them,
+ * so it was paying 84 invocations to shave a few KB in total.
  *
- * Worse, the site currently runs on a workers.dev subdomain, where Cloudflare's
- * CDN cache is bypassed entirely, so none of those transforms are ever reused
- * between visitors. Static assets under /clients, /brands and /vendors ARE
- * cached (public/_headers marks them immutable), so serving the logos as
- * plain files turns 84 uncached transforms into 84 edge-cache hits.
+ * A plain file under /clients, /brands or /vendors skips all of that: it is
+ * served straight from the CDN as a static asset, on the long-lived
+ * Cache-Control public/_headers gives it.
  *
  * The marks are therefore pre-sized here, once, at commit time, and rendered
- * with `unoptimized` so they go straight to Workers Assets.
+ * with `unoptimized` so they are served as files rather than transformed.
  *
  * SIZING
  * ------
