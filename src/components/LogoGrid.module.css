@@ -174,3 +174,10 @@
     transform: none;
   }
 }
+
+/* 42px — two short of a finger's target. */
+@media (pointer: coarse) {
+  .toggle {
+    min-height: 44px;
+  }
+}

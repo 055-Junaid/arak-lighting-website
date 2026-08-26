@@ -64,6 +64,29 @@ existing image in place is fine, since it is the same picture.
 rather than read from disk, because serverless bundles only carry the files
 Next's output tracing found. Regenerate with `node scripts/build-og-assets.mjs`.
 
+## 404s and errors
+
+This site has two root layouts — one per language route group — which is the
+case Next names for `global-not-found.js`, so `experimental.globalNotFound` is
+on in `next.config.ts`. The pieces:
+
+- `src/app/global-not-found.tsx` — URLs matching no route at all. It bypasses
+  layout rendering, so it carries its own `<html>`, stylesheet and fonts.
+- `src/app/(ar)/ar/[...rest]/` — a catch-all that throws `notFound()`, so an
+  unmatched `/ar/*` URL is answered in Arabic instead of falling through to
+  the English global page.
+- `projects/not-found.tsx` and `services/smart-poles/not-found.tsx` in both
+  trees — a slug that does not exist.
+- `error.tsx` per tree, plus `global-error.tsx` for a fault in a root layout.
+
+All of them render `NotFound` or `ErrorBody`, so the copy is written once.
+
+Security headers are set in `next.config.ts` rather than `public/_headers`,
+because that file only covers responses served from the publish directory —
+read the comment at the top of it. There is deliberately no
+Content-Security-Policy: a useful one needs per-request nonces for the
+colour-mode boot script, and therefore middleware on every route.
+
 ## Notes
 
 `AGENTS.md` is written and re-added by `next dev`; commit it with your work

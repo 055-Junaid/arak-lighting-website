@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import { FEATURED_PROJECTS, getFeaturedProject } from "@/lib/projects-data";
 import { getPole, getPoleNeighbours, FAMILY_LABEL, POLES } from "@/lib/smart-poles-data";
-import { pageMetadata } from "@/lib/seo";
+import { clampDescription, pageMetadata } from "@/lib/seo";
 import type { Locale } from "@/lib/site";
 import { ProjectDetail } from "@/components/ProjectDetail";
 import { PoleDetail } from "@/components/PoleDetail";
+import { Breadcrumbs } from "@/components/StructuredData";
 
 /**
  * Shared bodies for the two dynamic routes, which each exist twice — once
@@ -33,9 +34,10 @@ export function projectMetadata(slug: string, locale: Locale) {
   });
 }
 
-export function ProjectRoute({ slug }: { slug: string }) {
+export function ProjectRoute({ slug, locale = "en" }: { slug: string; locale?: Locale }) {
   const project = getFeaturedProject(slug);
   if (!project || project.gallery.length === 0) notFound();
+  const ar = locale === "ar";
 
   const at = PHOTOGRAPHED.findIndex((p) => p.slug === project.slug);
 
@@ -45,11 +47,23 @@ export function ProjectRoute({ slug }: { slug: string }) {
     p ? { slug: p.slug, name: p.name, arName: p.arName } : undefined;
 
   return (
-    <ProjectDetail
-      project={project}
-      previous={trim(PHOTOGRAPHED[at - 1])}
-      next={trim(PHOTOGRAPHED[at + 1])}
-    />
+    <>
+      {/* Emitted from here rather than from ProjectDetail, which is a client
+          component: this is the nearest server component that has the
+          project's own name to put in the trail. */}
+      <Breadcrumbs
+        trail={[
+          { name: ar ? "المشاريع" : "Projects", route: "/projects" },
+          { name: ar ? project.arName : project.name, route: `/projects/${project.slug}` },
+        ]}
+        lang={locale}
+      />
+      <ProjectDetail
+        project={project}
+        previous={trim(PHOTOGRAPHED[at - 1])}
+        next={trim(PHOTOGRAPHED[at + 1])}
+      />
+    </>
   );
 }
 
@@ -66,26 +80,44 @@ export function poleMetadata(slug: string, locale: Locale) {
   return pageMetadata({
     title: ar ? `عمود ${pole.name} الذكي` : `${pole.name} Smart Pole`,
     // The tagline alone is too short to be a useful snippet, so it leads and
-    // the catalogue copy carries the rest.
-    description: ar ? `${pole.arTagline}. ${pole.arBody}` : `${pole.tagline}. ${pole.body}`,
+    // the catalogue copy carries the rest — clamped, because the two together
+    // ran to 370 characters in English and 465 in Arabic, well past what a
+    // result will show.
+    description: clampDescription(
+      ar ? `${pole.arTagline}. ${pole.arBody}` : `${pole.tagline}. ${pole.body}`
+    ),
     route: `/services/smart-poles/${pole.slug}`,
     locale,
   });
 }
 
-export function PoleRoute({ slug }: { slug: string }) {
+export function PoleRoute({ slug, locale = "en" }: { slug: string; locale?: Locale }) {
   const pole = getPole(slug);
   if (!pole) notFound();
+  const ar = locale === "ar";
 
   const { previous, next } = getPoleNeighbours(slug);
   const trim = (p: typeof pole | undefined) => (p ? { slug: p.slug, name: p.name } : undefined);
 
   return (
-    <PoleDetail
-      pole={pole}
-      family={FAMILY_LABEL[pole.family]}
-      previous={trim(previous)}
-      next={trim(next)}
-    />
+    <>
+      <Breadcrumbs
+        trail={[
+          { name: ar ? "الخدمات" : "Services", route: "/services" },
+          { name: ar ? "الأعمدة الذكية" : "Smart Poles", route: "/services/smart-poles" },
+          {
+            name: ar ? `عمود ${pole.name} الذكي` : `${pole.name} Smart Pole`,
+            route: `/services/smart-poles/${pole.slug}`,
+          },
+        ]}
+        lang={locale}
+      />
+      <PoleDetail
+        pole={pole}
+        family={FAMILY_LABEL[pole.family]}
+        previous={trim(previous)}
+        next={trim(next)}
+      />
+    </>
   );
 }

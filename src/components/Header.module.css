@@ -24,6 +24,14 @@
   align-items: center;
 }
 
+/* At the phone breakpoint the mark drops to 42px, taking its link with it.
+   The link keeps a 44px target without the logo itself changing size. */
+@media (pointer: coarse) {
+  .logo {
+    min-height: 44px;
+  }
+}
+
 .logo img {
   height: 58px;
   width: auto;
@@ -73,8 +81,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  height: 34px;
+  min-width: 44px;
+  height: 44px;
   padding: 0 10px;
   border: 1px solid rgba(17, 17, 17, 0.16);
   background: transparent;

@@ -1,6 +1,20 @@
 import type { NextConfig } from "next";
+import { fileURLToPath } from "node:url";
 
 const nextConfig: NextConfig = {
+  // Turbopack infers the workspace root by walking up for a lockfile, and finds
+  // a stray package-lock.json in the home directory above this repo. Pinning the
+  // root to this directory stops it reaching outside the project — without it
+  // every build prints a warning and the inferred root is simply wrong.
+  turbopack: {
+    root: fileURLToPath(new URL(".", import.meta.url)),
+  },
+  experimental: {
+    // Turns on src/app/global-not-found.tsx. This site has two root layouts —
+    // one per language group — so an unmatched URL has no single layout to
+    // build a 404 from, which is the case this flag exists for.
+    globalNotFound: true,
+  },
   images: {
     // Next 16 requires every quality the app asks for to be listed here;
     // anything else silently falls back to 75. 45 is for the service
@@ -23,6 +37,54 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
+
+  /**
+   * Security headers.
+   *
+   * Declared here rather than in public/_headers because that file is only
+   * read for responses the CDN serves from the publish directory — as the
+   * comment at the top of it says, anything served by a function is
+   * unaffected, and that is exactly the HTML these headers need to be on.
+   * Next applies these to every response it serves, static or not, and they
+   * travel with the app if it is ever hosted somewhere other than Netlify.
+   *
+   * There is deliberately no Content-Security-Policy here. A useful one would
+   * have to allow the colour-mode boot script and Next's own inline
+   * bootstrap, which means per-request nonces and therefore middleware on
+   * every route — a change with real breakage risk that should be made on
+   * its own rather than folded into a headers pass.
+   */
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          // Stop a browser second-guessing a declared Content-Type, which is
+          // what turns an uploaded file into a script.
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          // Send the full URL to ourselves, only the origin to anyone else,
+          // and nothing at all when leaving HTTPS.
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // No third party has a reason to frame this site.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+          // The site asks for none of these, so nothing embedded in it should
+          // be able to either.
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+          },
+          // Two years, subdomains included. The site is HTTPS-only behind
+          // Netlify already; this stops the first request being the one that
+          // gets downgraded.
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+        ],
+      },
+    ];
   },
 };
 

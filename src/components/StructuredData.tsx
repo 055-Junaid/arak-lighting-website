@@ -98,3 +98,50 @@ export function StructuredData({ lang }: { lang: Locale }) {
     />
   );
 }
+
+/**
+ * `BreadcrumbList` for a page that sits below the top level.
+ *
+ * Google uses this to replace the bare URL in a result with a readable trail —
+ * "arak-sa.com › Services › Smart Poles" — and to understand that the smart
+ * pole pages are part of Services rather than a flat set of unrelated pages.
+ * The site already draws these crumbs on screen; this states the same
+ * hierarchy in the form a crawler reads.
+ *
+ * `trail` is the ancestry without the home page, which is added here so every
+ * caller cannot forget it, and in the site's own English route form —
+ * `localePath` applies the locale prefix.
+ */
+export function Breadcrumbs({
+  trail,
+  lang,
+}: {
+  trail: { name: string; route: string }[];
+  lang: Locale;
+}) {
+  const ar = lang === "ar";
+  const items = [{ name: ar ? "الرئيسية" : "Home", route: "/" }, ...trail];
+
+  const graph = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      // The last crumb is the page itself. Schema.org allows dropping `item`
+      // on it, but naming it is what lets the trail be clicked through in a
+      // result, so every position carries its URL.
+      item: url(localePath(item.route, lang)),
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(graph).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}

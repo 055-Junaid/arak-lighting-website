@@ -186,3 +186,25 @@
     height: 320px;
   }
 }
+
+/* The phone number, the address and the social chips: the details a visitor
+   on a phone is most likely to be reaching for, and the ones that were under
+   a finger's target. */
+@media (pointer: coarse) {
+  .rowLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 4px;
+  }
+
+  .social {
+    min-height: 44px;
+  }
+
+  .mapLink {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}

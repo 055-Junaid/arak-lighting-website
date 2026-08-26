@@ -900,3 +900,19 @@
     letter-spacing: 0.2em;
   }
 }
+
+/* The inline "read on" links that close each home-page section. They are set
+   as small uppercase rules on a tight line, which left them between 21px and
+   33px tall. On touch they get a finger's target, with the extra height taken
+   back out of the margin so the sections keep their spacing. */
+@media (pointer: coarse) {
+  .h3,
+  .h13,
+  .svcAllLink,
+  .ctrlCta {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -12px;
+  }
+}

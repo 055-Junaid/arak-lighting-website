@@ -53,3 +53,28 @@ export function pageMetadata({
     twitter: { card: "summary_large_image", title: fullTitle, description },
   };
 }
+
+/**
+ * Trims an assembled description to something a search result can actually
+ * show. Google renders roughly 160 characters of a snippet before cutting,
+ * and a description that runs to 370 spends its second half where nobody
+ * reads it.
+ *
+ * The cut lands on a sentence end where there is one inside the budget, and
+ * on a word boundary otherwise, so the snippet never ends mid-word. Only
+ * assembled copy is passed through here — hand-written descriptions are left
+ * exactly as they were authored.
+ */
+export function clampDescription(text: string, max = 160): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+
+  const budget = clean.slice(0, max);
+
+  // Prefer ending on a full stop, in either script's punctuation.
+  const sentence = Math.max(budget.lastIndexOf(". "), budget.lastIndexOf("۔ "), budget.lastIndexOf("، "));
+  if (sentence > max * 0.6) return budget.slice(0, sentence + 1).trim();
+
+  const word = budget.lastIndexOf(" ");
+  return `${budget.slice(0, word > 0 ? word : max).trim()}…`;
+}

@@ -28,6 +28,9 @@
 }
 
 .eyebrow {
+  /* Set on both a span (the page label) and an h2 (the section headings), so
+     the heading's default margin is cleared here rather than assumed. */
+  margin: 0;
   font: 500 11px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.3em;
   text-transform: uppercase;

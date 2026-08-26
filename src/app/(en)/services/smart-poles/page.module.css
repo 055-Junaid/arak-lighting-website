@@ -148,6 +148,25 @@
   transition: color 0.25s ease;
 }
 
+/* The crumb is set at 11px on a line-height of 1, which made the link itself
+   an 11px-tall target — the smallest control on the site. The padding is
+   negated by an equal negative margin so the hero's spacing is unchanged. */
+@media (pointer: coarse) {
+  .crumb a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    /* Arabic sets "خدماتنا" in 31px — narrower than a fingertip — so the
+       target is widened as well as heightened. The inline padding is taken
+       back out of the margin so the crumb reads at the same position. */
+    min-width: 44px;
+    padding-inline: 7px;
+    margin-block: -16px;
+    margin-inline: -7px;
+  }
+}
+
 .crumb a:hover {
   color: #ffffff;
 }
@@ -354,6 +373,14 @@
 .filter:hover {
   border-color: rgba(255, 255, 255, 0.55);
   color: #ffffff;
+}
+
+/* 11px text on 13px of padding lands at 39px — just under a finger's target.
+   Touch pointers get the extra 5px; a mouse keeps the tighter chip. */
+@media (pointer: coarse) {
+  .filter {
+    min-height: 44px;
+  }
 }
 
 .filterOn {

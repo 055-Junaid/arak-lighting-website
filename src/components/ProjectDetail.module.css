@@ -146,3 +146,14 @@
     max-width: 100%;
   }
 }
+
+/* An 11px uppercase link was an 11px-tall target — the smallest on a project
+   page, and the one a visitor reaches for to get back to the list. */
+@media (pointer: coarse) {
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-block: -16px;
+  }
+}

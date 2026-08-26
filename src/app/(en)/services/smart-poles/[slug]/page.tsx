@@ -9,5 +9,5 @@ export async function generateMetadata({ params }: PageProps<"/services/smart-po
 
 export default async function PolePage({ params }: PageProps<"/services/smart-poles/[slug]">) {
   const { slug } = await params;
-  return <PoleRoute slug={slug} />;
+  return <PoleRoute slug={slug} locale="en" />;
 }

@@ -246,3 +246,19 @@
     min-width: 0;
   }
 }
+
+/* Breadcrumb links, 11px on a 1.6 line — 18px of target. */
+@media (pointer: coarse) {
+  .crumb a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    /* As on the index: the Arabic crumb is 31px wide, so the target is
+       widened too, with the padding taken back out of the margin. */
+    min-width: 44px;
+    padding-inline: 7px;
+    margin-block: -14px;
+    margin-inline: -7px;
+  }
+}

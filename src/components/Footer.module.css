@@ -14,8 +14,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(17, 17, 17, 0.18);
   color: rgba(17, 17, 17, 0.6);
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -113,6 +113,33 @@
 
 .link {
   cursor: pointer;
+}
+
+/* Touch input only, so the pointer-driven footer keeps its density while a
+   finger gets the 44px the rows are too short for. `pointer: coarse` is the
+   question actually being asked here — a narrow window on a laptop is still
+   a mouse, and a wide tablet is still a finger. */
+@media (pointer: coarse) {
+  .link,
+  .colHead + .link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .socials {
+    gap: 12px;
+  }
+
+  /* An 18px underlined cue. The padding is taken back out of the margin so
+     the block below it does not move. */
+  .mapCue {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-bottom: 19px;
+    margin-bottom: -13px;
+  }
 }
 
 .legal {

@@ -28,6 +28,14 @@
   color: #111111;
 }
 
+/* 11px text on 13px of padding lands at 39px — just under a finger's target.
+   Touch pointers get the extra 5px; a mouse keeps the tighter chip. */
+@media (pointer: coarse) {
+  .filter {
+    min-height: 44px;
+  }
+}
+
 .filterCount {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;

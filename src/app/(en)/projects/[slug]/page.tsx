@@ -9,5 +9,5 @@ export async function generateMetadata({ params }: PageProps<"/projects/[slug]">
 
 export default async function ProjectPage({ params }: PageProps<"/projects/[slug]">) {
   const { slug } = await params;
-  return <ProjectRoute slug={slug} />;
+  return <ProjectRoute slug={slug} locale="en" />;
 }

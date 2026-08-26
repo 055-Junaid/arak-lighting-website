@@ -25,7 +25,10 @@ export default function ProjectsPage() {
 
       <section className={`${styles.section} ${styles.sectionMid}`}>
         <div className={`${styles.label} ${styles.labelRule}`}>
-          <span className={styles.eyebrow}>{ar ? "أبرز المشاريع" : "Top projects"}</span>
+          {/* A heading, not a label: these name the two sections under the
+              page's h1, and as spans the card titles below them made the
+              document jump straight from h1 to h3. */}
+          <h2 className={styles.eyebrow}>{ar ? "أبرز المشاريع" : "Top projects"}</h2>
           <span className={styles.rule} />
         </div>
         <ProjectCards />
@@ -33,7 +36,7 @@ export default function ProjectsPage() {
 
       <section className={`${styles.section} ${styles.sectionLast}`}>
         <div className={`${styles.label} ${styles.labelRule}`}>
-          <span className={styles.eyebrow}>{ar ? "مشاريع أخرى" : "Further references"}</span>
+          <h2 className={styles.eyebrow}>{ar ? "مشاريع أخرى" : "Further references"}</h2>
           <span className={styles.rule} />
         </div>
         <ProjectsTable />
