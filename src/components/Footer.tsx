@@ -92,7 +92,7 @@ export function Footer() {
                 : "Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513"}
             </a>
             <a href={MAPS_PLACE_URL} target="_blank" rel="noopener noreferrer" className={styles.mapCue}>
-              {ar ? "عرض على الخريطة ↖" : "View on map ↗"}
+              {ar ? "عرض على الخريطة" : "View on map"}
             </a>
             <a href="tel:+966114411131" dir="ltr" className={styles.link}>
               +966 11 441 1131
