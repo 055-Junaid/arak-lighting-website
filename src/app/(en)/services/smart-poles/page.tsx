@@ -279,8 +279,8 @@ export default function SmartPolesPage() {
               </div>
               <p className={`${styles.sectionNote} ${styles.sectionNoteLight}`}>
                 {ar
-                  ? "أنظمة الأعمدة الذكية هي طبقة الحمل والطرفيات للمدينة الذكية، قائمة على إنترنت الأشياء والحوسبة السحابية والبيانات الضخمة والمعلومات المكانية. تجمع هذه الأنظمة وتنقل ما تحتاجه المدينة لتقديم الخدمات وحفظ الأمن العام وحماية البيئة."
-                  : "Smart pole systems are a carrier and terminal layer for the intelligent city, built on IoT, cloud computing, big data and spatial information. They collect and transmit what a city needs for service delivery, public safety and environmental protection."}
+                  ? "أنظمة الأعمدة الذكية هي طبقة الحمل والطرفيات للمدينة الذكية، قائمة على إنترنت الأشياء والحوسبة السحابية والبيانات الضخمة والمعلومات المكانية. تجمع هذه الأنظمة وتنقل ما تحتاجه المدينة لتقديم الخدمات وحفظ الأمن العام وحماية البيئة. وما يلي هو ما يمكن أن يحمله العمود، لا ما يحمله كل عمود: تُبنى المواصفة لكل مشروع على حدة."
+                  : "Smart pole systems are a carrier and terminal layer for the intelligent city, built on IoT, cloud computing, big data and spatial information. They collect and transmit what a city needs for service delivery, public safety and environmental protection. What follows is what a pole can carry rather than what every pole carries — the specification is built per project."}
               </p>
             </div>
           </Reveal>
