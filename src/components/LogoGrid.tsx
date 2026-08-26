@@ -98,9 +98,14 @@ export function LogoGrid({
                     alt=""
                     width={220}
                     height={90}
-                    // The optimiser rejects SVG unless dangerouslyAllowSVG is set;
-                    // vectors need no resizing anyway, so serve them as-is.
-                    unoptimized={item.file.endsWith(".svg")}
+                    loading="lazy"
+                    // Served straight from Workers Assets rather than through
+                    // /_next/image. The marks are already WebP, already cut to
+                    // the size they are drawn at (scripts/optimise-logos.mjs),
+                    // and vectors resize for free — so a transform would cost a
+                    // Worker invocation per mark to save almost nothing. There
+                    // are 84 of them on the home page.
+                    unoptimized
                     className={styles.logo}
                   />
                 ) : (

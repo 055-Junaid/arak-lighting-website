@@ -13,19 +13,19 @@ import styles from "./VendorBelt.module.css";
  * are the forms they use on their own sites and in tender documents.
  */
 export const VENDORS = [
-  { file: "neom.png", name: "NEOM", ar: "نيوم" },
-  { file: "qiddiya.png", name: "Qiddiya", ar: "القدية" },
-  { file: "roshn.png", name: "Roshn", ar: "روشن" },
-  { file: "red-sea.png", name: "The Red Sea Development Company", ar: "شركة البحر الأحمر للتطوير" },
-  { file: "dgda.png", name: "Diriyah Gate Development Authority", ar: "هيئة تطوير بوابة الدرعية" },
-  { file: "saudi-aramco.png", name: "Saudi Aramco", ar: "أرامكو السعودية" },
-  { file: "saudi-electricity.png", name: "Saudi Electricity Company", ar: "الشركة السعودية للكهرباء" },
-  { file: "stc.png", name: "STC", ar: "شركة الاتصالات السعودية" },
-  { file: "riyadh-airports.png", name: "Riyadh Airports", ar: "مطارات الرياض" },
-  { file: "nhc.png", name: "National Housing Company", ar: "الشركة الوطنية للإسكان" },
-  { file: "national-water.png", name: "National Water Company", ar: "شركة المياه الوطنية" },
+  { file: "neom.webp", name: "NEOM", ar: "نيوم" },
+  { file: "qiddiya.webp", name: "Qiddiya", ar: "القدية" },
+  { file: "roshn.webp", name: "Roshn", ar: "روشن" },
+  { file: "red-sea.webp", name: "The Red Sea Development Company", ar: "شركة البحر الأحمر للتطوير" },
+  { file: "dgda.webp", name: "Diriyah Gate Development Authority", ar: "هيئة تطوير بوابة الدرعية" },
+  { file: "saudi-aramco.webp", name: "Saudi Aramco", ar: "أرامكو السعودية" },
+  { file: "saudi-electricity.webp", name: "Saudi Electricity Company", ar: "الشركة السعودية للكهرباء" },
+  { file: "stc.webp", name: "STC", ar: "شركة الاتصالات السعودية" },
+  { file: "riyadh-airports.webp", name: "Riyadh Airports", ar: "مطارات الرياض" },
+  { file: "nhc.webp", name: "National Housing Company", ar: "الشركة الوطنية للإسكان" },
+  { file: "national-water.webp", name: "National Water Company", ar: "شركة المياه الوطنية" },
   { file: "rcjy.svg", name: "Royal Commission for Jubail & Yanbu", ar: "الهيئة الملكية للجبيل وينبع" },
-  { file: "mngha.png", name: "Ministry of National Guard Health Affairs", ar: "الشؤون الصحية بوزارة الحرس الوطني" },
+  { file: "mngha.webp", name: "Ministry of National Guard Health Affairs", ar: "الشؤون الصحية بوزارة الحرس الوطني" },
 ];
 
 function Logo({
@@ -46,6 +46,11 @@ function Logo({
         title={name}
         width={168}
         height={74}
+        loading="lazy"
+        // As in LogoGrid: pre-sized WebP served straight from Workers Assets.
+        // The belt renders every mark twice for the marquee, so optimising
+        // here would have cost two Worker invocations per vendor.
+        unoptimized
         className={styles.logo}
       />
     </div>
