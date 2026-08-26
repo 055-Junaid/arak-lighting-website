@@ -1,0 +1,55 @@
+# Cache-Control for static assets, applied by Cloudflare Workers Assets.
+#
+# This file is why images are fast. Without it every /_next/image response
+# ships with NO Cache-Control at all, so nothing is cached anywhere and each
+# page view re-runs the whole pipeline: Worker invocation -> fetch the full
+# original through the ASSETS binding -> Cloudflare Images transform -> stream
+# it back. The About page alone renders ~86 logos, so that was ~86 uncached
+# transforms per visit.
+#
+# The reason is in @opennextjs/cloudflare's image handler
+# (node_modules/@opennextjs/cloudflare/dist/cli/templates/images.js): it marks
+# its optimised output cacheable only when the *source* asset is either a
+# hashed /_next/static/media import or already carries `immutable` upstream.
+# This site addresses its images by /public path, so neither held, and the
+# optimiser fell through to the no-header branch. Declaring the sources
+# immutable here is what flips that on for the optimised responses too.
+#
+# TRADE-OFF — read before replacing an image: `immutable` means browsers and
+# the edge may keep a copy effectively forever. Overwriting a file in place
+# will NOT reach anyone who already has it. To change a picture, give the new
+# file a new name and update the reference; do not overwrite the old path.
+
+/projects/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/home/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/smart-poles/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/brands/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/clients/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/vendors/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/arak-logo-black.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/arak-logo-white.png
+  Cache-Control: public, max-age=31536000, immutable
+
+# Build output is content-hashed, so the filename changes whenever the bytes
+# do and the caveat above cannot bite.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The company profile is replaced in place each year and is linked from the
+# site, so it stays revalidated rather than immutable.
+/docs/*
+  Cache-Control: public, max-age=3600, must-revalidate
