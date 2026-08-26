@@ -104,7 +104,10 @@ export default function HomePage() {
     <main>
       <section className={styles.hero} style={{ position: "relative", overflow: "hidden", background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
         <div className={styles.heroArt}>
-          <Image src="/home/riyadh-arterial-hero.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
+          {/* -v2 rather than a replacement of the original file: /home/* is
+              served immutable (see public/_headers), so overwriting a path
+              leaves anyone who already has it on the old picture forever. */}
+          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>

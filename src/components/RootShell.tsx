@@ -27,8 +27,16 @@ export function RootShell({
 }) {
   const dir = lang === "ar" ? "rtl" : "ltr";
 
+  /* <html> carries suppressHydrationWarning because the boot script in the
+     head below sets data-color on it while the HTML is still parsing, so the
+     DOM React hydrates against holds an attribute the server never rendered.
+     Without it React reports a mismatch and recovers by client-rendering from
+     the nearest boundary, which discards the very attribute the script set —
+     the flash the script exists to prevent. It covers this element's own
+     attributes only, not the tree beneath it. See the "Themes" section of
+     node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md. */
   return (
-    <html lang={lang} dir={dir} data-scroll-behavior="smooth" className={fontClassName}>
+    <html lang={lang} dir={dir} data-scroll-behavior="smooth" className={fontClassName} suppressHydrationWarning>
       {/* next/head is the Pages Router API; a root layout renders <head>
           directly, which is what this component is standing in for. The rule
           cannot tell the difference from outside the app directory. */}
