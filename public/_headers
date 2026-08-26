@@ -29,6 +29,9 @@
 /smart-poles/*
   Cache-Control: public, max-age=31536000, immutable
 
+/services/*
+  Cache-Control: public, max-age=31536000, immutable
+
 /brands/*
   Cache-Control: public, max-age=31536000, immutable
 

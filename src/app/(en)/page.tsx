@@ -66,9 +66,9 @@ const HOME_SERVICES = [
     ar: "أنظمة التحكم بالإضاءة",
     enText: "KNX/EIB systems, scene control, daylight and presence sensing, energy management.",
     arText: "أنظمة KNX/EIB، والتحكم بالمشاهد، واستشعار الضوء والحركة، وإدارة الطاقة.",
-    photo: "/projects/delfino/01.jpg",
-    alt: "The planted ceiling and table lighting at Delfino Mayfair, Riyadh, running on the EIB / KNX scene control ARAK supplied",
-    arAlt: "السقف المزروع وإضاءة الطاولات في دلفينو مايفير، الرياض، تعمل على نظام مشاهد EIB / KNX الذي وردّته أراك",
+    photo: "/services/lighting-controls.jpg",
+    alt: "A technician seating a KNX module onto the DIN rail of a lighting control panel, its conductors labelled circuit by circuit",
+    arAlt: "فنّي يثبّت وحدة KNX على قضيب DIN في لوحة التحكّم بالإضاءة، وموصّلاتها مرقّمة دائرةً دائرة",
   },
   {
     no: "06",
@@ -76,9 +76,9 @@ const HOME_SERVICES = [
     ar: "تركيب الإضاءة",
     enText: "Site installation, commissioning and handover by our own technical crews.",
     arText: "التركيب في الموقع والتشغيل والتسليم عبر فرقنا الفنية.",
-    photo: "/projects/four-points/01.jpg",
-    alt: "The Four Points by Sheraton, Riyadh, lit at night — ARAK supplied and commissioned the hotel's lighting control system",
-    arAlt: "فندق فور بوينتس باي شيراتون، الرياض، مضاءً ليلًا — وردّت أراك نظام التحكّم بالإضاءة وشغّلته",
+    photo: "/services/lighting-installation.jpg",
+    alt: "Two technicians on a mobile tower aiming track-mounted spotlights in an interior still being finished",
+    arAlt: "فنّيان على برج سقالة متحرّك يوجّهان كشّافات مركّبة على مسار في مساحة داخلية ما تزال قيد التشطيب",
   },
 ];
 
