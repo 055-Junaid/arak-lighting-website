@@ -16,12 +16,20 @@ const nextConfig: NextConfig = {
     globalNotFound: true,
   },
   images: {
-    // Next 16 requires every quality the app asks for to be listed here;
-    // anything else silently falls back to 75. 60 is PHOTO_QUALITY in
-    // src/lib/images.ts, which every photograph on the site is served at —
-    // see that file for why it is 60 and not Next's default 75. 45 is for the
-    // service spotlight's backdrops, which sit at 13% opacity behind a white
-    // wash and would be wasting bytes at full quality.
+    // Every quality the app asks for has to be listed here. A request for one
+    // that is not returns **400, not a fallback** — an <Image> left on Next's
+    // default 75 would be a broken picture, not a slightly worse one. (The
+    // note that used to sit here said it silently fell back to 75; it does
+    // not. Verified against this build: /_next/image?...&q=75 -> 400.)
+    //
+    // So this list and the quality props have to be changed together. All 70
+    // pages were crawled after the last change: only 60 and 45 are ever asked
+    // for, across 883 distinct image URLs, with no non-200 responses.
+    //
+    // 60 is PHOTO_QUALITY in src/lib/images.ts, which every photograph is
+    // served at — see that file for why it is 60 rather than Next's 75. 45 is
+    // for the service spotlight's backdrops, which sit at 13% opacity behind a
+    // white wash and would be wasting bytes at full quality.
     qualities: [45, 60],
     // Next's default list ends at 3840. Nothing here is worth serving that
     // wide: the largest original on the site is 3400px, so a 3840 request
