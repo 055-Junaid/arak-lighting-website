@@ -55,6 +55,28 @@ node scripts/optimise-photos.mjs
 Both scripts back originals up to `_originals/` (gitignored) before touching
 anything, and both are safe to re-run.
 
+**Quality** is set on the transform, not on the source. The sources are JPEG
+but nobody downloads them: `/_next/image` serves WebP, so a 435KB source
+arrives as about 57KB at phone width. Re-compressing the sources would cost a
+generation of quality and save nothing on the wire — the setting that moves
+bytes is `PHOTO_QUALITY` in `src/lib/images.ts`, which every photograph is
+served at. It is 60 rather than Next's default 75: rendered at the size they
+are drawn the two are indistinguishable on this photography, and it takes the
+English site from 13.4MB to 11.5MB over 35 pages. Below 60 the wall-wash
+gradients and the dark falloff start to band, which here is the product.
+
+Every quality the app asks for has to be listed in `images.qualities` in
+`next.config.ts`, **and a request for one that is not returns 400 rather than
+falling back**. An `<Image>` left on the default quality is a broken picture,
+not a slightly worse one, so the allowlist and the `quality` props have to be
+changed together. After changing either, check that nothing still asks for an
+unlisted value:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' \
+  'http://localhost:3000/_next/image?url=%2Fhome%2Friyadh-arterial-hero-v2.jpg&w=750&q=75'
+```
+
 **`public/_headers`** sets browser caching for these static files. Read the
 comment at the top of it before replacing any image: the paths are marked
 `immutable`, so a changed picture needs a new filename. Re-compressing an
