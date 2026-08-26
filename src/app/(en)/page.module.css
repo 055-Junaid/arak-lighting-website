@@ -916,3 +916,56 @@
     margin-block: -12px;
   }
 }
+
+/* --- Who we are ---------------------------------------------------------
+   Lifted out of inline styles on the page, which had no breakpoint at all.
+   The grid held both of its columns on a phone: a 98px text column beside an
+   85px photograph with a 96px gap between them, so the paragraphs ran about
+   ten characters wide and eight hundred pixels tall. The inset was a
+   hardcoded 130px/48px, which on a 375px screen spent a quarter of the width
+   on margins and sat out of line with the sections above and below it.
+
+   The measure caps already on the copy (20ch on the heading, 62ch on the
+   paragraphs) are what let the single column be full width without the lines
+   running long, so no width has to be invented here. */
+
+.whoSection {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--band-y) var(--gutter);
+}
+
+.whoGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(48px, 6.5vw, 96px);
+  align-items: start;
+}
+
+.whoPhoto {
+  height: 560px;
+}
+
+/* desk — the width at which this site's two-column editorial layouts give up
+   their second column, per the breakpoint contract in globals.css. Stacked,
+   the photograph reads as a full-width plate rather than a tall sliver. */
+@media (max-width: 1080px) {
+  .whoGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(36px, 5vw, 52px);
+  }
+
+  .whoPhoto {
+    height: clamp(280px, 58vw, 460px);
+  }
+}
+
+/* The shared inset for the page's full-width bands — the services band and
+   the projects band, which each carried the same hardcoded "120px 48px".
+   On a phone that held them at a 48px inset while their neighbours tapered
+   to 20px, so the page's left edge stepped in and out as you scrolled. */
+.band {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--band-y) var(--gutter);
+}

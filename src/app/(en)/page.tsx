@@ -208,8 +208,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section style={{ maxWidth: "1360px", margin: "0 auto", padding: "130px 48px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1.15fr) minmax(0,1fr)", gap: "96px", alignItems: "start" }}>
+      <section className={styles.whoSection}>
+        <div className={styles.whoGrid}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "34px" }}>
               <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "من نحن" : "Who we are"}</span>
@@ -240,13 +240,16 @@ export default function HomePage() {
             <Link href={localePath("/about", lang)} style={{ display: "inline-flex", alignItems: "center", gap: "12px", font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", marginTop: "44px", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.h3}>{lang === "ar" ? "قصتنا الكاملة" : "Our full story"}
             <span aria-hidden="true">{ar ? "←" : "→"}</span></Link>
           </div>
-          <div style={{ height: "560px" }}>
-            <PhotoSlot src="/projects/solitaire-mall/06.jpg" alt={ar ? "مشروع إضاءة شلال الكريستال في سوليتير مول، الرياض" : "The crystal cascade lighting scheme at Solitaire Mall, Riyadh"} />
+          <div className={styles.whoPhoto}>
+            <PhotoSlot
+              // This column stacks at 1080, not at the default 768.
+              sizes="(max-width: 1080px) 100vw, 50vw"
+              src="/projects/solitaire-mall/06.jpg" alt={ar ? "مشروع إضاءة شلال الكريستال في سوليتير مول، الرياض" : "The crystal cascade lighting scheme at Solitaire Mall, Riyadh"} />
           </div>
         </div>
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
+        <div className={styles.band}>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", marginBottom: "74px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
@@ -372,7 +375,7 @@ export default function HomePage() {
         </div>
       </section>
       <section style={{ borderTop: "1px solid rgba(17,17,17,.13)", background: "#F6F5F3" }}>
-        <div style={{ maxWidth: "1360px", margin: "0 auto", padding: "120px 48px" }}>
+        <div className={styles.band}>
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "40px", flexWrap: "wrap", marginBottom: "70px" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
