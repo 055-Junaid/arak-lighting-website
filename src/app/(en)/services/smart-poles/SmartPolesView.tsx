@@ -12,6 +12,7 @@ import {
 } from "@/lib/smart-poles-data";
 import { PoleSeries } from "./PoleSeries";
 import styles from "./page.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 const PITCH = [
   {
@@ -134,6 +135,7 @@ export function SmartPolesView() {
       {/* Hero */}
       <section className={styles.hero}>
         <Image
+          quality={PHOTO_QUALITY}
           src="/smart-poles/hero.jpg"
           alt={ar ? "عمود إنارة ذكي مضاء منفردًا بين أبراج المدينة عند الغسق" : "A single lit smart light pole standing between city towers at dusk"}
           fill
@@ -240,6 +242,7 @@ export function SmartPolesView() {
               </ul>
               <div className={styles.anatomyPole}>
                 <Image
+                  quality={PHOTO_QUALITY}
                   src="/smart-poles/anatomy-pole.jpg"
                   alt={
                     ar
@@ -424,6 +427,7 @@ export function SmartPolesView() {
                 <figure className={styles.shot} style={{ margin: 0 }}>
                   <div className={styles.shotFrame}>
                     <Image
+                      quality={PHOTO_QUALITY}
                       src={s.src}
                       alt={ar ? s.arAlt : s.alt}
                       fill

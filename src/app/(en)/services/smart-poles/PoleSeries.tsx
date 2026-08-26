@@ -8,6 +8,7 @@ import { POLES, POLE_FAMILIES, isPoleFamily, type PoleFamily } from "@/lib/smart
 import { localePath } from "@/lib/site";
 import { useLang } from "@/lib/lang";
 import styles from "./page.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 /**
  * The filter chips and the grid of twenty designs.
@@ -85,6 +86,7 @@ export function PoleSeries({ ar }: { ar: boolean }) {
             <Link href={localePath(`/services/smart-poles/${p.slug}`, lang)} className={styles.pole}>
               <div className={styles.poleArt}>
                 <Image
+                  quality={PHOTO_QUALITY}
                   src={`/smart-poles/${p.slug}.jpg`}
                   alt={
                     ar

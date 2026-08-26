@@ -12,6 +12,7 @@ import { BrandGrid } from "@/components/BrandGrid";
 import { ClientGrid } from "@/components/ClientGrid";
 import { Reveal } from "@/components/Reveal";
 import styles from "./page.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 /**
  * The six service lines carried on the home page, in company-profile order.
@@ -107,7 +108,7 @@ export default function HomePage() {
           {/* -v2 rather than a replacement of the original file: /home/* is
               served immutable (see public/_headers), so overwriting a path
               leaves anyone who already has it on the old picture forever. */}
-          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
+          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority quality={PHOTO_QUALITY} sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
@@ -268,6 +269,7 @@ export default function HomePage() {
               <Link key={service.no} href={localePath("/services", lang)} className={styles.svcCard}>
                 <div className={styles.svcFrame}>
                   <Image
+                    quality={PHOTO_QUALITY}
                     src={service.photo}
                     alt={ar ? service.arAlt : service.alt}
                     fill
@@ -286,6 +288,7 @@ export default function HomePage() {
           <Link href={localePath("/services/smart-poles", lang)} className={styles.poleStrip}>
             <div className={styles.poleStripArt}>
               <Image
+                quality={PHOTO_QUALITY}
                 src="/smart-poles/ctx-street.jpg"
                 alt={ar ? "أعمدة ذكية على امتداد شارع مدينيّ منسّق" : "Smart poles along a landscaped city boulevard"}
                 fill

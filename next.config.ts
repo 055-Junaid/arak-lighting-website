@@ -17,10 +17,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     // Next 16 requires every quality the app asks for to be listed here;
-    // anything else silently falls back to 75. 45 is for the service
-    // spotlight's backdrops, which sit at 13% opacity behind a white wash
-    // and would be wasting bytes at full quality.
-    qualities: [45, 75],
+    // anything else silently falls back to 75. 60 is PHOTO_QUALITY in
+    // src/lib/images.ts, which every photograph on the site is served at —
+    // see that file for why it is 60 and not Next's default 75. 45 is for the
+    // service spotlight's backdrops, which sit at 13% opacity behind a white
+    // wash and would be wasting bytes at full quality.
+    qualities: [45, 60],
     // Next's default list ends at 3840. Nothing here is worth serving that
     // wide: the largest original on the site is 3400px, so a 3840 request
     // just re-encodes the whole source at full size — measured at 246KB for

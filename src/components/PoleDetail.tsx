@@ -6,6 +6,7 @@ import { useLang } from "@/lib/lang";
 import { localePath } from "@/lib/site";
 import { POLE_FUNCTIONS, type Pole } from "@/lib/smart-poles-data";
 import styles from "./PoleDetail.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 type Neighbour = { slug: string; name: string } | undefined;
 
@@ -37,6 +38,7 @@ export function PoleDetail({
         <article className={styles.detail}>
           <div className={styles.art}>
             <Image
+              quality={PHOTO_QUALITY}
               src={`/smart-poles/${pole.slug}.jpg`}
               alt={
                 ar

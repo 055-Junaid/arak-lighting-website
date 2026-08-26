@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLang } from "@/lib/lang";
 import type { GalleryImage } from "@/lib/project-galleries";
 import styles from "./ProjectGallery.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 export function ProjectGallery({
   images,
@@ -68,6 +69,7 @@ export function ProjectGallery({
             }
           >
             <Image
+              quality={PHOTO_QUALITY}
               src={image.src}
               alt={ar ? `${projectName} — صورة ${i + 1} من ${images.length}` : `${projectName} — photograph ${i + 1} of ${images.length}`}
               fill
@@ -140,6 +142,7 @@ export function ProjectGallery({
             }
           >
             <Image
+              quality={PHOTO_QUALITY}
               src={active.src}
               alt={ar ? `${projectName} — صورة ${open + 1} من ${images.length}` : `${projectName} — photograph ${open + 1} of ${images.length}`}
               fill

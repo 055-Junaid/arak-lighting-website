@@ -15,6 +15,7 @@ import {
   SMART_POLES,
 } from "@/lib/services-data";
 import styles from "./page.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 const HERO_META = [
   { value: "1976", en: "Lighting since", ar: "نعمل منذ" },
@@ -100,6 +101,7 @@ export default function ServicesPage() {
               </div>
               <div className={styles.featureArt}>
                 <Image
+                  quality={PHOTO_QUALITY}
                   src="/smart-poles/ctx-boulevard-riyadh.jpg"
                   alt={ar ? "طريق شرياني مضاء في الرياض ليلًا" : "A lit arterial road in Riyadh at night"}
                   fill

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./PhotoSlot.module.css";
+import { PHOTO_QUALITY } from "@/lib/images";
 
 export function PhotoSlot({
   src,
@@ -21,6 +22,7 @@ export function PhotoSlot({
   return (
     <div className={styles.slot}>
       <Image
+        quality={PHOTO_QUALITY}
         src={src}
         alt={alt}
         fill
