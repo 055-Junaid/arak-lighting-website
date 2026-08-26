@@ -144,6 +144,40 @@
   }
 }
 
+/* phone — the pill becomes the bulb alone.
+   At full width this is a 180px bar fixed over the bottom-right corner, and
+   on a phone that is wide enough to land on the page's own text: on the
+   contact form it covered half of the brief field's validation message, so a
+   visitor who submitted an incomplete form could not read why. Dropping the
+   word and the track takes it to 48px square, which clears the copy while
+   keeping the switch on every page.
+
+   Nothing is lost to assistive technology — the button is a `role="switch"`
+   carrying `aria-checked` and a full `aria-label` — and the state stays
+   visible, because the filament is what actually reads as on or off: grey
+   when the lights are down, amber and glowing when they are up. */
+@media (max-width: 520px) {
+  .dock {
+    gap: 0;
+    /* Square, like every other control here, and 48px so it stays a
+       comfortable target once the label is gone. */
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .label,
+  .track {
+    display: none;
+  }
+
+  .bulb {
+    width: 22px;
+    height: 22px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dock,
   .dock[data-nudge="true"] {
