@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 /**
  * Site-wide colour switch. The whole site rests in black and white — the
@@ -75,6 +75,31 @@ export function useColorMode() {
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const color = state.startsWith("on");
   const toggleColor = useCallback(() => setColor(!colorOn), []);
+
+  /**
+   * Re-asserts the attribute from the store once the switch is mounted.
+   *
+   * Until this existed, <html data-color> was written in exactly two places:
+   * the boot script in the head, and `setColor` when the switch is worked.
+   * Nothing ever reconciled it. That left one way for the page to contradict
+   * itself, and it is the failure a visitor would actually meet: the store
+   * reads "on" straight out of localStorage, so the switch renders lit — but
+   * the attribute only exists if the inline boot script ran. Blocked by a
+   * content policy, stripped by an extension, or failed for any other reason,
+   * and the result is a switch that says the lights are on over a page that
+   * is still entirely grey, with no way to fix it but to toggle twice.
+   *
+   * Deriving the attribute from the state instead means the two cannot
+   * disagree past first paint. When the boot script has done its job this
+   * writes the value that is already there and nothing happens; when it has
+   * not, the page corrects itself as soon as React is running.
+   */
+  useEffect(() => {
+    const root = document.documentElement;
+    const want = color ? "on" : "off";
+    if (root.getAttribute("data-color") !== want) root.setAttribute("data-color", want);
+  }, [color]);
+
   return {
     color,
     toggleColor,
