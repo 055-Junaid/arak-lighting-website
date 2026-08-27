@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Sora, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { RootShell } from "@/components/RootShell";
-import { SITE_NAME, SITE_URL, localeAlternates } from "@/lib/site";
+import { ICONS, SITE_NAME, SITE_URL, localeAlternates } from "@/lib/site";
 import "../globals.css";
 
 const sora = Sora({
@@ -27,25 +27,55 @@ const plexSansArabic = IBM_Plex_Sans_Arabic({
   preload: false,
 });
 
+/**
+ * Opens by saying what the company is, because a result is read by people who
+ * have not heard of it: a list of services says nothing about who is offering
+ * them. This is the positioning line the company already uses of itself — see
+ * SITE_TAGLINE — with the work named after it.
+ *
+ * "since 1976" rather than "for fifty years". The two say the same thing this
+ * year and only one of them is still true next year.
+ *
+ * Kept under about 150 characters, which is where a result stops printing.
+ */
 const DESCRIPTION =
-  "Five decades of fixtures, lighting design, KNX control, home automation and smart poles, delivered across hotels, airports, palaces and national projects in Saudi Arabia.";
+  "A lighting company and smart lighting solutions provider in Riyadh since 1976. Lighting design, supply, KNX controls, automation and smart poles.";
+
+/**
+ * The home page's own title. Every other route sets its own and picks up
+ * "| Arak Lighting" from the template below, so this string is the home page
+ * alone.
+ *
+ * Longer than the name on purpose. A result heading gets around sixty
+ * characters and the bare name spent a third of them saying nothing to
+ * anyone who had not already heard of the company; the rest of the line is
+ * the work itself, in the words somebody would actually search for.
+ *
+ * The name still leads, and that is not decoration. Google reads the home
+ * page title as one of the signals for the name it prints above the URL, and
+ * the form it accepts is the name first, then a short description of the
+ * site — which is exactly this shape. Put the description first and the
+ * signal is lost, and it has to fall back to the bare domain again.
+ */
+const HOME_TITLE = "Arak Lighting | Lighting Design, KNX & Smart Poles, Riyadh";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
+  title: { default: HOME_TITLE, template: `%s | ${SITE_NAME}` },
   description: DESCRIPTION,
   applicationName: SITE_NAME,
+  icons: ICONS,
   alternates: localeAlternates("/", "en"),
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
     locale: "en",
     alternateLocale: ["ar"],
-    title: SITE_NAME,
+    title: HOME_TITLE,
     description: DESCRIPTION,
     url: "/",
   },
-  twitter: { card: "summary_large_image", title: SITE_NAME, description: DESCRIPTION },
+  twitter: { card: "summary_large_image", title: HOME_TITLE, description: DESCRIPTION },
   robots: {
     index: true,
     follow: true,
@@ -60,10 +90,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111111" },
-  ],
+  // One colour, because there is one theme. The dark entry that used to sit
+  // here promised a dark page to any phone set to dark mode and got a white
+  // one — `data-color` is a saturation switch, not a theme, so the page is
+  // #ffffff in both. `color-scheme: light` in globals.css says the same thing
+  // to the controls and the scrollbars.
+  themeColor: "#ffffff",
 };
 
 export default function EnglishRootLayout({ children }: { children: React.ReactNode }) {

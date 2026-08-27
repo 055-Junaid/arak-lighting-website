@@ -1,18 +1,23 @@
 /**
- * Cuts the raster icons from src/app/icon.svg, which holds the company mark —
+ * Cuts the raster icons from public/icon.svg, which holds the company mark —
  * the "A" traced off the logo, with the wordmark and the ™ dropped.
  *
  * WHAT IS PRODUCED
  * ----------------
- *   src/app/favicon.ico   16 / 32 / 48, the fallback for a browser that
+ *   public/favicon.ico    16 / 32 / 48, the fallback for a browser that
  *                         cannot use the SVG in the tab
- *   src/app/apple-icon.png    180, iOS home screen
+ *   public/icon-96.png    96, the icon search results are given
+ *   public/apple-icon.png     180, iOS home screen
  *   public/icon-192.png       192, the manifest's small icon
  *   public/icon-512.png       512, the manifest's large icon
  *
- * The last two are named in src/app/manifest.ts; the rest are picked up by
- * Next from their filenames in src/app, which is why they live there rather
- * than in public.
+ * Every one of these is served straight out of public/ at its own plain path,
+ * and every one is named by hand — the manifest names the two large PNGs, and
+ * ICONS in src/lib/site.ts names the rest. None of them go through Next's
+ * src/app file convention any more. That convention appends a content hash to
+ * the URL (/favicon.ico?favicon.23lft1ojwmnqp.ico), and Google asks for a
+ * favicon URL that stays put, so the hash is the one thing worth giving up
+ * the convenience for.
  *
  * THE MARK IS NOT PUT ON A BACKGROUND — EXCEPT WHERE IT HAS TO BE
  * ---------------------------------------------------------------
@@ -28,13 +33,19 @@
  * logo sits on everything else the company prints. They are also inset rather
  * than full-bleed, because both systems round the corners off.
  *
+ * icon-96 is drawn the same way, on white, and for the same reason: a search
+ * result is somebody else's page, and a bare black mark would be at that
+ * page's mercy. 96 rather than 48 because Google asks for a square whose side
+ * is a multiple of 48 and then draws it on a retina screen, where a 48 has to
+ * be stretched.
+ *
  * Run with: node scripts/build-icons.mjs
  */
 
 import { readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 
-const SOURCE = "src/app/icon.svg";
+const SOURCE = "public/icon.svg";
 
 /** The mark's own box, and its outline, lifted out of the SVG. */
 const svg = await readFile(SOURCE, "utf8");
@@ -113,13 +124,13 @@ const packed = [];
 for (const size of icoSizes) {
   packed.push({ size, data: await icon(size, TAB).toBuffer() });
 }
-await writeFile("src/app/favicon.ico", ico(packed));
-console.log(`src/app/favicon.ico  (${icoSizes.join(", ")})`);
+await writeFile("public/favicon.ico", ico(packed));
+console.log(`public/favicon.ico  (${icoSizes.join(", ")})`);
 
-await icon(180, TILE).toFile("src/app/apple-icon.png");
-console.log("src/app/apple-icon.png  (180)");
+await icon(180, TILE).toFile("public/apple-icon.png");
+console.log("public/apple-icon.png  (180)");
 
-for (const size of [192, 512]) {
+for (const size of [96, 192, 512]) {
   await icon(size, TILE).toFile(`public/icon-${size}.png`);
   console.log(`public/icon-${size}.png  (${size})`);
 }

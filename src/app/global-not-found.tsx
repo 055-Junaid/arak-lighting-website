@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, IBM_Plex_Sans } from "next/font/google";
 import { NotFound } from "@/components/NotFound";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { ICONS, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 /**
@@ -36,6 +36,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: `Page not found | ${SITE_NAME}`,
   description: "The page you are looking for does not exist.",
+  icons: ICONS,
   // Next injects `noindex` on 404s itself; this is here so the intent is
   // readable in the file rather than only in the framework's behaviour.
   robots: { index: false, follow: true },

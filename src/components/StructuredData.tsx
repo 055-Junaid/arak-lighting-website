@@ -59,6 +59,16 @@ export function StructuredData({ lang }: { lang: Locale }) {
           "@type": "Country",
           name: "Saudi Arabia",
         },
+        // A LocalBusiness with a walk-in address is asked for these by every
+        // local result. The contact page prints the same figures.
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [...COMPANY.hours.days],
+            opens: COMPANY.hours.opens,
+            closes: COMPANY.hours.closes,
+          },
+        ],
         // The handles the footer and contact page already link to. Declaring
         // them here is what lets a search engine tie the accounts to the
         // company rather than treating them as unrelated profiles.
@@ -79,7 +89,12 @@ export function StructuredData({ lang }: { lang: Locale }) {
         "@type": "WebSite",
         "@id": url(`${localePath("/", lang)}#website`),
         url: url(localePath("/", lang)),
+        // This `name` is the line a search result prints above the URL, and
+        // it is deliberately the same string as the page titles — see
+        // SITE_NAME. The registered name is declared alongside it rather than
+        // instead of it, so a search engine can still tie the two together.
         name: ar ? SITE_NAME_AR : SITE_NAME,
+        alternateName: COMPANY.legalName,
         publisher: { "@id": url("/#organization") },
         inLanguage: ar ? "ar" : "en",
       },

@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Sora, IBM_Plex_Sans, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { RootShell } from "@/components/RootShell";
-import { SITE_NAME_AR, SITE_URL, localeAlternates } from "@/lib/site";
+import { ICONS, SITE_NAME_AR, SITE_URL, localeAlternates } from "@/lib/site";
 import "../../globals.css";
 
 const sora = Sora({
@@ -24,25 +24,33 @@ const plexSansArabic = IBM_Plex_Sans_Arabic({
   weight: ["300", "400", "500", "600"],
 });
 
+/** The same shape as DESCRIPTION on the English tree: what the company is
+    first, then the work. Mirrors SITE_TAGLINE_AR's own wording. */
 const DESCRIPTION_AR =
-  "خمسة عقود من وحدات الإضاءة وتصميم الإضاءة والتحكّم عبر KNX والأتمتة المنزلية والأعمدة الذكية، في الفنادق والمطارات والقصور والمشاريع الوطنية في المملكة العربية السعودية.";
+  "شركة إضاءة ومزوّد لحلول الإضاءة الذكية في الرياض منذ عام 1976. تصميم الإضاءة وتوريد الوحدات وأنظمة التحكّم KNX والأتمتة والأعمدة الذكية.";
+
+/** The Arabic home page's title. Same shape as HOME_TITLE on the English
+    tree, and for the same reasons: the name first, then the work, in the
+    words somebody searching in Arabic would use. */
+const HOME_TITLE_AR = "أراك للإضاءة | تصميم الإضاءة وأنظمة KNX والأعمدة الذكية، الرياض";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: SITE_NAME_AR, template: `%s | ${SITE_NAME_AR}` },
+  title: { default: HOME_TITLE_AR, template: `%s | ${SITE_NAME_AR}` },
   description: DESCRIPTION_AR,
   applicationName: SITE_NAME_AR,
+  icons: ICONS,
   alternates: localeAlternates("/", "ar"),
   openGraph: {
     type: "website",
     siteName: SITE_NAME_AR,
     locale: "ar",
     alternateLocale: ["en"],
-    title: SITE_NAME_AR,
+    title: HOME_TITLE_AR,
     description: DESCRIPTION_AR,
     url: "/ar",
   },
-  twitter: { card: "summary_large_image", title: SITE_NAME_AR, description: DESCRIPTION_AR },
+  twitter: { card: "summary_large_image", title: HOME_TITLE_AR, description: DESCRIPTION_AR },
   robots: {
     index: true,
     follow: true,
@@ -57,10 +65,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111111" },
-  ],
+  // One colour, because there is one theme. The dark entry that used to sit
+  // here promised a dark page to any phone set to dark mode and got a white
+  // one — `data-color` is a saturation switch, not a theme, so the page is
+  // #ffffff in both. `color-scheme: light` in globals.css says the same thing
+  // to the controls and the scrollbars.
+  themeColor: "#ffffff",
 };
 
 export default function ArabicRootLayout({ children }: { children: React.ReactNode }) {
