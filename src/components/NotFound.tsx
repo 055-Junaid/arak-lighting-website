@@ -28,7 +28,7 @@ export function NotFound({ lang }: { lang: Locale }) {
   const ar = lang === "ar";
 
   return (
-    <main className={styles.wrap}>
+    <main id="main" tabIndex={-1} className={styles.wrap}>
       <p className={styles.eyebrow}>404</p>
       <h1 className={styles.title}>
         {ar ? "لم نعثر على هذه الصفحة" : "We could not find that page"}

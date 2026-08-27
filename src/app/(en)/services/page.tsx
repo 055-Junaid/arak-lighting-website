@@ -29,7 +29,7 @@ export default function ServicesPage() {
   const ar = lang === "ar";
 
   return (
-    <main className={styles.page}>
+    <main id="main" tabIndex={-1} className={styles.page}>
       {/* Hero */}
       <section className={`${styles.shell} ${styles.hero}`}>
         <Reveal>

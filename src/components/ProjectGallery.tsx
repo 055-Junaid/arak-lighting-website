@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
+import { useFocusTrap } from "@/lib/focus-trap";
 import { useLang } from "@/lib/lang";
 import type { GalleryImage } from "@/lib/project-galleries";
 import styles from "./ProjectGallery.module.css";
@@ -18,6 +19,14 @@ export function ProjectGallery({
   const ar = lang === "ar";
   // Index of the photo shown full size, or null when the lightbox is closed.
   const [open, setOpen] = useState<number | null>(null);
+  const dialog = useRef<HTMLDivElement>(null);
+  /** The tile that opened the lightbox, so closing puts focus back on it. */
+  const opener = useRef<HTMLButtonElement | null>(null);
+
+  // The overlay declares aria-modal="true", which promises that focus stays
+  // inside it. Until this it did not: Tab walked out into the gallery behind
+  // the backdrop, and closing dropped focus at the top of the document.
+  useFocusTrap(dialog, open !== null, opener);
 
   const close = useCallback(() => setOpen(null), []);
   const step = useCallback(
@@ -61,7 +70,10 @@ export function ProjectGallery({
             key={image.src}
             type="button"
             className={styles.tile}
-            onClick={() => setOpen(i)}
+            onClick={(event) => {
+              opener.current = event.currentTarget;
+              setOpen(i);
+            }}
             aria-label={
               ar
                 ? `عرض الصورة ${i + 1} من ${images.length} بالحجم الكامل`
@@ -82,6 +94,7 @@ export function ProjectGallery({
 
       {active && open !== null && (
         <div
+          ref={dialog}
           className={styles.backdrop}
           role="dialog"
           aria-modal="true"

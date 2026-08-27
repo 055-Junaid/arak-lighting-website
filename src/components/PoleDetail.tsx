@@ -25,7 +25,7 @@ export function PoleDetail({
   const ar = lang === "ar";
 
   return (
-    <main className={styles.page}>
+    <main id="main" tabIndex={-1} className={styles.page}>
       <div className={styles.shell}>
         <nav className={styles.crumb} aria-label={ar ? "مسار التنقل" : "Breadcrumb"}>
           <Link href={localePath("/services", lang)}>{ar ? "خدماتنا" : "Services"}</Link>

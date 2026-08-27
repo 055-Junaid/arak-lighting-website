@@ -33,7 +33,7 @@ export function ErrorBody({
   const contactLabel = ar ? "تواصل معنا" : "Contact us";
 
   return (
-    <main className={styles.wrap}>
+    <main id="main" tabIndex={-1} className={styles.wrap}>
       <p className={styles.eyebrow}>{ar ? "خطأ" : "Error"}</p>
       <h1 className={styles.title}>{ar ? "حدث خطأ ما" : "Something went wrong"}</h1>
       <p className={styles.lead}>

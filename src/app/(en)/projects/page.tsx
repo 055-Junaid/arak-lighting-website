@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useLang } from "@/lib/lang";
 import { ProjectCards } from "@/components/ProjectCards";
 import { ProjectsTable } from "@/components/ProjectsTable";
@@ -10,7 +11,7 @@ export default function ProjectsPage() {
   const ar = lang === "ar";
 
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <section className={styles.section}>
         <div className={styles.label}>
           <span className={styles.eyebrow}>{ar ? "مشاريعنا" : "Projects"}</span>
@@ -39,7 +40,12 @@ export default function ProjectsPage() {
           <h2 className={styles.eyebrow}>{ar ? "مشاريع أخرى" : "Further references"}</h2>
           <span className={styles.rule} />
         </div>
-        <ProjectsTable />
+        {/* ProjectsTable reads the filter from the query string. Reading search
+            params on a statically rendered page has to sit behind a boundary,
+            or the whole page opts out of static rendering. */}
+        <Suspense fallback={null}>
+          <ProjectsTable />
+        </Suspense>
       </section>
     </main>
   );

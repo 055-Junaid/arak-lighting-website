@@ -30,16 +30,6 @@ export function PhotoSlot({
         style={{ objectFit: "cover" }}
         priority={priority}
       />
-      {src.includes("unsplash.com") && (
-        <a
-          href="https://unsplash.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.credit}
-        >
-          Photo: Unsplash
-        </a>
-      )}
     </div>
   );
 }

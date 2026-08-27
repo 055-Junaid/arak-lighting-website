@@ -19,16 +19,34 @@ export function ColorToggle() {
   const ar = lang === "ar";
 
   // Two words, set in the same micro-caps as the rest of the site's labels.
-  // The bulb and the track carry the state; the label carries the action.
-  const label = ar ? (color ? "شغّل الإضاءة" : "أطفئ الإضاءة") : color ? "Lights on" : "Lights off";
-
-  const hint = ar
+  // The bulb and the track carry the state; the label names it.
+  //
+  // The Arabic used to be imperative — "شغّل الإضاءة", *turn the lights on* —
+  // against an English label that states the state. So with the lights already
+  // on, the Arabic told you to turn them on. Both sides describe the state now,
+  // which is also what role="switch" and aria-checked already say.
+  const label = ar
     ? color
-      ? "إطفاء الإضاءة — عرض الموقع بالأبيض والأسود"
-      : "تشغيل الإضاءة — عرض صور المشاريع بالألوان"
+      ? "الإضاءة مضاءة"
+      : "الإضاءة مطفأة"
     : color
-      ? "Turn the lights off — view the site in black and white"
-      : "Turn the lights on — see our projects in full colour";
+      ? "Lights on"
+      : "Lights off";
+
+  /** What working the switch will do. Appended to the label, never replacing it. */
+  const action = ar
+    ? color
+      ? "اضغط لإطفاء الإضاءة وعرض الموقع بالأبيض والأسود"
+      : "اضغط لتشغيل الإضاءة وعرض صور المشاريع بالألوان"
+    : color
+      ? "Press to turn the lights off and view the site in black and white"
+      : "Press to turn the lights on and see our projects in full colour";
+
+  // The accessible name has to *start with* the words on the button. It used to
+  // replace them — visible "Lights off", announced "Turn the lights on…" —
+  // which fails WCAG 2.5.3 Label in Name and means a voice-control user saying
+  // "click Lights off" gets nothing.
+  const hint = `${label} — ${action}`;
 
   return (
     <button

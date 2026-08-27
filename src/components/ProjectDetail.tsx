@@ -44,7 +44,7 @@ export function ProjectDetail({
     : `${count} ${count === 1 ? "photograph" : "photographs"}`;
 
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <section className={`${styles.wrap} ${styles.intro}`}>
         <Link href={localePath("/projects", lang)} className={styles.back}>
           {/* Back points the way the page reads. */}

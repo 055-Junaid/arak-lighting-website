@@ -14,22 +14,3 @@
 .slot:hover :global(img) {
   filter: none;
 }
-
-.credit {
-  position: absolute;
-  inset-inline-end: 10px;
-  bottom: 10px;
-  font: 400 11px/1 var(--font-plex-sans), sans-serif;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.85);
-  background: rgba(17, 17, 17, 0.45);
-  padding: 5px 9px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.slot:hover .credit {
-  opacity: 1;
-  pointer-events: auto;
-}

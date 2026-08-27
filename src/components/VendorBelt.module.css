@@ -2,8 +2,20 @@
   animation: belt 52s linear infinite;
 }
 
-.track:hover {
+/* Pause, Stop, Hide (WCAG 2.2.2): anything moving on its own for more than
+   five seconds needs a way to stop it. Hover was the only one, which is no
+   mechanism at all for a keyboard or a touch user — :focus-within covers
+   tabbing into the belt, and coarse pointers get a belt that does not move,
+   since there is nothing to hover with. */
+.track:hover,
+.track:focus-within {
   animation-play-state: paused;
+}
+
+@media (pointer: coarse) {
+  .track {
+    animation: none;
+  }
 }
 
 @keyframes belt {

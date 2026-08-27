@@ -62,7 +62,19 @@ export function VendorBelt() {
   const ar = lang === "ar";
 
   return (
-    <div style={{ position: "relative", margin: "0 -48px", overflow: "hidden", borderBlock: "1px solid rgba(17,17,17,.13)", background: "#FFFFFF" }}>
+    // Bleeds out to the page edge by exactly the gutter the shell put on.
+    // This was a hardcoded -48px against a --gutter that clamps down to 20px on
+    // a phone, so on small screens it pulled 28px further than there was room
+    // for — invisible only because of the overflow: hidden on the same element.
+    <div
+      style={{
+        position: "relative",
+        marginInline: "calc(var(--gutter) * -1)",
+        overflow: "hidden",
+        borderBlock: "1px solid var(--hair)",
+        background: "var(--white)",
+      }}
+    >
       <div className={styles.track} style={{ display: "flex", alignItems: "center", width: "max-content" }}>
         {VENDORS.map((v) => (
           <Logo key={v.file} file={v.file} name={ar ? v.ar : v.name} />

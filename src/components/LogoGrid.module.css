@@ -45,7 +45,7 @@
   font: 500 10px/1.35 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.4);
+  color: rgba(17, 17, 17, 0.62);
   transition: color 0.4s ease;
 }
 
@@ -76,7 +76,7 @@
 .wordmark {
   font: 500 14px/1.35 var(--font-sora), sans-serif;
   letter-spacing: -0.01em;
-  color: rgba(17, 17, 17, 0.55);
+  color: rgba(17, 17, 17, 0.62);
   text-wrap: balance;
   transition: color 0.4s ease;
 }

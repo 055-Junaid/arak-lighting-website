@@ -17,7 +17,12 @@
   --ink-hover: #3a3a38;
   --body: rgba(17, 17, 17, 0.72);
   --muted: rgba(17, 17, 17, 0.66);
-  --faint: rgba(17, 17, 17, 0.5);
+  /* 0.62, not 0.5. This is the bottom of the ink scale — the main nav links,
+     the drawer links, the placeholder text — and at 0.5 it composited to
+     #888888, which is 3.54:1 on white and fails WCAG AA's 4.5:1 for text.
+     The threshold is 0.573; 0.62 clears it at 5.29:1 with a little margin and
+     is visually almost indistinguishable at these sizes. */
+  --faint: rgba(17, 17, 17, 0.62);
   --eyebrow: #6e6e6b;
 
   /* Lines. --hair is the section divider, --rule the heavier border on
@@ -62,6 +67,11 @@
 
 html {
   scroll-behavior: smooth;
+  /* This site is light in both OS colour schemes — `data-color` is a
+     saturation switch, not a theme. Declaring it keeps the browser from
+     rendering native controls and scrollbars for a dark theme that does not
+     exist here. */
+  color-scheme: light;
 }
 
 body {
@@ -69,6 +79,72 @@ body {
   background: var(--white);
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-plex-sans), sans-serif;
+}
+
+/* --- Skip link ----------------------------------------------------------
+   Off-screen until focused, then pinned to the top-left (top-right in Arabic)
+   above the sticky header. `clip-path` rather than `display: none`, which
+   would take it out of the tab order and defeat the point. */
+.skip-link {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 100;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  background: var(--ink);
+  color: var(--white);
+  font: 500 13px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px 22px;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  width: auto;
+  height: auto;
+  clip-path: none;
+  color: var(--white);
+  outline: 2px solid var(--white);
+  outline-offset: -6px;
+}
+
+/* --- Focus ---------------------------------------------------------------
+   One rule for everything that can take focus. Nine components defined their
+   own ring and the other fifteen fell through to whatever the browser drew,
+   which on a black button is nearly invisible in Chrome. Components that
+   need a different treatment — the ones sitting on dark grounds, which set a
+   white ring — still override this; they come later in the cascade.
+
+   :focus-visible, not :focus, so a mouse click on a button does not leave a
+   ring behind it. */
+:is(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* <main> takes focus from the skip link, but it is not an interactive thing
+   and drawing a ring around the whole page reads as a fault. */
+main[tabindex]:focus,
+main[tabindex]:focus-visible {
+  outline: none;
+}
+
+/* --- Touch ---------------------------------------------------------------
+   Suppresses the ~300ms wait a browser leaves after a tap in case a second
+   one arrives to zoom. Double-tap zoom is not something this site needs on a
+   control, and pinch zoom — the accessibility-relevant one — is untouched. */
+a,
+button,
+input,
+select,
+textarea,
+[role="switch"],
+[role="tab"] {
+  touch-action: manipulation;
 }
 
 a {

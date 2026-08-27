@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useFocusTrap } from "@/lib/focus-trap";
 import { useLang } from "@/lib/lang";
 import { localePath, routeOf } from "@/lib/site";
 import styles from "./Header.module.css";
@@ -31,6 +32,13 @@ export function Header() {
   const otherHref = localePath(route, ar ? "en" : "ar");
   const [open, setOpen] = useState(false);
   const burger = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  // Holds Tab inside the header — logo, language link, burger and the drawer's
+  // own links — while the drawer is open, and hands focus back to the burger
+  // when it closes. Without it, tabbing past the last drawer link walked into
+  // the page underneath, which is covered by the scrim and cannot be seen.
+  useFocusTrap(headerRef, open, burger);
 
   // Escape closes it and hands focus back to the button that opened it, so a
   // keyboard user is not dropped at the top of the document. Back/forward
@@ -40,8 +48,8 @@ export function Header() {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "Escape") return;
+      // Focus goes back to the burger when the trap tears down.
       setOpen(false);
-      burger.current?.focus();
     };
     const onPop = () => setOpen(false);
     document.addEventListener("keydown", onKey);
@@ -67,7 +75,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} ref={headerRef}>
       <div className={styles.inner}>
         <Link href={localePath("/", lang)} className={styles.logo} aria-label="ARAK Lighting Solutions — home">
           {/* Sized in Header.module.css rather than inline, so the 520px rule

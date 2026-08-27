@@ -49,6 +49,15 @@ export function RootShell({
       </head>
       <body>
         <LanguageProvider lang={lang}>
+          {/* Every page opens with a logo, five nav items, a language toggle
+              and a CTA. Without this, reaching the content by keyboard means
+              tabbing past all of them on every page — WCAG 2.4.1. It is the
+              first thing in the tab order and invisible until it has focus.
+              `<main>` carries tabIndex={-1} so following it moves the focus
+              ring and not merely the scroll position. */}
+          <a href="#main" className="skip-link">
+            {lang === "ar" ? "تخطَّ إلى المحتوى" : "Skip to content"}
+          </a>
           <Header />
           {children}
           <Footer />

@@ -39,7 +39,7 @@
 .filterCount {
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.06em;
-  color: rgba(17, 17, 17, 0.38);
+  color: rgba(17, 17, 17, 0.62);
   transition: color 0.25s ease;
 }
 
@@ -57,8 +57,22 @@
   color: rgba(255, 255, 255, 0.55);
 }
 
+/* Real <table> markup, laid out on a grid.
+   Every element's display is overridden so the columns stay on the same track
+   sizes they had as divs — a table's own layout algorithm cannot do the
+   responsive restack at 860px below. The component restates the ARIA roles for
+   the same reason: changing display on table elements drops their semantics in
+   Safari. */
 .list {
+  display: block;
+  width: 100%;
+  border-collapse: collapse;
   border-top: 1px solid rgba(17, 17, 17, 0.28);
+}
+
+.thead,
+.tbody {
+  display: block;
 }
 
 .head,
@@ -74,11 +88,23 @@
   border-bottom: 1px solid rgba(17, 17, 17, 0.28);
 }
 
+/* <th> and <td> default to table-cell, which would opt them out of the grid
+   above and put every row back on one line. */
+.headCell,
+.index,
+.name,
+.loc,
+.scope {
+  display: block;
+  text-align: start;
+  padding: 0;
+}
+
 .headCell {
   font: 500 10px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.45);
+  color: rgba(17, 17, 17, 0.62);
 }
 
 .row {
@@ -114,7 +140,7 @@
   font: 400 12px/1.6 var(--font-plex-sans), sans-serif;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.08em;
-  color: rgba(17, 17, 17, 0.32);
+  color: rgba(17, 17, 17, 0.62);
   transition: color 0.25s ease;
 }
 
@@ -124,6 +150,7 @@
 
 .name {
   font: 400 16px/1.45 var(--font-plex-sans), sans-serif;
+  font-weight: 400;
   color: #111111;
   text-wrap: balance;
 }
@@ -132,7 +159,7 @@
   font: 500 11px/1.5 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.5);
+  color: rgba(17, 17, 17, 0.62);
 }
 
 .scope {
@@ -143,14 +170,19 @@
 .note {
   font: 400 13px/1.6 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.02em;
-  color: rgba(17, 17, 17, 0.5);
+  color: rgba(17, 17, 17, 0.62);
   margin: 28px 0 0;
   padding-inline-start: 20px;
 }
 
 @media (max-width: 860px) {
-  .head {
-    display: none;
+  .thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .row {
