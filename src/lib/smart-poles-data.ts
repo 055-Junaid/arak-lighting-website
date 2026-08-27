@@ -205,6 +205,68 @@ export const POLES: Pole[] = [
   },
 ];
 
+/**
+ * What the mast actually carries, and the site's one source for that number.
+ *
+ * This used to live in SmartPolesView as two hardcoded halves, and the count it
+ * implied was retyped as a literal in four other places — the home page's stat
+ * block said 07, the pitch headline on this page said nine, the page's own SEO
+ * description named seven, and the diagram drew eight. Four numbers for one
+ * product. Everything that needs the figure now derives it from this array.
+ *
+ * These eight are the orientation set — what a stranger needs to see to
+ * understand what a smart pole is. `POLE_FUNCTIONS` above is the full schedule
+ * of eighteen capabilities and is a different, longer answer.
+ */
+export const POLE_ANATOMY = [
+  {
+    no: "01", en: "Smart lighting", ar: "الإضاءة الذكية",
+    enText: "The LED head, dimmed and scheduled from the control centre.",
+    arText: "رأس LED يُخفَت ويُجدوَل من مركز التحكّم.",
+  },
+  {
+    no: "02", en: "Cameras", ar: "الكاميرات",
+    enText: "Fixed and PTZ, at the height that captures plates and faces.",
+    arText: "ثابتة ومتحرّكة PTZ، على الارتفاع الذي يلتقط اللوحات والوجوه.",
+  },
+  {
+    no: "03", en: "Environmental sensors", ar: "أجهزة استشعار البيئة",
+    enText: "Particulates, temperature, humidity and noise.",
+    arText: "الجسيمات ودرجة الحرارة والرطوبة والضجيج.",
+  },
+  {
+    no: "04", en: "Emergency call", ar: "نداء الطوارئ",
+    enText: "One button, straight through to the operations centre.",
+    arText: "زرّ واحد يصلك مباشرةً بمركز العمليات.",
+  },
+  {
+    no: "05", en: "5G small cell", ar: "خلية الجيل الخامس",
+    enText: "Mounting for the small cells dense coverage needs.",
+    arText: "حامل للخلايا الصغيرة التي تتطلّبها التغطية الكثيفة.",
+  },
+  {
+    no: "06", en: "Public WiFi", ar: "واي فاي عام",
+    enText: "Access points fed from the pole's own fibre run.",
+    arText: "نقاط وصول تُغذّى من مسار ألياف العمود نفسه.",
+  },
+  {
+    no: "07", en: "Digital display", ar: "الشاشة الرقمية",
+    enText: "Wayfinding, public information or event programming.",
+    arText: "الإرشاد أو المعلومات العامة أو برامج الفعاليات.",
+  },
+  {
+    no: "08", en: "Public address", ar: "البثّ العام",
+    enText: "Addressable speakers for announcements and alerts.",
+    arText: "سمّاعات قابلة للعنونة للإعلانات والتنبيهات.",
+  },
+];
+
+/** Systems on one mast. Read by the home page's stat block and this page. */
+export const MAST_SYSTEMS = POLE_ANATOMY.length;
+
+/** Designs in the C°LB series. Derived so the stat can never drift from POLES. */
+export const POLE_DESIGN_COUNT = POLES.length;
+
 export const POLE_FUNCTIONS = [
   {
     title: "Long-life LED lighting",

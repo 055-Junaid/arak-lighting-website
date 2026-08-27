@@ -133,6 +133,67 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
+/* The bare back arrow above the crumb. Nothing but the glyph shows, so the
+   44px box that makes it a finger-sized target is drawn on nothing — the
+   arrow floats at the top of the copy column and the padding is invisible.
+
+   `flex` rather than `inline-flex` on purpose: inline puts it on the crumb's
+   own line, where a lone arrow in front of "Services / Smart Poles" reads as
+   part of the trail rather than as a way out of it. On its own line above,
+   it is plainly a control. The negative inline margin cancels the invisible
+   padding so the stroke lines up with the crumb's first letter below it
+   rather than sitting indented from it. */
+.heroBack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-inline-start: -12px;
+  margin-bottom: 2px;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.heroBack svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+/* Back points the way the page reads, so the arrow turns round with it. */
+:global([dir="rtl"]) .heroBack svg {
+  transform: scaleX(-1);
+}
+
+.heroBack:hover {
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+:global([dir="rtl"]) .heroBack:hover {
+  transform: translateX(3px);
+}
+
+.heroBack:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline-offset: -8px;
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroBack,
+  .heroBack:hover,
+  :global([dir="rtl"]) .heroBack:hover {
+    transition: color 0.25s ease;
+    transform: none;
+  }
+}
+
 .crumb {
   display: inline-flex;
   align-items: center;
@@ -336,7 +397,7 @@
 .layerDetail {
   font: 400 14px/1.55 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.02em;
-  color: rgba(17, 17, 17, 0.55);
+  color: rgba(17, 17, 17, 0.62);
   margin: 0;
 }
 
@@ -632,7 +693,7 @@
 .roleNo {
   font: 300 30px/1 var(--font-sora), sans-serif;
   letter-spacing: -0.02em;
-  color: rgba(17, 17, 17, 0.34);
+  color: rgba(17, 17, 17, 0.5);
 }
 
 .roleTitle {

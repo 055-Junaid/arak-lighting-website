@@ -7,6 +7,9 @@ import { localePath } from "@/lib/site";
 import { Reveal } from "@/components/Reveal";
 import {
   ARAK_ROLE,
+  MAST_SYSTEMS,
+  POLE_ANATOMY,
+  POLE_DESIGN_COUNT,
   POLE_FUNCTIONS,
   POLE_LAYERS,
 } from "@/lib/smart-poles-data";
@@ -22,8 +25,8 @@ const PITCH = [
     arBody: "إنارة الشوارع هي البنية التحتية العامة الوحيدة التي تقف كل بضع عشرات من الأمتار، ولها تغذية كهربائية جاهزة، وتطلّ مباشرةً على الشارع. كل ما تريد المدينة الذكية تركيبه لا بدّ أن يجد له موضعًا؛ أما الإضاءة فلها موضعها بالفعل.",
   },
   {
-    title: "One foundation, nine services.",
-    arTitle: "قاعدة واحدة، تسع خدمات.",
+    title: `One foundation, ${MAST_SYSTEMS} systems.`,
+    arTitle: `قاعدة واحدة، ${MAST_SYSTEMS} أنظمة.`,
     body: "Every device you hang on a pole is a device you do not dig a separate trench for, pour a separate base for, or negotiate a separate wayleave for. The civil works are the expensive part of a smart city, and the pole pays them once.",
     arBody: "كل جهاز تعلّقه على العمود هو جهاز لا تحفر له خندقًا منفصلًا، ولا تصبّ له قاعدة مستقلة، ولا تتفاوض على تصريح مرور خاص به. الأعمال المدنية هي الجزء الأغلى في المدينة الذكية، والعمود يدفع كلفتها مرّة واحدة.",
   },
@@ -67,71 +70,32 @@ const CONTEXT_SHOTS = [
 ];
 
 /**
- * The anatomy key beside the pole render. Deliberately eight of the twelve
- * POLE_FUNCTIONS rather than all of them — this is the orientation diagram
- * for someone who has never seen a smart pole, not the full schedule, which
- * follows in the section below. Split 4/4 so the two columns balance.
+ * The anatomy key beside the pole render, split into two columns that balance.
+ *
+ * Both halves — and the hero rail below — are slices of POLE_ANATOMY in
+ * smart-poles-data.ts, which is the site's one statement of what the mast
+ * carries. They used to be two hardcoded arrays here, which is how the count
+ * came to disagree with the home page, the pitch headline and the page's own
+ * SEO description. Deliberately the orientation set rather than the full
+ * eighteen-line POLE_FUNCTIONS schedule, which follows in the section below.
  */
-const ANATOMY_START = [
-  {
-    no: "01", en: "Smart lighting", ar: "الإضاءة الذكية",
-    enText: "The LED head, dimmed and scheduled from the control centre.",
-    arText: "رأس LED يُخفَت ويُجدوَل من مركز التحكّم."
-  },
-  {
-    no: "02", en: "Cameras", ar: "الكاميرات",
-    enText: "Fixed and PTZ, at the height that captures plates and faces.",
-    arText: "ثابتة ومتحرّكة PTZ، على الارتفاع الذي يلتقط اللوحات والوجوه."
-  },
-  {
-    no: "03", en: "Environmental sensors", ar: "أجهزة استشعار البيئة",
-    enText: "Particulates, temperature, humidity and noise.",
-    arText: "الجسيمات ودرجة الحرارة والرطوبة والضجيج."
-  },
-  {
-    no: "04", en: "Emergency call", ar: "نداء الطوارئ",
-    enText: "One button, straight through to the operations centre.",
-    arText: "زرّ واحد يصلك مباشرةً بمركز العمليات."
-  },
-];
-
-const ANATOMY_END = [
-  {
-    no: "05", en: "5G small cell", ar: "خلية الجيل الخامس",
-    enText: "Mounting for the small cells dense coverage needs.",
-    arText: "حامل للخلايا الصغيرة التي تتطلّبها التغطية الكثيفة."
-  },
-  {
-    no: "06", en: "Public WiFi", ar: "واي فاي عام",
-    enText: "Access points fed from the pole's own fibre run.",
-    arText: "نقاط وصول تُغذّى من مسار ألياف العمود نفسه."
-  },
-  {
-    no: "07", en: "Digital display", ar: "الشاشة الرقمية",
-    enText: "Wayfinding, public information or event programming.",
-    arText: "الإرشاد أو المعلومات العامة أو برامج الفعاليات."
-  },
-  {
-    no: "08", en: "Public address", ar: "البثّ العام",
-    enText: "Addressable speakers for announcements and alerts.",
-    arText: "سمّاعات قابلة للعنونة للإعلانات والتنبيهات."
-  },
-];
+const HALF = Math.ceil(POLE_ANATOMY.length / 2);
+const ANATOMY_START = POLE_ANATOMY.slice(0, HALF);
+const ANATOMY_END = POLE_ANATOMY.slice(HALF);
 
 /**
- * The hero rail. Deliberately the same eight labels as the anatomy key, in the
- * same order: the rail is a preview of that diagram, so if one ever gains or
- * loses a line the other has to follow, and deriving it here is what makes
- * that automatic. Labels only, no numbers, since nothing in the hero is
- * pointing at a drawing yet.
+ * The hero rail. The same labels as the anatomy key, in the same order: the
+ * rail is a preview of that diagram, so deriving both from one list is what
+ * keeps them from drifting. Labels only, no numbers, since nothing in the hero
+ * is pointing at a drawing yet.
  */
-const HERO_CARRIES = [...ANATOMY_START, ...ANATOMY_END];
+const HERO_CARRIES = POLE_ANATOMY;
 
 export function SmartPolesView() {
   const { lang } = useLang();
   const ar = lang === "ar";
   return (
-    <main className={styles.page}>
+    <main id="main" tabIndex={-1} className={styles.page}>
       {/* Hero */}
       <section className={styles.hero}>
         <Image
@@ -146,6 +110,20 @@ export function SmartPolesView() {
         <div className={styles.heroVeil} />
         <div className={`${styles.shell} ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
+            {/* Arrow alone, no label. The crumb underneath already says in
+                words where this goes; this is the one-tap way back for a
+                visitor who arrived from /services and does not want to read a
+                trail to leave. The name it needs for a screen reader is on
+                the link, since there is nothing visible to read out. */}
+            <Link
+              href={localePath("/services", lang)}
+              className={styles.heroBack}
+              aria-label={ar ? "العودة إلى الخدمات" : "Back to services"}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M14.5 5 L7.5 12 L14.5 19" />
+              </svg>
+            </Link>
             <div className={styles.crumb}>
               <Link href={localePath("/services", lang)}>{ar ? "خدماتنا" : "Services"}</Link>
               <span aria-hidden="true">/</span>
@@ -191,7 +169,7 @@ export function SmartPolesView() {
                 history.replaceState(null, "", "#designs");
               }}
             >
-              <span className={styles.heroJumpNum}>20</span>
+              <span className={styles.heroJumpNum}>{POLE_DESIGN_COUNT}</span>
               <span className={styles.heroJumpLabel}>
                 {ar ? "تصميم عمود" : "pole designs"}
               </span>
