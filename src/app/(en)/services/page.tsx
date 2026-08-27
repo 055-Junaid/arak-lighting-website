@@ -94,7 +94,7 @@ export default function ServicesPage() {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <Link href={SMART_POLES.href} className={styles.featureCta}>
+                <Link href={localePath(SMART_POLES.href, lang)} className={styles.featureCta}>
                   {ar ? "استكشف الأعمدة الذكية" : "Explore smart poles"}
                   <span aria-hidden="true">&rarr;</span>
                 </Link>
