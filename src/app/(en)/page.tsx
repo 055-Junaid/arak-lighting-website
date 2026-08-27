@@ -13,6 +13,7 @@ import { ClientGrid } from "@/components/ClientGrid";
 import { Reveal } from "@/components/Reveal";
 import styles from "./page.module.css";
 import { PHOTO_QUALITY } from "@/lib/images";
+import { MAST_SYSTEMS, POLE_DESIGN_COUNT } from "@/lib/smart-poles-data";
 
 /**
  * The six service lines carried on the home page, in company-profile order.
@@ -47,7 +48,7 @@ const HOME_SERVICES = [
     ar: "إضاءة الواجهات",
     enText: "Exterior schemes that give buildings a night identity, engineered for the Saudi climate.",
     arText: "أنظمة إضاءة خارجية تمنح المباني هويةً ليلية، مصمّمة لتناسب المناخ السعودي.",
-    photo: "/home/facade-solitaire-aerial.jpg",
+    photo: "/projects/solitaire-mall/18-aerial-dusk.jpg",
     alt: "Solitaire Mall in Riyadh from the air at dusk, its faceted facade lit by ARAK",
     arAlt: "سوليتير مول في الرياض من الجو عند الغروب، وواجهته المضلّعة مضاءة بتنفيذ أراك",
   },
@@ -57,9 +58,9 @@ const HOME_SERVICES = [
     ar: "الإضاءة الخارجية",
     enText: "Streets, landscapes, car parks and compounds, from bollards to high-mast poles.",
     arText: "الشوارع والمسطحات والمواقف والمجمّعات، من الأعمدة القصيرة إلى الصواري العالية.",
-    photo: "/projects/seder-hq/01.jpg",
-    alt: "The lit plaza and external approach at the SEDER headquarters in Riyadh, an outdoor lighting scheme by ARAK",
-    arAlt: "ساحة المدخل الخارجي لمبنى سدر الرئيسي في الرياض مضاءة ليلًا، ضمن مشروع إضاءة خارجية نفّذته أراك",
+    photo: "/projects/four-points/02-upright.jpg",
+    alt: "The floodlit stone facade of the Four Points by Sheraton hotel in Riyadh at night, an exterior scheme by ARAK",
+    arAlt: "واجهة فندق فور بوينتس باي شيراتون الحجرية في الرياض مضاءة ليلًا، ضمن مشروع إضاءة خارجية نفّذته أراك",
   },
   {
     no: "05",
@@ -102,7 +103,7 @@ export default function HomePage() {
   const ar = lang === "ar";
 
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <section className={styles.hero} style={{ position: "relative", overflow: "hidden", background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
         <div className={styles.heroArt}>
           {/* -v2 rather than a replacement of the original file: /home/* is
@@ -156,8 +157,8 @@ export default function HomePage() {
               ))}
             </ul>
             <div style={{ display: "flex", gap: "14px", marginTop: "46px", pointerEvents: "auto" }}>
-              <Link href={localePath("/contact", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#FFFFFF", background: "#111111", padding: "19px 30px", cursor: "pointer" }} className={styles.h1}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</Link>
-              <Link href={localePath("/projects", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#111111", border: "1px solid rgba(17,17,17,.28)", padding: "19px 30px", cursor: "pointer" }} className={styles.h2}>{lang === "ar" ? "عرض المشاريع" : "View projects"}</Link>
+              <Link href={localePath("/contact", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#FFFFFF", background: "#111111", padding: "19px 30px", cursor: "pointer" }} className={styles.ctaPrimary}>{lang === "ar" ? "احجز استشارة إضاءة" : "Book a lighting consultation"}</Link>
+              <Link href={localePath("/projects", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".14em", textTransform: "uppercase", color: "#111111", border: "1px solid rgba(17,17,17,.28)", padding: "19px 30px", cursor: "pointer" }} className={styles.ctaGhost}>{lang === "ar" ? "عرض المشاريع" : "View projects"}</Link>
             </div>
           </div>
           {/* The corner used to hold a 50+ mark, which was the third time the
@@ -195,11 +196,11 @@ export default function HomePage() {
           </div>
           <div className={styles.poleBandFacts}>
             <div className={styles.poleBandFact}>
-              <div className={styles.poleBandNum}>20</div>
+              <div className={styles.poleBandNum}>{POLE_DESIGN_COUNT}</div>
               <div className={styles.poleBandLabel}>{ar ? "تصميم عمود" : "Pole designs"}</div>
             </div>
             <div className={styles.poleBandFact}>
-              <div className={styles.poleBandNum}>07</div>
+              <div className={styles.poleBandNum}>{String(MAST_SYSTEMS).padStart(2, "0")}</div>
               <div className={styles.poleBandLabel}>{ar ? "أنظمة على العمود" : "Systems per mast"}</div>
             </div>
             <div className={styles.poleBandFact}>
@@ -238,14 +239,14 @@ export default function HomePage() {
                 ? "وعلى مرّ السنين، رسّخت أراك مكانتها إلى جانب الشركات الوطنية الرائدة في القطاع، وأصبحت شريكًا معتمدًا لعدد من الشركات العالمية المرموقة."
                 : "Throughout the years, ARAK has positioned itself alongside the industry’s pioneering national companies, becoming a certified partner of several reputable international companies."}
             </p>
-            <Link href={localePath("/about", lang)} style={{ display: "inline-flex", alignItems: "center", gap: "12px", font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", marginTop: "44px", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.h3}>{lang === "ar" ? "قصتنا الكاملة" : "Our full story"}
+            <Link href={localePath("/about", lang)} style={{ display: "inline-flex", alignItems: "center", gap: "12px", font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", marginTop: "44px", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.ctaInline}>{lang === "ar" ? "قصتنا الكاملة" : "Our full story"}
             <span aria-hidden="true">{ar ? "←" : "→"}</span></Link>
           </div>
           <div className={styles.whoPhoto}>
             <PhotoSlot
               // This column stacks at 1080, not at the default 768.
               sizes="(max-width: 1080px) 100vw, 50vw"
-              src="/projects/solitaire-mall/06.jpg" alt={ar ? "مشروع إضاءة شلال الكريستال في سوليتير مول، الرياض" : "The crystal cascade lighting scheme at Solitaire Mall, Riyadh"} />
+              src="/home/solitaire-entrance-dusk.jpg" alt={ar ? "المدخل الرئيسي لسوليتير مول في الرياض عند الغروب، وواجهته الحجرية والمشغولة مضاءة" : "The main entrance of Solitaire Mall in Riyadh at dusk, its stone and latticework facade lit"} />
           </div>
         </div>
       </section>
@@ -386,7 +387,7 @@ export default function HomePage() {
               </div>
               <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "مشاريع مختارة" : "Projects"}</h2>
             </div>
-            <Link href={localePath("/projects", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.h13}>{lang === "ar" ? "جميع المراجع" : "All project references"}
+            <Link href={localePath("/projects", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.ctaInline}>{lang === "ar" ? "جميع المراجع" : "All project references"}
               <span aria-hidden="true" style={{ marginInlineStart: "8px" }}>{ar ? "←" : "→"}</span></Link>
           </div>
           <ProjectCards slugs={["solitaire-mall", "ritz-carlton", "riyadh-air"]} />

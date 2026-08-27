@@ -12,9 +12,14 @@ export interface GalleryImage {
  */
 export const PROJECT_GALLERIES: Record<string, GalleryImage[]> = {
   "solitaire-mall": [
-    { src: "/projects/solitaire-mall/03.jpg", w: 2560, h: 1707 },
+    /* Cover for the project cards on the home and projects pages. A wider
+       frame of the same dusk facade, replacing 03.jpg at the head of this
+       list. New name rather than the old one rewritten: public/_headers marks
+       this folder immutable, so anyone holding a cached 03.jpg would never be
+       sent this picture. 03.jpg itself stays on disk — services-data.ts uses
+       it as the Facade Lighting photograph. */
+    { src: "/projects/solitaire-mall/03-wide.jpg", w: 1537, h: 1023 },
     { src: "/projects/solitaire-mall/01.jpg", w: 2560, h: 1707 },
-    { src: "/projects/solitaire-mall/02.jpg", w: 2560, h: 1920 },
     { src: "/projects/solitaire-mall/04.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/05.jpg", w: 2560, h: 1920 },
     { src: "/projects/solitaire-mall/06.jpg", w: 2560, h: 1707 },
@@ -23,12 +28,13 @@ export const PROJECT_GALLERIES: Record<string, GalleryImage[]> = {
     { src: "/projects/solitaire-mall/09.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/10.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/11.jpg", w: 2560, h: 1707 },
-    { src: "/projects/solitaire-mall/12.jpg", w: 2560, h: 1920 },
-    { src: "/projects/solitaire-mall/13.jpg", w: 2560, h: 1707 },
-    { src: "/projects/solitaire-mall/14.jpg", w: 2560, h: 1920 },
     { src: "/projects/solitaire-mall/15.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/16.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/17.jpg", w: 2560, h: 1707 },
+    /* Aerial of the lit facade at dusk. Also the Facade Lighting card on
+       the home page, which used to carry its own crop of this view at
+       /home/facade-solitaire-aerial.jpg — one file now serves both. */
+    { src: "/projects/solitaire-mall/18-aerial-dusk.jpg", w: 1448, h: 1086 },
   ],
   "ritz-carlton": [
     { src: "/projects/ritz-carlton/01.jpg", w: 2400, h: 1135 },
@@ -39,7 +45,11 @@ export const PROJECT_GALLERIES: Record<string, GalleryImage[]> = {
   ],
   "four-points": [
     { src: "/projects/four-points/01.jpg", w: 1428, h: 1071 },
-    { src: "/projects/four-points/02.jpg", w: 900, h: 1600 },
+    /* The same photograph as the old 02.jpg, turned a quarter anticlockwise
+       so the hotel stands up. New name rather than the old one rewritten:
+       public/_headers marks this folder immutable, so anyone holding a
+       cached 02.jpg would never be sent the corrected one. */
+    { src: "/projects/four-points/02-upright.jpg", w: 1600, h: 900 },
   ],
   "riyadh-air": [
     { src: "/projects/riyadh-air/01.jpg", w: 1600, h: 1066 },
@@ -65,10 +75,6 @@ export const PROJECT_GALLERIES: Record<string, GalleryImage[]> = {
     { src: "/projects/milling-mc2/07.jpg", w: 1252, h: 1280 },
     { src: "/projects/milling-mc2/08.jpg", w: 1200, h: 1600 },
     { src: "/projects/milling-mc2/09.jpg", w: 1138, h: 1280 },
-    { src: "/projects/milling-mc2/10.jpg", w: 250, h: 412 },
-    { src: "/projects/milling-mc2/11.jpg", w: 744, h: 381 },
-    { src: "/projects/milling-mc2/12.jpg", w: 260, h: 473 },
-    { src: "/projects/milling-mc2/13.jpg", w: 252, h: 439 },
   ],
   "seder-hq": [
     { src: "/projects/seder-hq/01.jpg", w: 1280, h: 591 },

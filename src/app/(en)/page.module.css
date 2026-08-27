@@ -1,7 +1,40 @@
-.h1:hover { background:#3A3A38 }
-.h2:hover { border-color:#111111;color:#111111 }
-.h3:hover { color:#3A3A38 }
-.h13:hover { color:#3A3A38 }
+/* The home page's four call-to-action links.
+   These were called .h1, .h2, .h3 and .h13 — auto-generated names left over
+   from the conversion out of static HTML, which read like heading styles and
+   are not. Each existed only as a :hover rule, with the base styling written
+   inline in page.tsx, so none of them had a focus state at all: the primary
+   CTA on the site could be tabbed to and gave no sign of it. */
+
+/* Hero, filled: "Book a lighting consultation". */
+.ctaPrimary:hover {
+  background: var(--ink-hover);
+}
+
+.ctaPrimary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Hero, outlined: "View projects". */
+.ctaGhost:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.ctaGhost:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* The underlined "read on" links closing the Who we are and Projects sections. */
+.ctaInline:hover {
+  color: var(--ink-hover);
+}
+
+.ctaInline:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
 
 /* Smart Poles feature strip, sits below the six-card services grid. */
 .poleStrip {
@@ -147,7 +180,7 @@
 .credCount {
   font: 400 12px/1 var(--font-sora), sans-serif;
   font-variant-numeric: tabular-nums;
-  color: rgba(17, 17, 17, 0.42);
+  color: rgba(17, 17, 17, 0.62);
 }
 
 @media (max-width: 620px) {
@@ -465,7 +498,7 @@
 .svcNo {
   font: 400 11px/1 var(--font-sora), sans-serif;
   letter-spacing: 0.18em;
-  color: rgba(17, 17, 17, 0.42);
+  color: rgba(17, 17, 17, 0.62);
 }
 
 .svcTitle {
@@ -906,8 +939,7 @@
    33px tall. On touch they get a finger's target, with the extra height taken
    back out of the margin so the sections keep their spacing. */
 @media (pointer: coarse) {
-  .h3,
-  .h13,
+  .ctaInline,
   .svcAllLink,
   .ctrlCta {
     display: inline-flex;
@@ -935,15 +967,31 @@
   padding: var(--band-y) var(--gutter);
 }
 
+/* The photograph column is the wider of the two. It used to be the narrower
+   one — 1.15fr of copy against 1fr of picture — which left a 544x560 frame,
+   very nearly a square. The photograph in it is a 3:2 landscape, and
+   `object-fit: cover` on a square frame simply threw away the sides: about a
+   third of the width, taking the shopfronts at either end of the entrance
+   with it. Reversing the ratio and taking some height out of the frame brings
+   it to roughly 1.3:1, close enough to the picture's own proportions that
+   what is cropped is a trim rather than an amputation.
+
+   The copy column loses ~90px in the trade and reads better for it: at 626px
+   its lines ran to about 74 characters, the top of the comfortable measure. */
 .whoGrid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr);
   gap: clamp(48px, 6.5vw, 96px);
   align-items: start;
 }
 
+/* A shape rather than a height. Fixed at 560px the frame was square at 1440
+   and squarer still further down — the column narrows with the viewport while
+   a fixed height does not, so the crop got worse exactly where there was
+   least room to spare. Holding 4:3 keeps the same modest trim off a 3:2
+   photograph at every width the two columns survive. */
 .whoPhoto {
-  height: 560px;
+  aspect-ratio: 4 / 3;
 }
 
 /* desk — the width at which this site's two-column editorial layouts give up
@@ -955,7 +1003,10 @@
     gap: clamp(36px, 5vw, 52px);
   }
 
+  /* Stacked, the plate is full-bleed and sets its own height again — a 4:3
+     frame across the whole column would be taller than most phones. */
   .whoPhoto {
+    aspect-ratio: auto;
     height: clamp(280px, 58vw, 460px);
   }
 }
