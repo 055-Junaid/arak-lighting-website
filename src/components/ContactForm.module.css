@@ -157,7 +157,155 @@
   padding-inline-start: 14px;
 }
 
-.count {
-  font: 400 13px/1.5 var(--font-plex-sans), sans-serif;
+/* Honeypot. Taken out of the layout and off the screen rather than
+   display:none — some bots deliberately skip anything not rendered — and out
+   of the tab order, so nobody filling the form in can reach it. */
+.trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.submit:disabled {
+  cursor: progress;
+  background: var(--ink-hover);
+  border-color: var(--ink-hover);
+}
+
+/* --- Outcome notice ------------------------------------------------------
+   Raised when an enquiry is sent or fails. It exists because the .status line
+   above was doing this job alone and losing: it is 14px muted text in the slot
+   that already held the helper copy, so a successful send changed a sentence
+   nobody was looking at, often below the fold on a phone.
+
+   Pinned to the top of the viewport rather than the bottom — the bottom-right
+   corner belongs to the colour switch, and a full-width notice on a phone
+   would land straight on top of it. Sits above the header (z-index 60) and the
+   switch (70), and below the skip link (100), which has to stay reachable. */
+.notice {
+  position: fixed;
+  z-index: 90;
+  inset-block-start: calc(var(--header-h) + 14px);
+  inset-inline: var(--gutter);
+  margin-inline: auto;
+  max-width: 460px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--white);
+  color: var(--ink);
+  /* The site has no shadow language anywhere else, so the notice is lifted by
+     a hairline and a heavy inline-start rule instead — the same device the
+     .statusNote uses, at the weight of something that just happened. */
+  border: 1px solid var(--hair);
+  border-inline-start: 3px solid var(--ink);
+  box-shadow: 0 18px 44px rgba(17, 17, 17, 0.13);
+  /* No fill mode, deliberately. With `both` the element holds the keyframes'
+     opening frame — opacity 0 — for as long as the animation has not run, and
+     a browser that never runs it (a backgrounded tab at the moment of the
+     send, animations suspended) leaves the notice invisible while every test
+     for it still passes: it is in the DOM, it is `position: fixed`, it has the
+     right text. Unfilled, the element's own styles are the visible ones and
+     the animation is only the way it arrives. */
+  animation: notice-in 0.34s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Failure borrows the one non-ink colour the form already owns — the red the
+   field errors are drawn in — so the two read as the same voice. */
+.noticeBad {
+  border-inline-start-color: #a3231f;
+}
+
+.noticeBad .noticeTitle {
+  color: #a3231f;
+}
+
+.noticeBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.noticeTitle {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.noticeText {
+  font: 400 14px/1.65 var(--font-plex-sans), sans-serif;
+  color: var(--body);
+}
+
+.noticeText a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+
+.noticeText a:hover {
+  border-bottom-color: var(--ink);
+}
+
+.noticeClose {
+  flex: none;
+  /* 44px of target around a 14px mark, per the same touch minimum the rest of
+     the site's controls are built to. */
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  /* Pulled back into the padding so the target is generous without the mark
+     sitting a finger's width away from the corner. */
+  margin-block: -12px;
+  margin-inline: 0 -14px;
+  padding: 0;
+  background: none;
+  border: 0;
   color: var(--faint);
+  cursor: pointer;
+}
+
+.noticeClose:hover {
+  color: var(--ink);
+}
+
+.noticeClose:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -6px;
+}
+
+/* Travel only — no fade. An opacity keyframe would mean that any moment the
+   animation is suspended rather than finished (a tab in the background at the
+   instant of the send, a renderer that has stopped painting) is a moment the
+   notice is transparent, and fill-mode cannot help with that: it governs
+   before and after the run, not a run held at 0%. Animating position alone,
+   the worst case is a notice sitting 12px high of where it belongs, still
+   perfectly legible. */
+@keyframes notice-in {
+  from {
+    transform: translateY(-12px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* The notice still has to appear — it is the whole point — so reduced motion
+   takes away the travel, not the arrival. */
+@media (prefers-reduced-motion: reduce) {
+  .notice {
+    animation: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .notice {
+    inset-block-start: calc(var(--header-h) + 10px);
+    padding: 16px;
+  }
 }

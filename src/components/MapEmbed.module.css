@@ -1,0 +1,85 @@
+.frame {
+  border: 1px solid var(--hair);
+  height: 420px;
+  overflow: hidden;
+}
+
+.frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  /* Desaturated to sit with the rest of the page; restores on interaction. */
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+
+.frame:hover iframe,
+.frame:focus-within iframe {
+  filter: none;
+}
+
+/* Holds the same 420px the map will, so pressing the button does not shift
+   the page under the reader. */
+.placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 32px var(--gutter);
+  text-align: center;
+  background: var(--paper);
+}
+
+.address {
+  font: 400 16px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--body);
+  margin: 0;
+  max-width: 40ch;
+}
+
+.load {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 17px 28px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 0.25s ease;
+}
+
+.load:hover {
+  background: var(--ink-hover);
+  border-color: var(--ink-hover);
+}
+
+.notice {
+  font: 400 13px/1.6 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.direct {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 6px;
+}
+
+.direct:hover {
+  border-bottom-color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .frame {
+    height: 320px;
+  }
+}

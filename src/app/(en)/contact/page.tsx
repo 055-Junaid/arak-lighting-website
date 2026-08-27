@@ -2,14 +2,16 @@
 
 import { useLang } from "@/lib/lang";
 import { ContactForm } from "@/components/ContactForm";
-import { SOCIALS, MAPS_PLACE_URL, MAPS_COORDS } from "@/lib/social-data";
+import { MapEmbed } from "@/components/MapEmbed";
+import { SOCIALS, MAPS_PLACE_URL } from "@/lib/social-data";
+import { COMPANY, SITE_URL } from "@/lib/site";
 import styles from "./page.module.css";
 
 export default function ContactPage() {
   const { lang } = useLang();
 
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <section className={styles.section}>
         <div className={styles.label}>
           <span className={styles.eyebrow}>{lang === "ar" ? "تواصل معنا" : "Contact"}</span>
@@ -33,35 +35,56 @@ export default function ContactPage() {
                 <div className={styles.rowValue}>
                   {lang === "ar" ? (
                     <>
-                      مخرج 2، طريق الدائري الشمالي الفرعي، حطين
+                      {COMPANY.streetAr}
                       <br />
-                      الرياض 13513، المملكة العربية السعودية
+                      {COMPANY.cityAr} {COMPANY.postalCode}، {COMPANY.countryNameAr}
                     </>
                   ) : (
                     <>
-                      Exit 2, Northern Ring Branch Road, Hittin
+                      {COMPANY.street}
                       <br />
-                      Riyadh 13513, Kingdom of Saudi Arabia
+                      {COMPANY.city} {COMPANY.postalCode}, {COMPANY.countryName}
                     </>
                   )}
                 </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.rowLabel}>{lang === "ar" ? "الهاتف" : "Phone"}</div>
-                <a href="tel:+966114411131" dir="ltr" className={styles.rowLink}>
-                  +966 11 441 1131
+                <a href={`tel:${COMPANY.phone}`} dir="ltr" className={styles.rowLink}>
+                  {COMPANY.phoneDisplay}
                 </a>
               </div>
               <div className={styles.row}>
                 <div className={styles.rowLabel}>{lang === "ar" ? "البريد الإلكتروني" : "Email"}</div>
-                <a href="mailto:info@arak-sa.com" className={styles.rowLink}>
-                  info@arak-sa.com
+                <a href={`mailto:${COMPANY.email}`} className={styles.rowLink}>
+                  {COMPANY.email}
                 </a>
+              </div>
+              {/* The page invites people to visit the showroom and never said
+                  when it is open. Same figures as the openingHours in the
+                  structured data — both read COMPANY.hours. */}
+              <div className={styles.row}>
+                <div className={styles.rowLabel}>{lang === "ar" ? "ساعات العمل" : "Hours"}</div>
+                <div className={styles.rowValue}>
+                  {lang === "ar" ? (
+                    <>
+                      الأحد – الخميس، 9:00 – 18:00
+                      <br />
+                      الجمعة والسبت: مغلق
+                    </>
+                  ) : (
+                    <>
+                      Sunday – Thursday, 8:00 AM – 5:00 PM
+                      <br />
+                      Friday &amp; Saturday: closed
+                    </>
+                  )}
+                </div>
               </div>
               <div className={styles.row}>
                 <div className={styles.rowLabel}>{lang === "ar" ? "الموقع" : "Web"}</div>
-                <a href="https://www.arak-sa.com" className={styles.rowLink}>
-                  www.arak-sa.com
+                <a href={SITE_URL} className={styles.rowLink}>
+                  arak-sa.com
                 </a>
               </div>
               <div style={{ padding: "24px 0" }}>
@@ -100,18 +123,7 @@ export default function ContactPage() {
               {lang === "ar" ? "افتح في خرائط جوجل ↖" : "Open in Google Maps ↗"}
             </a>
           </div>
-          <div className={styles.mapFrame}>
-            <iframe
-              title={lang === "ar" ? "خريطة موقع أراك للإنارة" : "Map showing the ARAK Lighting showroom"}
-              // `/maps?...&output=embed` now 301s with X-Frame-Options: SAMEORIGIN,
-              // which blanks the frame. This is that redirect's own target, which
-              // serves 200 with no framing restriction and needs no API key.
-              src={`https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${MAPS_COORDS}!6i16!3m1!1s${lang === "ar" ? "ar" : "en"}!5m1!1s${lang === "ar" ? "ar" : "en"}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
+          <MapEmbed />
         </div>
       </section>
     </main>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
-import { localePath } from "@/lib/site";
+import { COMPANY, localePath } from "@/lib/site";
 import { SOCIALS, MAPS_PLACE_URL } from "@/lib/social-data";
 import styles from "./Footer.module.css";
 
@@ -27,6 +27,7 @@ const SERVICE_ITEMS = [
 export function Footer() {
   const { lang } = useLang();
   const ar = lang === "ar";
+  const year = new Date().getFullYear();
 
   return (
     <footer className={styles.footer}>
@@ -88,28 +89,34 @@ export function Footer() {
               className={styles.link}
             >
               {ar
-                ? "مخرج 2، طريق الدائري الشمالي الفرعي، حطين، الرياض 13513"
-                : "Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513"}
+                ? `${COMPANY.streetAr}، ${COMPANY.cityAr} ${COMPANY.postalCode}`
+                : `${COMPANY.street}, ${COMPANY.city} ${COMPANY.postalCode}`}
             </a>
             <a href={MAPS_PLACE_URL} target="_blank" rel="noopener noreferrer" className={styles.mapCue}>
               {ar ? "عرض على الخريطة" : "View on map"}
             </a>
-            <a href="tel:+966114411131" dir="ltr" className={styles.link}>
-              +966 11 441 1131
+            <a href={`tel:${COMPANY.phone}`} dir="ltr" className={styles.link}>
+              {COMPANY.phoneDisplay}
             </a>
-            <a href="mailto:info@arak-sa.com" className={styles.link}>
-              info@arak-sa.com
+            <a href={`mailto:${COMPANY.email}`} className={styles.link}>
+              {COMPANY.email}
             </a>
           </div>
         </div>
 
         <div className={styles.legal}>
+          {/* The year was written out, and would have quietly said 2026 for the
+              whole of 2027. Read at render rather than typed. */}
           <span>
             {ar
-              ? "© 2026 أراك لحلول الإضاءة. جميع الحقوق محفوظة."
-              : "© 2026 ARAK Lighting Solutions. All rights reserved."}
+              ? `© ${year} أراك لحلول الإضاءة. جميع الحقوق محفوظة.`
+              : `© ${year} ARAK Lighting Solutions. All rights reserved.`}
           </span>
-          <span>{ar ? "الرياض، المملكة العربية السعودية" : "Riyadh, Kingdom of Saudi Arabia"}</span>
+          <span>
+            {ar
+              ? `${COMPANY.cityAr}، ${COMPANY.countryNameAr}`
+              : `${COMPANY.city}, ${COMPANY.countryName}`}
+          </span>
         </div>
       </div>
     </footer>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
-import { localePath } from "@/lib/site";
+import { COMPANY, localePath } from "@/lib/site";
 import { PhotoSlot } from "@/components/PhotoSlot";
 import { Reveal } from "@/components/Reveal";
 import { VendorBelt } from "@/components/VendorBelt";
@@ -14,7 +14,7 @@ export default function AboutPage() {
   const ar = lang === "ar";
 
   return (
-    <main className={styles.page}>
+    <main id="main" tabIndex={-1} className={styles.page}>
       {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroGlow} />
@@ -351,8 +351,8 @@ export default function AboutPage() {
             </div>
             <p className={styles.closeAddress}>
               {ar
-                ? "مخرج 2، طريق الدائري الشمالي الفرعي، حطين، الرياض 13513، المملكة العربية السعودية"
-                : "Exit 2, Northern Ring Branch Road, Hittin, Riyadh 13513, Kingdom of Saudi Arabia"}
+                ? `${COMPANY.streetAr}، ${COMPANY.cityAr} ${COMPANY.postalCode}، ${COMPANY.countryNameAr}`
+                : `${COMPANY.street}, ${COMPANY.city} ${COMPANY.postalCode}, ${COMPANY.countryName}`}
             </p>
           </Reveal>
         </div>
