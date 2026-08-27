@@ -38,12 +38,11 @@ const nextConfig: NextConfig = {
     // viewport at DPR 2.5 asks for 3420 and was getting exactly that.
     // 2048 is the ceiling a retina laptop actually resolves.
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
+    // No remotePatterns. There was an entry here for images.unsplash.com, left
+    // from the placeholder photography, and nothing on the site had referenced
+    // it in some time. While it stood, anyone could call
+    // /_next/image?url=https://images.unsplash.com/... and have this account
+    // pay for the transform. Every image the site serves is local.
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
