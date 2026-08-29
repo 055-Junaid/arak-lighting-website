@@ -1,6 +1,6 @@
 import { ogCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
 
-export const alt = "ARAK Lighting Solutions — a lighting company and smart lighting solutions provider in Riyadh";
+export const alt = "ARAK Lighting Solutions, a lighting company and smart lighting solutions provider in Riyadh";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 

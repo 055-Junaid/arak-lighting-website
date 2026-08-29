@@ -54,9 +54,9 @@ const FEATURED: Omit<FeaturedProject, "image" | "gallery">[] = [
     arScope: "توريد وحدات الإضاءة",
     category: "fittings",
     blurb:
-      "One of Riyadh's landmark hospitality addresses. ARAK supplied the light fittings for the hotel's public areas — the grand hall, the double staircase atrium and the ornamented ceilings that carry the marble, gilt and plasterwork detail throughout.",
+      "One of Riyadh's landmark hospitality addresses. ARAK supplied the light fittings for the hotel's public areas: the grand hall, the double staircase atrium and the ornamented ceilings that carry the marble, gilt and plasterwork detail throughout.",
     arBlurb:
-      "أحد أبرز عناوين الضيافة في الرياض. وردّت أراك وحدات الإضاءة للمناطق العامة في الفندق — القاعة الكبرى، وبهو الدرج المزدوج، والأسقف المزخرفة التي تحمل تفاصيل الرخام والتذهيب وأعمال الجبس في أرجاء المبنى.",
+      "أحد أبرز عناوين الضيافة في الرياض. وردّت أراك وحدات الإضاءة للمناطق العامة في الفندق: القاعة الكبرى، وبهو الدرج المزدوج، والأسقف المزخرفة التي تحمل تفاصيل الرخام والتذهيب وأعمال الجبس في أرجاء المبنى.",
   },
   {
     slug: "four-points",
@@ -124,9 +124,9 @@ const FEATURED: Omit<FeaturedProject, "image" | "gallery">[] = [
     arScope: "توريد وحدات الإضاءة الداخلية والخارجية",
     category: "fittings",
     blurb:
-      "The headquarters building for Seder Construction. ARAK supplied both the indoor and outdoor fittings — the facade and landscape lighting that reads at night, and the downlighting through the lobby, lift cores and open-plan floors.",
+      "The headquarters building for Seder Construction. ARAK supplied both the indoor and outdoor fittings: the facade and landscape lighting that reads at night, and the downlighting through the lobby, lift cores and open-plan floors.",
     arBlurb:
-      "مبنى المقر الرئيسي لشركة سدر للإنشاءات. وردّت أراك وحدات الإضاءة الداخلية والخارجية معًا — إضاءة الواجهة والمسطحات التي تظهر ليلًا، والإضاءة السفلية في البهو وأنوية المصاعد والأدوار المفتوحة.",
+      "مبنى المقر الرئيسي لشركة سدر للإنشاءات. وردّت أراك وحدات الإضاءة الداخلية والخارجية معًا: إضاءة الواجهة والمسطحات التي تظهر ليلًا، والإضاءة السفلية في البهو وأنوية المصاعد والأدوار المفتوحة.",
   },
   {
     slug: "athletic-showroom",

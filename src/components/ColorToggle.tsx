@@ -46,7 +46,7 @@ export function ColorToggle() {
   // replace them — visible "Lights off", announced "Turn the lights on…" —
   // which fails WCAG 2.5.3 Label in Name and means a voice-control user saying
   // "click Lights off" gets nothing.
-  const hint = `${label} — ${action}`;
+  const hint = `${label}. ${action}`;
 
   return (
     <button

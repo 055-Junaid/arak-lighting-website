@@ -13,7 +13,7 @@ import { ogCard, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og";
  * The og:title and og:description on this page are Arabic either way, and
  * that is the headline most platforms show beside the image.
  */
-export const alt = "ARAK Lighting Solutions — Arabic";
+export const alt = "ARAK Lighting Solutions, Arabic";
 export const size = OG_SIZE;
 export const contentType = OG_CONTENT_TYPE;
 

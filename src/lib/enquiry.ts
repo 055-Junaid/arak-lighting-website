@@ -95,8 +95,8 @@ export function mailtoFallback(enquiry: Enquiry): string {
   const line = (label: string, value: string) => (value ? `${label}: ${value}\n` : "");
 
   const subject = ar
-    ? `طلب استشارة إضاءة — ${enquiry.projectType}`
-    : `Lighting enquiry — ${enquiry.projectType}`;
+    ? `طلب استشارة إضاءة: ${enquiry.projectType}`
+    : `Lighting enquiry: ${enquiry.projectType}`;
 
   const body = ar
     ? `الاسم: ${enquiry.name}\n` +

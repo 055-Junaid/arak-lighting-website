@@ -47,8 +47,8 @@ export function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${s.name} — ${s.handle}`}
-                  title={`${s.name} — ${s.handle}`}
+                  aria-label={`${s.name}, ${s.handle}`}
+                  title={`${s.name}, ${s.handle}`}
                   className={styles.social}
                 >
                   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">

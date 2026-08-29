@@ -140,13 +140,13 @@ export function ContactForm() {
   /** Likewise for the failure, fallback link and all. */
   const failedBody = ar ? (
     <>
-      تعذّر إرسال الطلب — قد تكون المشكلة في الاتصال. بياناتك ما تزال في النموذج:{" "}
+      تعذّر إرسال الطلب، وقد تكون المشكلة في الاتصال. بياناتك ما تزال في النموذج:{" "}
       <a href={fallbackHref}>أرسلها عبر بريدك</a> أو راسلنا على{" "}
       <a href={`mailto:${INBOX}`}>{INBOX}</a>.
     </>
   ) : (
     <>
-      We couldn’t send that — it may be your connection. Nothing is lost:{" "}
+      We couldn’t send that; it may be your connection. Nothing is lost:{" "}
       <a href={fallbackHref}>send it from your email app</a> instead, or write to{" "}
       <a href={`mailto:${INBOX}`}>{INBOX}</a>.
     </>
@@ -161,8 +161,8 @@ export function ContactForm() {
     ? "أدخل بريدًا إلكترونيًا صحيحًا، مثل name@company.com"
     : "Enter a valid email address, for example name@company.com";
   const missingBrief = ar
-    ? "صف المشروع باختصار — نطاق العمل أو المخططات المتوفرة يكفي للبدء."
-    : "Describe the project briefly — the scope or the drawings you have is enough to start.";
+    ? "صف المشروع باختصار، فنطاق العمل أو المخططات المتوفرة يكفي للبدء."
+    : "Describe the project briefly. The scope or the drawings you have is enough to start.";
 
   const validate = (data: FormData): Errors => {
     const next: Errors = {};

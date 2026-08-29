@@ -77,7 +77,7 @@ export function Header() {
   return (
     <header className={styles.header} ref={headerRef}>
       <div className={styles.inner}>
-        <Link href={localePath("/", lang)} className={styles.logo} aria-label="ARAK Lighting Solutions — home">
+        <Link href={localePath("/", lang)} className={styles.logo} aria-label="ARAK Lighting Solutions, home">
           {/* Sized in Header.module.css rather than inline, so the 520px rule
               can shrink it. Setting only one axis inline is what Next warns
               about; the module sets both. */}

@@ -39,7 +39,7 @@ export function ErrorBody({
       <p className={styles.lead}>
         {ar
           ? "تعذّر عرض هذه الصفحة. غالبًا ما تكفي إعادة المحاولة؛ فإن تكرّر الخطأ فأخبرنا به."
-          : "This page could not be displayed. Trying again usually resolves it — if it keeps happening, please tell us."}
+          : "This page could not be displayed. Trying again usually resolves it. If it keeps happening, please tell us."}
       </p>
 
       <div className={styles.actions}>
