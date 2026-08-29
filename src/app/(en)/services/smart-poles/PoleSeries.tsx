@@ -4,7 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Reveal } from "@/components/Reveal";
-import { POLES, POLE_FAMILIES, isPoleFamily, type PoleFamily } from "@/lib/smart-poles-data";
+import {
+  FAMILY_LABEL,
+  POLES,
+  POLE_FAMILIES,
+  isPoleFamily,
+  type PoleFamily,
+} from "@/lib/smart-poles-data";
 import { localePath } from "@/lib/site";
 import { useLang } from "@/lib/lang";
 import styles from "./page.module.css";
@@ -80,6 +86,15 @@ export function PoleSeries({ ar }: { ar: boolean }) {
         </div>
       </Reveal>
 
+      {/* Filtering swaps the grid under a sighted reader's eye and said
+          nothing at all to a screen reader — "Pedestrian and park" takes the
+          catalogue from twenty cards to three with no announcement. */}
+      <p className={styles.seriesCount} role="status" aria-live="polite">
+        {ar
+          ? `${poles.length} من ${POLES.length} تصميمًا`
+          : `Showing ${poles.length} of ${POLES.length} designs`}
+      </p>
+
       <div className={styles.series}>
         {poles.map((p, i) => (
           <Reveal key={p.slug} delay={(i % 4) * 70}>
@@ -98,6 +113,15 @@ export function PoleSeries({ ar }: { ar: boolean }) {
                 />
               </div>
               <div className={styles.poleMeta}>
+                {/* The taglines are the manufacturer's — "Revolutionary glow",
+                    "Sophistication in simplicity" — and twenty of them in a
+                    grid tell a specifier nothing about which pole suits their
+                    street. The family is the one fact on file that actually
+                    sorts them, so it is on the card rather than only behind a
+                    filter chip. */}
+                <span className={styles.poleFamily}>
+                  {ar ? FAMILY_LABEL[p.family].ar : FAMILY_LABEL[p.family].en}
+                </span>
                 <h3 className={styles.poleName}>{p.name}</h3>
                 <p className={styles.poleTag}>{ar ? p.arTagline : p.tagline}</p>
                 <span className={styles.poleMore}>{ar ? "التفاصيل" : "View detail"}</span>

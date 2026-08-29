@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { localePath } from "@/lib/site";
-import { POLE_FUNCTIONS, type Pole } from "@/lib/smart-poles-data";
+import { POLE_ANATOMY, type Pole } from "@/lib/smart-poles-data";
 import styles from "./PoleDetail.module.css";
 import { PHOTO_QUALITY } from "@/lib/images";
 
@@ -58,12 +58,19 @@ export function PoleDetail({
             <p className={styles.tagline}>{ar ? pole.arTagline : pole.tagline}</p>
             <p className={styles.body}>{ar ? pole.arBody : pole.body}</p>
 
+            {/* The eight systems the anatomy diagram on the series page
+                labels, rather than the first six rows of POLE_FUNCTIONS —
+                that slice was an arbitrary cut of a differently-purposed list
+                and stopped mid-way through the payload, so the page named 5G
+                and broadband but not the display, the speakers or the
+                emergency call. This is the same eight the rest of the section
+                counts, and it is the set the footnote below is about. */}
             <h2 className={styles.payloadHead}>
-              {ar ? "ما يحمله هذا العمود" : "What this pole carries"}
+              {ar ? "الأنظمة التي يحملها هذا العمود" : "Systems this pole carries"}
             </h2>
             <ul className={styles.payload}>
-              {POLE_FUNCTIONS.slice(0, 6).map((f) => (
-                <li key={f.title}>{ar ? f.arTitle : f.title}</li>
+              {POLE_ANATOMY.map((item) => (
+                <li key={item.no}>{ar ? item.ar : item.en}</li>
               ))}
             </ul>
 
@@ -76,7 +83,7 @@ export function PoleDetail({
             <div className={styles.actions}>
               <Link href={localePath("/contact", lang)} className={styles.cta}>
                 {ar ? `اسأل عن ${pole.name}` : `Enquire about ${pole.name}`}
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
               <Link href={localePath("/services/smart-poles", lang)} className={styles.ghost}>
                 {ar ? "كل التصاميم العشرين" : "All twenty designs"}

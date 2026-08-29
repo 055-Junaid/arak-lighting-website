@@ -10,7 +10,7 @@ import {
   MAST_SYSTEMS,
   POLE_ANATOMY,
   POLE_DESIGN_COUNT,
-  POLE_FUNCTIONS,
+  POLE_EXTRA_FUNCTIONS,
   POLE_LAYERS,
 } from "@/lib/smart-poles-data";
 import { PoleSeries } from "./PoleSeries";
@@ -38,13 +38,35 @@ const PITCH = [
   },
 ];
 
+/**
+ * Where a pole ends up standing.
+ *
+ * Two of these were replaced. The set used to open on the Solitaire Mall
+ * frontage captioned as an arterial road, and close on a street of gabled
+ * roofs, attached garages and lawns captioned "residential districts and
+ * compounds" — a North American suburb, sitting between two captions that say
+ * Riyadh, on the one section of the page that claims to show real context.
+ * Neither of the two had a smart pole anywhere in the frame.
+ *
+ * What leads now is a Riyadh arterial that has both: the city, unmistakably —
+ * King Fahd Road, the Kingdom Centre on the skyline — and a run of masts
+ * carrying signage panels and camera arms. Solitaire stays, named as ARAK's
+ * own scheme rather than passed off as a pole installation.
+ */
 const CONTEXT_SHOTS = [
   {
-    src: "/smart-poles/ctx-boulevard-riyadh.jpg",
-    alt: "A lit arterial road in Riyadh at night, the existing street lighting run a smart mast would replace",
-    cap: "Boulevards and arterial roads in Riyadh. On a street like this the mast carries the road luminaire, the small cell and the signage face on one shaft.",
-    arAlt: "طريق شرياني مضاء في الرياض ليلًا، وهو خطّ إنارة الشوارع القائم الذي يحلّ العمود الذكي محلّه",
-    arCap: "الشوارع الرئيسية والطرق الشريانية في الرياض. في شارع كهذا يحمل العمود وحدة إنارة الطريق والخلية الصغيرة وواجهة اللوحات على جسمٍ واحد.",
+    src: "/home/riyadh-arterial-hero-v2.jpg",
+    alt: "A Riyadh arterial road at first light, a run of smart poles carrying signage panels and camera arms down the central reservation",
+    cap: "Arterial roads in Riyadh. At this scale one mast carries the road luminaire, the small cell, the camera arm and the signage face on a single shaft.",
+    arAlt: "طريق شرياني في الرياض عند أول الضوء، وصفّ من الأعمدة الذكية يحمل لوحات رقمية وأذرع كاميرات على الجزيرة الوسطى",
+    arCap: "الطرق الشريانية في الرياض. على هذا المقياس يحمل العمود الواحد وحدة إنارة الطريق والخلية الصغيرة وذراع الكاميرا وواجهة اللوحات على جسمٍ واحد.",
+  },
+  {
+    src: "/smart-poles/ctx-street.jpg",
+    alt: "Slim white smart poles along a landscaped city boulevard between office towers",
+    cap: "Dense city boulevards, where the shaft has to stay slim and the signage sits at eye level rather than overhead.",
+    arAlt: "أعمدة ذكية بيضاء نحيلة على امتداد شارع مدينيّ مشجَّر بين أبراج المكاتب",
+    arCap: "الشوارع الحضرية الكثيفة، حيث يجب أن يبقى جسم العمود نحيلًا وأن تكون اللوحات عند مستوى النظر لا فوق الرؤوس.",
   },
   {
     src: "/smart-poles/ctx-park.jpg",
@@ -55,17 +77,10 @@ const CONTEXT_SHOTS = [
   },
   {
     src: "/smart-poles/ctx-frontage-riyadh.jpg",
-    alt: "A lit retail frontage on an arterial road in Riyadh at dusk",
-    cap: "Retail streets and civic frontages in Riyadh. Here the pole has to stay slim enough not to compete with the building behind it.",
-    arAlt: "واجهة تجارية مضاءة على طريق شرياني في الرياض عند الغروب",
-    arCap: "الشوارع التجارية والواجهات العامة في الرياض. هنا يجب أن يبقى العمود نحيلًا بما يكفي كي لا ينافس المبنى خلفه.",
-  },
-  {
-    src: "/smart-poles/ctx-residential.jpg",
-    alt: "Ornamental smart poles on a residential street lined with houses",
-    cap: "Residential districts and compounds, using the ornamental crowns that carry the same sensors as the modern masts.",
-    arAlt: "أعمدة ذكية زخرفية في شارع سكني تصطفّ على جانبيه المنازل",
-    arCap: "الأحياء والمجمّعات السكنية، بتيجان زخرفية تحمل أجهزة الاستشعار نفسها التي تحملها الأعمدة الحديثة.",
+    alt: "The lit facade of Solitaire Mall on an arterial road in Riyadh at dusk",
+    cap: "Civic and retail frontages: here, Solitaire Mall in Riyadh, an ARAK lighting scheme. In front of an elevation like this the pole has to stay quiet enough not to compete with it.",
+    arAlt: "واجهة سوليتير مول المضاءة على طريق شرياني في الرياض عند الغسق",
+    arCap: "الواجهات العامة والتجارية: وهنا سوليتير مول في الرياض، من تنفيذ أراك للإضاءة. أمام واجهة كهذه يجب أن يبقى العمود هادئًا بما لا ينافسها.",
   },
 ];
 
@@ -184,8 +199,18 @@ export function SmartPolesView() {
         </div>
       </section>
 
-      {/* Basics — the plain answer, before any argument is made */}
-      <section className={`${styles.band} ${styles.bandRender}`} style={{ borderTop: 0 }}>
+      {/* Basics — the plain answer, before the catalogue. Short on purpose:
+          one line, one paragraph and the labelled pole, so a reader who has
+          never specified one of these knows what they are looking at by the
+          time the twenty designs arrive underneath.
+
+          Black rather than the render grey it used to sit on: the series band
+          below is #383838 and two of those in a row read as one slab. The
+          pole keeps its matching backdrop through the plate behind it.
+
+          borderTop: 0 because this is the band that meets the hero — the
+          divider would draw a line across the seam. */}
+      <section className={`${styles.band} ${styles.bandDark}`} style={{ borderTop: 0 }}>
         <div className={styles.shell}>
           <Reveal>
             <span className={`${styles.eyebrow} ${styles.eyebrowLight}`}>
@@ -202,8 +227,8 @@ export function SmartPolesView() {
               </p>
               <p className={styles.basicsBody}>
                 {ar
-                  ? "لا يزال العمود ينير الطريق، غير أنّ الجسم نفسه يحمل كذلك شبكة الاتصالات والكاميرات وأجهزة استشعار البيئة واللوحات الرقمية وزرّ نداء الطوارئ — معتمدًا على التغذية الكهربائية والقاعدة التي يحتاجها عمود الإنارة أصلًا. عمود واحد بدل ستة، وخندق واحد بدل ستة."
-                  : "The mast still lights the road. But the same shaft also holds the mobile network, the cameras, the environmental sensors, the digital signage and an emergency call button — running on the power feed and the foundation the street light already needed. One column instead of six. One trench instead of six."}
+                  ? "لا يزال العمود ينير الطريق، غير أنّ الجسم نفسه يحمل كذلك شبكة الاتصالات والكاميرات وأجهزة استشعار البيئة واللوحات الرقمية وزرّ نداء الطوارئ، معتمدًا على التغذية الكهربائية والقاعدة التي يحتاجها عمود الإنارة أصلًا. عمود واحد بدل ستة، وخندق واحد بدل ستة."
+                  : "The mast still lights the road. But the same shaft also holds the mobile network, the cameras, the environmental sensors, the digital signage and an emergency call button, running on the power feed and the foundation the street light already needed. One column instead of six. One trench instead of six."}
               </p>
             </div>
           </Reveal>
@@ -218,18 +243,25 @@ export function SmartPolesView() {
                   </li>
                 ))}
               </ul>
-              <div className={styles.anatomyPole}>
-                <Image
-                  quality={PHOTO_QUALITY}
-                  src="/smart-poles/anatomy-pole.jpg"
-                  alt={
-                    ar
-                      ? "عمود Quantum الذكي تظهر عليه وحدة الإضاءة والكاميرا وأجهزة الاستشعار والشاشة الرقمية"
-                      : "The Quantum smart pole, showing its luminaire, camera, sensors and digital display"
-                  }
-                  fill
-                  sizes="(max-width: 900px) 38vw, 182px"
-                />
+              <div className={styles.anatomyStage}>
+                <div className={styles.anatomyPole}>
+                  <Image
+                    quality={PHOTO_QUALITY}
+                    src="/smart-poles/anatomy-pole.jpg"
+                    alt={
+                      ar
+                        ? "عمود Quantum الذكي تظهر عليه وحدتا إضاءة وكاميرا وجهاز استشعار ولوحة رقمية وحيّز الخدمات في القاعدة"
+                        : "The Quantum smart pole, showing two luminaire heads, a camera, an environmental sensor, a signage panel and the service enclosure at its base"
+                    }
+                    fill
+                    sizes="(max-width: 900px) 38vw, 182px"
+                  />
+                </div>
+                <p className={styles.anatomyNote}>
+                  {ar
+                    ? "عمود Quantum بإحدى تهيئاته. تُحدَّد الأجهزة لكل مشروع."
+                    : "Quantum, in one configuration. The devices are specified per project."}
+                </p>
               </div>
               <ul className={`${styles.anatomyCol} ${styles.anatomyColEnd}`}>
                 {ANATOMY_END.map((a) => (
@@ -245,7 +277,41 @@ export function SmartPolesView() {
         </div>
       </section>
 
-      {/* Functions */}
+      {/* The series, and the target of the hero shortcut. It sits second, on
+          the render grey the catalogue photographs already carry: a specifier
+          arrives wanting to see poles, and used to scroll past four screens of
+          argument on desktop and nine on a phone before reaching one. Only the
+          short answer above comes first now; the rest of the case follows. */}
+      <section id="designs" className={`${styles.band} ${styles.bandRender} ${styles.jumpTarget}`}>
+        <div className={styles.shell}>
+          <Reveal>
+            <div className={styles.sectionHead}>
+              <div>
+                <span className={`${styles.eyebrow} ${styles.eyebrowLight}`}>
+                  {ar ? "المجموعة" : "The series"}
+                </span>
+                <h2 className={`${styles.sectionTitle} ${styles.sectionTitleLight}`}>
+                  {ar ? "عشرون تصميماً" : "Twenty designs"}
+                </h2>
+              </div>
+              <p className={`${styles.sectionNote} ${styles.sectionNoteLight}`}>
+                {ar
+                  ? "من أعمدة المدن الذكية الكاملة إلى التيجان الزخرفية للأحياء التراثية. كل تصميم يحمل الحزمة نفسها من الخدمات. افتح أي تصميم لقراءة تفاصيله."
+                  : "From full smart-city masts down to ornamental crowns for heritage districts. Every design takes the same service payload. Open any design for its full detail."}
+              </p>
+            </div>
+          </Reveal>
+
+          <PoleSeries ar={ar} />
+        </div>
+      </section>
+
+      {/* Functions. The second half of the payload answer, picking up after
+          the catalogue: the eight in the diagram are the orientation set, and
+          these twelve are what else the same shaft will take.
+
+          POLE_EXTRA_FUNCTIONS, not the full eighteen — six of them named the
+          same systems the anatomy diagram has already labelled. */}
       <section className={`${styles.band} ${styles.bandDark}`}>
         <div className={styles.shell}>
           <Reveal>
@@ -255,18 +321,18 @@ export function SmartPolesView() {
                   {ar ? "وظائف النظام" : "System functions"}
                 </span>
                 <h2 className={`${styles.sectionTitle} ${styles.sectionTitleLight}`}>
-                  {ar ? "ماذا يحمل العمود الذكي" : "What a smart pole carries"}
+                  {ar ? "وما يمكن أن يحمله أيضاً" : "And what else it can carry"}
                 </h2>
               </div>
               <p className={`${styles.sectionNote} ${styles.sectionNoteLight}`}>
                 {ar
-                  ? "أنظمة الأعمدة الذكية هي طبقة الحمل والطرفيات للمدينة الذكية، قائمة على إنترنت الأشياء والحوسبة السحابية والبيانات الضخمة والمعلومات المكانية. تجمع هذه الأنظمة وتنقل ما تحتاجه المدينة لتقديم الخدمات وحفظ الأمن العام وحماية البيئة. وما يلي هو ما يمكن أن يحمله العمود، لا ما يحمله كل عمود: تُبنى المواصفة لكل مشروع على حدة."
-                  : "Smart pole systems are a carrier and terminal layer for the intelligent city, built on IoT, cloud computing, big data and spatial information. They collect and transmit what a city needs for service delivery, public safety and environmental protection. What follows is what a pole can carry rather than what every pole carries — the specification is built per project."}
+                  ? "إلى جانب الأنظمة الثمانية في الرسم أعلى الصفحة، يعمل العمود طبقةَ حملٍ وطرفيات للمدينة الذكية، قائمة على إنترنت الأشياء والحوسبة السحابية والبيانات الضخمة والمعلومات المكانية. وما يلي هو ما يمكن أن يحمله العمود، لا ما يحمله كل عمود: تُبنى المواصفة لكل مشروع على حدة."
+                  : "Beyond the eight systems in the diagram at the top of this page, the mast is a carrier and terminal layer for the intelligent city, built on IoT, cloud computing, big data and spatial information. What follows is what a pole can carry rather than what every pole carries: the specification is built per project."}
               </p>
             </div>
           </Reveal>
           <div className={styles.functions}>
-            {POLE_FUNCTIONS.map((f, i) => (
+            {POLE_EXTRA_FUNCTIONS.map((f, i) => (
               <Reveal key={f.title} delay={(i % 3) * 80}>
                 <div className={styles.fn}>
                   <h3 className={styles.fnTitle}>{ar ? f.arTitle : f.title}</h3>
@@ -291,31 +357,6 @@ export function SmartPolesView() {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* The series — target of the hero shortcut */}
-      <section id="designs" className={`${styles.band} ${styles.bandRender} ${styles.jumpTarget}`}>
-        <div className={styles.shell}>
-          <Reveal>
-            <div className={styles.sectionHead}>
-              <div>
-                <span className={`${styles.eyebrow} ${styles.eyebrowLight}`}>
-                  {ar ? "المجموعة" : "The series"}
-                </span>
-                <h2 className={`${styles.sectionTitle} ${styles.sectionTitleLight}`}>
-                  {ar ? "عشرون تصميماً" : "Twenty designs"}
-                </h2>
-              </div>
-              <p className={`${styles.sectionNote} ${styles.sectionNoteLight}`}>
-                {ar
-                  ? "من أعمدة المدن الذكية الكاملة إلى التيجان الزخرفية للأحياء التراثية. كل تصميم يحمل الحزمة نفسها من الخدمات. افتح أي تصميم لقراءة تفاصيله."
-                  : "From full smart-city masts down to ornamental crowns for heritage districts. Every design takes the same service payload. Open any design for its full detail."}
-              </p>
-            </div>
-          </Reveal>
-
-          <PoleSeries ar={ar} />
         </div>
       </section>
 
@@ -435,7 +476,7 @@ export function SmartPolesView() {
             <div className={styles.ctaRow}>
               <Link href={localePath("/contact", lang)} className={styles.ctaPrimary}>
                 {ar ? "تحدث إلى فريقنا" : "Talk to our team"}
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
               <Link href={localePath("/services", lang)} className={styles.ctaGhost}>
                 {ar ? "كل الخدمات" : "All services"}

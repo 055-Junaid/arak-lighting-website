@@ -413,7 +413,7 @@
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: clamp(34px, 4vw, 52px);
+  margin-bottom: clamp(24px, 2.6vw, 34px);
 }
 
 .filter {
@@ -452,6 +452,14 @@
 
 .filterOn:hover {
   color: #111111;
+}
+
+.seriesCount {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 22px;
 }
 
 .series {
@@ -520,6 +528,15 @@
   border-top: 1px solid rgba(255, 255, 255, 0.11);
 }
 
+.poleFamily {
+  display: block;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 12px;
+}
+
 .poleName {
   font: 500 19px/1.2 var(--font-sora), sans-serif;
   letter-spacing: -0.015em;
@@ -537,7 +554,9 @@
   font: 500 10px/1 var(--font-plex-sans), sans-serif;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.38);
+  /* 0.38 measured under 3:1 on the render grey — legible only as a shape.
+     0.55 clears it without pulling the eye off the pole names. */
+  color: rgba(255, 255, 255, 0.55);
   margin-top: 16px;
   display: block;
   transition: color 0.3s ease;
@@ -1002,7 +1021,8 @@
 /* The figure is capped and centred: left to fill a 2000px viewport the labels
    drift so far from the shaft that the leader lines stop reading as leaders. */
 .anatomy {
-  --leader: clamp(30px, 4.4vw, 76px);
+  /* Gutter between the key and the plate. */
+  --leader: clamp(22px, 3vw, 48px);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: stretch;
@@ -1011,13 +1031,33 @@
   margin: clamp(48px, 6vw, 86px) auto 0;
 }
 
+/* The render carries its own #383838 backdrop, and the band is now black, so
+   the shaft sits on a plate of the matching grey rather than on a seam. */
+.anatomyStage {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  background: var(--render-bg);
+  padding: clamp(20px, 2.4vw, 34px) clamp(14px, 1.8vw, 26px);
+}
+
 .anatomyPole {
   position: relative;
-  align-self: center;
-  /* Matches the tight crop of anatomy-pole.jpg, so the frame edge IS the pole
-     edge and every leader line terminates on the shaft rather than in space. */
   width: clamp(128px, 15vw, 182px);
   aspect-ratio: 338 / 1183;
+}
+
+/* Says what the render is. It shows one configuration — two luminaire heads,
+   a sensor, a camera, a signage panel and the base enclosure — not all eight
+   systems, and a technical reader will count them. */
+.anatomyNote {
+  font: 400 11.5px/1.5 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  max-width: 22ch;
+  margin: 0;
 }
 
 .anatomyPole img {
@@ -1025,13 +1065,14 @@
   filter: grayscale(1) contrast(1.04);
 }
 
-/* Spread across the full height of the shaft rather than bunching in the
-   middle, so the top head and the base are annotated too. */
+/* Centred against the plate rather than stretched to its full height: the
+   items no longer point at anything, so spreading them to meet the top head
+   and the base bought nothing but slack between the labels. */
 .anatomyCol {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(20px, 2.6vw, 34px);
+  justify-content: center;
+  gap: clamp(18px, 2.2vw, 28px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1051,38 +1092,21 @@
   padding-inline-start: var(--leader);
 }
 
-/* Leader + node. The line runs the full width of the gutter and the node sits
-   astride the shaft edge, so the two read as physically connected. */
-.anatomyItem::before {
-  content: "";
-  position: absolute;
-  top: 9px;
-  width: calc(var(--leader) - 18px);
-  height: 1px;
-  background: rgba(255, 255, 255, 0.38);
-}
+/* There were leader lines and nodes here, drawn from each label to the edge
+   of the shaft. They were removed because they were not true: the eight items
+   are distributed down the column by `justify-content: space-between` while
+   the render is centred and object-fit: contain, so a node's height had no
+   relationship to where that device actually sits on the pole — "Digital
+   display" pointed at bare shaft. The render also only shows five of the
+   eight, so no amount of repositioning would have made all eight land.
 
-.anatomyItem::after {
-  content: "";
-  position: absolute;
-  top: 6px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-}
-
-.anatomyColStart .anatomyItem::before {
-  inset-inline-end: 0;
-}
-.anatomyColStart .anatomyItem::after {
-  inset-inline-end: -4px;
-}
-.anatomyColEnd .anatomyItem::before {
-  inset-inline-start: 0;
-}
-.anatomyColEnd .anatomyItem::after {
-  inset-inline-start: -4px;
+   What is left is what this always was: a key of eight systems either side of
+   the pole. The rule under each item separates them; the gutter keeps the
+   labels off the plate. Nothing claims a precision the drawing cannot keep.
+*/
+.anatomyItem + .anatomyItem {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: clamp(18px, 2.2vw, 28px);
 }
 
 /* Tabular figures so the 01-08 column never shifts width. */
@@ -1091,7 +1115,8 @@
   font: 500 11px/1 var(--font-plex-sans), sans-serif;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.2em;
-  /* 0.42 measured 3.5:1 on #383838 and failed AA at this size; 0.58 clears it. */
+  /* 0.42 measured 3.5:1 on #383838 and failed AA at this size; 0.58 cleared
+     it there, and clears it by more against the #111 band this now sits on. */
   color: rgba(255, 255, 255, 0.58);
 }
 
@@ -1145,10 +1170,16 @@
     max-width: none;
   }
 
-  /* Leaders point at nothing once the shaft sits above the grid. */
-  .anatomyItem::before,
-  .anatomyItem::after {
-    display: none;
+  /* The key becomes a two-column grid under the pole, so the rule goes on
+     every item rather than on each one after the first — an adjacent-sibling
+     border leaves the top-left cell alone and the top-right cell ruled. */
+  .anatomyItem + .anatomyItem {
+    padding-top: 0;
+  }
+
+  .anatomyItem {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding-top: 18px;
   }
 }
 

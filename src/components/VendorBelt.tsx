@@ -21,6 +21,7 @@ export const VENDORS = [
   { file: "saudi-aramco.webp", name: "Saudi Aramco", ar: "أرامكو السعودية" },
   { file: "saudi-electricity.webp", name: "Saudi Electricity Company", ar: "الشركة السعودية للكهرباء" },
   { file: "stc.webp", name: "STC", ar: "شركة الاتصالات السعودية" },
+  { file: "riyad-bank.webp", name: "Riyad Bank", ar: "بنك الرياض" },
   { file: "riyadh-airports.webp", name: "Riyadh Airports", ar: "مطارات الرياض" },
   { file: "nhc.webp", name: "National Housing Company", ar: "الشركة الوطنية للإسكان" },
   { file: "national-water.webp", name: "National Water Company", ar: "شركة المياه الوطنية" },

@@ -20,6 +20,7 @@ const BRANDS: LogoItem[] = [
   { name: "planlicht", file: "planlicht.webp" },
   { name: "Trevos", file: "trevos.webp" },
   { name: "Zalux", file: "zalux.webp" },
+  { name: "GEWISS", file: "gewiss.webp" },
   { name: "Niviss", file: "niviss.webp" },
   { name: "Hormen", file: "hormen.webp" },
   { name: "espica", file: "espica.webp" },
@@ -44,7 +45,6 @@ const BRANDS: LogoItem[] = [
   { name: "Zennio", file: "zennio.webp" },
   { name: "Hager", file: "hager.webp" },
   { name: "Leviton", file: "leviton.webp" },
-  { name: "GEWISS", file: "gewiss.webp" },
   { name: "Interra", file: "interra.webp" },
 ];
 

@@ -267,8 +267,36 @@ export const MAST_SYSTEMS = POLE_ANATOMY.length;
 /** Designs in the C°LB series. Derived so the stat can never drift from POLES. */
 export const POLE_DESIGN_COUNT = POLES.length;
 
-export const POLE_FUNCTIONS = [
+/**
+ * A capability the mast can carry.
+ *
+ * `core` marks the six that POLE_ANATOMY already answers in the diagram
+ * above them on the page. Every one of the eight anatomy items reappeared
+ * here, so the page described the same payload twice — 2,851px of it on
+ * desktop and nearly six screens on a phone. Rather than delete the
+ * duplicates and leave this list unable to describe a pole on its own, they
+ * are flagged: the full eighteen stay available, and the page renders
+ * POLE_EXTRA_FUNCTIONS, which is the twelve the reader has not just been
+ * shown.
+ *
+ * Two of that twelve do touch an anatomy item — video surveillance and
+ * environmental sensing — but both carry substantially more than the
+ * diagram's one line (on-pole analytics; dust as the defining local air
+ * quality event), so they earn their place a second time. The six flagged
+ * here do not: they say the same sentence twice.
+ */
+export interface PoleFunction {
+  title: string;
+  arTitle: string;
+  body: string;
+  arBody: string;
+  /** Already covered by POLE_ANATOMY. Rendered in the diagram, not the grid. */
+  core?: true;
+}
+
+export const POLE_FUNCTIONS: PoleFunction[] = [
   {
+    core: true,
     title: "Long-life LED lighting",
     arTitle: "إضاءة LED طويلة العمر",
     body: "The primary job. High-efficacy LED heads with the lumen output and distribution the road class calls for.",
@@ -287,12 +315,14 @@ export const POLE_FUNCTIONS = [
     arBody: "لوحة متابعة واحدة لكل عمود على الشبكة، مع تقارير أعطال تخبرك بالوحدة المتعطّلة قبل أن يخبرك بها أحد السكان.",
   },
   {
+    core: true,
     title: "5G micro base station",
     arTitle: "محطة قاعدية مصغّرة للجيل الخامس",
     body: "The mast doubles as small-cell mounting, which is what makes dense 5G coverage viable in a built-up district.",
     arBody: "يعمل العمود كذلك حاملًا للخلايا الصغيرة، وهو ما يجعل تغطية الجيل الخامس الكثيفة ممكنة داخل الأحياء المبنيّة.",
   },
   {
+    core: true,
     title: "High-speed broadband",
     arTitle: "إنترنت عريض النطاق عالي السرعة",
     body: "Public WiFi access points fed from the same fibre run that serves the pole's other services.",
@@ -301,13 +331,13 @@ export const POLE_FUNCTIONS = [
   {
     title: "HD video surveillance and on-pole analytics",
     arTitle: "مراقبة بالفيديو عالية الدقة وتحليل على العمود",
-    body: "Fixed and PTZ cameras at the correct height for plate and face capture, cabled inside the shaft. Where the scheme calls for it, the analysis runs on the pole — plate recognition, crowd density, wrong-way and incident detection — so what crosses the network is the event rather than every frame.",
-    arBody: "كاميرات ثابتة وأخرى متحرّكة PTZ على الارتفاع الصحيح لالتقاط اللوحات والوجوه، بكابلات ممدودة داخل جسم العمود. وحين يقتضي المشروع ذلك، يجري التحليل على العمود نفسه — قراءة اللوحات وكثافة الحشود ورصد السير العكسي والحوادث — فلا يعبر الشبكة إلا الحدث لا كل إطار.",
+    body: "Fixed and PTZ cameras at the correct height for plate and face capture, cabled inside the shaft. Where the scheme calls for it, the analysis runs on the pole (plate recognition, crowd density, wrong-way and incident detection), so what crosses the network is the event rather than every frame.",
+    arBody: "كاميرات ثابتة وأخرى متحرّكة PTZ على الارتفاع الصحيح لالتقاط اللوحات والوجوه، بكابلات ممدودة داخل جسم العمود. وحين يقتضي المشروع ذلك، يجري التحليل على العمود نفسه (قراءة اللوحات وكثافة الحشود ورصد السير العكسي والحوادث)، فلا يعبر الشبكة إلا الحدث لا كل إطار.",
   },
   {
     title: "Air quality, dust and weather",
     arTitle: "جودة الهواء والغبار والطقس",
-    body: "PM2.5 and PM10 alongside wind, temperature, humidity, noise and solar irradiance — sized for a climate where the defining air quality event is dust rather than traffic.",
+    body: "PM2.5 and PM10 alongside wind, temperature, humidity, noise and solar irradiance, sized for a climate where the defining air quality event is dust rather than traffic.",
     arBody: "قياس الجسيمات PM2.5 وPM10 إلى جانب الرياح ودرجة الحرارة والرطوبة والضجيج وشدّة الإشعاع الشمسي، بمقاس مناخٍ حدثُه الفاصل في جودة الهواء هو الغبار لا حركة المرور.",
   },
   {
@@ -353,18 +383,21 @@ export const POLE_FUNCTIONS = [
     arBody: "عدّ المركبات والمشاة بما يغذّي توقيت الإشارات ودراسات التخطيط وإدارة الفعاليات.",
   },
   {
+    core: true,
     title: "Outdoor LED display",
     arTitle: "شاشة LED خارجية",
     body: "Weather-rated signage faces for wayfinding, public information, event programming or commercial content.",
     arBody: "واجهات عرض مقاومة للعوامل الجوية للإرشاد والمعلومات العامة وبرامج الفعاليات أو المحتوى التجاري.",
   },
   {
+    core: true,
     title: "Multi-functional public broadcasting",
     arTitle: "بثّ عام متعدّد الوظائف",
     body: "Addressable speakers for announcements, emergency instruction and scheduled programming.",
     arBody: "سمّاعات قابلة للعنونة للإعلانات وتعليمات الطوارئ والبرامج المجدولة.",
   },
   {
+    core: true,
     title: "One-button emergency call",
     arTitle: "نداء طوارئ بزرّ واحد",
     body: "A direct line to the operations centre, with the camera at that pole automatically brought up on the operator's screen.",
@@ -377,6 +410,9 @@ export const POLE_FUNCTIONS = [
     arBody: "بوابة واحدة لكل عمود، بحيث تُهيّأ الكهرباء والشبكة وكل جهاز متّصل وتُراقَب كأصلٍ واحد.",
   },
 ];
+
+/** The capabilities the anatomy diagram has not already shown. */
+export const POLE_EXTRA_FUNCTIONS = POLE_FUNCTIONS.filter((f) => !f.core);
 
 export const POLE_LAYERS = [
   {
