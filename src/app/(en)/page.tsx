@@ -16,12 +16,28 @@ import { PHOTO_QUALITY } from "@/lib/images";
 import { MAST_SYSTEMS, POLE_DESIGN_COUNT } from "@/lib/smart-poles-data";
 
 /**
- * The six service lines carried on the home page, in company-profile order.
- * The remaining four (project management, 3D projection mapping, home
- * automation, smart poles) live on /services; Smart Poles keeps its own
- * feature strip below the grid. Photography is from delivered ARAK projects.
+ * The six cards carried on the home page, in company-profile order. Facade and
+ * outdoor lighting are shown as one card here because a stranger reads them as
+ * one job (the building at night and the ground around it); /services still
+ * publishes them as the two separate lines they are contracted as. Smart Poles
+ * closes the grid as an ordinary sixth card rather than a feature strip, and is
+ * the only one that links past /services to its own page.
+ * Photography is from delivered ARAK projects.
  */
-const HOME_SERVICES = [
+type HomeService = {
+  no: string;
+  en: string;
+  ar: string;
+  enText: string;
+  arText: string;
+  photo: string;
+  alt: string;
+  arAlt: string;
+  /** Where the card goes. Defaults to /services; only Smart Poles has its own page. */
+  href?: string;
+};
+
+const HOME_SERVICES: HomeService[] = [
   {
     no: "01",
     en: "Indoor Lighting",
@@ -44,26 +60,16 @@ const HOME_SERVICES = [
   },
   {
     no: "03",
-    en: "Facade Lighting",
-    ar: "إضاءة الواجهات",
-    enText: "Exterior schemes that give buildings a night identity, engineered for the Saudi climate.",
-    arText: "أنظمة إضاءة خارجية تمنح المباني هويةً ليلية، مصمّمة لتناسب المناخ السعودي.",
-    photo: "/projects/solitaire-mall/18-aerial-dusk.jpg",
-    alt: "Solitaire Mall in Riyadh from the air at dusk, its faceted facade lit by ARAK",
-    arAlt: "سوليتير مول في الرياض من الجو عند الغروب، وواجهته المضلّعة مضاءة بتنفيذ أراك",
-  },
-  {
-    no: "04",
-    en: "Outdoor Lighting",
-    ar: "الإضاءة الخارجية",
-    enText: "Streets, landscapes, car parks and compounds, from bollards to high-mast poles.",
-    arText: "الشوارع والمسطحات والمواقف والمجمّعات، من الأعمدة القصيرة إلى الصواري العالية.",
+    en: "Facade and Outdoor Lighting",
+    ar: "إضاءة الواجهات والإضاءة الخارجية",
+    enText: "Night identity for a building's facade, and the streets, landscapes and car parks around it.",
+    arText: "هويّة ليلية لواجهة المبنى، وللشوارع والمسطحات والمواقف من حوله.",
     photo: "/projects/four-points/02-upright.jpg",
     alt: "The floodlit stone facade of the Four Points by Sheraton hotel in Riyadh at night, an exterior scheme by ARAK",
     arAlt: "واجهة فندق فور بوينتس باي شيراتون الحجرية في الرياض مضاءة ليلًا، ضمن مشروع إضاءة خارجية نفّذته أراك",
   },
   {
-    no: "05",
+    no: "04",
     en: "Lighting Controls",
     ar: "أنظمة التحكم بالإضاءة",
     enText: "KNX/EIB systems, scene control, daylight and presence sensing, energy management.",
@@ -73,7 +79,7 @@ const HOME_SERVICES = [
     arAlt: "فنّي يثبّت وحدة KNX على قضيب DIN في لوحة التحكّم بالإضاءة، وموصّلاتها مرقّمة دائرةً دائرة",
   },
   {
-    no: "06",
+    no: "05",
     en: "Lighting Installation",
     ar: "تركيب الإضاءة",
     enText: "Site installation, commissioning and handover by our own technical crews.",
@@ -81,6 +87,17 @@ const HOME_SERVICES = [
     photo: "/services/lighting-installation.jpg",
     alt: "Two technicians on a mobile tower aiming track-mounted spotlights in an interior still being finished",
     arAlt: "فنّيان على برج سقالة متحرّك يوجّهان كشّافات مركّبة على مسار في مساحة داخلية ما تزال قيد التشطيب",
+  },
+  {
+    no: "06",
+    en: "Smart Poles",
+    ar: "الأعمدة الذكية",
+    enText: "Lighting, 5G, cameras, sensors, signage and emergency call on a single mast.",
+    arText: "الإضاءة وشبكات الجيل الخامس والكاميرات وأجهزة الاستشعار واللوحات الرقمية ونداء الطوارئ على عمود واحد.",
+    photo: "/smart-poles/ctx-street.jpg",
+    alt: "Smart poles along a landscaped city boulevard",
+    arAlt: "أعمدة ذكية على امتداد شارع مدينيّ منسّق",
+    href: "/services/smart-poles",
   },
 ];
 
@@ -145,8 +162,8 @@ export default function HomePage() {
                 its one sentence on the scope of work instead. */}
             <p style={{ font: "300 clamp(17px,1.5vw,21px)/1.6 var(--font-plex-sans),sans-serif", color: "rgba(17,17,17,.72)", margin: "34px 0 0", maxWidth: "52ch" }}>
               {ar
-                ? "نُصمّمها ونورّدها ونركّبها ونبقى معها بعد التسليم — أنظمة إضاءة وتحكّم لفنادق المملكة ومطاراتها وقصورها ومشاريعها الوطنية."
-                : "We design it, supply it, install it and stay with it after handover. Lighting and control systems for the Kingdom's hotels, airports, palaces and national projects."}
+                ? "نُصمّمها ونورّدها ونركّبها ونبقى معها بعد التسليم. أنظمة إضاءة وتحكّم لفنادق المملكة ومطاراتها ومراكزها التجارية وقصورها ومشاريعها الوطنية."
+                : "We design it, supply it, install it and stay with it after handover. Lighting and control systems for the Kingdom's hotels, airports, malls, palaces and national projects."}
             </p>
             {/* Ten service lines read as prose take eight seconds. As a rail
                 they take one, and they answer the question the headline raises:
@@ -267,7 +284,7 @@ export default function HomePage() {
           </div>
           <div className={styles.svcGrid}>
             {HOME_SERVICES.map((service) => (
-              <Link key={service.no} href={localePath("/services", lang)} className={styles.svcCard}>
+              <Link key={service.no} href={localePath(service.href ?? "/services", lang)} className={styles.svcCard}>
                 <div className={styles.svcFrame}>
                   <Image
                     quality={PHOTO_QUALITY}
@@ -286,35 +303,6 @@ export default function HomePage() {
               </Link>
             ))}
           </div>
-          <Link href={localePath("/services/smart-poles", lang)} className={styles.poleStrip}>
-            <div className={styles.poleStripArt}>
-              <Image
-                quality={PHOTO_QUALITY}
-                src="/smart-poles/ctx-street.jpg"
-                alt={ar ? "أعمدة ذكية على امتداد شارع مدينيّ منسّق" : "Smart poles along a landscaped city boulevard"}
-                fill
-                sizes="(max-width: 900px) 100vw, 42vw"
-                style={{ objectFit: "cover" }}
-              />
-              <div className={styles.poleStripVeil} />
-            </div>
-            <div className={styles.poleStripCopy}>
-              <span className={styles.poleStripTop}>
-                <span className={styles.poleStripBadge}>{ar ? "جديد" : "New"}</span>
-                <span className={styles.poleStripNo}>10</span>
-              </span>
-              <h3 className={styles.poleStripTitle}>{lang === "ar" ? "الأعمدة الذكية" : "Smart Poles"}</h3>
-              <p className={styles.poleStripBody}>
-                {ar
-                  ? "الإضاءة وشبكات الجيل الخامس والكاميرات وأجهزة الاستشعار واللوحات الرقمية ونداء الطوارئ على عمود واحد. عشرون تصميمًا من شريكنا C\u00b0LB، نورّدها وندمجها في مختلف أنحاء المملكة."
-                  : "Lighting, 5G, cameras, sensors, signage and emergency call on a single mast. Twenty designs from our partner C\u00b0LB, supplied and integrated across the Kingdom."}
-              </p>
-              <span className={styles.poleStripCta}>
-                {lang === "ar" ? "استكشف الأعمدة الذكية" : "Explore smart poles"}
-                <span aria-hidden="true">{ar ? "←" : "→"}</span>
-              </span>
-            </div>
-          </Link>
           <div className={styles.svcAll}>
             <Link href={localePath("/services", lang)} className={styles.svcAllLink}>
               {ar ? "جميع الخدمات العشر" : "View all ten services"}
@@ -336,10 +324,25 @@ export default function HomePage() {
                   ? "أنظمة التحكم هي ما يجعل مشروع الإضاءة يستحق ميزانيته أو يهدرها بصمت. نقوم بالتوصيف والتوريد والتشغيل، ونبقى مع النظام بعد التسليم بوقت طويل."
                   : "Controls are where a lighting scheme either earns its budget or quietly wastes it. We specify, supply and commission the platform, then stay with it long after handover."}
               </p>
-              <Link href={localePath("/services#controls", lang)} className={styles.ctrlCta}>
-                {ar ? "تفاصيل أنظمة التحكم" : "Controls in detail"}
-                <span aria-hidden="true">{ar ? "←" : "→"}</span>
-              </Link>
+              {/* Two routes, not one. This band covers both control and
+                  automation, and each now has its own service page: a single
+                  link had to drop one of them on the floor. */}
+              <div className={styles.ctrlActions}>
+                <Link
+                  href={localePath("/services/lighting-controls", lang)}
+                  className={styles.ctrlCta}
+                >
+                  {ar ? "اقرأ عن أنظمة التحكم" : "Read about controls"}
+                  <span aria-hidden="true">{ar ? "←" : "→"}</span>
+                </Link>
+                <Link
+                  href={localePath("/services/home-automation", lang)}
+                  className={styles.ctrlCta}
+                >
+                  {ar ? "اقرأ عن الأتمتة" : "Read about automation"}
+                  <span aria-hidden="true">{ar ? "←" : "→"}</span>
+                </Link>
+              </div>
             </div>
             <div className={styles.ctrlList}>
               <div className={styles.ctrlItem}>

@@ -312,37 +312,6 @@ export const PROCESS = [
   },
 ];
 
-export const CONTROL_SYSTEMS = [
-  {
-    title: "KNX and EIB technology",
-    arTitle: "تقنية KNX وEIB",
-    body: "Our control products are built on KNX and EIB, the worldwide open standard for building control across commercial, residential and industrial buildings. The product range covers a complete spectrum of applications found in today's buildings, from lighting and shutter control to heating, ventilation, security and energy management, all addressable from one bus.",
-    arBody:
-      "تقوم منتجات التحكّم لدينا على KNX وEIB، المعيار العالمي المفتوح للتحكّم بالمباني التجارية والسكنية والصناعية. وتغطّي تشكيلة المنتجات طيفًا كاملًا من التطبيقات في مباني اليوم، من التحكّم بالإضاءة والستائر إلى التدفئة والتهوية والأمن وإدارة الطاقة، وكلّها قابلة للعنونة من ناقل واحد.",
-  },
-  {
-    title: "Guest Room Management System",
-    arTitle: "نظام إدارة غرف النزلاء",
-    body: "GRMS makes sure every guest room need is met and every expectation is set correctly. Lighting, cooling and heating, curtains and hotel room services are controlled through intuitive buttons, touch screens or panel interfaces, while the front desk and housekeeping see occupancy, service requests and setback status in real time.",
-    arBody:
-      "يضمن نظام إدارة غرف النزلاء تلبية كل احتياج في الغرفة وضبط التوقّعات على نحو صحيح. فالإضاءة والتبريد والتدفئة والستائر وخدمات الغرفة تُدار عبر أزرار بديهية أو شاشات لمس أو لوحات تحكّم، بينما يرى مكتب الاستقبال والتدبير المنزلي حالة الإشغال وطلبات الخدمة ووضع توفير الطاقة لحظةً بلحظة.",
-  },
-  {
-    title: "Lighting Control System",
-    arTitle: "نظام التحكّم بالإضاءة",
-    body: "Seamless control and monitoring of every lighting circuit in the building and across the outdoor areas. KNX has been chosen for major projects of all sizes because it is flexible, robust, interfaces widely with other systems, and carries significant potential for energy saving on schemes of any scale.",
-    arBody:
-      "تحكّم سلس ومراقبة لكل دائرة إضاءة في المبنى وفي المساحات الخارجية. وقد اختير KNX لمشاريع كبرى بمختلف الأحجام لمرونته ومتانته وسعة تكامله مع الأنظمة الأخرى، ولما يتيحه من توفير كبير في الطاقة على أي نطاق.",
-  },
-  {
-    title: "Energy management and reporting",
-    arTitle: "إدارة الطاقة والتقارير",
-    body: "Circuit-level metering, scheduling and daylight harvesting cut running hours without anyone on site having to think about it. Consumption is logged and reported, which matters increasingly for ESCO contracts, green building targets and the operating budgets that outlive the construction budget.",
-    arBody:
-      "القياس على مستوى الدائرة والجدولة والاستفادة من ضوء النهار تُقلّص ساعات التشغيل دون أن يضطر أحد في الموقع للتفكير في الأمر. ويُسجَّل الاستهلاك وتُعدّ عنه التقارير، وهو ما تتزايد أهميته في عقود شركات خدمات الطاقة ومستهدفات المباني الخضراء وميزانيات التشغيل التي تعمّر أطول من ميزانية الإنشاء.",
-  },
-];
-
 /** Client types ARAK is set up to work with, as listed in the company profile. */
 export const SECTORS = [
   { en: "Government Entities", ar: "الجهات الحكومية" },

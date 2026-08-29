@@ -4,11 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { localePath } from "@/lib/site";
-import { PhotoSlot } from "@/components/PhotoSlot";
 import { Reveal } from "@/components/Reveal";
 import { ServiceSpotlight } from "@/components/ServiceSpotlight";
 import {
-  CONTROL_SYSTEMS,
   PROCESS,
   SECTORS,
   SERVICES,
@@ -96,7 +94,7 @@ export default function ServicesPage() {
                 </ul>
                 <Link href={localePath(SMART_POLES.href, lang)} className={styles.featureCta}>
                   {ar ? "استكشف الأعمدة الذكية" : "Explore smart poles"}
-                  <span aria-hidden="true">&rarr;</span>
+                  <span aria-hidden="true">{ar ? "←" : "→"}</span>
                 </Link>
               </div>
               <div className={styles.featureArt}>
@@ -147,49 +145,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Controls detail. Anchored: the home page controls band links here. */}
-      <section id="controls" className={`${styles.band} ${styles.bandPaper}`}>
-        <div className={styles.shell}>
-          <div className={styles.controls}>
-            <div>
-              <Reveal>
-                <span className={styles.eyebrow}>{ar ? "بالتفصيل" : "In detail"}</span>
-                <h2 className={styles.sectionTitle}>
-                  {ar ? "أنظمة التحكم والأتمتة" : "Controls and automation"}
-                </h2>
-                <p className={styles.sectionNote} style={{ marginTop: "22px", maxWidth: "50ch" }}>
-                  {ar
-                    ? "أنظمة التحكّم هي المكان الذي يستحقّ فيه مشروع الإضاءة ميزانيته أو يهدرها بصمت. وهي الجزء من عملنا الذي يستمرّ أطول ما يكون بعد التسليم."
-                    : "Controls are where a lighting scheme either earns its budget or quietly wastes it. This is the part of our work that runs longest after handover."}
-                </p>
-              </Reveal>
-              <div style={{ marginTop: "44px" }}>
-                {CONTROL_SYSTEMS.map((c, i) => (
-                  <Reveal key={c.title} delay={i * 70}>
-                    <div className={styles.controlItem}>
-                      <h3 className={styles.controlTitle}>{ar ? c.arTitle : c.title}</h3>
-                      <p className={styles.controlBody}>{ar ? c.arBody : c.body}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-            <div className={styles.controlArt}>
-              <PhotoSlot
-                src="/projects/delfino/04.jpg"
-                alt={
-                  ar
-                    ? "شاشة التحكّم KNX في دلفينو مايفير، الرياض، وعليها مشاهد إضاءة المطعم والتحكّم بالستائر والمظلات والتكييف في واجهة واحدة"
-                    : "The KNX control screen at Delfino Mayfair, Riyadh, with the restaurant's lighting scenes, curtain, blind and air control on one interface"
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Sectors */}
-      <section className={styles.band}>
+      <section className={`${styles.band} ${styles.bandPaper}`}>
         <div className={styles.shell}>
           <Reveal>
             <div className={styles.sectionHead}>
@@ -231,7 +188,7 @@ export default function ServicesPage() {
             </p>
             <Link href={localePath("/contact", lang)} className={styles.ctaButton}>
               {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
-              <span aria-hidden="true">&rarr;</span>
+              <span aria-hidden="true">{ar ? "←" : "→"}</span>
             </Link>
           </Reveal>
         </div>
