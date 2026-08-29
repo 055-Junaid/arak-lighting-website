@@ -53,3 +53,8 @@ next-env.d.ts
 
 # local pre-optimisation image backups
 /_originals/
+
+# AI-generated imagery, local only. /review-generated is the full candidate
+# set from the fal.ai run; /generated holds the ones selected for use.
+/public/review-generated/
+/public/generated/
