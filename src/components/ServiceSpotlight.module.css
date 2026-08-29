@@ -235,6 +235,19 @@
   gap: 18px;
 }
 
+/* On a touch screen the link was a 22px-tall target: the type height plus the
+   9px above its rule. The padding grows the box upwards into the space that
+   was already empty and the margin gives that space back, so the hit area
+   reaches 44px with the rule, the type and the gap above it all unmoved.
+   Pointer-scoped because on a mouse it would only mean the hover state
+   firing 22px early. */
+@media (pointer: coarse) {
+  .panelCta {
+    margin-top: 10px;
+    padding-top: 22px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tab,
   .tab::after,

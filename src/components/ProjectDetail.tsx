@@ -7,8 +7,8 @@ import type { FeaturedProject } from "@/lib/projects-data";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import styles from "./ProjectDetail.module.css";
 
-/** Just enough of a neighbouring project to link to it. */
-type Neighbour = { slug: string; name: string } | undefined;
+/** Just enough of a neighbouring project to link to it, in both languages. */
+type Neighbour = { slug: string; name: string; arName: string } | undefined;
 
 /**
  * The body of a project page. It lives apart from the route file because the
@@ -16,8 +16,9 @@ type Neighbour = { slug: string; name: string } | undefined;
  * `generateMetadata` — while every label on the page has to follow the
  * language switch, which is client state.
  *
- * The project's own copy (name, location, scope, blurb) stays in English: it
- * is client-supplied reference text and has no Arabic original yet.
+ * The project's own copy (name, location, scope, blurb) is carried in both
+ * languages by projects-data, and every field on this page follows the switch
+ * — the pager at the foot included, which is why Neighbour carries `arName`.
  */
 export function ProjectDetail({
   project,
@@ -90,7 +91,7 @@ export function ProjectDetail({
           {previous && (
             <Link href={localePath(`/projects/${previous.slug}`, lang)} className={styles.pagerLink}>
               <span className={styles.pagerLabel}>{ar ? "السابق" : "Previous"}</span>
-              <span className={styles.pagerName}>{previous.name}</span>
+              <span className={styles.pagerName}>{ar ? previous.arName : previous.name}</span>
             </Link>
           )}
           {next && (
@@ -99,7 +100,7 @@ export function ProjectDetail({
               className={`${styles.pagerLink} ${styles.pagerNext}`}
             >
               <span className={styles.pagerLabel}>{ar ? "التالي" : "Next"}</span>
-              <span className={styles.pagerName}>{next.name}</span>
+              <span className={styles.pagerName}>{ar ? next.arName : next.name}</span>
             </Link>
           )}
         </nav>

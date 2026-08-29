@@ -34,7 +34,12 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.brand}>
-            <Image src="/arak-logo-black.png" alt="ARAK Lighting Solutions" height={54} width={154} />
+            <Image
+              src="/arak-logo-black.png"
+              alt={ar ? "أراك لحلول الإضاءة" : "ARAK Lighting Solutions"}
+              height={54}
+              width={154}
+            />
             <p>
               {ar
                 ? "شركة إضاءة ومزوّد لحلول الإضاءة الذكية، الرياض، المملكة العربية السعودية. منذ عام 1976."

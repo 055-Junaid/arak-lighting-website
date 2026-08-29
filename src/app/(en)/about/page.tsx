@@ -33,7 +33,7 @@ export default function AboutPage() {
                 <p className={styles.heroLead}>
                   {ar
                     ? "بدأت أراك عام 1976 امتدادًا لمؤسسة عبدالرحمن عبدالقادر. وبعد خمسين عامًا صارت شركة إضاءة سعودية ومزوّدًا لحلول الإضاءة الذكية، تحمل أكثر من أربعين علامة عالمية وتورّد وحدات الإضاءة وأنظمة التحكّم والأتمتة إلى الفنادق والمطارات والمستشفيات والقصور والمشاريع الوطنية في مختلف أنحاء المملكة."
-                    : "ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation. Fifty years later it is a Saudi lighting company and smart lighting solutions provider, carrying more than forty international brands and delivering fittings, controls and automation into hotels, airports, hospitals, palaces and national projects across the Kingdom."}
+                    : "ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kader Corporation. Fifty years later it is a Saudi lighting company and smart lighting solutions provider, carrying more than forty international brands and delivering fittings, controls and automation into hotels, airports, hospitals, palaces and national projects across the Kingdom."}
                 </p>
                 <div className={styles.heroActions}>
                   <Link href={localePath("/projects", lang)} className={styles.primaryCta}>

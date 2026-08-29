@@ -78,6 +78,16 @@
   border-bottom-color: var(--ink);
 }
 
+/* Same trick as the spotlight's link, and the same reason: 11px type over a
+   6px rule is an 18px target on a phone. The negative margin cancels the
+   padding against the placeholder's 18px gap, so only the hit area changes. */
+@media (pointer: coarse) {
+  .direct {
+    padding-top: 26px;
+    margin-top: -26px;
+  }
+}
+
 @media (max-width: 900px) {
   .frame {
     height: 320px;

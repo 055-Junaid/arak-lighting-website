@@ -25,7 +25,7 @@ export function ProjectGallery({
    * Project pages pass nothing. A project's photographs are the same subject
    * from different angles, so numbering them is the honest description.
    */
-  captions?: { en: string; ar: string; note?: { en: string; ar: string } }[];
+  captions?: { en: string; ar: string }[];
 }) {
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -117,14 +117,7 @@ export function ProjectGallery({
           return captions ? (
             <figure key={image.src} className={styles.figure}>
               {tile}
-              <figcaption className={styles.caption}>
-                {captions[i]?.note && (
-                  <span className={styles.note}>
-                    {ar ? captions[i].note!.ar : captions[i].note!.en}
-                  </span>
-                )}
-                {describe(i)}
-              </figcaption>
+              <figcaption className={styles.caption}>{describe(i)}</figcaption>
             </figure>
           ) : (
             tile

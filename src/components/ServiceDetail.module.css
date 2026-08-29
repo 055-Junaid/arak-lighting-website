@@ -190,19 +190,6 @@
 
 /* Same marker the gallery prints, on the one image that is not in the gallery.
    Sits inside the frame because the hero has no caption line to hang it on. */
-.heroNote {
-  position: absolute;
-  inset-block-end: 12px;
-  inset-inline-start: 12px;
-  font: 500 10px/1 var(--font-plex-sans), sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #ffffff;
-  background: rgba(17, 17, 17, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 6px 8px;
-}
-
 /* ---------- Fact rail ---------- */
 
 .facts {

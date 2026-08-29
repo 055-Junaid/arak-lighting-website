@@ -51,6 +51,20 @@ export type Enquiry = {
   phone: string;
   projectType: string;
   brief: string;
+  /**
+   * Which channel brought the visitor here, recorded in the language of the
+   * form it was chosen on: the Arabic option files its Arabic wording, the
+   * English one its English. The Sheet keeps what was actually said rather
+   * than a normalised code, so one channel appears under two spellings.
+   * Empty when the question was skipped, which it may be.
+   */
+  heardFrom: string;
+  /**
+   * What they typed when they chose "Other". Optional even then: choosing
+   * "Other" and writing nothing is a real answer, and records as "Other" with
+   * this left blank.
+   */
+  heardFromDetail: string;
   /** Which side of the site the enquiry came from, so replies go out in kind. */
   lang: "en" | "ar";
   /** The page it was sent from, for attribution. */
@@ -98,19 +112,27 @@ export function mailtoFallback(enquiry: Enquiry): string {
     ? `طلب استشارة إضاءة: ${enquiry.projectType}`
     : `Lighting enquiry: ${enquiry.projectType}`;
 
+  // "Other: saw the van on Olaya" reads better than two separate lines, and
+  // collapses to plain "Other" when nothing was typed.
+  const heard = enquiry.heardFromDetail
+    ? `${enquiry.heardFrom}: ${enquiry.heardFromDetail}`
+    : enquiry.heardFrom;
+
   const body = ar
     ? `الاسم: ${enquiry.name}\n` +
       line("الجهة", enquiry.company) +
       `البريد الإلكتروني: ${enquiry.email}\n` +
       line("الهاتف", enquiry.phone) +
-      `نوع المشروع: ${enquiry.projectType}\n\n` +
-      `موجز المشروع:\n${enquiry.brief}\n`
+      `نوع المشروع: ${enquiry.projectType}\n` +
+      line("كيف عرفنا", heard) +
+      `\nموجز المشروع:\n${enquiry.brief}\n`
     : `Name: ${enquiry.name}\n` +
       line("Company", enquiry.company) +
       `Email: ${enquiry.email}\n` +
       line("Phone", enquiry.phone) +
-      `Project type: ${enquiry.projectType}\n\n` +
-      `Brief:\n${enquiry.brief}\n`;
+      `Project type: ${enquiry.projectType}\n` +
+      line("Heard about us", heard) +
+      `\nBrief:\n${enquiry.brief}\n`;
 
   return `mailto:${INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }

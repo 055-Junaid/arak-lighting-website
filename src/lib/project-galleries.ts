@@ -12,13 +12,25 @@ export interface GalleryImage {
  */
 export const PROJECT_GALLERIES: Record<string, GalleryImage[]> = {
   "solitaire-mall": [
-    /* Cover for the project cards on the home and projects pages. A wider
-       frame of the same dusk facade, replacing 03.jpg at the head of this
-       list. New name rather than the old one rewritten: public/_headers marks
-       this folder immutable, so anyone holding a cached 03.jpg would never be
-       sent this picture. 03.jpg itself stays on disk — services-data.ts uses
-       it as the Facade Lighting photograph. */
-    { src: "/projects/solitaire-mall/03-wide.jpg", w: 1537, h: 1023 },
+    /* Cover for the project cards on the home and projects pages, and the
+       photograph in the "Who we are" block on the home page. A wider frame of
+       the same dusk facade, replacing 03.jpg at the head of this list.
+
+       This is 03-wide.jpg retouched: in the frame as shot, the wash thrown
+       onto the stone by the two facade sources (the graze along the bottom
+       edge of each volume, and the graze along the hypotenuse of the
+       triangular screen) was scalloped, with each fixture readable as its own
+       pool of light and dark gaps in between. The retouch evens the wash out
+       and carries it up to roughly the middle of each wall before it fades.
+       Lighting only: the sources sit where they always sat, and nothing else
+       in the frame moved.
+
+       New name rather than any of these rewritten in place: public/_headers
+       marks this folder immutable, so anyone holding a cached copy of the old
+       path would never be sent the new picture. 03-wide.jpg and 03.jpg both
+       stay on disk — services-data.ts uses 03.jpg as the Facade Lighting
+       photograph. */
+    { src: "/projects/solitaire-mall/03-wide-relit.jpg", w: 2528, h: 1696 },
     { src: "/projects/solitaire-mall/01.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/04.jpg", w: 2560, h: 1707 },
     { src: "/projects/solitaire-mall/05.jpg", w: 2560, h: 1920 },

@@ -24,13 +24,6 @@ export interface ServicePhoto extends GalleryImage {
   /** What the photograph shows. Doubles as the alt text. */
   caption: string;
   arCaption: string;
-  /**
-   * Set on any frame that is not photography of a delivered ARAK project, and
-   * printed by the gallery as a tag on the tile. The galleries sit under a
-   * line about work delivered in Riyadh, so an illustration or a diagram has
-   * to say so on the frame itself rather than rely on the reader inferring it.
-   */
-  note?: { en: string; ar: string };
 }
 
 export interface ServiceFact {
@@ -98,13 +91,18 @@ const EXTRA: Record<string, [number, number]> = {
 };
 
 /* Generated imagery, held outside the repository in public/generated. These are
-   illustrations and diagrams, not photographs of delivered work: every one of
-   them carries a `note` that the gallery prints on the tile. */
+   illustrations and diagrams, not photographs of delivered work; the heading
+   over each gallery that carries them says so. */
 const GENERATED: Record<string, [number, number]> = {
   "/generated/facade-lighting/01-stone-tower.jpg": [1248, 832],
   "/generated/facade-lighting/02-mosque.jpg": [1248, 832],
   "/generated/facade-lighting/03-villa.jpg": [1248, 832],
+  "/generated/facade-lighting/04-aerial-dusk.png": [1448, 1086],
+  "/generated/facade-lighting/05-slab-edge-tower.jpg": [2048, 1374],
   "/generated/home-automation/01-villa-systems.jpg": [1536, 1024],
+  "/generated/lighting-design/01-chandelier-lobby.jpg": [2048, 1365],
+  "/generated/lighting-design/02-living-room.jpg": [2048, 1365],
+  "/generated/lighting-design/03-restaurant-scheme.jpg": [2048, 1366],
   "/generated/home-automation/03-guest-room.jpg": [1536, 1024],
   "/generated/home-automation/04-network-layer.jpg": [1536, 1024],
   "/generated/home-automation/05-one-bus.jpg": [1536, 1024],
@@ -112,16 +110,23 @@ const GENERATED: Record<string, [number, number]> = {
   "/generated/lighting-controls/01-knx-topology.jpg": [1536, 1024],
   "/generated/lighting-controls/03-scene-timeline.jpg": [1536, 1024],
   "/generated/lighting-controls/06-panel-anatomy.jpg": [1536, 1024],
+  "/generated/lighting-controls/07-controls-overview.png": [1536, 1024],
+  "/generated/lighting-controls/08-touch-panel-hero.jpg": [2048, 1366],
   "/generated/lighting-installation/01-scissor-lift.jpg": [1248, 832],
   "/generated/lighting-installation/03-terminating.jpg": [1248, 832],
   "/generated/lighting-installation/05-fixture-fix.jpg": [1248, 832],
+  "/generated/lighting-installation/06-installation-overview.png": [1536, 1024],
+  "/generated/lighting-installation/07-linear-install-hero.jpg": [2048, 1365],
   "/generated/outdoor-lighting/01-street.jpg": [1248, 832],
   "/generated/outdoor-lighting/02-landscape-path.jpg": [1248, 832],
   "/generated/outdoor-lighting/03-car-park.jpg": [1248, 832],
   "/generated/project-management/01-site-meeting.jpg": [1248, 832],
+  "/generated/project-management/02-coordination-meeting.png": [1536, 1024],
+  "/generated/project-management/03-process-flow.png": [1774, 1330],
   "/generated/projection-mapping/01-mapped-show.jpg": [1248, 832],
   "/generated/projection-mapping/02-projector-rig.jpg": [1248, 832],
   "/generated/projection-mapping/04-audience.jpg": [1248, 832],
+  "/generated/projection-mapping/09-mapped-show-crowd.jpg": [2048, 1366],
   "/generated/projection-mapping/08-green-show.jpg": [1248, 832],
 };
 
@@ -137,15 +142,10 @@ const SIZES: Record<string, [number, number]> = {
 
 /** A photograph with its size looked up. Throws at build if the file is not
  *  known — a wrong aspect ratio is silent, a missing one should not be. */
-function photo(
-  src: string,
-  caption: string,
-  arCaption: string,
-  note?: { en: string; ar: string }
-): ServicePhoto {
+function photo(src: string, caption: string, arCaption: string): ServicePhoto {
   const size = SIZES[src];
   if (!size) throw new Error(`service-details: no recorded size for ${src}`);
-  return { src, w: size[0], h: size[1], caption, arCaption, ...(note ? { note } : {}) };
+  return { src, w: size[0], h: size[1], caption, arCaption };
 }
 
 export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
@@ -220,19 +220,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "الريتز كارلتون، الرياض: وحدات مدفونة في السقف المزخرف وقبّته المرسومة"
       ),
       photo(
-        "/projects/ladun-center/03.jpg",
-        "LADUN Center, Riyadh: linear profiles picked into the folded ceiling and down the face of the bulkhead",
-        "مركز لادن، الرياض: قطاعات خطّية مدمجة في السقف المطوي وعلى واجهة الجسر الساقط"
-      ),
-      photo(
         "/projects/athletic-showroom/01.jpg",
         "Athletic Showroom, Riyadh: track spots on the merchandise, linear light on the circulation",
         "معرض رياضي، الرياض: إضاءة مسار مركّزة على البضاعة وإضاءة خطّية على مسارات الحركة"
-      ),
-      photo(
-        "/projects/solitaire-mall/09.jpg",
-        "Solitaire Mall, Riyadh: the sculptural ribbon over the mall floor, with the shopfronts lit to their own levels",
-        "سوليتير مول، الرياض: الشريط النحتي فوق أرضية المول، وواجهات المتاجر مُضاءة بمستوياتها الخاصة"
       ),
       photo(
         "/projects/delfino/01.jpg",
@@ -240,10 +230,10 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "دلفينو مايفير، الرياض: نقاط ضوء دافئة منسوجة في السقف المزروع بصالة الطعام"
       ),
       photo(
-        "/projects/ladun-center/05.jpg",
-        "LADUN Center, Riyadh: a fitted-out floor, the ceiling grid resolved around the linear runs",
-        "مركز لادن، الرياض: طابق مُجهَّز، وقد حُلَّت شبكة السقف حول الامتدادات الخطّية"
-      )
+        "/projects/solitaire-mall/11.jpg",
+        "Solitaire Mall, Riyadh: linear slots cut into the faceted ceiling on the geometry, not across it",
+        "سوليتير مول، الرياض: فتحات خطّية مشقوقة في السقف متعدّد الأوجه وفق هندسته لا عبرها"
+      ),
     ],
     projects: ["ritz-carlton", "ladun-center", "athletic-showroom"],
   },
@@ -304,39 +294,29 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
-        "/projects/ladun-center/04.jpg",
-        "LADUN Center, Riyadh: a folded linear fitting run out along the corridor soffit",
-        "مركز لادن، الرياض: وحدة خطّية مطويّة ممتدّة على باطن سقف الممرّ"
-      ),
-      photo(
-        "/projects/solitaire-mall/11.jpg",
-        "Solitaire Mall, Riyadh: linear slots cut into the faceted ceiling on the geometry, not across it",
-        "سوليتير مول، الرياض: فتحات خطّية مشقوقة في السقف متعدّد الأوجه وفق هندسته لا عبرها"
-      ),
-      photo(
-        "/projects/ritz-carlton/05.jpg",
-        "The Ritz-Carlton, Riyadh: the Galleria, held at a level low enough for the polished floor not to glare",
-        "الريتز كارلتون، الرياض: الغاليريا، مضبوطة عند مستوى منخفض بما يكفي لئلا تُبهر الأرضية المصقولة"
-      ),
-      photo(
         "/projects/solitaire-mall/05.jpg",
         "Solitaire Mall, Riyadh: the sculptural ribbon read against the roof truss it is hung from",
         "سوليتير مول، الرياض: الشريط النحتي مقروءًا مقابل الجمالون المعلَّق منه"
       ),
       photo(
-        "/projects/seder-hq/01.jpg",
-        "Seder Head Quarter, Riyadh: the atrium at night, the coffer grid resolved into an even field",
-        "المقر الرئيسي لسدر، الرياض: البهو ليلًا، وقد تحوّلت شبكة الأسقف الغائرة إلى مستوى متجانس"
-      ),
-      photo(
-        "/projects/ladun-center/02.jpg",
-        "LADUN Center, Riyadh: an open floor before fit-out, the ceiling run set out on the structural grid",
-        "مركز لادن، الرياض: طابق مفتوح قبل التجهيز، وقد وُزِّع امتداد السقف على الشبكة الإنشائية"
-      ),
-      photo(
         "/projects/solitaire-mall/15.jpg",
         "Solitaire Mall, Riyadh: mall floor and shopfronts, each tenant lit to its own level under one ambient",
         "سوليتير مول، الرياض: أرضية المول وواجهات المتاجر، كل مستأجر مُضاء بمستواه تحت إضاءة عامة واحدة"
+      ),
+      photo(
+        "/generated/lighting-design/01-chandelier-lobby.jpg",
+        "A decorative chandelier carrying a hotel lobby, with the cove behind the cornice and the floor downlights held at the same colour temperature",
+        "ثريّا زخرفية تحمل بهو فندق، والإضاءة المخفيّة خلف الكورنيش والوحدات المدفونة في الأرضية مضبوطة على درجة حرارة اللون نفسها"
+      ),
+      photo(
+        "/generated/lighting-design/02-living-room.jpg",
+        "A living room lit in layers: a pendant cluster over the seating, a cove behind the bulkhead, accents grazing the stone wall and lamps at low level",
+        "غرفة معيشة مُضاءة بطبقات: مجموعة معلّقات فوق الجلسة، وإضاءة مخفيّة خلف الجسر الساقط، وإضاءة مركّزة تغسل الجدار الحجري، ومصابيح عند مستوى منخفض"
+      ),
+      photo(
+        "/generated/lighting-design/03-restaurant-scheme.jpg",
+        "A restaurant scheme set low: narrow beams on the table tops, a cove around the ceiling perimeter and the void above left dark",
+        "توزيع إضاءة مطعم مضبوط عند مستوى منخفض: أشعة ضيّقة على أسطح الطاولات، وإضاءة مخفيّة حول محيط السقف، والفراغ فوقها متروك معتمًا"
       )
     ],
     projects: ["solitaire-mall", "ladun-center", "seder-hq"],
@@ -345,9 +325,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 03 --- */
   "facade-lighting": {
     hero: photo(
-      "/projects/solitaire-mall/13.jpg",
-      "Solitaire Mall, Riyadh: the west elevation at dusk, the faceted panels taking colour across their full height",
-      "سوليتير مول، الرياض: الواجهة الغربية عند الغسق، وألواحها متعدّدة الأوجه تحمل اللون بارتفاعها كاملًا"
+      "/generated/facade-lighting/04-aerial-dusk.png",
+      "A retail and leisure block seen from above at dusk, each facade plane lit to its own value against the city behind it",
+      "مجمّع تجاري وترفيهي من الأعلى عند الغسق، كل مستوٍ من الواجهة مُضاء بقيمته الخاصة مقابل المدينة خلفه"
     ),
     intro: [
       "A facade scheme is judged from four hundred metres away by people who will never read the specification, and it is judged again eighteen months later by whoever has to replace the fittings that did not survive. Both judgements are settled at design stage, and the second one is settled by hardware selection.",
@@ -393,57 +373,34 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       arEyebrow: "من مشاريعنا",
       title: "What it looks like",
       arTitle: "كيف يبدو ذلك",
-      note: "Photographs from delivered projects in Riyadh, with illustrations where the frame is marked. Click any frame to see it full size.",
-      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية حيث أُشير إلى ذلك. اضغط أي صورة لعرضها بالحجم الكامل.",
+      note: "Photographs from delivered projects in Riyadh, with illustrations alongside them. Click any frame to see it full size.",
+      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية. اضغط أي صورة لعرضها بالحجم الكامل.",
     },
     gallery: [
-      photo(
-        "/projects/solitaire-mall/01.jpg",
-        "Solitaire Mall, Riyadh: the faceted white elevation at dusk, each plane lit to a different value",
-        "سوليتير مول، الرياض: الواجهة البيضاء متعدّدة الأوجه عند الغسق، كل مستوٍ مُضاء بقيمة مختلفة"
-      ),
-      photo(
-        "/projects/solitaire-mall/16.jpg",
-        "Solitaire Mall, Riyadh: the perforated screen close up, grazed so the pattern is legible at street level",
-        "سوليتير مول، الرياض: الحاجز المخرّم عن قرب، مُضاءً بزاوية مائلة ليكون النقش مقروءًا من مستوى الشارع"
-      ),
-      photo(
-        "/projects/solitaire-mall/18-aerial-dusk.jpg",
-        "Solitaire Mall, Riyadh: the lit facade from above at dusk, against the city behind it",
-        "سوليتير مول، الرياض: الواجهة المضاءة من الأعلى عند الغسق، مقابل المدينة خلفها"
-      ),
       photo(
         "/projects/four-points/02-upright.jpg",
         "Four Points by Sheraton, Riyadh: the elevation uplit between the window bays, the crown left to the signage",
         "فور بوينتس باي شيراتون، الرياض: الواجهة مُضاءة من الأسفل بين فتحات النوافذ، والتاج متروك للوحة الاسم"
       ),
       photo(
-        "/projects/four-points/01.jpg",
-        "Four Points by Sheraton, Riyadh: the approach at night, the entrance canopy carrying the brightest note",
-        "فور بوينتس باي شيراتون، الرياض: المدخل ليلًا، ومظلّة الاستقبال تحمل أعلى درجة سطوع"
-      ),
-      photo(
-        "/projects/solitaire-mall/02.jpg",
-        "Solitaire Mall, Riyadh: the whole site at dusk, facade and landscape balanced against each other",
-        "سوليتير مول، الرياض: الموقع كاملًا عند الغسق، والواجهة والمسطحات موازِنة إحداهما للأخرى"
-      ),
-      photo(
         "/generated/facade-lighting/01-stone-tower.jpg",
         "Full-height piers grazed from below, the recessed glazing left dark between them",
-        "دعامات بكامل الارتفاع مُضاءة من أسفل بزاوية مائلة، والزجاج الغائر متروك معتمًا بينها",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "دعامات بكامل الارتفاع مُضاءة من أسفل بزاوية مائلة، والزجاج الغائر متروك معتمًا بينها"
       ),
       photo(
         "/generated/facade-lighting/02-mosque.jpg",
         "Plain stone walls and a minaret lit evenly, without colour and without glare",
-        "جدران حجرية بسيطة ومئذنة مُضاءة بانتظام، بلا لون وبلا وهج",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "جدران حجرية بسيطة ومئذنة مُضاءة بانتظام، بلا لون وبلا وهج"
       ),
       photo(
         "/generated/facade-lighting/03-villa.jpg",
         "A residential elevation washed warm, with the landscape lit to the same level",
-        "واجهة سكنية مغسولة بضوء دافئ، والمسطحات مُضاءة بالمستوى نفسه",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "واجهة سكنية مغسولة بضوء دافئ، والمسطحات مُضاءة بالمستوى نفسه"
+      ),
+      photo(
+        "/generated/facade-lighting/05-slab-edge-tower.jpg",
+        "An office tower lit off its slab edges, the stone corner grazed warm and the glazing left dark so the horizontal rhythm carries",
+        "برج مكاتب مُضاء من حواف بلاطاته، وركنه الحجري مغسول بضوء دافئ مائل، والزجاج متروك معتمًا ليحمل الإيقاع الأفقي"
       )
     ],
     projects: ["solitaire-mall", "four-points", "seder-hq"],
@@ -452,9 +409,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 04 --- */
   "outdoor-lighting": {
     hero: photo(
-      "/projects/solitaire-mall/12.jpg",
-      "Solitaire Mall, Riyadh: the site and its approach roads at night, seen from above",
-      "سوليتير مول، الرياض: الموقع وطرق الوصول إليه ليلًا، من الأعلى"
+      "/projects/four-points/01.jpg",
+      "Four Points by Sheraton, Riyadh: the approach at night, the entrance canopy carrying the brightest note",
+      "فور بوينتس باي شيراتون، الرياض: المدخل ليلًا، ومظلّة الاستقبال تحمل أعلى درجة سطوع"
     ),
     intro: [
       "Outdoor lighting is the part of a scheme that gets designed from a catalogue most often and should be designed from a site most of all. Pole spacing is set by the kerb line and the trees that are already there. Mounting height is set by what is allowed and what can be reached with the maintenance vehicle the client actually owns. Uniformity is set by the class the road has to meet. Pick the fitting first and you spend the rest of the project apologising for it.",
@@ -500,8 +457,8 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       arEyebrow: "من مشاريعنا",
       title: "What it looks like",
       arTitle: "كيف يبدو ذلك",
-      note: "Photographs from delivered projects in Riyadh, with illustrations where the frame is marked. Click any frame to see it full size.",
-      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية حيث أُشير إلى ذلك. اضغط أي صورة لعرضها بالحجم الكامل.",
+      note: "Photographs from delivered projects in Riyadh, with illustrations alongside them. Click any frame to see it full size.",
+      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية. اضغط أي صورة لعرضها بالحجم الكامل.",
     },
     gallery: [
       photo(
@@ -510,14 +467,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "سوليتير مول، الرياض: الدرج الخارجي، كل نائمة مغسولة بالضوء من القائمة التي فوقها"
       ),
       photo(
-        "/projects/solitaire-mall/08.jpg",
-        "Solitaire Mall, Riyadh: the external colonnade, a continuous run carrying the whole walkway",
-        "سوليتير مول، الرياض: الرواق الخارجي، وامتداد متّصل يحمل الممرّ كاملًا"
-      ),
-      photo(
-        "/projects/seder-hq/02.jpg",
-        "Seder Head Quarter, Riyadh: a lit column at the building line, set clear of the glazing",
-        "المقر الرئيسي لسدر، الرياض: عمود مضاء عند خطّ المبنى، مُبعَد عن الواجهة الزجاجية"
+        "/projects/seder-hq/01.jpg",
+        "Seder Head Quarter, Riyadh: the entrance court at night, the soffit downlights and the approach poles reading together",
+        "المقر الرئيسي لسدر، الرياض: فناء المدخل ليلًا، وإضاءة باطن السقف وأعمدة الممرّ تُقرأ معًا"
       ),
       photo(
         "/projects/seder-hq/05.jpg",
@@ -525,27 +477,19 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "المقر الرئيسي لسدر، الرياض: رصيف المدخل، مُضاءً من الأعمدة على امتداد الحافّة"
       ),
       photo(
-        "/projects/seder-hq/04.jpg",
-        "Seder Head Quarter, Riyadh: the ramp under construction, columns set before the surfacing",
-        "المقر الرئيسي لسدر، الرياض: المنحدر أثناء التنفيذ، وقد رُكِّبت الأعمدة قبل التبليط"
-      ),
-      photo(
         "/generated/outdoor-lighting/01-street.jpg",
         "A residential street on a regular column line, the pools overlapping without dark gaps",
-        "شارع سكني على خطّ أعمدة منتظم، وبقع الضوء متداخلة بلا فجوات معتمة",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "شارع سكني على خطّ أعمدة منتظم، وبقع الضوء متداخلة بلا فجوات معتمة"
       ),
       photo(
         "/generated/outdoor-lighting/02-landscape-path.jpg",
         "A landscaped path lit from bollards and low columns",
-        "ممرّ في مسطح أخضر مُضاء من أعمدة قصيرة ومنخفضة",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "ممرّ في مسطح أخضر مُضاء من أعمدة قصيرة ومنخفضة"
       ),
       photo(
         "/generated/outdoor-lighting/03-car-park.jpg",
         "An open car park on high-mast columns, lit evenly across the bays",
-        "موقف مكشوف على صوارٍ عالية، مُضاء بانتظام على امتداد المواقف",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "موقف مكشوف على صوارٍ عالية، مُضاء بانتظام على امتداد المواقف"
       )
     ],
     projects: ["solitaire-mall", "seder-hq", "ladun-center"],
@@ -554,10 +498,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 05 --- */
   "lighting-controls": {
     hero: photo(
-      "/generated/lighting-controls/01-knx-topology.jpg",
-      "How a KNX installation is put together: one power supply, one bus, and the devices hanging off it",
-      "كيف يُبنى نظام KNX: مصدر تغذية واحد وناقل واحد والأجهزة المتفرّعة عنه",
-      { en: "Diagram", ar: "رسم توضيحي" }
+      "/generated/lighting-controls/08-touch-panel-hero.jpg",
+      "A wall panel reaching the whole floor: one press moves lighting, curtains and the rooms beyond it to a scene",
+      "لوحة جدارية تصل إلى الطابق كاملًا: ضغطة واحدة تنقل الإضاءة والستائر والغرف خلفها إلى مشهد واحد"
     ),
     intro: [
       "Controls are where a lighting scheme either earns its budget or quietly wastes it. A building with no control runs every circuit at full output for fourteen hours because nobody is paid to walk round switching things off. A building with the wrong control does the same thing, plus the client now owns a proprietary system that one integrator in the Kingdom can service.",
@@ -603,26 +546,29 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       arEyebrow: "كيف يُبنى",
       title: "The system behind it",
       arTitle: "النظام خلفه",
-      note: "Diagrams of how these systems are put together, with our own installation photography alongside. Click any frame to see it full size.",
-      arNote: "رسوم توضيحية لكيفية بناء هذه الأنظمة، ومعها صور من تنفيذنا. اضغط أي صورة لعرضها بالحجم الكامل.",
+      note: "Diagrams of how these systems are put together. Click any frame to see it full size.",
+      arNote: "رسوم توضيحية لكيفية بناء هذه الأنظمة. اضغط أي صورة لعرضها بالحجم الكامل.",
     },
     gallery: [
       photo(
-        "/projects/milling-mc2/03.jpg",
-        "Milling Company MC-2, Riyadh: a KNX distribution board, bus and load sides landed and numbered",
-        "شركة المطاحن الثانية، الرياض: لوحة توزيع KNX، وقد رُبط جانبا الناقل والأحمال ورُقِّما"
+        "/generated/lighting-controls/07-controls-overview.png",
+        "What a control system does across a building: daylight harvesting, occupancy sensing, scenes, dimming, scheduling and remote access",
+        "ما يفعله نظام التحكّم في المبنى: استثمار الضوء الطبيعي، واستشعار الإشغال، والمشاهد، والخفت، والجدولة، والوصول عن بُعد"
+      ),
+      photo(
+        "/generated/lighting-controls/01-knx-topology.jpg",
+        "How a KNX installation is put together: one power supply, one bus, and the devices hanging off it",
+        "كيف يُبنى نظام KNX: مصدر تغذية واحد وناقل واحد والأجهزة المتفرّعة عنه"
       ),
       photo(
         "/generated/lighting-controls/03-scene-timeline.jpg",
         "One space across a day, and the scenes a control system moves it through",
-        "مساحة واحدة على مدار اليوم، والمشاهد التي ينقلها نظام التحكّم بينها",
-        { en: "Diagram", ar: "رسم توضيحي" }
+        "مساحة واحدة على مدار اليوم، والمشاهد التي ينقلها نظام التحكّم بينها"
       ),
       photo(
         "/generated/lighting-controls/06-panel-anatomy.jpg",
         "What sits inside a lighting control panel, rail by rail",
-        "ما يوجد داخل لوحة التحكّم بالإضاءة، قضيبًا بعد قضيب",
-        { en: "Diagram", ar: "رسم توضيحي" }
+        "ما يوجد داخل لوحة التحكّم بالإضاءة، قضيبًا بعد قضيب"
       )
     ],
     projects: ["four-points", "milling-mc2", "delfino"],
@@ -631,9 +577,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 06 --- */
   "lighting-installation": {
     hero: photo(
-      "/projects/milling-mc2/05.jpg",
-      "Milling Company MC-2, Riyadh: a board being wired out, every core landed and labelled as it goes in",
-      "شركة المطاحن الثانية، الرياض: لوحة أثناء التوصيل، كل موصل يُربط ويُعلَّم أثناء تركيبه"
+      "/generated/lighting-installation/07-linear-install-hero.jpg",
+      "A linear run going in from the lift, the fitting lit and set true before the ceiling closes around it",
+      "امتداد خطّي يُركَّب من على الرافعة، والوحدة مُضاءة ومستقيمة قبل أن يُغلق السقف حولها"
     ),
     intro: [
       "The gap between a lighting design and a lit building is about two hundred small decisions taken on a ladder: which way this spot points, how far that trimless fitting sits off the plaster line, whether the driver is reachable once the ceiling closes. They are taken either by people who understand the scheme or by whoever was available that week.",
@@ -679,47 +625,34 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       arEyebrow: "من مشاريعنا",
       title: "What it looks like",
       arTitle: "كيف يبدو ذلك",
-      note: "Photographs from delivered projects in Riyadh, with illustrations where the frame is marked. Click any frame to see it full size.",
-      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية حيث أُشير إلى ذلك. اضغط أي صورة لعرضها بالحجم الكامل.",
+      note: "Photographs from delivered projects in Riyadh, with illustrations alongside them. Click any frame to see it full size.",
+      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية. اضغط أي صورة لعرضها بالحجم الكامل.",
     },
     gallery: [
+      photo(
+        "/generated/lighting-installation/06-installation-overview.png",
+        "The fittings an installation is made of, named on the building they go into: linear profiles, downlights, wall washers, step lights and the control that runs them",
+        "الوحدات التي يتكوّن منها التركيب، مُسمّاة على المبنى الذي تُركَّب فيه: القطاعات الخطّية والوحدات المدفونة وغاسلات الجدران وإضاءة الدرج والتحكّم الذي يُشغّلها"
+      ),
       photo(
         "/projects/athletic-showroom/03.jpg",
         "Athletic Showroom, Riyadh: track spots aimed onto the rails, the exposed services left dark on purpose",
         "معرض رياضي، الرياض: وحدات مسار موجَّهة إلى القضبان، والخدمات المكشوفة تُركت معتمة عمدًا"
       ),
       photo(
-        "/projects/athletic-showroom/07.jpg",
-        "Athletic Showroom, Riyadh: the finished floor, ambient and accent balanced across the whole span",
-        "معرض رياضي، الرياض: الطابق بعد اكتماله، والإضاءة العامة والمركّزة متوازنتان على امتداده كاملًا"
-      ),
-      photo(
-        "/projects/ladun-center/01.jpg",
-        "LADUN Center, Riyadh: a completed ceiling, the linear runs set true against the panel joints",
-        "مركز لادن، الرياض: سقف مكتمل، والامتدادات الخطّية مستقيمة مقابل فواصل الألواح"
-      ),
-      photo(
-        "/projects/seder-hq/06.jpg",
-        "Seder Head Quarter, Riyadh: an office corridor handed over, the ceiling grid complete",
-        "المقر الرئيسي لسدر، الرياض: ممرّ مكاتب مُسلَّم، وشبكة السقف مكتملة"
-      ),
-      photo(
         "/generated/lighting-installation/01-scissor-lift.jpg",
         "A linear run going into a high exposed-services ceiling before the space is finished",
-        "امتداد خطّي يُركَّب في سقف عالٍ مكشوف الخدمات قبل اكتمال المساحة",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "امتداد خطّي يُركَّب في سقف عالٍ مكشوف الخدمات قبل اكتمال المساحة"
       ),
       photo(
         "/generated/lighting-installation/03-terminating.jpg",
         "Cores ferruled, numbered and landed into a control panel",
-        "موصلات مُطرَّفة ومرقَّمة ومربوطة داخل لوحة تحكّم",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "موصلات مُطرَّفة ومرقَّمة ومربوطة داخل لوحة تحكّم"
       ),
       photo(
         "/generated/lighting-installation/05-fixture-fix.jpg",
         "A recessed downlight going into its cut aperture, driver in the void above",
-        "وحدة مدفونة تُركَّب في فتحتها، ومحوّلها في الفراغ فوقها",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "وحدة مدفونة تُركَّب في فتحتها، ومحوّلها في الفراغ فوقها"
       )
     ],
     projects: ["athletic-showroom", "milling-mc2", "delfino"],
@@ -728,9 +661,9 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 07 --- */
   "project-management": {
     hero: photo(
-      "/projects/solitaire-mall/04.jpg",
-      "Solitaire Mall, Riyadh: the main atrium on handover, trading floors and feature lighting complete together",
-      "سوليتير مول، الرياض: البهو الرئيسي عند التسليم، وقد اكتملت صالات العرض والإضاءة المميّزة معًا"
+      "/generated/project-management/03-process-flow.png",
+      "The chain one project manager owns, from submittals and approvals through procurement, shipping and customs, phased delivery and site coordination to snagging and close-out",
+      "السلسلة التي يتولّاها مدير مشروع واحد، من الاعتمادات والموافقات مرورًا بالشراء والشحن والتخليص والتسليم على مراحل والتنسيق في الموقع وصولًا إلى معالجة الملاحظات والإقفال"
     ),
     intro: [
       "On a large scheme the lighting is rarely late because of the lighting. It is late because a submittal sat with a consultant for five weeks, or because a container cleared customs the day after the ceiling closed, or because nobody noticed that phase two needed a fitting that was discontinued between tender and award.",
@@ -776,25 +709,24 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       arEyebrow: "من مشاريعنا",
       title: "What it looks like",
       arTitle: "كيف يبدو ذلك",
-      note: "Photographs from delivered projects in Riyadh, with illustrations where the frame is marked. Click any frame to see it full size.",
-      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية حيث أُشير إلى ذلك. اضغط أي صورة لعرضها بالحجم الكامل.",
+      note: "Photographs from delivered projects in Riyadh, with illustrations alongside them. Click any frame to see it full size.",
+      arNote: "صور من مشاريع سُلِّمت في الرياض، ومعها صور توضيحية. اضغط أي صورة لعرضها بالحجم الكامل.",
     },
     gallery: [
       photo(
-        "/projects/athletic-showroom/06.jpg",
-        "Athletic Showroom, Riyadh: a retail unit handed over ready to trade",
-        "معرض رياضي، الرياض: وحدة تجزئة مُسلَّمة جاهزة للتشغيل"
-      ),
-      photo(
-        "/projects/solitaire-mall/06.jpg",
-        "Solitaire Mall, Riyadh: the feature stair and its surrounds, one package among many on the same date",
-        "سوليتير مول، الرياض: الدرج المميّز ومحيطه، حزمة واحدة بين حزم كثيرة في التاريخ نفسه"
+        "/generated/project-management/03-process-flow.png",
+        "The chain one project manager owns, from submittals and approvals through procurement, shipping and customs, phased delivery and site coordination to snagging and close-out",
+        "السلسلة التي يتولّاها مدير مشروع واحد، من الاعتمادات والموافقات مرورًا بالشراء والشحن والتخليص والتسليم على مراحل والتنسيق في الموقع وصولًا إلى معالجة الملاحظات والإقفال"
       ),
       photo(
         "/generated/project-management/01-site-meeting.jpg",
         "The progress meeting where a lighting package is coordinated against the construction programme",
-        "اجتماع المتابعة الذي تُنسَّق فيه حزمة الإضاءة مع برنامج البناء",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "اجتماع المتابعة الذي تُنسَّق فيه حزمة الإضاءة مع برنامج البناء"
+      ),
+      photo(
+        "/generated/project-management/02-coordination-meeting.png",
+        "A lighting package worked through in the office: the layout on screen, the drawings on the table, the fitting types and colour temperatures on the board",
+        "حزمة إضاءة تُدرس في المكتب: التوزيع على الشاشة، والمخططات على الطاولة، وأنواع الوحدات ودرجات حرارة اللون على اللوح"
       )
     ],
     projects: ["solitaire-mall", "riyadh-air", "seder-hq"],
@@ -805,8 +737,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     hero: photo(
       "/generated/projection-mapping/01-mapped-show.jpg",
       "A mapped show holding a faceted stone elevation, the projected geometry following the building's own edges",
-      "عرض مُسقَط يغطّي واجهة حجرية متعدّدة الأوجه، وهندسة الإسقاط تتبع حواف المبنى نفسه",
-      { en: "Illustration", ar: "صورة توضيحية" }
+      "عرض مُسقَط يغطّي واجهة حجرية متعدّدة الأوجه، وهندسة الإسقاط تتبع حواف المبنى نفسه"
     ),
     intro: [
       "Projection mapping is the one thing on this list that has a deadline nobody can move. The opening is on the twelfth; the national day is the twenty-third. Everything (the survey, the mesh, the content, the rig, the blend, the rehearsal) is scheduled backwards from a night that will happen whether the show is ready or not.",
@@ -857,22 +788,19 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
-        "/generated/projection-mapping/02-projector-rig.jpg",
-        "A projector tower rigged and cabled on site, aimed at the elevation it has to cover",
-        "برج أجهزة عرض مركَّب ومُمدّد بالكابلات في الموقع، موجَّه إلى الواجهة التي سيغطّيها",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "/generated/projection-mapping/09-mapped-show-crowd.jpg",
+        "A mapped show at full output, the projected geometry landing on the building's own piers and setbacks with the crowd held in front of it",
+        "عرض مُسقَط بكامل شدّته، وهندسة الإسقاط تستقرّ على دعامات المبنى وانكساراته، والجمهور أمامه"
       ),
       photo(
         "/generated/projection-mapping/04-audience.jpg",
         "The view most of an audience gets, from the plaza in front of the building",
-        "المشهد كما يراه معظم الجمهور، من الساحة أمام المبنى",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "المشهد كما يراه معظم الجمهور، من الساحة أمام المبنى"
       ),
       photo(
         "/generated/projection-mapping/08-green-show.jpg",
         "A single-colour show built on the vertical rhythm of the facade",
-        "عرض بلون واحد مبني على الإيقاع الرأسي للواجهة",
-        { en: "Illustration", ar: "صورة توضيحية" }
+        "عرض بلون واحد مبني على الإيقاع الرأسي للواجهة"
       )
     ],
     projects: ["solitaire-mall", "four-points", "riyadh-air"],
@@ -883,8 +811,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     hero: photo(
       "/generated/home-automation/06-villa-overview.png",
       "One home on one system: lighting, climate, hot water, security and the devices around them, all reached from the same place",
-      "منزل واحد على نظام واحد: الإضاءة والتكييف والماء الساخن والأمن والأجهزة المحيطة بها، تُدار جميعها من مكان واحد",
-      { en: "Illustration", ar: "صورة توضيحية" }
+      "منزل واحد على نظام واحد: الإضاءة والتكييف والماء الساخن والأمن والأجهزة المحيطة بها، تُدار جميعها من مكان واحد"
     ),
     intro: [
       "Most homes described as smart are a shelf of apps. The lights are on one, the curtains on another, the air conditioning came with its own remote, and the intercom is a separate box by the door that talks to nothing. Every one of them works. Together they are worse than switches.",
@@ -935,6 +862,11 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
+        "/generated/home-automation/06-villa-overview.png",
+        "One home on one system: lighting, climate, hot water, security and the devices around them, all reached from the same place",
+        "منزل واحد على نظام واحد: الإضاءة والتكييف والماء الساخن والأمن والأجهزة المحيطة بها، تُدار جميعها من مكان واحد"
+      ),
+      photo(
         "/projects/delfino/04.jpg",
         "Delfino Mayfair, Riyadh: the KNX touch panel, with the restaurant's scenes, curtains, blinds and air on one screen",
         "دلفينو مايفير، الرياض: لوحة اللمس KNX، وعليها مشاهد المطعم والستائر والمظلات والتكييف في شاشة واحدة"
@@ -942,27 +874,18 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       photo(
         "/generated/home-automation/01-villa-systems.jpg",
         "One bus, five systems: lighting, curtains, HVAC, security and metering answering to a single panel",
-        "ناقل واحد وخمسة أنظمة: الإضاءة والستائر والتكييف والأمن والقياس تخضع للوحة واحدة",
-        { en: "Diagram", ar: "رسم توضيحي" }
+        "ناقل واحد وخمسة أنظمة: الإضاءة والستائر والتكييف والأمن والقياس تخضع للوحة واحدة"
       ),
       photo(
         "/generated/home-automation/03-guest-room.jpg",
         "A guest room's devices and the controller they report to",
-        "أجهزة غرفة النزيل ووحدة التحكّم التي ترتبط بها",
-        { en: "Diagram", ar: "رسم توضيحي" }
+        "أجهزة غرفة النزيل ووحدة التحكّم التي ترتبط بها"
       ),
       photo(
         "/generated/home-automation/05-one-bus.jpg",
         "Lighting, blinds, HVAC, locks, metering and scenes on one supervision layer",
-        "الإضاءة والمظلات والتكييف والأقفال والقياس والمشاهد على طبقة إشراف واحدة",
-        { en: "Diagram", ar: "رسم توضيحي" }
+        "الإضاءة والمظلات والتكييف والأقفال والقياس والمشاهد على طبقة إشراف واحدة"
       ),
-      photo(
-        "/generated/home-automation/04-network-layer.jpg",
-        "The cabling and coverage layer everything above it depends on",
-        "طبقة الكابلات والتغطية التي يعتمد عليها كل ما فوقها",
-        { en: "Diagram", ar: "رسم توضيحي" }
-      )
     ],
     projects: ["delfino", "four-points", "riyadh-air"],
   },

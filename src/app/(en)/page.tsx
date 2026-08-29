@@ -241,7 +241,7 @@ export default function HomePage() {
                 <>
                   “ARAK” <span style={{ color: "#111111" }}>أراك</span>, which means “I See You” in
                   Arabic, is a Lighting Company and a Smart Lighting Solutions Provider that started
-                  as an extension of Abdul Rahman Abdul Kadir Corporation in 1976 and is now a
+                  as an extension of Abdul Rahman Abdul Kader Corporation in 1976 and is now a
                   pioneering Saudi Establishment that embodies Saudi values.
                 </>
               )}
@@ -263,7 +263,7 @@ export default function HomePage() {
             <PhotoSlot
               // This column stacks at 1080, not at the default 768.
               sizes="(max-width: 1080px) 100vw, 50vw"
-              src="/home/solitaire-entrance-dusk.jpg" alt={ar ? "المدخل الرئيسي لسوليتير مول في الرياض عند الغروب، وواجهته الحجرية والمشغولة مضاءة" : "The main entrance of Solitaire Mall in Riyadh at dusk, its stone and latticework facade lit"} />
+              src="/projects/solitaire-mall/03-wide-relit.jpg" alt={ar ? "سوليتير مول في الرياض عند الغروب، وواجهته الحجرية مضاءة من جهة الطريق" : "Solitaire Mall in Riyadh at dusk, its stone facade lit, seen from across the road"} />
           </div>
         </div>
       </section>
@@ -388,7 +388,7 @@ export default function HomePage() {
               <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "30px" }}>
                 <span style={{ font: "500 11px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".3em", textTransform: "uppercase", color: "#6E6E6B" }}>{lang === "ar" ? "أعمالنا" : "Selected work"}</span>
               </div>
-              <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "مشاريع مختارة" : "Projects"}</h2>
+              <h2 style={{ font: "600 clamp(32px,4vw,58px)/1.06 var(--font-sora),sans-serif", letterSpacing: "-0.03em", color: "#111111", margin: "0" }}>{lang === "ar" ? "مشاريعنا" : "Our Projects"}</h2>
             </div>
             <Link href={localePath("/projects", lang)} style={{ font: "500 12px/1 var(--font-plex-sans),sans-serif", letterSpacing: ".16em", textTransform: "uppercase", color: "#111111", cursor: "pointer", borderBottom: "1px solid rgba(17,17,17,.3)", paddingBottom: "8px" }} className={styles.ctaInline}>{lang === "ar" ? "جميع المراجع" : "All project references"}
               <span aria-hidden="true" style={{ marginInlineStart: "8px" }}>{ar ? "←" : "→"}</span></Link>

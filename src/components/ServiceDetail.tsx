@@ -40,7 +40,7 @@ export function ServiceDetail({
   const name = ar ? service.ar : service.en;
   const intro = ar ? detail.arIntro : detail.intro;
   const includes = ar ? service.arIncludes : service.includes;
-  const captions = detail.gallery.map((g) => ({ en: g.caption, ar: g.arCaption, note: g.note }));
+  const captions = detail.gallery.map((g) => ({ en: g.caption, ar: g.arCaption }));
   // Most pages are photographs of delivered work and say so. The ones carrying
   // diagrams or illustrations override this, because that sentence would be a
   // claim the gallery cannot back.
@@ -93,14 +93,6 @@ export function ServiceDetail({
                 sizes="(max-width: 1000px) 100vw, 48vw"
                 className={styles.heroImg}
               />
-              {/* The hero sits above the fold and outside the gallery, so a
-                  generated one has to carry its own tag: the gallery's marker
-                  never reaches it. */}
-              {detail.hero.note && (
-                <span className={styles.heroNote}>
-                  {ar ? detail.hero.note.ar : detail.hero.note.en}
-                </span>
-              )}
             </div>
           </div>
 

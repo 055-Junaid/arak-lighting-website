@@ -36,6 +36,15 @@
  *
  * 6. Send a test enquiry from the live contact page and check the Sheet.
  *
+ * ---------------------------------------------------------------------------
+ * UPDATING A SHEET THAT IS ALREADY LIVE
+ * ---------------------------------------------------------------------------
+ *
+ * Paste the new script over the old one, then run `addHeardAboutColumns` once
+ * (not `setupSheet` — that one clears the tab and would delete every enquiry
+ * received so far). Then Deploy -> Manage deployments -> pencil -> Version:
+ * New version, as below.
+ *
  * NOTE ON RE-DEPLOYING: if you ever edit this script, use
  * Deploy -> Manage deployments -> pencil -> Version: New version. Creating a
  * *new deployment* instead gives you a different URL and the form will keep
@@ -57,6 +66,8 @@ var HEADERS = [
   'Phone',
   'Project type',
   'Brief',
+  'Heard about us',
+  'Heard about us (detail)',
   'Language',
   'Source page',
 ];
@@ -74,7 +85,54 @@ function setupSheet() {
   sheet.setFrozenRows(1);
   sheet.setColumnWidth(1, 150); // Received
   sheet.setColumnWidth(7, 480); // Brief
+  sheet.setColumnWidth(9, 220); // Heard about us (detail)
   return 'Ready.';
+}
+
+/**
+ * Adds the two "Heard about us" columns to a Sheet that already holds
+ * enquiries. Run this once, by hand, when updating an existing deployment.
+ *
+ * Do NOT run setupSheet for this. setupSheet calls sheet.clear() and would
+ * take every enquiry ever received with it; it is only for a Sheet that has
+ * never been used.
+ *
+ * The columns are inserted after Brief rather than appended at the end, so
+ * Language and Source page stay where they have always been relative to the
+ * rest. insertColumnsAfter shifts existing rows with them, so no row loses
+ * alignment with its own data.
+ *
+ * Safe to run twice: it checks the header first and does nothing if the
+ * columns are already there.
+ */
+function addHeardAboutColumns() {
+  var book = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = book.getSheetByName(SHEET_NAME);
+  if (!sheet) return say('No "' + SHEET_NAME + '" tab yet. Run setupSheet instead.');
+
+  if (sheet.getRange(1, 8).getValue() === 'Heard about us') {
+    return say('Already added. Nothing to do.');
+  }
+
+  sheet.insertColumnsAfter(7, 2); // after Brief
+  sheet.getRange(1, 8, 1, 2)
+    .setValues([['Heard about us', 'Heard about us (detail)']])
+    .setFontWeight('bold')
+    .setBackground('#f6f5f3');
+  sheet.setColumnWidth(9, 220);
+  return say('Added. Existing rows keep their data and leave the two new cells blank.');
+}
+
+/**
+ * Prints to the Execution log as well as returning.
+ *
+ * The editor shows a function's logged output but never its return value, so a
+ * function that only returns a message runs to a blank log and leaves you
+ * guessing whether it did anything.
+ */
+function say(message) {
+  console.log(message);
+  return message;
 }
 
 /**
@@ -121,6 +179,8 @@ function doPost(e) {
       clean(data.phone),
       clean(data.projectType),
       clean(data.brief),
+      clean(data.heardFrom),
+      clean(data.heardFromDetail),
       clean(data.lang),
       clean(data.source),
     ]);
@@ -147,6 +207,18 @@ function clean(value) {
   return String(value == null ? '' : value).trim().slice(0, 5000);
 }
 
+/**
+ * How the channel reads in the notification email. "Other" on its own is a
+ * real answer and stays as it is; anything typed alongside it is appended
+ * rather than replacing it, so the bucket is never lost.
+ */
+function heardLine(data) {
+  var channel = String(data.heardFrom || '').trim();
+  var detail = String(data.heardFromDetail || '').trim();
+  if (!channel) return '—';
+  return detail ? channel + ': ' + detail : channel;
+}
+
 function reply(ok, message) {
   return ContentService
     .createTextOutput(JSON.stringify({ ok: ok, message: message }))
@@ -165,6 +237,7 @@ function notify(data, received) {
       'Email:        ' + (data.email || ''),
       'Phone:        ' + (data.phone || '—'),
       'Project type: ' + (data.projectType || '—'),
+      'Heard via:    ' + heardLine(data),
       'Language:     ' + (data.lang || ''),
       'Page:         ' + (data.source || ''),
       'Received:     ' + received + ' (Riyadh)',

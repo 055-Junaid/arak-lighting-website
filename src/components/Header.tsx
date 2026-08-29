@@ -77,13 +77,19 @@ export function Header() {
   return (
     <header className={styles.header} ref={headerRef}>
       <div className={styles.inner}>
-        <Link href={localePath("/", lang)} className={styles.logo} aria-label="ARAK Lighting Solutions, home">
+        {/* The link's own label is what a screen reader announces, so it has to
+            follow the language switch the same as the visible nav does. */}
+        <Link
+          href={localePath("/", lang)}
+          className={styles.logo}
+          aria-label={ar ? "أراك لحلول الإضاءة، الصفحة الرئيسية" : "ARAK Lighting Solutions, home"}
+        >
           {/* Sized in Header.module.css rather than inline, so the 520px rule
               can shrink it. Setting only one axis inline is what Next warns
               about; the module sets both. */}
           <Image
             src="/arak-logo-black.png"
-            alt="ARAK Lighting Solutions"
+            alt={ar ? "أراك لحلول الإضاءة" : "ARAK Lighting Solutions"}
             height={58}
             width={166}
             priority

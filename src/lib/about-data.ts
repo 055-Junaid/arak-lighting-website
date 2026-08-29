@@ -38,7 +38,7 @@ export const CHAPTERS: Chapter[] = [
     no: "01",
     en: "A corporation, and then a light company",
     ar: "مؤسسة، ثم شركة إضاءة",
-    body: "ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kadir Corporation, supplying light fittings into a Kingdom that was building faster than it could be lit. The trade was simple then. Find the right fitting, get it to site, stand behind it after the invoice is paid.",
+    body: "ARAK started in 1976 as an extension of the Abdul Rahman Abdul Kader Corporation, supplying light fittings into a Kingdom that was building faster than it could be lit. The trade was simple then. Find the right fitting, get it to site, stand behind it after the invoice is paid.",
     arBody:
       "بدأت أراك عام 1976 امتدادًا لمؤسسة عبدالرحمن عبدالقادر، تورّد وحدات الإضاءة إلى مملكة كانت تبني أسرع مما تستطيع أن تُضيء. كانت التجارة بسيطة حينها: اعثر على الوحدة المناسبة، وأوصلها إلى الموقع، وقِف خلفها بعد سداد الفاتورة.",
   },

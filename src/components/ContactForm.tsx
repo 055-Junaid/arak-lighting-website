@@ -25,7 +25,55 @@ const PROJECT_TYPES: [string, string][] = [
   ["Controls & automation only", "أنظمة تحكم وأتمتة فقط"],
 ];
 
-type FieldName = "name" | "company" | "email" | "phone" | "projectType" | "brief";
+/**
+ * Where the enquiry came from, as a channel the office can count.
+ *
+ * What reaches the Sheet is the label the visitor actually read: an Arabic
+ * enquiry files the Arabic wording, an English one files the English, the same
+ * way the project type above already behaves. The Sheet is a record of what
+ * was said, not a normalised dataset, so a column of these will hold both
+ * languages and should be counted as two spellings of one channel.
+ *
+ * `key` never leaves this file. It is the React key, and it is how "Other" is
+ * recognised without comparing translated strings.
+ *
+ * Kept deliberately to six. A longer list reads as a survey, and a visitor who
+ * came to ask about a lighting package will abandon a survey.
+ */
+const HEARD_FROM: { key: string; en: string; ar: string }[] = [
+  { key: "search", en: "Google or web search", ar: "بحث في Google أو الإنترنت" },
+  {
+    key: "social",
+    en: "Social media (Instagram, LinkedIn)",
+    ar: "وسائل التواصل الاجتماعي (إنستغرام، لينكدإن)",
+  },
+  {
+    key: "ai",
+    en: "AI assistant (ChatGPT, Gemini)",
+    ar: "مساعد ذكاء اصطناعي (ChatGPT، Gemini)",
+  },
+  {
+    key: "referral",
+    en: "Recommended by a friend or colleague",
+    ar: "توصية من صديق أو زميل",
+  },
+  { key: "existing", en: "Worked with ARAK before", ar: "تعاملنا مع أراك سابقًا" },
+  { key: "other", en: "Other", ar: "أخرى" },
+];
+
+/** The one option that opens a text box. Matched by key, so it still holds
+ *  when the labels are Arabic. */
+const HEARD_FROM_OTHER = "other";
+
+type FieldName =
+  | "name"
+  | "company"
+  | "email"
+  | "phone"
+  | "projectType"
+  | "heardFrom"
+  | "heardFromDetail"
+  | "brief";
 type Errors = Partial<Record<FieldName, string>>;
 type Status = "idle" | "sending" | "sent" | "failed";
 
@@ -73,6 +121,14 @@ export function ContactForm() {
   /** Held so the fallback link can be offered with the brief already in it. */
   const [fallbackHref, setFallbackHref] = useState<string>("");
 
+  /** The chosen channel as a `HEARD_FROM` key, held only so the "Other" box
+   *  can appear under it. The key rather than the label, so that switching
+   *  language does not leave this holding a string the list no longer
+   *  contains. The select is otherwise uncontrolled like every other field
+   *  here, and the label that gets submitted is read from the FormData, not
+   *  from this. */
+  const [heardFrom, setHeardFrom] = useState("");
+
   /** Whether the outcome notice is currently raised. Separate from `status`,
    *  which stays put after the notice is dismissed so the line under the
    *  button keeps reporting what happened. */
@@ -113,6 +169,10 @@ export function ContactForm() {
     email: ar ? "البريد الإلكتروني" : "Email",
     phone: ar ? "الهاتف" : "Phone",
     type: ar ? "نوع المشروع" : "Project type",
+    heard: ar ? "كيف عرفت عنا؟" : "How did you hear about us?",
+    heardPlaceholder: ar ? "اختر من القائمة" : "Please select",
+    heardOther: ar ? "أين تحديدًا؟" : "Where exactly?",
+    heardOtherPh: ar ? "مثلًا: مجلة أو دليل تجاري" : "For example, a magazine or a trade directory",
     brief: ar ? "موجز المشروع" : "Brief",
     optional: ar ? "(اختياري)" : "(optional)",
     namePh: ar ? "الاسم الكامل" : "Full name",
@@ -212,6 +272,11 @@ export function ContactForm() {
       email: get("email"),
       phone: get("phone"),
       projectType: get("projectType"),
+      // The label as the visitor read it, in their own language.
+      heardFrom: get("heardFrom"),
+      // Only carried when it is the answer to something. Typing under "Other"
+      // and then picking Google instead should not send the stray sentence.
+      heardFromDetail: heardFrom === HEARD_FROM_OTHER ? get("heardFromDetail") : "",
       brief: get("brief"),
       lang: ar ? "ar" : "en",
       source: typeof window === "undefined" ? "" : window.location.pathname,
@@ -222,6 +287,9 @@ export function ContactForm() {
       await sendEnquiry(enquiry);
       setStatus("sent");
       formRef.current?.reset();
+      // reset() empties the select; this is the mirror of it, and leaving it
+      // set would strand the "Other" box open above a blank dropdown.
+      setHeardFrom("");
     } catch {
       // Nothing is lost: the brief stays in the fields, and the fallback link
       // below carries it into the visitor's mail client already written out.
@@ -340,6 +408,52 @@ export function ContactForm() {
           ))}
         </select>
       </div>
+
+      <div className={styles.label}>
+        <label className={styles.labelText} htmlFor={fid("heardFrom")}>
+          {t.heard} <span className={styles.optional}>{t.optional}</span>
+        </label>
+        <select
+          id={fid("heardFrom")}
+          name="heardFrom"
+          defaultValue=""
+          // Read by position, not by value: the value is a translated label,
+          // and the key behind it is what the "Other" box keys off. The
+          // offset is the placeholder sitting at index 0.
+          onChange={(event) => setHeardFrom(HEARD_FROM[event.target.selectedIndex - 1]?.key ?? "")}
+          className={`${styles.field} ${styles.select}`}
+        >
+          {/* Opens blank rather than on the first channel. A select that
+              defaults to "Google or web search" reports Google for everyone
+              who never touched it, which is worse than no answer at all. */}
+          <option value="">{t.heardPlaceholder}</option>
+          {HEARD_FROM.map((option) => (
+            <option key={option.key} value={ar ? option.ar : option.en}>
+              {ar ? option.ar : option.en}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Appears only under "Other", and is optional even then: choosing
+          "Other" and writing nothing still records as "Other". Nothing here
+          can block a send. */}
+      {heardFrom === HEARD_FROM_OTHER && (
+        <div className={styles.label}>
+          <label className={styles.labelText} htmlFor={fid("heardFromDetail")}>
+            {t.heardOther} <span className={styles.optional}>{t.optional}</span>
+          </label>
+          <input
+            id={fid("heardFromDetail")}
+            name="heardFromDetail"
+            type="text"
+            autoComplete="off"
+            maxLength={120}
+            placeholder={t.heardOtherPh}
+            className={styles.field}
+          />
+        </div>
+      )}
 
       <div className={styles.label}>
         <label className={styles.labelText} htmlFor={fid("brief")}>

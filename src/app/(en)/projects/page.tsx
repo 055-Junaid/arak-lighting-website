@@ -14,7 +14,7 @@ export default function ProjectsPage() {
     <main id="main" tabIndex={-1}>
       <section className={styles.section}>
         <div className={styles.label}>
-          <span className={styles.eyebrow}>{ar ? "مشاريعنا" : "Projects"}</span>
+          <span className={styles.eyebrow}>{ar ? "مشاريعنا" : "Our Projects"}</span>
         </div>
         <h1 className={styles.title}>{ar ? "مراجع المشاريع" : "Project references"}</h1>
         <p className={styles.lead}>

@@ -54,21 +54,6 @@
   border-top: 1px solid var(--hair);
 }
 
-/* Marks a frame that is not photography of a delivered project. Set on the
-   caption line rather than over the image: it has to be readable, not
-   decorative, and covering the picture to say so helps nobody. */
-.note {
-  display: inline-block;
-  font: 500 10px/1 var(--font-plex-sans), sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.72);
-  border: 1px solid var(--rule);
-  padding: 5px 7px;
-  margin-inline-end: 9px;
-  vertical-align: 1px;
-}
-
 .backdrop {
   position: fixed;
   inset: 0;

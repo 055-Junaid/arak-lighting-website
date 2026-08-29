@@ -108,13 +108,17 @@
    Hero add-ons: the fifty-year mark on the right of the original
    hero, and the smart-poles rail along its foot.
    ───────────────────────────────────────────────────────────── */
-/* Zoom the photograph in a touch and push it right, so the building
-   sits clear of the headline instead of running underneath it. */
+/* No zoom on top of the cover fit. The 4% push-in used to clear the
+   building from under the headline, but it also cropped 67px off the
+   width of a photograph the frame was otherwise showing whole, and it
+   read as a picture pressed too close to the glass. At scale 1 the
+   full width of the frame is on screen and only the height is cropped,
+   which is as far out as a full-bleed cover fit goes. Any translate
+   would have to come back with a scale to cover the gap it opens, so
+   both sides now share one plain fit. */
 .heroArt {
   position: absolute;
   inset: 0;
-  transform: scale(1.04) translate(1%, 0);
-  transform-origin: center;
 }
 
 /* Matches the rest of the site's photography. Unlike the smaller frames it
@@ -143,11 +147,6 @@
     linear-gradient(260deg, #ffffff 0%, #ffffff 26%, rgba(255, 255, 255, 0.9) 46%, rgba(255, 255, 255, 0.45) 70%, rgba(255, 255, 255, 0.1) 100%);
 }
 
-/* Same reasoning as the veil: the nudge that clears the building from under
-   the headline has to go the other way once the headline changes sides. */
-:global([dir="rtl"]) .heroArt {
-  transform: scale(1.04) translate(-1%, 0);
-}
 
 .hero {
   height: min(88vh, 900px);
