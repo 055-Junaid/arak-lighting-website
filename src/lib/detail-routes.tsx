@@ -1,10 +1,13 @@
 import { notFound } from "next/navigation";
 import { FEATURED_PROJECTS, getFeaturedProject } from "@/lib/projects-data";
 import { getPole, getPoleNeighbours, FAMILY_LABEL, POLES } from "@/lib/smart-poles-data";
+import { SERVICES } from "@/lib/services-data";
+import { getServiceDetail } from "@/lib/service-details";
 import { clampDescription, pageMetadata } from "@/lib/seo";
 import type { Locale } from "@/lib/site";
 import { ProjectDetail } from "@/components/ProjectDetail";
 import { PoleDetail } from "@/components/PoleDetail";
+import { ServiceDetail, type ServiceNeighbour } from "@/components/ServiceDetail";
 import { Breadcrumbs } from "@/components/StructuredData";
 
 /**
@@ -117,6 +120,69 @@ export function PoleRoute({ slug, locale = "en" }: { slug: string; locale?: Loca
         family={FAMILY_LABEL[pole.family]}
         previous={trim(previous)}
         next={trim(next)}
+      />
+    </>
+  );
+}
+
+/* ---------- Services ---------- */
+
+/**
+ * The nine service lines get a page each. Smart Poles is deliberately absent:
+ * it is its own section at /services/smart-poles with a series index and
+ * twenty designs under it, and a static segment wins over this dynamic one
+ * anyway.
+ */
+export function serviceParams() {
+  return SERVICES.map((service) => ({ slug: service.slug }));
+}
+
+export function serviceMetadata(slug: string, locale: Locale) {
+  const service = SERVICES.find((s) => s.slug === slug);
+  if (!service) return {};
+  const ar = locale === "ar";
+  return pageMetadata({
+    title: ar ? service.ar : service.en,
+    // The lead is one sentence and reads as a strapline rather than as a
+    // description of the page, so the body follows it and the pair is
+    // clamped to what a result will actually print.
+    description: clampDescription(
+      ar ? `${service.arLead} ${service.arBody}` : `${service.lead} ${service.body}`
+    ),
+    route: `/services/${service.slug}`,
+    locale,
+  });
+}
+
+export function ServiceRoute({ slug, locale = "en" }: { slug: string; locale?: Locale }) {
+  const at = SERVICES.findIndex((service) => service.slug === slug);
+  const service = SERVICES[at];
+  const detail = getServiceDetail(slug);
+  if (!service || !detail) notFound();
+  const ar = locale === "ar";
+
+  // The list is a loop: the ninth line leads back to the first rather than
+  // stopping, which is how the pole pager already behaves.
+  const step = (by: number): ServiceNeighbour => {
+    const neighbour = SERVICES[(at + by + SERVICES.length) % SERVICES.length];
+    if (!neighbour || neighbour.slug === slug) return undefined;
+    return { slug: neighbour.slug, en: neighbour.en, ar: neighbour.ar };
+  };
+
+  return (
+    <>
+      <Breadcrumbs
+        trail={[
+          { name: ar ? "الخدمات" : "Services", route: "/services" },
+          { name: ar ? service.ar : service.en, route: `/services/${service.slug}` },
+        ]}
+        lang={locale}
+      />
+      <ServiceDetail
+        service={service}
+        detail={detail}
+        previous={step(-1)}
+        next={step(1)}
       />
     </>
   );

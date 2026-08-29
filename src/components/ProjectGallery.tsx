@@ -11,12 +11,25 @@ import { PHOTO_QUALITY } from "@/lib/images";
 export function ProjectGallery({
   images,
   projectName,
+  captions,
 }: {
   images: GalleryImage[];
+  /** What the set is of. Names the photographs when `captions` is absent. */
   projectName: string;
+  /**
+   * One caption per photograph, in the same order as `images`. Supplied by
+   * the service pages, where each frame is there to show a different thing
+   * and "photograph 4 of 7" describes none of it: the caption becomes the
+   * alt text, the lightbox's label, and a line printed under the tile.
+   *
+   * Project pages pass nothing. A project's photographs are the same subject
+   * from different angles, so numbering them is the honest description.
+   */
+  captions?: { en: string; ar: string; note?: { en: string; ar: string } }[];
 }) {
   const { lang } = useLang();
   const ar = lang === "ar";
+
   // Index of the photo shown full size, or null when the lightbox is closed.
   const [open, setOpen] = useState<number | null>(null);
   const dialog = useRef<HTMLDivElement>(null);
@@ -27,6 +40,15 @@ export function ProjectGallery({
   // inside it. Until this it did not: Tab walked out into the gallery behind
   // the backdrop, and closing dropped focus at the top of the document.
   useFocusTrap(dialog, open !== null, opener);
+
+  /** What photograph `i` is called, wherever it has to be named. */
+  const describe = (i: number) => {
+    const caption = captions?.[i];
+    if (caption) return ar ? caption.ar : caption.en;
+    return ar
+      ? `${projectName}، صورة ${i + 1} من ${images.length}`
+      : `${projectName}, photograph ${i + 1} of ${images.length}`;
+  };
 
   const close = useCallback(() => setOpen(null), []);
   const step = useCallback(
@@ -65,31 +87,49 @@ export function ProjectGallery({
   return (
     <>
       <div className={styles.gallery}>
-        {images.map((image, i) => (
-          <button
-            key={image.src}
-            type="button"
-            className={styles.tile}
-            onClick={(event) => {
-              opener.current = event.currentTarget;
-              setOpen(i);
-            }}
-            aria-label={
-              ar
-                ? `عرض الصورة ${i + 1} من ${images.length} بالحجم الكامل`
-                : `View photograph ${i + 1} of ${images.length} full size`
-            }
-          >
-            <Image
-              quality={PHOTO_QUALITY}
-              src={image.src}
-              alt={ar ? `${projectName} — صورة ${i + 1} من ${images.length}` : `${projectName} — photograph ${i + 1} of ${images.length}`}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
-              priority={i < 3}
-            />
-          </button>
-        ))}
+        {images.map((image, i) => {
+          const tile = (
+            <button
+              key={image.src}
+              type="button"
+              className={styles.tile}
+              onClick={(event) => {
+                opener.current = event.currentTarget;
+                setOpen(i);
+              }}
+              aria-label={
+                ar
+                  ? `عرض الصورة ${i + 1} من ${images.length} بالحجم الكامل`
+                  : `View photograph ${i + 1} of ${images.length} full size`
+              }
+            >
+              <Image
+                quality={PHOTO_QUALITY}
+                src={image.src}
+                alt={describe(i)}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                priority={i < 3}
+              />
+            </button>
+          );
+
+          return captions ? (
+            <figure key={image.src} className={styles.figure}>
+              {tile}
+              <figcaption className={styles.caption}>
+                {captions[i]?.note && (
+                  <span className={styles.note}>
+                    {ar ? captions[i].note!.ar : captions[i].note!.en}
+                  </span>
+                )}
+                {describe(i)}
+              </figcaption>
+            </figure>
+          ) : (
+            tile
+          );
+        })}
       </div>
 
       {active && open !== null && (
@@ -100,8 +140,8 @@ export function ProjectGallery({
           aria-modal="true"
           aria-label={
             ar
-              ? `${projectName}، الصورة ${open + 1} من ${images.length}`
-              : `${projectName}, photograph ${open + 1} of ${images.length}`
+              ? `${describe(open)}، ${open + 1} من ${images.length}`
+              : `${describe(open)}, ${open + 1} of ${images.length}`
           }
           onClick={close}
         >
@@ -157,7 +197,7 @@ export function ProjectGallery({
             <Image
               quality={PHOTO_QUALITY}
               src={active.src}
-              alt={ar ? `${projectName} — صورة ${open + 1} من ${images.length}` : `${projectName} — photograph ${open + 1} of ${images.length}`}
+              alt={describe(open)}
               fill
               sizes="(max-width: 640px) 100vw, 90vw"
               // Clicks on the photo itself shouldn't dismiss the overlay.

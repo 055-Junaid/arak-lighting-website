@@ -37,6 +37,38 @@
   outline-offset: 3px;
 }
 
+/* Captioned form, used by the service pages. The tile keeps its own 4:3
+   window and the caption sits under it, so a row of figures still lines up
+   even though the captions are different lengths. */
+.figure {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.caption {
+  font: 400 13px/1.55 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.62);
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 1px solid var(--hair);
+}
+
+/* Marks a frame that is not photography of a delivered project. Set on the
+   caption line rather than over the image: it has to be readable, not
+   decorative, and covering the picture to say so helps nobody. */
+.note {
+  display: inline-block;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.72);
+  border: 1px solid var(--rule);
+  padding: 5px 7px;
+  margin-inline-end: 9px;
+  vertical-align: 1px;
+}
+
 .backdrop {
   position: fixed;
   inset: 0;

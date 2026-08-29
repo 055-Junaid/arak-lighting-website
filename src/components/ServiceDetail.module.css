@@ -1,0 +1,500 @@
+/* One service line's own page. The dark hero carries the same ground as the
+   smart-pole pages and the Open Graph card, so arriving from a shared link
+   reads as the same site; everything below it returns to the paper-and-white
+   rhythm of /services. */
+
+.page {
+  background: var(--white);
+}
+
+.shell {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  font: 500 11px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
+}
+
+.band {
+  border-top: 1px solid var(--hair);
+  padding-block: clamp(64px, 7vw, 108px);
+}
+
+.bandPaper {
+  background: var(--paper);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(40px, 4.6vw, 64px);
+}
+
+.sectionTitle {
+  font: 600 clamp(28px, 3.2vw, 46px) / 1.07 var(--font-sora), sans-serif;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 18px 0 0;
+  max-width: 20ch;
+}
+
+.sectionNote {
+  font: 400 16px/1.7 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 0;
+  max-width: 40ch;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  background: #111111;
+  padding-block: clamp(26px, 3.4vw, 44px) clamp(44px, 5vw, 76px);
+}
+
+.crumb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font: 500 11px/1.6 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: clamp(34px, 4.2vw, 58px);
+}
+
+.crumb a {
+  color: rgba(255, 255, 255, 0.62);
+  transition: color 0.3s ease;
+}
+
+.crumb a:hover {
+  color: #ffffff;
+}
+
+.crumbNow {
+  color: #ffffff;
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr);
+  gap: clamp(40px, 4.6vw, 78px);
+  align-items: center;
+}
+
+.heroEyebrow {
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.heroTitle {
+  font: 600 clamp(36px, 4.8vw, 68px) / 1.03 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin: 18px 0 0;
+  max-width: 16ch;
+  text-wrap: balance;
+}
+
+.heroLead {
+  font: 300 clamp(17px, 1.5vw, 21px) / 1.55 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 22px 0 0;
+  max-width: 40ch;
+}
+
+.heroBody {
+  font: 400 15.5px/1.78 var(--font-plex-sans), sans-serif;
+  color: rgba(255, 255, 255, 0.62);
+  margin: 24px 0 0;
+  max-width: 56ch;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #111111;
+  background: #ffffff;
+  padding: 18px 28px;
+  transition:
+    background-color 0.3s ease,
+    gap 0.3s ease;
+}
+
+.cta:hover {
+  background: rgba(255, 255, 255, 0.86);
+  color: #111111;
+  gap: 18px;
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  padding: 18px 26px;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.ghost:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.heroArt {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #383838;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+/* Desaturated at rest like every other photograph on the site; the colour
+   switch and a hover bring it up. */
+.heroImg {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
+  transition: filter 0.5s ease;
+}
+
+.heroArt:hover .heroImg {
+  filter: none;
+}
+
+/* Same marker the gallery prints, on the one image that is not in the gallery.
+   Sits inside the frame because the hero has no caption line to hang it on. */
+.heroNote {
+  position: absolute;
+  inset-block-end: 12px;
+  inset-inline-start: 12px;
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: rgba(17, 17, 17, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 8px;
+}
+
+/* ---------- Fact rail ---------- */
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: clamp(48px, 5vw, 76px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.fact {
+  flex: 1 1 220px;
+  padding: 26px 28px 30px 0;
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.fact:last-child {
+  border-inline-end: 0;
+}
+
+.fact + .fact {
+  padding-inline-start: 28px;
+}
+
+.factValue {
+  font: 300 clamp(22px, 2.2vw, 32px) / 1.15 var(--font-sora), sans-serif;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+}
+
+.factLabel {
+  font: 500 11px/1.5 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 12px;
+}
+
+/* ---------- Overview ---------- */
+
+.overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  gap: clamp(40px, 4.8vw, 84px);
+  align-items: start;
+}
+
+.proseText {
+  font: 400 clamp(16px, 1.25vw, 17.5px) / 1.78 var(--font-plex-sans), sans-serif;
+  color: var(--body);
+  margin: 26px 0 0;
+  max-width: 62ch;
+}
+
+.includes {
+  border-top: 2px solid var(--ink);
+  padding-top: 22px;
+  position: sticky;
+  top: calc(var(--header-h) + 28px);
+}
+
+.includesHead {
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+}
+
+.includesList {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.includesList li {
+  font: 400 15px/1.5 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+/* ---------- Capability blocks ---------- */
+
+.blocks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 52px);
+  margin-top: clamp(40px, 4.4vw, 62px);
+}
+
+.block {
+  border-top: 1px solid rgba(17, 17, 17, 0.22);
+  padding-top: 24px;
+}
+
+.blockNo {
+  font: 300 13px/1 var(--font-sora), sans-serif;
+  letter-spacing: 0.22em;
+  color: rgba(17, 17, 17, 0.5);
+}
+
+.blockTitle {
+  font: 500 clamp(19px, 1.7vw, 23px) / 1.28 var(--font-sora), sans-serif;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 18px 0 0;
+  max-width: 24ch;
+}
+
+.blockBody {
+  font: 400 15px/1.75 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 14px 0 0;
+  max-width: 52ch;
+}
+
+/* ---------- Pager ---------- */
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.pagerLink {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--hair);
+  padding: 20px 26px;
+  min-width: 220px;
+  transition: border-color 0.3s ease;
+}
+
+.pagerNext {
+  text-align: end;
+  margin-inline-start: auto;
+}
+
+.pagerLink:hover {
+  border-color: var(--ink);
+}
+
+.pagerLabel {
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.pagerName {
+  font: 500 clamp(18px, 1.6vw, 22px) / 1.2 var(--font-sora), sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* ---------- Closing call to action ---------- */
+
+.close {
+  text-align: center;
+  padding-block: clamp(72px, 8vw, 118px) clamp(8px, 1vw, 16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.closeGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% -10%, rgba(17, 17, 17, 0.07) 0%, rgba(255, 255, 255, 0) 62%);
+  pointer-events: none;
+}
+
+.closeTitle {
+  font: 600 clamp(30px, 4vw, 56px) / 1.06 var(--font-sora), sans-serif;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 auto;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.closeLead {
+  font: 300 clamp(16px, 1.4vw, 20px) / 1.65 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  margin: 24px auto 0;
+  max-width: 50ch;
+}
+
+.closeCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #111111;
+  padding: 18px 30px;
+  margin-top: 40px;
+  transition:
+    background 0.3s ease,
+    gap 0.3s ease;
+}
+
+.closeCta:hover {
+  background: #2c2c2a;
+  color: #ffffff;
+  gap: 18px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroImg,
+  .cta,
+  .ghost,
+  .pagerLink,
+  .closeCta {
+    transition: none;
+  }
+}
+
+/* ---------- Responsive ---------- */
+
+/* tab */
+@media (max-width: 1000px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Photograph first on a stacked hero: it is what tells you which service
+     you have opened before any of the copy is read. */
+  .heroArt {
+    order: -1;
+    aspect-ratio: 16 / 10;
+  }
+
+  .overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .includes {
+    position: static;
+  }
+
+  .blocks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* phone */
+@media (max-width: 560px) {
+  .fact {
+    flex: 1 1 100%;
+    padding-inline: 0;
+    border-inline-end: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .fact + .fact {
+    padding-inline-start: 0;
+  }
+
+  .fact:last-child {
+    border-bottom: 0;
+  }
+
+  /* Full width and centred. "Enquire about 3D projection mapping" wraps to
+     two lines at this width whatever is done to it, so the label is centred
+     rather than left to sit ragged against a vertically centred arrow. */
+  .heroActions .cta,
+  .heroActions .ghost {
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .pagerLink {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
+/* Breadcrumb links are 11px on a 1.6 line — 18px of target on their own. */
+@media (pointer: coarse) {
+  .crumb a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    padding-inline: 7px;
+    margin-block: -14px;
+    margin-inline: -7px;
+  }
+}

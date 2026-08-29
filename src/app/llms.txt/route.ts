@@ -46,7 +46,7 @@ const line = (s = "") => s;
 const stat = (label: string) => STATS.find((s) => s.en === label)?.value ?? "";
 
 export function GET() {
-  const services = SERVICES.map((s) => `- ${s.en}: ${s.lead}`);
+  const services = SERVICES.map((s) => `- [${s.en}](${url(`/services/${s.slug}`)}): ${s.lead}`);
 
   // Named clients carry more weight than a count. These are the projects with
   // a page of their own; the full schedule on /projects is longer, and its
@@ -83,7 +83,7 @@ export function GET() {
     `## Services`,
     line(),
     ...services,
-    `- ${SMART_POLES.en}: ${SMART_POLES.lead}`,
+    `- [${SMART_POLES.en}](${url(SMART_POLES.href)}): ${SMART_POLES.lead}`,
     line(),
     `## Selected projects`,
     line(),
@@ -92,8 +92,8 @@ export function GET() {
     `## Key pages`,
     line(),
     `- [Home](${url("/")}): what the company does, in brief.`,
-    `- [Services](${url("/services")}): the ten service lines in full, and how a project runs from brief to handover.`,
-    `- [Smart Poles](${url("/services/smart-poles")}): the C°LB Smart Light Pole Series ARAK supplies, installs, integrates and maintains — ${POLE_DESIGN_COUNT} designs, from ornamental to smart-city.`,
+    `- [Services](${url("/services")}): the ten service lines in full, and how a project runs from brief to handover. Each line above has a page of its own.`,
+    `- [Smart Poles](${url("/services/smart-poles")}): the C°LB Smart Light Pole Series ARAK supplies, installs, integrates and maintains: ${POLE_DESIGN_COUNT} designs, from ornamental to smart-city.`,
     `- [Projects](${url("/projects")}): delivered work, with photographs and scope.`,
     `- [About](${url("/about")}): history from 1976, structure, and how the company works.`,
     `- [Contact](${url("/contact")}): showroom address, map, phone, and an enquiry form.`,

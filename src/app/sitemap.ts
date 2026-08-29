@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { LOCALES, ROUTES, localePath, url } from "@/lib/site";
 import { FEATURED_PROJECTS } from "@/lib/projects-data";
 import { POLES } from "@/lib/smart-poles-data";
+import { SERVICES } from "@/lib/services-data";
 
 /**
  * Every page a visitor can reach, in both languages.
@@ -37,5 +38,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const poles = POLES.flatMap((p) => entry(`/services/smart-poles/${p.slug}`, 0.6, "yearly"));
 
-  return [...staticPages, ...projects, ...poles];
+  // The nine service lines' own pages. Ranked above a project page and below
+  // /services itself: these are the terms people search for — "facade
+  // lighting Riyadh" — and each one is the page that should answer.
+  const services = SERVICES.flatMap((s) => entry(`/services/${s.slug}`, 0.7, "monthly"));
+
+  return [...staticPages, ...services, ...projects, ...poles];
 }

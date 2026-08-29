@@ -87,6 +87,20 @@
   margin-top: 26px;
 }
 
+/* Touch wording is the default; a real pointer swaps in the hover wording. */
+.hintPointer {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hintPointer {
+    display: inline;
+  }
+  .hintTouch {
+    display: none;
+  }
+}
+
 /* ---------- Stage ---------- */
 
 /* Every panel occupies the same grid cell, so the stage is as tall as the
@@ -108,12 +122,28 @@
   visibility: hidden;
   transition:
     opacity 0.34s ease,
-    visibility 0.34s ease;
+    visibility 0.34s ease,
+    border-color 0.3s ease;
 }
 
 .panelOn {
   opacity: 1;
   visibility: visible;
+  /* The whole panel opens the service, so it reads as one target. */
+  cursor: pointer;
+}
+
+/* Guarded: on a touch screen a tapped :hover sticks until you tap elsewhere,
+   which would leave the card looking permanently pointed at. */
+@media (hover: hover) {
+  .panelOn:hover {
+    border-color: rgba(17, 17, 17, 0.32);
+  }
+
+  .panelOn:hover .panelCta {
+    border-color: #111111;
+    gap: 18px;
+  }
 }
 
 /* Placeholder photography: present but deliberately faint, so the copy leads. */
@@ -183,12 +213,35 @@
   border-top: 1px solid rgba(17, 17, 17, 0.13);
 }
 
+.panelCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  font: 500 12px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #111111;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.3);
+  padding-bottom: 9px;
+  transition:
+    gap 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.panelCta:hover {
+  color: #111111;
+  border-color: #111111;
+  gap: 18px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tab,
   .tab::after,
   .tabNo,
   .tabName,
-  .panel {
+  .panel,
+  .panelCta {
     transition: none;
   }
 }
