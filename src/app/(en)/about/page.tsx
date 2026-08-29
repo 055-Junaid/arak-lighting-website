@@ -38,7 +38,7 @@ export default function AboutPage() {
                 <div className={styles.heroActions}>
                   <Link href={localePath("/projects", lang)} className={styles.primaryCta}>
                     {ar ? "شاهد أعمالنا" : "See the work"}
-                    <span aria-hidden="true">&rarr;</span>
+                    <span aria-hidden="true">{ar ? "←" : "→"}</span>
                   </Link>
                   <a
                     href="/docs/Arak%20Company%20Profile%202024.pdf"
@@ -342,11 +342,11 @@ export default function AboutPage() {
             <div className={styles.closeActions}>
               <Link href={localePath("/contact", lang)} className={styles.closeCta}>
                 {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
               <Link href={localePath("/services", lang)} className={styles.closeGhost}>
                 {ar ? "استكشف خدماتنا" : "Explore the services"}
-                <span aria-hidden="true">&rarr;</span>
+                <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
             </div>
             <p className={styles.closeAddress}>
