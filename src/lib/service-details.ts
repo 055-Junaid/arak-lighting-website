@@ -97,31 +97,31 @@ const GENERATED: Record<string, [number, number]> = {
   "/generated/facade-lighting/01-stone-tower.jpg": [1248, 832],
   "/generated/facade-lighting/02-mosque.jpg": [1248, 832],
   "/generated/facade-lighting/03-villa.jpg": [1248, 832],
-  "/generated/facade-lighting/04-aerial-dusk.png": [1448, 1086],
+  "/generated/facade-lighting/04-aerial-dusk.jpg": [1448, 1086],
   "/generated/facade-lighting/05-slab-edge-tower.jpg": [2048, 1374],
-  "/generated/home-automation/01-villa-systems.jpg": [1536, 1024],
+  "/generated/home-automation/01-villa-systems.png": [1536, 1024],
   "/generated/lighting-design/01-chandelier-lobby.jpg": [2048, 1365],
   "/generated/lighting-design/02-living-room.jpg": [2048, 1365],
   "/generated/lighting-design/03-restaurant-scheme.jpg": [2048, 1366],
-  "/generated/home-automation/03-guest-room.jpg": [1536, 1024],
-  "/generated/home-automation/04-network-layer.jpg": [1536, 1024],
-  "/generated/home-automation/05-one-bus.jpg": [1536, 1024],
-  "/generated/home-automation/06-villa-overview.png": [1565, 1005],
-  "/generated/lighting-controls/01-knx-topology.jpg": [1536, 1024],
-  "/generated/lighting-controls/03-scene-timeline.jpg": [1536, 1024],
-  "/generated/lighting-controls/06-panel-anatomy.jpg": [1536, 1024],
-  "/generated/lighting-controls/07-controls-overview.png": [1536, 1024],
+  "/generated/home-automation/03-guest-room.png": [1536, 1024],
+  "/generated/home-automation/04-network-layer.png": [1536, 1024],
+  "/generated/home-automation/05-one-bus.png": [1536, 1024],
+  "/generated/home-automation/06-villa-overview.jpg": [1565, 1005],
+  "/generated/lighting-controls/01-knx-topology.png": [1536, 1024],
+  "/generated/lighting-controls/03-scene-timeline.png": [1536, 1024],
+  "/generated/lighting-controls/06-panel-anatomy.png": [1536, 1024],
+  "/generated/lighting-controls/07-controls-overview.jpg": [1536, 1024],
   "/generated/lighting-controls/08-touch-panel-hero.jpg": [2048, 1366],
   "/generated/lighting-installation/01-scissor-lift.jpg": [1248, 832],
   "/generated/lighting-installation/03-terminating.jpg": [1248, 832],
   "/generated/lighting-installation/05-fixture-fix.jpg": [1248, 832],
-  "/generated/lighting-installation/06-installation-overview.png": [1536, 1024],
+  "/generated/lighting-installation/06-installation-overview.jpg": [1536, 1024],
   "/generated/lighting-installation/07-linear-install-hero.jpg": [2048, 1365],
   "/generated/outdoor-lighting/01-street.jpg": [1248, 832],
   "/generated/outdoor-lighting/02-landscape-path.jpg": [1248, 832],
   "/generated/outdoor-lighting/03-car-park.jpg": [1248, 832],
   "/generated/project-management/01-site-meeting.jpg": [1248, 832],
-  "/generated/project-management/02-coordination-meeting.png": [1536, 1024],
+  "/generated/project-management/02-coordination-meeting.jpg": [1536, 1024],
   "/generated/project-management/03-process-flow.png": [1774, 1330],
   "/generated/projection-mapping/01-mapped-show.jpg": [1248, 832],
   "/generated/projection-mapping/02-projector-rig.jpg": [1248, 832],
@@ -325,7 +325,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 03 --- */
   "facade-lighting": {
     hero: photo(
-      "/generated/facade-lighting/04-aerial-dusk.png",
+      "/generated/facade-lighting/04-aerial-dusk.jpg",
       "A retail and leisure block seen from above at dusk, each facade plane lit to its own value against the city behind it",
       "مجمّع تجاري وترفيهي من الأعلى عند الغسق، كل مستوٍ من الواجهة مُضاء بقيمته الخاصة مقابل المدينة خلفه"
     ),
@@ -551,22 +551,22 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
-        "/generated/lighting-controls/07-controls-overview.png",
+        "/generated/lighting-controls/07-controls-overview.jpg",
         "What a control system does across a building: daylight harvesting, occupancy sensing, scenes, dimming, scheduling and remote access",
         "ما يفعله نظام التحكّم في المبنى: استثمار الضوء الطبيعي، واستشعار الإشغال، والمشاهد، والخفت، والجدولة، والوصول عن بُعد"
       ),
       photo(
-        "/generated/lighting-controls/01-knx-topology.jpg",
+        "/generated/lighting-controls/01-knx-topology.png",
         "How a KNX installation is put together: one power supply, one bus, and the devices hanging off it",
         "كيف يُبنى نظام KNX: مصدر تغذية واحد وناقل واحد والأجهزة المتفرّعة عنه"
       ),
       photo(
-        "/generated/lighting-controls/03-scene-timeline.jpg",
+        "/generated/lighting-controls/03-scene-timeline.png",
         "One space across a day, and the scenes a control system moves it through",
         "مساحة واحدة على مدار اليوم، والمشاهد التي ينقلها نظام التحكّم بينها"
       ),
       photo(
-        "/generated/lighting-controls/06-panel-anatomy.jpg",
+        "/generated/lighting-controls/06-panel-anatomy.png",
         "What sits inside a lighting control panel, rail by rail",
         "ما يوجد داخل لوحة التحكّم بالإضاءة، قضيبًا بعد قضيب"
       )
@@ -630,7 +630,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
-        "/generated/lighting-installation/06-installation-overview.png",
+        "/generated/lighting-installation/06-installation-overview.jpg",
         "The fittings an installation is made of, named on the building they go into: linear profiles, downlights, wall washers, step lights and the control that runs them",
         "الوحدات التي يتكوّن منها التركيب، مُسمّاة على المبنى الذي تُركَّب فيه: القطاعات الخطّية والوحدات المدفونة وغاسلات الجدران وإضاءة الدرج والتحكّم الذي يُشغّلها"
       ),
@@ -724,7 +724,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "اجتماع المتابعة الذي تُنسَّق فيه حزمة الإضاءة مع برنامج البناء"
       ),
       photo(
-        "/generated/project-management/02-coordination-meeting.png",
+        "/generated/project-management/02-coordination-meeting.jpg",
         "A lighting package worked through in the office: the layout on screen, the drawings on the table, the fitting types and colour temperatures on the board",
         "حزمة إضاءة تُدرس في المكتب: التوزيع على الشاشة، والمخططات على الطاولة، وأنواع الوحدات ودرجات حرارة اللون على اللوح"
       )
@@ -809,7 +809,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
   /* ---------------------------------------------------------------- 09 --- */
   "home-automation": {
     hero: photo(
-      "/generated/home-automation/06-villa-overview.png",
+      "/generated/home-automation/06-villa-overview.jpg",
       "One home on one system: lighting, climate, hot water, security and the devices around them, all reached from the same place",
       "منزل واحد على نظام واحد: الإضاءة والتكييف والماء الساخن والأمن والأجهزة المحيطة بها، تُدار جميعها من مكان واحد"
     ),
@@ -862,7 +862,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     },
     gallery: [
       photo(
-        "/generated/home-automation/06-villa-overview.png",
+        "/generated/home-automation/06-villa-overview.jpg",
         "One home on one system: lighting, climate, hot water, security and the devices around them, all reached from the same place",
         "منزل واحد على نظام واحد: الإضاءة والتكييف والماء الساخن والأمن والأجهزة المحيطة بها، تُدار جميعها من مكان واحد"
       ),
@@ -872,17 +872,17 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         "دلفينو مايفير، الرياض: لوحة اللمس KNX، وعليها مشاهد المطعم والستائر والمظلات والتكييف في شاشة واحدة"
       ),
       photo(
-        "/generated/home-automation/01-villa-systems.jpg",
+        "/generated/home-automation/01-villa-systems.png",
         "One bus, five systems: lighting, curtains, HVAC, security and metering answering to a single panel",
         "ناقل واحد وخمسة أنظمة: الإضاءة والستائر والتكييف والأمن والقياس تخضع للوحة واحدة"
       ),
       photo(
-        "/generated/home-automation/03-guest-room.jpg",
+        "/generated/home-automation/03-guest-room.png",
         "A guest room's devices and the controller they report to",
         "أجهزة غرفة النزيل ووحدة التحكّم التي ترتبط بها"
       ),
       photo(
-        "/generated/home-automation/05-one-bus.jpg",
+        "/generated/home-automation/05-one-bus.png",
         "Lighting, blinds, HVAC, locks, metering and scenes on one supervision layer",
         "الإضاءة والمظلات والتكييف والأقفال والقياس والمشاهد على طبقة إشراف واحدة"
       ),

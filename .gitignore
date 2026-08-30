@@ -54,7 +54,8 @@ next-env.d.ts
 # local pre-optimisation image backups
 /_originals/
 
-# AI-generated imagery, local only. /review-generated is the full candidate
-# set from the fal.ai run; /generated holds the ones selected for use.
+# The full candidate set from the fal.ai run. Nothing serves these, so they
+# stay local. /public/generated/ holds the frames actually chosen for use and
+# IS committed: src/lib/service-details.ts references them, so leaving them out
+# ships eight service pages with broken images, which is what happened once.
 /public/review-generated/
-/public/generated/
