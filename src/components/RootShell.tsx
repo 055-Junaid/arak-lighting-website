@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { LanguageProvider } from "@/lib/lang";
 import { COLOR_MODE_BOOT_SCRIPT } from "@/lib/color-mode";
 import { Header } from "@/components/Header";
@@ -6,6 +7,7 @@ import { StructuredData } from "@/components/StructuredData";
 import { Footer } from "@/components/Footer";
 import { ColorToggle } from "@/components/ColorToggle";
 import type { Locale } from "@/lib/site";
+import { GA_MEASUREMENT_ID } from "@/lib/analytics";
 
 /**
  * The document both locales render.
@@ -64,6 +66,17 @@ export function RootShell({
           <ColorToggle />
         </LanguageProvider>
       </body>
+      {/* After </body>, which is where Next's own guide places it, so the tag
+          is fetched once hydration has happened rather than competing with
+          first paint. Rendered only when the id is set — see lib/analytics.ts
+          — so a developer's session and every deploy preview stay out of the
+          production numbers.
+
+          NOTE: there is no consent gate on this yet, and that is a decision
+          rather than an oversight. The site has no cookie banner, GA4 sets
+          cookies, and Saudi's PDPL is in force; the banner is planned
+          separately. Anyone adding one should gate this render on it. */}
+      {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
     </html>
   );
 }
