@@ -241,9 +241,10 @@ a:hover {
 }
 
 /* --- Colour switch -------------------------------------------------------
-   Every photograph, logo and map on the site rests desaturated. The header
-   switch sets data-color="on" on <html> and lifts all of them to full colour
-   in one move — the site's own lights coming up. Per-component rules use
+   Every photograph, logo and map is desaturated by its own component rule,
+   and <html data-color="on">, the default, lifts all of them to full colour
+   in one move: the site's own lights up. The switch sets "off" to show it
+   in black and white. Per-component rules use
    plain class selectors, so !important is what lets this single rule win. */
 img,
 iframe {

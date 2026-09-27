@@ -3,16 +3,20 @@
 import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 /**
- * Site-wide colour switch. The whole site rests in black and white — the
- * lighting is "off" — and this flips every photograph, logo and map back to
- * full colour, the way a lighting company turns a room on.
+ * Site-wide colour switch. The site opens with the lights ON, every
+ * photograph, logo and map in full colour, and this takes it down to black
+ * and white and back up again, the way a lighting company works a room.
+ *
+ * It used to open in black and white. Visitors who never found the switch
+ * (most of the people it was tested on) saw the whole site grey and never
+ * saw the projects in colour at all, so the default was turned round.
  *
  * The state lives on <html data-color="on|off"> so a single global rule in
  * globals.css can override every per-component grayscale filter at once,
  * without each component having to subscribe to anything. This module is the
  * external store React reads that DOM state from, which is also what lets a
- * saved choice hydrate cleanly: the server always renders "off", and React
- * swaps to the stored value right after hydration.
+ * saved choice hydrate cleanly: the server always renders "on", and React
+ * swaps to a stored "off" right after hydration.
  */
 
 export const COLOR_MODE_STORAGE_KEY = "arak-color";
@@ -22,9 +26,10 @@ export const COLOR_MODE_SEEN_KEY = "arak-color-seen";
 
 /**
  * Runs before first paint (injected in the root layout) so a returning
- * visitor who left the lights on never sees a flash of grayscale.
+ * visitor who turned the lights off never sees a flash of colour first.
+ * Only an explicit "off" counts: no stored value means the default, on.
  */
-export const COLOR_MODE_BOOT_SCRIPT = `(function(){try{if(localStorage.getItem("${COLOR_MODE_STORAGE_KEY}")==="on"){document.documentElement.setAttribute("data-color","on")}}catch(e){}})()`;
+export const COLOR_MODE_BOOT_SCRIPT = `(function(){try{if(localStorage.getItem("${COLOR_MODE_STORAGE_KEY}")==="off"){document.documentElement.setAttribute("data-color","off")}}catch(e){}})()`;
 
 const listeners = new Set<() => void>();
 
@@ -38,7 +43,7 @@ function read(key: string, match: string): boolean {
   }
 }
 
-let colorOn = read(COLOR_MODE_STORAGE_KEY, "on");
+let colorOn = !read(COLOR_MODE_STORAGE_KEY, "off");
 let seen = read(COLOR_MODE_SEEN_KEY, "1");
 
 /**
@@ -53,9 +58,9 @@ function subscribe(listener: () => void) {
 }
 
 const getSnapshot = () => snapshot;
-// Lights off and no nudge on the server: the nudge starts a beat after
+// Lights on and no nudge on the server: the nudge starts a beat after
 // hydration, once we know whether this visitor has met the switch before.
-const getServerSnapshot = () => "off|seen";
+const getServerSnapshot = () => "on|seen";
 
 function setColor(next: boolean) {
   colorOn = next;
@@ -103,8 +108,8 @@ export function useColorMode() {
   return {
     color,
     toggleColor,
-    /** True only while the lights are off and the visitor has never touched
-     *  the switch — drives the attention pulse. */
-    nudge: !color && state.endsWith("new"),
+    /** True until the visitor first works the switch, whichever way the
+     *  lights are: drives the attention pulse and the first-visit bubble. */
+    nudge: state.endsWith("new"),
   };
 }
