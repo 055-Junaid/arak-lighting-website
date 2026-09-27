@@ -142,7 +142,7 @@ export function serviceMetadata(slug: string, locale: Locale) {
   if (!service) return {};
   const ar = locale === "ar";
   return pageMetadata({
-    title: ar ? service.ar : service.en,
+    title: ar ? (service.arSeoTitle ?? service.ar) : (service.seoTitle ?? service.en),
     // The lead is one sentence and reads as a strapline rather than as a
     // description of the page, so the body follows it and the pair is
     // clamped to what a result will actually print.

@@ -137,26 +137,34 @@ export default function HomePage() {
                 — the most memorable thing about the brand — sat 900px down the
                 page. Arabic readers get no reveal from a translation of their
                 own word, so that column carries the positioning instead. */}
-            <div className={styles.heroEyebrow}>
-              {ar ? (
-                <>
-                  <span className={styles.heroName}>أراك</span>
-                  <span aria-hidden="true" className={styles.heroDot}>·</span>
-                  <span>حلول الإضاءة الذكية</span>
-                  <span aria-hidden="true" className={styles.heroDot}>·</span>
-                  <span>الرياض</span>
-                </>
-              ) : (
-                <>
-                  <span className={styles.heroName}>ARAK</span>
-                  <span aria-hidden="true" className={styles.heroDot}>·</span>
-                  <span lang="ar" dir="rtl" className={styles.heroNameAr}>أراك</span>
-                  <span aria-hidden="true" className={styles.heroDot}>·</span>
-                  <span className={styles.heroGloss}>&ldquo;I see you&rdquo; in Arabic</span>
-                </>
-              )}
-            </div>
-            <h1 style={{ font: "600 clamp(42px,6vw,88px)/1.0 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>{lang === "ar" ? "نُضيء المملكة منذ عام 1976" : "Lighting the Kingdom since 1976"}</h1>
+            {/* The brand line sits INSIDE the h1 so the heading names the
+                company. Search Console had Arabic brand searches ("شركة اراك")
+                on page two, and neither heading said أراك or Arak at all; the
+                name was only in the <title>. It looks exactly as it did as a
+                separate line above: .heroEyebrow is a flex row, so it still
+                breaks onto its own line and carries its own type. */}
+            <h1 style={{ font: "600 clamp(42px,6vw,88px)/1.0 var(--font-sora),sans-serif", letterSpacing: "-0.035em", color: "#111111", margin: "0", maxWidth: "15ch", textWrap: "balance" }}>
+              <span className={styles.heroEyebrow}>
+                {ar ? (
+                  <>
+                    <span className={styles.heroName}>أراك للإضاءة</span>{" "}
+                    <span aria-hidden="true" className={styles.heroDot}>·</span>{" "}
+                    <span>حلول الإضاءة الذكية</span>{" "}
+                    <span aria-hidden="true" className={styles.heroDot}>·</span>{" "}
+                    <span>الرياض</span>{" "}
+                  </>
+                ) : (
+                  <>
+                    <span className={styles.heroName}>Arak Lighting</span>{" "}
+                    <span aria-hidden="true" className={styles.heroDot}>·</span>{" "}
+                    <span lang="ar" dir="rtl" className={styles.heroNameAr}>أراك</span>{" "}
+                    <span aria-hidden="true" className={styles.heroDot}>·</span>{" "}
+                    <span className={styles.heroGloss}>&ldquo;I see you&rdquo; in Arabic</span>{" "}
+                  </>
+                )}
+              </span>{" "}
+              {lang === "ar" ? "نُضيء المملكة منذ عام 1976" : "Lighting the Kingdom since 1976"}
+            </h1>
             {/* The old lead opened "Five decades…" directly beneath a headline
                 that already says 1976, and a seal that said 50+. It now spends
                 its one sentence on the scope of work instead. */}

@@ -43,6 +43,22 @@ export const SITE_NAME = "Arak Lighting";
 /** The same, in Arabic, for titles and metadata on the /ar tree. */
 export const SITE_NAME_AR = "أراك للإضاءة";
 
+/**
+ * Every other way the company is written, for schema.org `alternateName`.
+ *
+ * Search Console showed people typing the Arabic name without the hamza
+ * ("اراك", "شركة اراك") and landing on page two. The bare spelling and the
+ * "شركة" form are listed so the structured data names the company the way it
+ * is actually searched for, not only the way it is correctly spelled.
+ */
+export const SITE_NAME_VARIANTS = [
+  "ARAK",
+  "أراك",
+  "اراك للاضاءة",
+  "شركة أراك للإضاءة",
+  "شركة اراك",
+];
+
 export const SITE_TAGLINE =
   "A Lighting Company and Smart Lighting Solutions Provider, Riyadh, Kingdom of Saudi Arabia. Since 1976.";
 

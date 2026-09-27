@@ -36,12 +36,52 @@
     0 14px 40px rgba(17, 17, 17, 0.26);
 }
 
-/* First-timers, lights still off: a slow amber breath around the pill. Stops
-   for good the moment the switch is worked. */
+/* First-timers: a slow amber breath around the pill, and the bulb flickers
+   the way a lamp does when it is switched. Both stop for good the moment the
+   switch is worked. */
 .dock[data-nudge="true"] {
   animation:
     dockIn 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.6s both,
-    breathe 3.2s ease-in-out 1.8s infinite;
+    breathe 2.4s ease-in-out 1.8s infinite;
+}
+
+.dock[data-nudge="true"] .bulb {
+  animation: flicker 4.8s linear 1.8s infinite;
+}
+
+/* The first-visit bubble, parked just above the dock with a notch pointing
+   down at it. White on the black pill's corner so it reads over photographs,
+   the light sections and the black footer alike. */
+.hint {
+  position: fixed;
+  z-index: 71;
+  right: clamp(18px, 2.4vw, 34px);
+  bottom: calc(clamp(18px, 2.4vw, 34px) + 64px);
+  padding: 11px 14px;
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  box-shadow: 0 14px 40px rgba(17, 17, 17, 0.22);
+  font: 500 13px/1.2 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  animation:
+    hintIn 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both,
+    bob 2.4s ease-in-out 0.5s infinite;
+}
+
+.hint::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-right: 1px solid rgba(17, 17, 17, 0.16);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.16);
+  transform: rotate(45deg);
 }
 
 .bulb {
@@ -129,7 +169,47 @@
   50% {
     box-shadow:
       0 14px 40px rgba(17, 17, 17, 0.26),
-      0 0 0 9px rgba(233, 162, 59, 0.13);
+      0 0 0 10px rgba(233, 162, 59, 0.32);
+  }
+}
+
+/* Two quick dips, then steady for the rest of the cycle, so it reads as a
+   lamp catching rather than as a loading spinner. */
+@keyframes flicker {
+  0%,
+  14%,
+  100% {
+    opacity: 1;
+  }
+  3% {
+    opacity: 0.25;
+  }
+  6% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes hintIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
   }
 }
 
@@ -176,11 +256,23 @@
     width: 22px;
     height: 22px;
   }
+
+  /* The dock is 48px tall here rather than ~50, and the bubble matters most
+     on a phone, where the switch is a bare bulb with no word beside it. */
+  .hint {
+    bottom: calc(clamp(18px, 2.4vw, 34px) + 60px);
+  }
+
+  .hint::after {
+    right: 18px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dock,
-  .dock[data-nudge="true"] {
+  .dock[data-nudge="true"],
+  .dock[data-nudge="true"] .bulb,
+  .hint {
     animation: none;
   }
 
