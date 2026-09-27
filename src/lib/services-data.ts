@@ -5,6 +5,18 @@ export interface Service {
   photo: string;
   en: string;
   ar: string;
+  /**
+   * What the search result and the page heading say, where that has to differ
+   * from the short name. `en`/`ar` label the service everywhere it is listed
+   * (menus, cards, breadcrumbs, the pager), and "Lighting Design" is right
+   * there. It is wrong as a search title: it names neither the city nor the
+   * word people search with, so Google answered "lighting consultant riyadh"
+   * with the homepage, whose title does say Riyadh.
+   */
+  seoTitle?: string;
+  arSeoTitle?: string;
+  heading?: string;
+  arHeading?: string;
   lead: string;
   arLead: string;
   body: string;
@@ -56,6 +68,10 @@ export const SERVICES: Service[] = [
     photo: "/projects/solitaire-mall/07.jpg",
     en: "Lighting Design",
     ar: "تصميم الإضاءة",
+    seoTitle: "Lighting Design Consultant in Riyadh",
+    arSeoTitle: "استشارات تصميم الإضاءة في الرياض",
+    heading: "Lighting design consultancy, Riyadh",
+    arHeading: "استشارات تصميم الإضاءة في الرياض",
     lead: "Drawings you can build from and numbers you can defend in a design review.",
     arLead: "مخططات تصلح للتنفيذ وأرقام تصمد في اجتماع مراجعة التصميم.",
     body: "Concept studies, photometric calculations, lux-level verification and complete fixture schedules, produced alongside architects, lighting consultants and electrical engineers. We work in the consultant's format and to the project's own specification, so submittals clear review instead of bouncing back.",

@@ -145,7 +145,7 @@ export function SmartPolesView() {
               <span className={styles.crumbNow}>{ar ? "الأعمدة الذكية" : "Smart Poles"}</span>
             </div>
             <h1 className={styles.heroTitle}>
-              {ar ? "نصمّمه لك أنت." : "We design it for you."}
+              {ar ? "أعمدة إنارة ذكية، نصمّمها لك أنت." : "Smart street light poles, designed for you."}
             </h1>
             <p className={styles.heroLead}>
               {ar

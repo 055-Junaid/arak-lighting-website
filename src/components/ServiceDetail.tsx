@@ -69,7 +69,9 @@ export function ServiceDetail({
               <span className={styles.heroEyebrow}>
                 {ar ? `خط الخدمة ${service.no}` : `Service line ${service.no}`}
               </span>
-              <h1 className={styles.heroTitle}>{name}</h1>
+              <h1 className={styles.heroTitle}>
+                {(ar ? service.arHeading : service.heading) ?? name}
+              </h1>
               <p className={styles.heroLead}>{ar ? service.arLead : service.lead}</p>
               <p className={styles.heroBody}>{ar ? service.arBody : service.body}</p>
               <div className={styles.heroActions}>
