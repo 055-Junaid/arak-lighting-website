@@ -23,6 +23,17 @@
  */
 export const ENQUIRY_ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT ?? "";
 
+/**
+ * Where an enquiry goes when the visitor left the marketing box ticked: the
+ * ARAK marketing app, which files them as a marketing contact (the group
+ * "Website enquiries"). Both values ship in the page and are not secrets: the
+ * key only names which workspace this site belongs to, and the app accepts
+ * posts from arak-sa.com alone. Overridable per deployment.
+ */
+export const SIGNUP_ENDPOINT =
+  process.env.NEXT_PUBLIC_SIGNUP_ENDPOINT ?? "https://marketing-main-ten.vercel.app/api/email/website-signup";
+export const SIGNUP_KEY = process.env.NEXT_PUBLIC_SIGNUP_KEY ?? "arak_site_cf63094877b1933864ef";
+
 /** Where enquiries are addressed. The fallback, and the address on the page. */
 export const INBOX = "info@arak-sa.com";
 
@@ -135,4 +146,33 @@ export function mailtoFallback(enquiry: Enquiry): string {
       `\nBrief:\n${enquiry.brief}\n`;
 
   return `mailto:${INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/**
+ * Adds the visitor to ARAK's marketing emails, when they left the box ticked.
+ *
+ * Never allowed to cost the enquiry anything: it is sent after the Sheet post
+ * succeeded, it is not awaited by the form, and a failure is swallowed. The
+ * enquiry itself is what matters; missing one newsletter contact does not.
+ * `text/plain` for the same reason as `sendEnquiry`: no preflight.
+ */
+export function sendMarketingSignup(enquiry: Enquiry): void {
+  if (!SIGNUP_ENDPOINT || !SIGNUP_KEY) return;
+  fetch(SIGNUP_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({
+      key: SIGNUP_KEY,
+      consent: true,
+      name: enquiry.name,
+      email: enquiry.email,
+      company: enquiry.company,
+      phone: enquiry.phone,
+      projectType: enquiry.projectType,
+      lang: enquiry.lang,
+      page: enquiry.source,
+    }),
+    // Survives the visitor navigating away straight after pressing Send.
+    keepalive: true,
+  }).catch(() => {});
 }
