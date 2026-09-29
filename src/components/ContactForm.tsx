@@ -10,6 +10,7 @@ import {
   TRAP_FIELD,
   mailtoFallback,
   sendEnquiry,
+  sendMarketingSignup,
   type Enquiry,
 } from "@/lib/enquiry";
 import styles from "./ContactForm.module.css";
@@ -134,6 +135,12 @@ export function ContactForm() {
    *  button keeps reporting what happened. */
   const [noticeOpen, setNoticeOpen] = useState(false);
 
+  /** Whether the small marketing-consent note under the brief is open. The
+   *  box inside it is ticked by default and is submitted whether the note is
+   *  open or not, so an enquiry joins the marketing list unless the visitor
+   *  opens the note and unticks it. */
+  const [consentOpen, setConsentOpen] = useState(false);
+
   useEffect(() => {
     mountedAt.current = Date.now();
   }, []);
@@ -189,6 +196,10 @@ export function ContactForm() {
     // body that explains it in different words.
     failedTitle: ar ? "لم يُرسَل الطلب" : "Request not sent",
     dismiss: ar ? "إغلاق الإشعار" : "Dismiss notification",
+    consentInfo: ar ? "عن رسائلنا البريدية" : "About our emails",
+    consent: ar
+      ? "أرسلوا لي رسائل أراك البريدية من حين لآخر عن المشاريع والمنتجات الجديدة. يمكنني إلغاء الاشتراك في أي وقت."
+      : "Send me ARAK’s occasional emails about projects and new products. I can unsubscribe at any time.",
   };
 
   /** The one sentence that says an enquiry arrived. Written once: the notice
@@ -283,8 +294,12 @@ export function ContactForm() {
     };
 
     setStatus("sending");
+    // Read before the reset below puts the box back to ticked.
+    const marketing = data.get("marketingConsent") === "on";
+
     try {
       await sendEnquiry(enquiry);
+      if (marketing) sendMarketingSignup(enquiry);
       setStatus("sent");
       formRef.current?.reset();
       // reset() empties the select; this is the mirror of it, and leaving it
@@ -478,6 +493,28 @@ export function ContactForm() {
             URL is truncated past roughly 2,000 and percent-encoding triples
             every space. Posting has no such ceiling, so the cap is gone and
             with it the counter that policed it. */}
+      </div>
+
+      {/* Marketing consent, deliberately quiet: a small "i" that opens one
+          line with the box, ticked by default. The input is always in the
+          form (only hidden while the note is shut), so the default holds for
+          a visitor who never opens it. */}
+      <div className={styles.consent}>
+        <button
+          type="button"
+          className={styles.consentToggle}
+          onClick={() => setConsentOpen((o) => !o)}
+          aria-expanded={consentOpen}
+          aria-controls={`${uid}-consent`}
+          aria-label={t.consentInfo}
+          title={t.consentInfo}
+        >
+          i
+        </button>
+        <label id={`${uid}-consent`} className={styles.consentNote} hidden={!consentOpen}>
+          <input type="checkbox" name="marketingConsent" defaultChecked />
+          <span>{t.consent}</span>
+        </label>
       </div>
 
       {/* Honeypot. Off-screen rather than display:none — some bots skip
