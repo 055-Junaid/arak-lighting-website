@@ -351,6 +351,15 @@ export default function HomePage() {
                   <span aria-hidden="true">{ar ? "←" : "→"}</span>
                 </Link>
               </div>
+              {/* Named, because rival integrators now claim the same systems
+                  with no project behind the claim. Taken from the reference
+                  list; private residences stay out of it. */}
+              <p className={styles.ctrlProof}>
+                <span>{ar ? "نفّذناه في" : "Delivered at"}</span>
+                {ar
+                  ? "المقر الرئيسي لطيران الرياض · فور بوينتس باي شيراتون · مطعم دلفينو مايفير · شركة المطاحن الثانية MC-2 · مستشفى نبع"
+                  : "Riyadh Air Head Office · Four Points by Sheraton · Delfino Mayfair · Milling Company MC-2 · Naba Hospital"}
+              </p>
             </div>
             <div className={styles.ctrlList}>
               <div className={styles.ctrlItem}>

@@ -18,10 +18,13 @@ export function ProjectCards({
   limit,
   imagesOnly,
   slugs,
+  columns,
 }: {
   limit?: number;
   imagesOnly?: boolean;
   slugs?: string[];
+  /** Wide-screen column count. Three by default; four suits a set of four. */
+  columns?: 3 | 4;
 }) {
   const { lang } = useLang();
   const selected = slugs
@@ -33,7 +36,7 @@ export function ProjectCards({
   const projects = limit ? pool.slice(0, limit) : pool;
 
   return (
-    <div className={styles.grid}>
+    <div className={`${styles.grid} ${columns === 4 ? styles.four : ""}`}>
       {projects.map((project, i) => (
         <Reveal key={project.slug} delay={(i % 3) * 70} className={styles.card}>
           {project.image ? (

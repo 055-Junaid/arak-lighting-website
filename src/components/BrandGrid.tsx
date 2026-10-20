@@ -2,7 +2,7 @@ import { LogoGrid, type LogoItem } from "./LogoGrid";
 
 // Ordered: lighting brands, then emergency lighting, then control & automation.
 // The grouping is deliberate but intentionally unlabelled so it reads as one list.
-const BRANDS: LogoItem[] = [
+export const BRANDS: LogoItem[] = [
   { name: "C°LB", file: "c-lb.webp" },
   { name: "Artemide", file: "artemide.webp" },
   { name: "Reggiani", file: "reggiani.webp" },

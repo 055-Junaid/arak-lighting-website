@@ -144,11 +144,17 @@ export const SERVICES: Service[] = [
     photo: "/projects/milling-mc2/03.jpg",
     en: "Lighting Controls",
     ar: "أنظمة التحكم بالإضاءة",
+    // "Lighting Controls" names neither the standard buyers search for nor the
+    // city, and Google had not indexed either language of this page.
+    seoTitle: "KNX Lighting Control Systems in Riyadh",
+    arSeoTitle: "أنظمة التحكم بالإضاءة KNX في الرياض",
+    heading: "KNX lighting control systems, Riyadh",
+    arHeading: "أنظمة التحكّم بالإضاءة KNX في الرياض",
     lead: "Every circuit, indoors and out, on one open standard.",
     arLead: "كل دائرة كهربائية، داخل المبنى وخارجه، على معيار مفتوح واحد.",
-    body: "KNX and EIB control of lighting across the whole building envelope. Scenes, occupancy and daylight sensing, DALI dimming, astronomical time clocks and energy monitoring, built on a worldwide open standard so the client is never locked into a single vendor for the life of the building.",
+    body: "KNX, EIB and DALI control of lighting across the whole building envelope. Scenes, occupancy and daylight sensing, dimming and tunable white, astronomical time clocks and energy metering, designed, panel-built, programmed and commissioned by our own Riyadh team on open standards, so the client is never locked into a single vendor for the life of the building.",
     arBody:
-      "تحكّم بالإضاءة عبر غلاف المبنى بالكامل باستخدام KNX وEIB. مشاهد إضاءة واستشعار للإشغال وضوء النهار وخفت DALI وساعات فلكية ومراقبة للطاقة، مبنيّة على معيار عالمي مفتوح، فلا يبقى العميل مرتبطًا بمورّد واحد طوال عمر المبنى.",
+      "تحكّم بالإضاءة عبر غلاف المبنى بالكامل باستخدام KNX وEIB وDALI. مشاهد إضاءة واستشعار للإشغال وضوء النهار وخفت وأبيض قابل للضبط وساعات فلكية وقياس للطاقة، يصمّمها فريقنا في الرياض ويجمّع لوحاتها ويبرمجها ويشغّلها على معايير مفتوحة، فلا يبقى العميل مرتبطًا بمورّد واحد طوال عمر المبنى.",
     includes: [
       "KNX and EIB scene and circuit control",
       "Occupancy and daylight sensing",
@@ -240,6 +246,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/four-points/01.jpg",
     en: "Home Automation Systems",
     ar: "أنظمة الأتمتة المنزلية",
+    // Hotels search for guest room management by its own name.
+    seoTitle: "KNX Home Automation and Hotel GRMS in Riyadh",
+    arSeoTitle: "الأتمتة المنزلية KNX وإدارة غرف الفنادق في الرياض",
     lead: "One commissioned system, not a shelf of apps that do not talk to each other.",
     arLead: "نظام واحد مُشغَّل بالكامل، لا مجموعة تطبيقات لا يتحدّث بعضها إلى بعض.",
     body: "Lighting, curtains, HVAC, IP intercom, smart locks, WiFi and network systems delivered and commissioned together on KNX. For hotels the same platform runs Guest Room Management, so housekeeping status, room comfort and energy savings all sit on one supervision layer.",
