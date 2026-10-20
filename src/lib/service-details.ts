@@ -304,6 +304,7 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       { value: "Concept → tender", arValue: "من المفهوم إلى الطرح", label: "Design stages covered", arLabel: "مراحل التصميم المغطّاة" },
       { value: "Lux · UGR · Ra", arValue: "Lux · UGR · Ra", label: "Verified space by space", arLabel: "يُتحقَّق منها مساحةً مساحة" },
       { value: "First pass", arValue: "من أول مرّة", label: "Submittals written to clear", arLabel: "تُكتب الاعتمادات لتجتاز المراجعة" },
+      { value: "Since 1976", arValue: "منذ 1976", label: "Lighting projects across the Kingdom", arLabel: "مشاريع إضاءة في أنحاء المملكة" },
     ],
     blocks: [
       {
@@ -367,6 +368,10 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       )
     ],
     projects: ["solitaire-mall", "ladun-center", "seder-hq"],
+    // The one reference whose scope says design in so many words. The
+    // research agent asked for named Saudi projects on this page, which the
+    // rival design offers in Riyadh do not show.
+    references: ["Al Nafl Tower"],
   },
 
   /* ---------------------------------------------------------------- 03 --- */

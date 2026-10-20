@@ -71,7 +71,11 @@ function Card({
           <>
             <PhotoSlot
               src={project.image}
-              alt={ar ? `${project.arName}، ${project.arLoc}` : `${project.name}, ${project.loc}`}
+              alt={
+                ar
+                  ? `${project.arName}، ${project.arLoc}: ${project.arScope} من أراك`
+                  : `${project.name}, ${project.loc}: ${project.scope.charAt(0).toLowerCase() + project.scope.slice(1)} by ARAK`
+              }
               priority={priority}
             />
             {extras > 0 && <span className={styles.count}>+{extras}</span>}

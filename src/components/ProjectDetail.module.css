@@ -157,3 +157,14 @@
     margin-block: -16px;
   }
 }
+
+.factLink {
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 17, 17, 0.3);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.3s ease;
+}
+
+.factLink:hover {
+  text-decoration-color: currentColor;
+}
