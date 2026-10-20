@@ -26,6 +26,22 @@ const PROJECT_TYPES: [string, string][] = [
 ];
 
 /**
+ * `?type=` values a page can link with to open the form on the right project
+ * type — "Request a controls proposal" lands on "Controls & automation only"
+ * rather than on "Hotel", which a visitor would then have to notice and change.
+ * Keys are English and stable; the index is into PROJECT_TYPES.
+ */
+const TYPE_PRESETS: Record<string, number> = {
+  hotel: 0,
+  villa: 1,
+  commercial: 2,
+  government: 3,
+  industrial: 4,
+  outdoor: 5,
+  controls: 6,
+};
+
+/**
  * Where the enquiry came from, as a channel the office can count.
  *
  * What reaches the Sheet is the label the visitor actually read: an Arabic
@@ -137,6 +153,16 @@ export function ContactForm() {
   useEffect(() => {
     mountedAt.current = Date.now();
   }, []);
+
+  // Read once on arrival rather than through useSearchParams, which would make
+  // the whole contact page wait on a Suspense boundary for one dropdown.
+  useEffect(() => {
+    const preset = TYPE_PRESETS[new URLSearchParams(window.location.search).get("type") ?? ""];
+    const select = formRef.current?.querySelector<HTMLSelectElement>('select[name="projectType"]');
+    if (preset === undefined || !select) return;
+    const [en, arabic] = PROJECT_TYPES[preset];
+    select.value = ar ? arabic : en;
+  }, [ar]);
 
   const closeNotice = useCallback(() => setNoticeOpen(false), []);
 

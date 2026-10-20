@@ -8,7 +8,7 @@ import type { Locale } from "@/lib/site";
 import { ProjectDetail } from "@/components/ProjectDetail";
 import { PoleDetail } from "@/components/PoleDetail";
 import { ServiceDetail, type ServiceNeighbour } from "@/components/ServiceDetail";
-import { Breadcrumbs } from "@/components/StructuredData";
+import { Breadcrumbs, FaqData } from "@/components/StructuredData";
 
 /**
  * Shared bodies for the two dynamic routes, which each exist twice — once
@@ -178,6 +178,11 @@ export function ServiceRoute({ slug, locale = "en" }: { slug: string; locale?: L
         ]}
         lang={locale}
       />
+      {detail.faqs && (
+        <FaqData
+          faqs={detail.faqs.map((faq) => (ar ? { q: faq.arQ, a: faq.arA } : { q: faq.q, a: faq.a }))}
+        />
+      )}
       <ServiceDetail
         service={service}
         detail={detail}

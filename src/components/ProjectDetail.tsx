@@ -65,7 +65,16 @@ export function ProjectDetail({
           </div>
           <div>
             <span className={styles.factLabel}>{ar ? "التخصص" : "Discipline"}</span>
-            <span className={styles.factValue}>
+            {/* Linked to the service line it proves, so a project page passes
+                its weight to the page that sells the work, and a visitor who
+                liked the project can see the offer behind it. */}
+            <Link
+              href={localePath(
+                project.category === "controls" ? "/services/lighting-controls" : "/services/indoor-lighting",
+                lang
+              )}
+              className={`${styles.factValue} ${styles.factLink}`}
+            >
               {project.category === "controls"
                 ? ar
                   ? "أنظمة التحكم والأتمتة"
@@ -73,7 +82,7 @@ export function ProjectDetail({
                 : ar
                   ? "وحدات الإضاءة"
                   : "Light fittings"}
-            </span>
+            </Link>
           </div>
         </div>
       </section>
@@ -83,7 +92,18 @@ export function ProjectDetail({
           <span className={styles.galleryLabel}>{photographs}</span>
           <span className={styles.rule} />
         </div>
-        <ProjectGallery images={project.gallery} projectName={ar ? project.arName : project.name} />
+        {/* The alt text names the lighting work, not just the building. Image
+            search sends these photographs to people searching the building's
+            name ("riyadh air head office") and says nothing about who lit it;
+            naming the scope is what ties the result back to ARAK. */}
+        <ProjectGallery
+          images={project.gallery}
+          projectName={
+            ar
+              ? `${project.arName}، ${project.arLoc}: ${project.arScope} من أراك`
+              : `${project.name}, ${project.loc}: ${project.scope.charAt(0).toLowerCase() + project.scope.slice(1)} by ARAK`
+          }
+        />
       </section>
 
       <section className={styles.wrap}>

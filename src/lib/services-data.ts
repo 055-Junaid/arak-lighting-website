@@ -44,6 +44,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/ritz-carlton/01.jpg",
     en: "Indoor Lighting",
     ar: "الإضاءة الداخلية",
+    // Names what is bought and where; "Indoor Lighting" alone matched nothing searched.
+    seoTitle: "Decorative and Architectural Lighting Supplier in Riyadh",
+    arSeoTitle: "مورّد الإضاءة الزخرفية والمعمارية في الرياض",
     lead: "Decorative and architectural fittings for the rooms people actually live and work in.",
     arLead: "وحدات إضاءة زخرفية ومعمارية للمساحات التي يعيش فيها الناس ويعملون.",
     body: "Villas, palaces, hotels, offices, retail and public interiors, specified from the European partner houses we have carried for decades. Fast-moving ranges are held in Riyadh so a delayed shipment never becomes a delayed handover, and every fitting is matched to the room it has to serve rather than pulled off a generic schedule.",
@@ -68,8 +71,8 @@ export const SERVICES: Service[] = [
     photo: "/projects/solitaire-mall/07.jpg",
     en: "Lighting Design",
     ar: "تصميم الإضاءة",
-    seoTitle: "Lighting Design Consultant in Riyadh",
-    arSeoTitle: "استشارات تصميم الإضاءة في الرياض",
+    seoTitle: "Lighting Design Consultant in Riyadh, Saudi Arabia",
+    arSeoTitle: "استشارات تصميم الإضاءة في الرياض والمملكة",
     heading: "Lighting design consultancy, Riyadh",
     arHeading: "استشارات تصميم الإضاءة في الرياض",
     lead: "Drawings you can build from and numbers you can defend in a design review.",
@@ -96,6 +99,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/solitaire-mall/03.jpg",
     en: "Facade Lighting",
     ar: "إضاءة الواجهات",
+    // "facade lighting in saudi arabia" was answered with the homepage at position 15.
+    seoTitle: "Facade Lighting in Riyadh and Saudi Arabia",
+    arSeoTitle: "إضاءة الواجهات في الرياض والمملكة",
     lead: "A building's night identity, engineered to survive a Saudi summer.",
     arLead: "هويّة المبنى الليلية، مصمَّمة لتتحمّل صيف المملكة.",
     body: "Exterior and architectural schemes using IP-rated, heat-tolerant hardware selected for Gulf conditions. Linear grazing, wall washing, media facades and full RGBW colour control, detailed with the glare and light-spill limits that municipal and developer reviews now ask for.",
@@ -120,6 +126,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/solitaire-mall/12.jpg",
     en: "Outdoor Lighting",
     ar: "الإضاءة الخارجية",
+    // Roads and car parks are what the line sells; the title now says so.
+    seoTitle: "Outdoor and Street Lighting Supplier in Riyadh",
+    arSeoTitle: "مورّد الإضاءة الخارجية وإنارة الطرق في الرياض",
     lead: "Everything from a garden bollard to a high-mast on a national road.",
     arLead: "من عمود حديقة قصير إلى صارٍ عالٍ على طريق وطني.",
     body: "Roads, landscapes, compounds, car parks, walkways and sports areas. Poles, floodlights, bollards, in-ground and step fittings, sized around the pole spacing, mounting heights and uniformity targets the site allows rather than around a catalogue page.",
@@ -144,11 +153,17 @@ export const SERVICES: Service[] = [
     photo: "/projects/milling-mc2/03.jpg",
     en: "Lighting Controls",
     ar: "أنظمة التحكم بالإضاءة",
+    // "Lighting Controls" names neither the standard buyers search for nor the
+    // city, and Google had not indexed either language of this page.
+    seoTitle: "KNX Lighting Control Systems in Riyadh",
+    arSeoTitle: "أنظمة التحكم بالإضاءة KNX في الرياض",
+    heading: "KNX lighting control systems, Riyadh",
+    arHeading: "أنظمة التحكّم بالإضاءة KNX في الرياض",
     lead: "Every circuit, indoors and out, on one open standard.",
     arLead: "كل دائرة كهربائية، داخل المبنى وخارجه، على معيار مفتوح واحد.",
-    body: "KNX and EIB control of lighting across the whole building envelope. Scenes, occupancy and daylight sensing, DALI dimming, astronomical time clocks and energy monitoring, built on a worldwide open standard so the client is never locked into a single vendor for the life of the building.",
+    body: "KNX, EIB and DALI control of lighting across the whole building envelope. Scenes, occupancy and daylight sensing, dimming and tunable white, astronomical time clocks and energy metering, designed, panel-built, programmed and commissioned by our own Riyadh team on open standards, so the client is never locked into a single vendor for the life of the building.",
     arBody:
-      "تحكّم بالإضاءة عبر غلاف المبنى بالكامل باستخدام KNX وEIB. مشاهد إضاءة واستشعار للإشغال وضوء النهار وخفت DALI وساعات فلكية ومراقبة للطاقة، مبنيّة على معيار عالمي مفتوح، فلا يبقى العميل مرتبطًا بمورّد واحد طوال عمر المبنى.",
+      "تحكّم بالإضاءة عبر غلاف المبنى بالكامل باستخدام KNX وEIB وDALI. مشاهد إضاءة واستشعار للإشغال وضوء النهار وخفت وأبيض قابل للضبط وساعات فلكية وقياس للطاقة، يصمّمها فريقنا في الرياض ويجمّع لوحاتها ويبرمجها ويشغّلها على معايير مفتوحة، فلا يبقى العميل مرتبطًا بمورّد واحد طوال عمر المبنى.",
     includes: [
       "KNX and EIB scene and circuit control",
       "Occupancy and daylight sensing",
@@ -168,6 +183,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/athletic-showroom/03.jpg",
     en: "Lighting Installation",
     ar: "تركيب الإضاءة",
+    // Commissioning is the word a contractor's scope uses.
+    seoTitle: "Lighting Installation and Commissioning in Riyadh",
+    arSeoTitle: "تركيب الإضاءة وتشغيلها في الرياض",
     lead: "Our own technical crews on site, not a subcontractor we have never met.",
     arLead: "فرقنا الفنية على الموقع، لا مقاول باطن لم نلتقِ به يومًا.",
     body: "Installation, aiming, configuration, commissioning and handover carried out by ARAK teams. We focus and program on site with the client present, then hand over as-built documentation and train the people who will run the system every day after we leave.",
@@ -240,6 +258,9 @@ export const SERVICES: Service[] = [
     photo: "/projects/four-points/01.jpg",
     en: "Home Automation Systems",
     ar: "أنظمة الأتمتة المنزلية",
+    // Hotels search for guest room management by its own name.
+    seoTitle: "KNX Home Automation and Hotel GRMS in Riyadh",
+    arSeoTitle: "الأتمتة المنزلية KNX وإدارة غرف الفنادق في الرياض",
     lead: "One commissioned system, not a shelf of apps that do not talk to each other.",
     arLead: "نظام واحد مُشغَّل بالكامل، لا مجموعة تطبيقات لا يتحدّث بعضها إلى بعض.",
     body: "Lighting, curtains, HVAC, IP intercom, smart locks, WiFi and network systems delivered and commissioned together on KNX. For hotels the same platform runs Guest Room Management, so housekeeping status, room comfort and energy savings all sit on one supervision layer.",

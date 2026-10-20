@@ -7,7 +7,12 @@ import { localePath } from "@/lib/site";
 import { PHOTO_QUALITY } from "@/lib/images";
 import type { Service } from "@/lib/services-data";
 import type { ServiceDetail as Detail } from "@/lib/service-details";
+import { PROJECT_ROWS } from "@/lib/projects-data";
 import { ProjectGallery } from "@/components/ProjectGallery";
+import { ProjectCards } from "@/components/ProjectCards";
+import { PhotoSlot } from "@/components/PhotoSlot";
+import { LogoGrid } from "@/components/LogoGrid";
+import { BRANDS } from "@/components/BrandGrid";
 import { Reveal } from "@/components/Reveal";
 import styles from "./ServiceDetail.module.css";
 
@@ -41,6 +46,15 @@ export function ServiceDetail({
   const intro = ar ? detail.arIntro : detail.intro;
   const includes = ar ? service.arIncludes : service.includes;
   const captions = detail.gallery.map((g) => ({ en: g.caption, ar: g.arCaption }));
+  // Named references without a page of their own, looked up in the reference
+  // list so the location and scope printed here are the ones /projects prints.
+  const references = (detail.references ?? [])
+    .map((name) => PROJECT_ROWS.find((row) => row.name === name))
+    .filter((row): row is (typeof PROJECT_ROWS)[number] => Boolean(row));
+  const brands = (detail.brands ?? [])
+    .map((name) => BRANDS.find((brand) => brand.name === name))
+    .filter((brand): brand is (typeof BRANDS)[number] => Boolean(brand));
+  const close = detail.close;
   // Most pages are photographs of delivered work and say so. The ones carrying
   // diagrams or illustrations override this, because that sentence would be a
   // claim the gallery cannot back.
@@ -75,7 +89,7 @@ export function ServiceDetail({
               <p className={styles.heroLead}>{ar ? service.arLead : service.lead}</p>
               <p className={styles.heroBody}>{ar ? service.arBody : service.body}</p>
               <div className={styles.heroActions}>
-                <Link href={localePath("/contact", lang)} className={styles.cta}>
+                <Link href={localePath(close?.href ?? "/contact", lang)} className={styles.cta}>
                   {ar ? `اسأل عن ${name}` : `Enquire about ${service.en}`}
                   <span aria-hidden="true">{ar ? "←" : "→"}</span>
                 </Link>
@@ -158,6 +172,174 @@ export function ServiceDetail({
         </div>
       </section>
 
+      {/* ---------- Applications ---------- */}
+      {detail.applications && detail.applications.length > 0 && (
+        <section className={styles.band}>
+          <div className={styles.shell}>
+            <Reveal>
+              <span className={styles.eyebrow}>
+                {ar ? detail.applicationsHead?.arEyebrow : detail.applicationsHead?.eyebrow}
+              </span>
+              <h2 className={styles.sectionTitle}>
+                {ar ? detail.applicationsHead?.arTitle : detail.applicationsHead?.title}
+              </h2>
+            </Reveal>
+            <div className={styles.apps}>
+              {detail.applications.map((app, i) => {
+                const body = (
+                  <>
+                    <div className={styles.appFrame}>
+                      <PhotoSlot
+                        src={app.image.src}
+                        alt={ar ? app.image.arCaption : app.image.caption}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
+                      />
+                      {app.stock && (
+                        <span className={styles.appTag}>{ar ? "صورة توضيحية" : "Illustrative"}</span>
+                      )}
+                    </div>
+                    <h3 className={styles.appTitle}>{ar ? app.arTitle : app.title}</h3>
+                    <p className={styles.appBody}>{ar ? app.arBody : app.body}</p>
+                    {app.proof && (
+                      <p className={styles.appProof}>
+                        <span>{ar ? "من مشاريعنا" : "On our reference list"}</span>
+                        {ar ? app.arProof : app.proof}
+                      </p>
+                    )}
+                  </>
+                );
+                return (
+                  <Reveal key={app.title} delay={(i % 3) * 70} className={styles.app}>
+                    {app.href ? (
+                      <Link href={localePath(app.href, lang)} className={styles.appLink}>
+                        {body}
+                      </Link>
+                    ) : (
+                      body
+                    )}
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---------- Delivered projects ---------- */}
+      {detail.projects.length > 0 && (
+        <section className={`${styles.band} ${styles.bandPaper}`}>
+          <div className={styles.shell}>
+            <Reveal>
+              <div className={styles.sectionHead}>
+                <div>
+                  <span className={styles.eyebrow}>{ar ? "مشاريع منفّذة" : "Delivered"}</span>
+                  <h2 className={styles.sectionTitle}>
+                    {ar ? "أين نفّذناه" : "Where we have delivered it"}
+                  </h2>
+                </div>
+                <Link href={localePath("/projects", lang)} className={styles.sectionLink}>
+                  {ar ? "كل المشاريع" : "All projects"}
+                  <span aria-hidden="true">{ar ? "←" : "→"}</span>
+                </Link>
+              </div>
+            </Reveal>
+            <ProjectCards
+              slugs={detail.projects}
+              columns={detail.projects.length === 4 ? 4 : 3}
+            />
+            {(references.length > 0 || detail.referencesNote) && (
+              <Reveal>
+                <div className={styles.refs}>
+                  <h3 className={styles.refsHead}>{ar ? "ومن قائمة مشاريعنا أيضًا" : "Also on our reference list"}</h3>
+                  <ul className={styles.refsList}>
+                    {references.map((row) => (
+                      <li key={row.name}>
+                        <span className={styles.refName}>{ar ? row.arName : row.name}</span>
+                        <span className={styles.refMeta}>
+                          {ar ? `${row.arLoc} · ${row.arScope}` : `${row.loc} · ${row.scope}`}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  {detail.referencesNote && (
+                    <p className={styles.refsNote}>
+                      {ar ? detail.referencesNote.ar : detail.referencesNote.en}
+                    </p>
+                  )}
+                </div>
+              </Reveal>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ---------- Why now ---------- */}
+      {detail.drivers && detail.drivers.length > 0 && (
+        <section className={`${styles.band} ${styles.bandDark}`}>
+          <div className={styles.shell}>
+            <Reveal>
+              <span className={styles.eyebrowDark}>{ar ? "لماذا الآن" : "Why owners are asking now"}</span>
+              <h2 className={`${styles.sectionTitle} ${styles.sectionTitleDark}`}>
+                {ar ? "ما الذي تغيّر في المملكة" : "What has changed in the Kingdom"}
+              </h2>
+            </Reveal>
+            <div className={styles.drivers}>
+              {detail.drivers.map((driver, i) => (
+                <Reveal key={driver.title} delay={i * 80}>
+                  <article className={styles.driver}>
+                    <h3 className={styles.driverTitle}>{ar ? driver.arTitle : driver.title}</h3>
+                    <p className={styles.driverBody}>{ar ? driver.arBody : driver.body}</p>
+                  </article>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---------- How a project runs, and what it is built from ---------- */}
+      {detail.steps && detail.steps.length > 0 && (
+        <section className={styles.band}>
+          <div className={styles.shell}>
+            <Reveal>
+              <span className={styles.eyebrow}>{ar ? "من المعاينة إلى التسليم" : "From survey to handover"}</span>
+              <h2 className={styles.sectionTitle}>
+                {ar ? "كيف يسير مشروع التحكّم" : "How a controls project runs"}
+              </h2>
+            </Reveal>
+            <ol className={styles.steps}>
+              {detail.steps.map((step, i) => (
+                <li key={step.title} className={styles.step}>
+                  <Reveal delay={(i % 5) * 60}>
+                    <span className={styles.stepNo}>{String(i + 1).padStart(2, "0")}</span>
+                    <h3 className={styles.stepTitle}>{ar ? step.arTitle : step.title}</h3>
+                    <p className={styles.stepBody}>{ar ? step.arBody : step.body}</p>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+
+            {brands.length > 0 && (
+              <Reveal>
+                <div className={styles.brands}>
+                  <div className={styles.brandsHead}>
+                    <h3 className={styles.brandsTitle}>
+                      {ar ? "علامات التحكّم والأتمتة التي نورّدها" : "Control and automation brands we supply"}
+                    </h3>
+                    <p className={styles.brandsNote}>
+                      {ar
+                        ? "نختار المنصّة لتناسب المشروع، لا العكس، وكلّها على معايير مفتوحة."
+                        : "We pick the platform to suit the project, not the other way round, and all of it sits on open standards."}
+                    </p>
+                  </div>
+                  <LogoGrid items={brands} basePath="/brands" collapsedRows={1} />
+                </div>
+              </Reveal>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ---------- Photography ---------- */}
       <section className={styles.band}>
         <div className={styles.shell}>
@@ -175,6 +357,33 @@ export function ServiceDetail({
           </Reveal>
         </div>
       </section>
+
+      {/* ---------- Questions ---------- */}
+      {detail.faqs && detail.faqs.length > 0 && (
+        <section className={`${styles.band} ${styles.bandPaper}`}>
+          <div className={`${styles.shell} ${styles.faqGrid}`}>
+            <Reveal>
+              <div>
+                <span className={styles.eyebrow}>{ar ? "أسئلة شائعة" : "Questions we are asked"}</span>
+                <h2 className={styles.sectionTitle}>
+                  {ar ? `قبل أن تطلب ${name}` : `Before you specify ${service.en.toLowerCase()}`}
+                </h2>
+              </div>
+            </Reveal>
+            <div className={styles.faqs}>
+              {detail.faqs.map((faq) => (
+                <details key={faq.q} className={styles.faq}>
+                  <summary className={styles.faqQ}>
+                    <span>{ar ? faq.arQ : faq.q}</span>
+                    <span className={styles.faqIcon} aria-hidden="true" />
+                  </summary>
+                  <p className={styles.faqA}>{ar ? faq.arA : faq.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ---------- Pager and CTA ---------- */}
       <section className={styles.band}>
@@ -204,15 +413,21 @@ export function ServiceDetail({
             <div className={styles.close}>
               <div className={styles.closeGlow} />
               <h2 className={styles.closeTitle}>
-                {ar ? "لنُضئ مشروعك القادم" : "Tell us what the space has to do."}
+                {close
+                  ? ar ? close.arTitle : close.title
+                  : ar ? "لنُضئ مشروعك القادم" : "Tell us what the space has to do."}
               </h2>
               <p className={styles.closeLead}>
-                {ar
-                  ? "أرسل المخططات أو جدول وحدات الإضاءة أو الفكرة وحدها، وسيعود إليك فريقنا في الرياض بدراسة إضاءة وعرض سعر."
-                  : "Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back with a lighting study and a quotation."}
+                {close
+                  ? ar ? close.arLead : close.lead
+                  : ar
+                    ? "أرسل المخططات أو جدول وحدات الإضاءة أو الفكرة وحدها، وسيعود إليك فريقنا في الرياض بدراسة إضاءة وعرض سعر."
+                    : "Send drawings, a fixture schedule, or just the brief. Our Riyadh team will come back with a lighting study and a quotation."}
               </p>
-              <Link href={localePath("/contact", lang)} className={styles.closeCta}>
-                {ar ? "احجز استشارة إضاءة" : "Book a consultation"}
+              <Link href={localePath(close?.href ?? "/contact", lang)} className={styles.closeCta}>
+                {close
+                  ? ar ? close.arCta : close.cta
+                  : ar ? "احجز استشارة إضاءة" : "Book a consultation"}
                 <span aria-hidden="true">{ar ? "←" : "→"}</span>
               </Link>
             </div>

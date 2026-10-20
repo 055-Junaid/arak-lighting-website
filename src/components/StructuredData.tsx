@@ -161,3 +161,33 @@ export function Breadcrumbs({
     />
   );
 }
+
+/**
+ * FAQPage for a page that prints its own questions and answers.
+ *
+ * Google shows FAQ rich results for very few sites now, so this is not about
+ * a snippet. It is the plainest way to hand search engines and AI answer
+ * engines the exact question a buyer types — "KNX or DALI?" — next to our
+ * answer to it. Every entry is also on the page, word for word, which is the
+ * condition for marking it up at all.
+ */
+export function FaqData({ faqs }: { faqs: { q: string; a: string }[] }) {
+  const graph = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.q,
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(graph).replace(/</g, "\\u003c"),
+      }}
+    />
+  );
+}
