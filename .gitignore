@@ -59,3 +59,6 @@ next-env.d.ts
 # IS committed: src/lib/service-details.ts references them, so leaving them out
 # ships eight service pages with broken images, which is what happened once.
 /public/review-generated/
+
+# Local blog drafts, uploads, staff password hashes and signing key
+/.blog-data/

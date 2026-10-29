@@ -113,3 +113,11 @@ colour-mode boot script, and therefore middleware on every route.
 
 `AGENTS.md` is written and re-added by `next dev`; commit it with your work
 rather than stripping it from the diff.
+
+## Blogs (local feature branch)
+
+Public blogs live at `/blogs` (Arabic: `/ar/blogs`). The private employee workspace
+is `/team/login`. See [blog publishing](docs/blog-publishing.md) for account setup,
+the publishing workflow, local storage, and the production integration required
+before launch. Use `npm run dev` to preview it; the local CMS is disabled in
+production builds.

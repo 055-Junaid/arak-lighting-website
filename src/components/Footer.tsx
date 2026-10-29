@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useLang } from "@/lib/lang";
-import { COMPANY, localePath } from "@/lib/site";
+import { COMPANY, localePath, routeOf } from "@/lib/site";
 import { SOCIALS, MAPS_PLACE_URL } from "@/lib/social-data";
 import styles from "./Footer.module.css";
 
@@ -12,6 +13,7 @@ const SITE_LINKS = [
   { href: "/about", en: "About", ar: "عن الشركة" },
   { href: "/services", en: "Services", ar: "خدماتنا" },
   { href: "/projects", en: "Projects", ar: "مشاريعنا" },
+  { href: "/blogs", en: "Blogs", ar: "المدونة" },
   { href: "/contact", en: "Contact", ar: "اتصل بنا" },
 ] as const;
 
@@ -36,12 +38,16 @@ const SERVICE_LINKS = [
 ] as const;
 
 export function Footer() {
+  const pathname = usePathname();
+  const reading = /^\/blogs(?:\/|$)/.test(routeOf(pathname));
   const { lang } = useLang();
   const ar = lang === "ar";
   const year = new Date().getFullYear();
 
+  if (pathname.startsWith("/team/blogs")) return null;
+
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${reading ? styles.reading : ""}`}>
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.brand}>
