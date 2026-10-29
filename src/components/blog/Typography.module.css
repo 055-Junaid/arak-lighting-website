@@ -1,0 +1,17 @@
+/* Shared type scale for public blogs, article previews, and team publishing.
+   Display and lead sizes follow the existing About/Projects pages. */
+.scope {
+  --blog-display: clamp(34px, 4.4vw, 66px);
+  --blog-heading: clamp(26px, 2.8vw, 38px);
+  --blog-section: clamp(24px, 2.8vw, 34px);
+  --blog-subheading: clamp(22px, 2.2vw, 28px);
+  --blog-card-title: clamp(21px, 2vw, 26px);
+  --blog-lead: clamp(17px, 1.5vw, 21px);
+  --blog-reading: clamp(17px, 1.3vw, 18px);
+  --blog-body: 16px;
+  --blog-ui: 14px;
+  --blog-small: 13px;
+  font-family: var(--font-plex-sans), sans-serif;
+  font-size: var(--blog-body);
+  line-height: 1.7;
+}

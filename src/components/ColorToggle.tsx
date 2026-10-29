@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useColorMode } from "@/lib/color-mode";
 import { useLang } from "@/lib/lang";
@@ -28,6 +29,7 @@ const HINT_SESSION_KEY = "arak-color-hinted";
 const HINT_DELAY_MS = 1600;
 const HINT_VISIBLE_MS = 9000;
 export function ColorToggle() {
+  const pathname = usePathname();
   const { color, toggleColor, nudge } = useColorMode();
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -84,12 +86,14 @@ export function ColorToggle() {
   // "click Lights off" gets nothing.
   const accessibleName = `${label}. ${action}`;
 
+  if (pathname.startsWith("/team/blogs")) return null;
+
   return (
     <>
       {/* Hidden from assistive technology: the switch's own name already says
           everything this does, and a second announcement would be noise. It is
           still a pointer target, because people click what they are pointed at. */}
-      {nudge && hint && (
+      {nudge && hint && !/^\/(?:ar\/)?blogs\/[^/]+/.test(pathname) && (
         <span className={styles.hint} aria-hidden="true" onClick={work}>
           {ar ? "جرّب مفتاح الإضاءة" : "Try the light switch"}
         </span>

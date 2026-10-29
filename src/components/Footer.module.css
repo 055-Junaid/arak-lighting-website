@@ -180,3 +180,21 @@
     gap: 12px;
   }
 }
+
+:global([data-blog-theme="dark"]) .reading {
+  --paper: #101111;
+  --body: #bbbcb7;
+  --muted: #a1a39c;
+  --hair: #303330;
+  color: #e9e7e1;
+  color-scheme: dark;
+}
+:global([data-blog-theme="dark"]) .reading :is(.colHead, .mapCue) { color: #a1a39c; }
+:global([data-blog-theme="dark"]) .reading :is(.mapCue, .social) { border-color: #454943; }
+:global([data-blog-theme="dark"]) .reading .social { color: #bbbcb7; }
+:global([data-blog-theme="dark"]) .reading .social:hover { color: #101111; background: #e9e7e1; border-color: #e9e7e1; }
+:global([data-blog-theme="dark"]) .reading .link:hover { color: #e9e7e1 !important; }
+:global([data-blog-theme="dark"]) .reading .mapCue:hover { color: #e9e7e1; border-color: #e9e7e1; }
+:global([data-blog-theme="dark"]) .reading a:focus-visible { outline-color: #e9e7e1; }
+
+:global([data-blog-theme="dark"]) .reading .brand img { filter: invert(1) !important; }

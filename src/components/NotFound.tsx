@@ -15,12 +15,13 @@ import styles from "./NotFound.module.css";
 
 /** The nav labels, keyed by the routes already declared in site.ts, so a new
  *  section appears here as soon as it is added to the navigation. */
-const LABELS: Record<string, { en: string; ar: string }> = {
+const LABELS: Record<(typeof ROUTES)[number]["path"], { en: string; ar: string }> = {
   "/": { en: "Home", ar: "الرئيسية" },
   "/about": { en: "About", ar: "من نحن" },
   "/services": { en: "Services", ar: "الخدمات" },
   "/services/smart-poles": { en: "Smart Poles", ar: "الأعمدة الذكية" },
   "/projects": { en: "Projects", ar: "المشاريع" },
+  "/blogs": { en: "Blogs", ar: "المدونة" },
   "/contact": { en: "Contact", ar: "تواصل معنا" },
 };
 

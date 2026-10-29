@@ -1,3 +1,5 @@
+import { publishedPosts } from "@/lib/blog/storage";
+import { blogPath } from "@/lib/blog/types";
 import type { MetadataRoute } from "next";
 import { LOCALES, ROUTES, localePath, url } from "@/lib/site";
 import { FEATURED_PROJECTS } from "@/lib/projects-data";
@@ -12,7 +14,9 @@ import { SERVICES } from "@/lib/services-data";
  * belt and braces, but it is the form Google reads most reliably for a site
  * whose translations live on separate URLs.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // No lastModified. It was the build time on all 88 URLs, so every deploy
   // claimed every page had just changed; Google treats a date that is always
   // "now" as untrustworthy and ignores it for the whole sitemap. An absent
@@ -45,5 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // lighting Riyadh" — and each one is the page that should answer.
   const services = SERVICES.flatMap((s) => entry(`/services/${s.slug}`, 0.7, "monthly"));
 
-  return [...staticPages, ...services, ...projects, ...poles];
+  const blogs = (await publishedPosts()).filter(post => !post.sample).map(post => ({ url: url(blogPath(post)), lastModified: post.updatedAt, changeFrequency: "monthly" as const, priority: 0.6 }));
+
+  return [...staticPages, ...services, ...projects, ...poles, ...blogs];
 }

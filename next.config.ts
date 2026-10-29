@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     root: fileURLToPath(new URL(".", import.meta.url)),
   },
   experimental: {
+    serverActions: { bodySizeLimit: "8mb" },
     // Turns on src/app/global-not-found.tsx. This site has two root layouts —
     // one per language group — so an unmatched URL has no single layout to
     // build a 404 from, which is the case this flag exists for.

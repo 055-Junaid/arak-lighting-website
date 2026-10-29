@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { LanguageProvider } from "@/lib/lang";
+import { BLOG_THEME_BOOT_SCRIPT } from "@/lib/blog/theme-config";
 import { COLOR_MODE_BOOT_SCRIPT } from "@/lib/color-mode";
 import { Header } from "@/components/Header";
 import { StructuredData } from "@/components/StructuredData";
@@ -38,7 +39,7 @@ export function RootShell({
      attributes only, not the tree beneath it. See the "Themes" section of
      node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md. */
   return (
-    <html lang={lang} dir={dir} data-color="on" data-scroll-behavior="smooth" className={fontClassName} suppressHydrationWarning>
+    <html lang={lang} dir={dir} data-color="on" data-blog-theme="light" data-scroll-behavior="smooth" className={fontClassName} suppressHydrationWarning>
       {/* next/head is the Pages Router API; a root layout renders <head>
           directly, which is what this component is standing in for. The rule
           cannot tell the difference from outside the app directory. */}
@@ -48,6 +49,7 @@ export function RootShell({
             returning visitor who chose black and white never sees a flash of
             colour. Everyone else gets data-color="on", rendered above. */}
         <script dangerouslySetInnerHTML={{ __html: COLOR_MODE_BOOT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: BLOG_THEME_BOOT_SCRIPT }} />
         <StructuredData lang={lang} />
       </head>
       <body>

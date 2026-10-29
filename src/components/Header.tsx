@@ -9,13 +9,14 @@ import { useLang } from "@/lib/lang";
 import { localePath, routeOf } from "@/lib/site";
 import styles from "./Header.module.css";
 
-type NavItem = { href: "/" | "/about" | "/services" | "/projects" | "/contact"; en: string; ar: string };
+type NavItem = { href: "/" | "/about" | "/services" | "/projects" | "/blogs" | "/contact"; en: string; ar: string };
 
 const NAV: NavItem[] = [
   { href: "/", en: "Home", ar: "الرئيسية" },
   { href: "/about", en: "About", ar: "عن الشركة" },
   { href: "/services", en: "Services", ar: "خدماتنا" },
   { href: "/projects", en: "Projects", ar: "مشاريعنا" },
+  { href: "/blogs", en: "Blogs", ar: "المدونة" },
   { href: "/contact", en: "Contact", ar: "اتصل بنا" },
 ];
 
@@ -29,7 +30,10 @@ export function Header() {
   // the two root layouts is a full document load, which is what we want here:
   // <html lang> and dir have to change with it.
   const route = routeOf(pathname);
-  const otherHref = localePath(route, ar ? "en" : "ar");
+  const reading = /^\/blogs(?:\/|$)/.test(route);
+  const activeRoute = route.startsWith("/blogs/") ? "/blogs" : route;
+  // Articles have independent languages; a translation may not exist yet.
+  const otherHref = localePath(route.startsWith("/team") ? "/blogs" : activeRoute, ar ? "en" : "ar");
   const [open, setOpen] = useState(false);
   const burger = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
@@ -74,8 +78,10 @@ export function Header() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  if (pathname.startsWith("/team/blogs")) return null;
+
   return (
-    <header className={styles.header} ref={headerRef}>
+    <header className={`${styles.header} ${reading ? styles.reading : ""}`} ref={headerRef}>
       <div className={styles.inner}>
         {/* The link's own label is what a screen reader announces, so it has to
             follow the language switch the same as the visible nav does. */}
@@ -101,8 +107,8 @@ export function Header() {
             <Link
               key={item.href}
               href={localePath(item.href, lang)}
-              aria-current={route === item.href ? "page" : undefined}
-              className={`${styles.navLink} ${route === item.href ? styles.navLinkOn : ""}`}
+              aria-current={activeRoute === item.href ? "page" : undefined}
+              className={`${styles.navLink} ${activeRoute === item.href ? styles.navLinkOn : ""}`}
             >
               {ar ? item.ar : item.en}
             </Link>
@@ -163,8 +169,8 @@ export function Header() {
                 key={item.href}
                 href={localePath(item.href, lang)}
                 onClick={() => setOpen(false)}
-                aria-current={route === item.href ? "page" : undefined}
-                className={`${styles.drawerLink} ${route === item.href ? styles.drawerLinkOn : ""}`}
+                aria-current={activeRoute === item.href ? "page" : undefined}
+                className={`${styles.drawerLink} ${activeRoute === item.href ? styles.drawerLinkOn : ""}`}
               >
                 {ar ? item.ar : item.en}
               </Link>
