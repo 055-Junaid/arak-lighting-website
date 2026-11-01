@@ -97,6 +97,7 @@ export function ProjectDetail({
             name ("riyadh air head office") and says nothing about who lit it;
             naming the scope is what ties the result back to ARAK. */}
         <ProjectGallery
+          eager
           images={project.gallery}
           projectName={
             ar

@@ -105,7 +105,7 @@ export function ServiceDetail({
                 src={detail.hero.src}
                 alt={ar ? detail.hero.arCaption : detail.hero.caption}
                 fill
-                priority
+                loading="eager" fetchPriority="high"
                 sizes="(max-width: 1000px) 100vw, 48vw"
                 className={styles.heroImg}
               />

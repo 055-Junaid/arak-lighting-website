@@ -131,7 +131,7 @@ export default function HomePage() {
           {/* -v2 rather than a replacement of the original file: /home/* is
               served immutable (see public/_headers), so overwriting a path
               leaves anyone who already has it on the old picture forever. */}
-          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority quality={PHOTO_QUALITY} sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
+          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill loading="eager" fetchPriority="high" quality={PHOTO_QUALITY} sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
