@@ -1,7 +1,9 @@
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Contact",
+  // "lighting stores riyadh" and "light shop near me" have nowhere to land;
+  // the walk-in showroom is on this page, so the title says so.
+  title: "Contact and Lighting Showroom in Riyadh",
   description:
     "Book a lighting consultation with ARAK. Send drawings, a fixture schedule or a brief and our Riyadh team will come back with a lighting study and a quotation. Showroom at Exit 2, Northern Ring Branch Road, Hittin, Riyadh.",
   route: "/contact",

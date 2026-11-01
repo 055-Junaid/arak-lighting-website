@@ -6,6 +6,7 @@ import { getServiceDetail } from "@/lib/service-details";
 import { clampDescription, pageMetadata } from "@/lib/seo";
 import type { Locale } from "@/lib/site";
 import { ProjectDetail } from "@/components/ProjectDetail";
+import { projectMentions } from "@/lib/project-mentions";
 import { PoleDetail } from "@/components/PoleDetail";
 import { ServiceDetail, type ServiceNeighbour } from "@/components/ServiceDetail";
 import { Breadcrumbs, FaqData } from "@/components/StructuredData";
@@ -63,6 +64,9 @@ export function ProjectRoute({ slug, locale = "en" }: { slug: string; locale?: L
       />
       <ProjectDetail
         project={project}
+        // Worked out here, on the server, so the service pages' copy is not
+        // shipped to the browser just to find a few captions in it.
+        mentions={projectMentions(project.slug)}
         previous={trim(PHOTOGRAPHED[at - 1])}
         next={trim(PHOTOGRAPHED[at + 1])}
       />

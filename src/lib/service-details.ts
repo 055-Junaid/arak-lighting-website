@@ -368,6 +368,38 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       )
     ],
     projects: ["solitaire-mall", "ladun-center", "seder-hq"],
+    faqs: [
+      {
+        q: "Do you offer lighting design consultancy in Riyadh?",
+        arQ: "هل تقدّمون استشارات تصميم الإضاءة في الرياض؟",
+        a: "Yes. ARAK's Riyadh team takes a lighting design from concept to tender: concept and mood studies, photometric calculations that verify lux level, uniformity, glare (UGR) and colour rendering (Ra) space by space, and complete fixture schedules and submittal packs. ARAK has delivered lighting projects across the Kingdom since 1976.",
+        arA: "نعم. يتولّى فريق أراك في الرياض تصميم الإضاءة من المفهوم حتى الطرح: دراسات المفهوم والأجواء، وحسابات ضوئية تتحقّق من شدّة الإضاءة والانتظام والوهج (UGR) وتجسيد اللون (Ra) مساحةً مساحة، وجداول وحدات إضاءة وملفّات اعتماد كاملة. وتنفّذ أراك مشاريع الإضاءة في أنحاء المملكة منذ عام 1976.",
+      },
+      {
+        q: "What does a lighting design package include?",
+        arQ: "ماذا تتضمّن حزمة تصميم الإضاءة؟",
+        a: "Three things that hold each other up: the concept that says what each space should feel like, the calculation that proves it reaches the lux level and uniformity the brief asks for, and a schedule that names every fitting with its type mark, photometric file, wattage, optic, finish, IP rating, driver and control protocol.",
+        arA: "ثلاثة عناصر يسند بعضها بعضًا: المفهوم الذي يحدّد الإحساس المطلوب في كل مساحة، والحساب الذي يُثبت بلوغ شدّة الإضاءة والانتظام المطلوبَين في نطاق العمل، وجدول يسمّي كل وحدة بعلامة نوعها وملفّها الضوئي وقدرتها وبصرياتها وتشطيبها وتصنيف الحماية والمشغّل وبروتوكول التحكّم.",
+      },
+      {
+        q: "Do you work to our consultant's format and specification?",
+        arQ: "هل تعملون بصيغة الاستشاري ووفق مواصفات المشروع؟",
+        a: "Yes. We work alongside architects, lighting consultants and electrical engineers, in the consultant's own format and to the project's specification rather than ours, so submittals are written to clear review the first time.",
+        arA: "نعم. نعمل مع المعماريين واستشاريي الإضاءة ومهندسي الكهرباء، بالصيغة التي يعتمدها الاستشاري ووفق مواصفات المشروع لا مواصفاتنا، فتُكتب الاعتمادات لتجتاز المراجعة من أول مرّة.",
+      },
+      {
+        q: "What if the specified fitting is unavailable or over budget?",
+        arQ: "ماذا لو كانت الوحدة الموصَّفة غير متاحة أو تتجاوز الميزانية؟",
+        a: "We propose an alternative with the photometric calculation re-run, not as a name in an email. When the budget moves, we say which savings cost nothing visible and which would quietly change the design, before you sign.",
+        arA: "نقترح بديلًا وقد أُعيد عليه الحساب الضوئي، لا اسمًا في رسالة بريد. وحين تتغيّر الميزانية نوضّح أيّ توفير لا يكلّف شيئًا مرئيًا وأيّه يغيّر التصميم بصمت، قبل التوقيع.",
+      },
+      {
+        q: "Can ARAK also supply, install and control what it designs?",
+        arQ: "هل تستطيع أراك توريد ما تصمّمه وتركيبه والتحكّم به أيضًا؟",
+        a: "Yes. ARAK supplies fittings from more than 40 partner brands, installs and commissions them, and can bring the whole scheme onto a KNX lighting control system, so one team carries the design through to handover.",
+        arA: "نعم. تورّد أراك وحدات الإضاءة من أكثر من 40 علامة شريكة، وتركّبها وتشغّلها، ويمكنها ربط المشروع كله بنظام تحكّم بالإضاءة KNX، فيحمل فريق واحد التصميم حتى التسليم.",
+      },
+    ],
     // The one reference whose scope says design in so many words. The
     // research agent asked for named Saudi projects on this page, which the
     // rival design offers in Riyadh do not show.
@@ -456,6 +488,38 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       )
     ],
     projects: ["solitaire-mall", "four-points", "seder-hq"],
+    faqs: [
+      {
+        q: "What facade lighting does ARAK deliver in Saudi Arabia?",
+        arQ: "ما خدمات إضاءة الواجهات التي تقدّمها أراك في المملكة؟",
+        a: "Exterior and architectural lighting for building facades: grazing and wall washing, media facades and full RGBW colour control, built from IP-rated, heat-tolerant hardware selected for Gulf conditions and detailed to the glare and light-spill limits that municipal and developer reviews ask for.",
+        arA: "إضاءة خارجية ومعمارية لواجهات المباني: إضاءة مائلة وغسيل للجدران وواجهات إعلامية وتحكّم كامل بالألوان RGBW، بأجهزة مصنّفة IP وقادرة على تحمّل الحرارة مختارة لظروف الخليج، ومفصّلة وفق حدود الوهج وتسرّب الضوء التي تطلبها مراجعات البلديات والمطوّرين.",
+      },
+      {
+        q: "How do you make facade lighting last in Riyadh's heat?",
+        arQ: "كيف تصمد إضاءة الواجهات أمام حرارة الرياض؟",
+        a: "Riyadh runs past 45°C in the shade and a south elevation runs hotter. We specify heat-tolerant, correctly rated hardware from manufacturers who publish their thermal data, check the gasket material and cable gland detail, and plan the maintenance access before the first bracket is set.",
+        arA: "تتجاوز الحرارة في الرياض 45 درجة مئوية في الظل، والواجهة الجنوبية أشدّ حرارة. لذلك نوصّف أجهزة تتحمّل الحرارة ومصنّفة بشكل صحيح من مصنّعين ينشرون بياناتهم الحرارية، ونراجع مادة الحشوات وتفاصيل جلب الكابلات، ونخطّط لمسار الصيانة قبل تثبيت أول حامل.",
+      },
+      {
+        q: "Grazing or washing: which does a facade need?",
+        arQ: "الإضاءة المائلة أم غسيل الجدران: أيّهما تحتاج الواجهة؟",
+        a: "The material decides. Grazing from about 50mm off the wall brings out the texture of stone; washing from further out lights a panel evenly and flattens it. Getting it backwards makes expensive cladding look cheap.",
+        arA: "المادة هي التي تقرّر. فالإضاءة المائلة من مسافة نحو 50 مم من الجدار تُبرز ملمس الحجر، والغسيل من مسافة أبعد يضيء اللوح بالتساوي ويُسطّحه. وعكس الاختيار يجعل الكسوة الباهظة تبدو رخيصة.",
+      },
+      {
+        q: "Can a facade change colour for National Day and events?",
+        arQ: "هل يمكن أن تتغيّر ألوان الواجهة في اليوم الوطني والمناسبات؟",
+        a: "Yes. RGBW pixel and node systems run on their own controller, with a white channel that keeps colours true, and scenes, calendars and event overrides sit in the same control layer as the rest of the site.",
+        arA: "نعم. تعمل أنظمة البكسل والعُقد RGBW على وحدة تحكّم خاصة بها، مع قناة بيضاء تحافظ على صدق الألوان، وتكون المشاهد والتقويمات وتجاوزات المناسبات في طبقة التحكّم نفسها لبقية الموقع.",
+      },
+      {
+        q: "Will the scheme pass glare and light-spill reviews?",
+        arQ: "هل يجتاز التصميم مراجعات الوهج وتسرّب الضوء؟",
+        a: "We show the upward light ratio, the obtrusive light reaching neighbouring windows and the view from the road as numbers in the submittal, so the review checks figures rather than opinions.",
+        arA: "نعرض نسبة الضوء المتّجه إلى الأعلى، والضوء المزعج الواصل إلى النوافذ المجاورة، والمنظر من الطريق، أرقامًا في ملف الاعتماد، فتراجع اللجنة أرقامًا لا آراء.",
+      },
+    ],
   },
 
   /* ---------------------------------------------------------------- 04 --- */
@@ -545,6 +609,38 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       )
     ],
     projects: ["solitaire-mall", "seder-hq", "ladun-center"],
+    faqs: [
+      {
+        q: "What outdoor lighting does ARAK supply in Riyadh?",
+        arQ: "ما الإضاءة الخارجية التي تورّدها أراك في الرياض؟",
+        a: "Street and car park lighting, landscape and pathway lighting, and sports and flood lighting: poles and brackets, floodlights, bollards, in-ground uplights, step and handrail fittings, and the foundations, cabling and feeder pillars that go under them.",
+        arA: "إنارة الطرق ومواقف السيارات، وإضاءة الحدائق والممرّات، وإضاءة الملاعب والكشّافات: أعمدة وحوامل وكشّافات وأعمدة قصيرة ووحدات أرضية متّجهة للأعلى ووحدات للدرج والدرابزين، إضافةً إلى القواعد والكابلات ولوحات التغذية التي تحتها.",
+      },
+      {
+        q: "How do you design street and car park lighting?",
+        arQ: "كيف تصمّمون إنارة الطرق ومواقف السيارات؟",
+        a: "From the site first: pole spacing, mounting height, tilt and optic are chosen against the uniformity and glare class the road has to meet, with the calculation attached. Column foundations and feeder pillars are sized alongside rather than left to the contractor to guess.",
+        arA: "من الموقع أولًا: تُختار المسافات بين الأعمدة وارتفاع التركيب والميل والبصريات وفق فئة الانتظام والوهج المطلوبة للطريق، مع إرفاق الحساب. وتُحدَّد قواعد الأعمدة ولوحات التغذية في الوقت نفسه بدل تركها لتقدير المقاول.",
+      },
+      {
+        q: "Can outdoor lighting be controlled with the building?",
+        arQ: "هل يمكن التحكّم بالإضاءة الخارجية مع المبنى؟",
+        a: "Yes. Every outdoor circuit can come back to the same KNX control layer as the building, so the car park, the landscape and the facade run off one astronomical time clock instead of separate photocells.",
+        arA: "نعم. يمكن ربط كل دائرة خارجية بطبقة التحكّم KNX نفسها التي تدير المبنى، فتعمل مواقف السيارات والحدائق والواجهة على ساعة فلكية واحدة بدل خلايا ضوئية منفصلة.",
+      },
+      {
+        q: "Do you light sports pitches and courts?",
+        arQ: "هل تنفّذون إضاءة الملاعب؟",
+        a: "Yes, to the horizontal and vertical levels the sport and its broadcast class require. The floodlights are aimed and measured on site rather than signed off from the calculation alone.",
+        arA: "نعم، وفق مستويات الإضاءة الأفقية والرأسية التي تتطلّبها الرياضة وفئة البث. وتُوجَّه الكشّافات وتُقاس في الموقع، لا يُكتفى باعتمادها من الحساب.",
+      },
+      {
+        q: "Does ARAK supply smart poles?",
+        arQ: "هل تورّد أراك أعمدة إنارة ذكية؟",
+        a: "Yes. ARAK supplies the C°LB Smart Light Pole Series, twenty designs that can carry smart lighting, cameras, environmental sensors, emergency call, 5G small cells, public WiFi, digital displays and public address, and installs, integrates and maintains them.",
+        arA: "نعم. تورّد أراك سلسلة أعمدة الإنارة الذكية C°LB بعشرين تصميمًا يمكن أن تحمل الإضاءة الذكية والكاميرات وأجهزة استشعار البيئة ونداء الطوارئ وخلايا الجيل الخامس والواي فاي العام والشاشات الرقمية والبثّ العام، وتتولّى تركيبها ودمجها وصيانتها.",
+      },
+    ],
   },
 
   /* ---------------------------------------------------------------- 05 --- */
@@ -1153,6 +1249,32 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
       ),
     ],
     projects: ["delfino", "four-points", "riyadh-air"],
+    faqs: [
+      {
+        q: "What home automation does ARAK install in Riyadh?",
+        arQ: "ما أنظمة الأتمتة المنزلية التي تركّبها أراك في الرياض؟",
+        a: "A complete KNX system rather than a shelf of apps: lighting, curtains and shutters, HVAC, IP intercom, smart locks, CCTV, and the structured WiFi and networking underneath, on one bus with one set of scenes.",
+        arA: "نظام KNX متكامل بدل مجموعة من التطبيقات المنفصلة: الإضاءة والستائر والمصاريع والتكييف والإنتركم الشبكي والأقفال الذكية والكاميرات، والواي فاي والشبكة المنظّمة تحتها، على ناقل واحد وبمجموعة مشاهد واحدة.",
+      },
+      {
+        q: "Does a KNX home still work if the internet goes down?",
+        arQ: "هل يعمل المنزل بنظام KNX إذا انقطع الإنترنت؟",
+        a: "Yes. The scenes live on the KNX bus and are on physical wall keypads as well as screens, so lighting, curtains and climate keep working when the router does not.",
+        arA: "نعم. تعمل المشاهد على ناقل KNX نفسه وتتوفّر على لوحات مفاتيح جدارية إلى جانب الشاشات، فتستمر الإضاءة والستائر والتكييف في العمل حتى لو تعطّل الموجّه.",
+      },
+      {
+        q: "Can automation be added to an existing villa?",
+        arQ: "هل يمكن إضافة الأتمتة إلى فيلا قائمة؟",
+        a: "Yes. The existing circuits and distribution boards are surveyed first, then retrofitted with panel-mounted actuators, DALI drivers or wireless devices where rewiring is not practical, usually in phases so the home stays in use.",
+        arA: "نعم. تُعاين الدوائر ولوحات التوزيع القائمة أولًا، ثم تُضاف وحدات تنفيذ داخل اللوحات أو مشغّلات DALI أو أجهزة لاسلكية حيث لا تكون إعادة التمديد عملية، وغالبًا على مراحل ليبقى المنزل مسكونًا.",
+      },
+      {
+        q: "Do you install hotel guest room management (GRMS)?",
+        arQ: "هل تركّبون نظام إدارة غرف النزلاء (GRMS) للفنادق؟",
+        a: "Yes. The same KNX platform runs Guest Room Management: welcome scenes, do-not-disturb and make-up-room at the door, an energy setback when the room is empty, and service status for every room visible at the front desk.",
+        arA: "نعم. تعمل منصّة KNX نفسها على إدارة غرف النزلاء: مشاهد الترحيب، وعدم الإزعاج وطلب التنظيف عند الباب، وخفض استهلاك الطاقة حين تكون الغرفة فارغة، وحالة الخدمة لكل غرفة ظاهرة في الاستقبال.",
+      },
+    ],
   },
 };
 
