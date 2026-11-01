@@ -12,6 +12,7 @@ import {
   sendEnquiry,
   type Enquiry,
 } from "@/lib/enquiry";
+import { trackEvent } from "@/lib/analytics";
 import styles from "./ContactForm.module.css";
 
 /** The one field list on the site, in both languages. */
@@ -285,6 +286,16 @@ export function ContactForm() {
     setStatus("sending");
     try {
       await sendEnquiry(enquiry);
+      // Only here, after the Sheet has accepted it: the trap and too-fast
+      // branches above show success to bots but must not count as leads.
+      // The project type and channel are categories picked from a list, not
+      // anything the visitor typed, so they are safe to send.
+      trackEvent("generate_lead", {
+        form_language: enquiry.lang,
+        project_type: enquiry.projectType,
+        heard_from: enquiry.heardFrom,
+        page_path: enquiry.source,
+      });
       setStatus("sent");
       formRef.current?.reset();
       // reset() empties the select; this is the mirror of it, and leaving it
