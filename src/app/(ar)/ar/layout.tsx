@@ -32,7 +32,10 @@ const DESCRIPTION_AR =
 /** The Arabic home page's title. Same shape as HOME_TITLE on the English
     tree, and for the same reasons: the name first, then the work, in the
     words somebody searching in Arabic would use. */
-const HOME_TITLE_AR = "أراك للإضاءة | تصميم الإضاءة وأنظمة KNX والأعمدة الذكية، الرياض";
+// "شركة انارة" and "أفضل شركات الإنارة في السعودية" reach /ar at positions in
+// the fifties: the title said what ARAK designs but never that it is a
+// lighting company, which is the word those searches use.
+const HOME_TITLE_AR = "أراك للإضاءة | شركة إنارة وتصميم إضاءة وأنظمة KNX، الرياض";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

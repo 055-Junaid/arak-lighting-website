@@ -72,7 +72,9 @@ export const SERVICES: Service[] = [
     en: "Lighting Design",
     ar: "تصميم الإضاءة",
     seoTitle: "Lighting Design Consultant in Riyadh, Saudi Arabia",
-    arSeoTitle: "استشارات تصميم الإضاءة في الرياض والمملكة",
+    // Arabic searchers ask for the person and say انارة as often as إضاءة:
+    // "مهندس اضاءة الرياض", "استشاريين تصميم انارة". The old title had neither.
+    arSeoTitle: "مهندسو واستشاريو تصميم الإضاءة والإنارة في الرياض",
     heading: "Lighting design consultancy, Riyadh",
     arHeading: "استشارات تصميم الإضاءة في الرياض",
     lead: "Drawings you can build from and numbers you can defend in a design review.",
@@ -101,7 +103,7 @@ export const SERVICES: Service[] = [
     ar: "إضاءة الواجهات",
     // "facade lighting in saudi arabia" was answered with the homepage at position 15.
     seoTitle: "Facade Lighting in Riyadh and Saudi Arabia",
-    arSeoTitle: "إضاءة الواجهات في الرياض والمملكة",
+    arSeoTitle: "إضاءة وإنارة الواجهات في الرياض والمملكة",
     lead: "A building's night identity, engineered to survive a Saudi summer.",
     arLead: "هويّة المبنى الليلية، مصمَّمة لتتحمّل صيف المملكة.",
     body: "Exterior and architectural schemes using IP-rated, heat-tolerant hardware selected for Gulf conditions. Linear grazing, wall washing, media facades and full RGBW colour control, detailed with the glare and light-spill limits that municipal and developer reviews now ask for.",
