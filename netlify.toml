@@ -24,3 +24,8 @@
 
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[plugins]]
+  # Pings IndexNow (Bing, and through it ChatGPT search) after each production
+  # deploy. See plugins/indexnow/index.js.
+  package = "./plugins/indexnow"

@@ -92,7 +92,7 @@ export function Header() {
             alt={ar ? "أراك لحلول الإضاءة" : "ARAK Lighting Solutions"}
             height={58}
             width={166}
-            priority
+            loading="eager"
           />
         </Link>
 

@@ -12,6 +12,7 @@ export function ProjectGallery({
   images,
   projectName,
   captions,
+  eager,
 }: {
   images: GalleryImage[];
   /** What the set is of. Names the photographs when `captions` is absent. */
@@ -26,6 +27,11 @@ export function ProjectGallery({
    * from different angles, so numbering them is the honest description.
    */
   captions?: { en: string; ar: string }[];
+  /**
+   * Load the first row now. Project pages, where the gallery is the page;
+   * on a service page it sits near the bottom and loads on approach.
+   */
+  eager?: boolean;
 }) {
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -109,7 +115,7 @@ export function ProjectGallery({
                 alt={describe(i)}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                priority={i < 3}
+                loading={eager && i < 3 ? "eager" : "lazy"}
               />
             </button>
           );
