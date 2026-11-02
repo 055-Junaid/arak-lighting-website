@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { ColorToggle } from "@/components/ColorToggle";
 import type { Locale } from "@/lib/site";
 import { GA_MEASUREMENT_ID } from "@/lib/analytics";
+import { ContactClicks } from "@/components/ContactClicks";
 
 /**
  * The document both locales render.
@@ -66,6 +67,7 @@ export function RootShell({
           <Footer />
           <ColorToggle />
         </LanguageProvider>
+        {GA_MEASUREMENT_ID && <ContactClicks />}
       </body>
       {/* After </body>, which is where Next's own guide places it, so the tag
           is fetched once hydration has happened rather than competing with

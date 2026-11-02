@@ -1,3 +1,5 @@
+import { sendGAEvent } from "@next/third-parties/google";
+
 /**
  * Google Analytics 4.
  *
@@ -31,3 +33,27 @@
  * .env.example is a record of what the build expects, it is not read.
  */
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
+
+/**
+ * The outcomes that make a visit worth something, sent to GA4 as events.
+ *
+ * Page views alone say how many people came; these say whether any of them
+ * got in touch. Mark all three as key events in GA4 (Admin -> Events) and the
+ * Marketing dashboard's Key events panel starts reporting them by channel.
+ *
+ * - `generate_lead`: the enquiry form was accepted by the Sheet. GA4's own
+ *   recommended name, so its lead reports pick it up without mapping.
+ * - `phone_click`: a tel: link, which on a phone opens the dialler.
+ * - `email_click`: a mailto: link, including the pre-written fallback the
+ *   form offers when sending fails.
+ *
+ * Never send what a visitor typed. GA4's terms forbid personal data, and the
+ * Sheet already holds the enquiry itself; the event only says one happened.
+ */
+export type LeadEvent = "generate_lead" | "phone_click" | "email_click";
+
+export function trackEvent(name: LeadEvent, params: Record<string, string> = {}) {
+  // No id, no tag: nothing is listening, and sendGAEvent would only warn.
+  if (!GA_MEASUREMENT_ID || typeof window === "undefined") return;
+  sendGAEvent("event", name, params);
+}
