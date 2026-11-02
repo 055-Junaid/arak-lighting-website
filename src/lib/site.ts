@@ -116,6 +116,7 @@ export const ROUTES = [
   { path: "/services", priority: 0.9, changeFrequency: "monthly" },
   { path: "/services/smart-poles", priority: 0.9, changeFrequency: "monthly" },
   { path: "/projects", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/blogs", priority: 0.7, changeFrequency: "weekly" },
   { path: "/contact", priority: 0.7, changeFrequency: "yearly" },
 ] as const;
 
