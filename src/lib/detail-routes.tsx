@@ -6,9 +6,10 @@ import { getServiceDetail } from "@/lib/service-details";
 import { clampDescription, pageMetadata } from "@/lib/seo";
 import type { Locale } from "@/lib/site";
 import { ProjectDetail } from "@/components/ProjectDetail";
+import { projectMentions } from "@/lib/project-mentions";
 import { PoleDetail } from "@/components/PoleDetail";
 import { ServiceDetail, type ServiceNeighbour } from "@/components/ServiceDetail";
-import { Breadcrumbs } from "@/components/StructuredData";
+import { Breadcrumbs, FaqData, ProjectPageData, ServiceData } from "@/components/StructuredData";
 
 /**
  * Shared bodies for the two dynamic routes, which each exist twice — once
@@ -61,8 +62,24 @@ export function ProjectRoute({ slug, locale = "en" }: { slug: string; locale?: L
         ]}
         lang={locale}
       />
+      <ProjectPageData
+        slug={project.slug}
+        name={ar ? `${project.arName}، ${project.arLoc}` : `${project.name}, ${project.loc}`}
+        description={ar ? project.arBlurb : project.blurb}
+        locality={project.loc}
+        images={project.gallery.map((g) => g.src)}
+        caption={
+          ar
+            ? `${project.arName}، ${project.arLoc}: ${project.arScope} من أراك`
+            : `${project.name}, ${project.loc}: ${project.scope.charAt(0).toLowerCase() + project.scope.slice(1)} by ARAK`
+        }
+        lang={locale}
+      />
       <ProjectDetail
         project={project}
+        // Worked out here, on the server, so the service pages' copy is not
+        // shipped to the browser just to find a few captions in it.
+        mentions={projectMentions(project.slug)}
         previous={trim(PHOTOGRAPHED[at - 1])}
         next={trim(PHOTOGRAPHED[at + 1])}
       />
@@ -178,6 +195,19 @@ export function ServiceRoute({ slug, locale = "en" }: { slug: string; locale?: L
         ]}
         lang={locale}
       />
+      <ServiceData
+        slug={service.slug}
+        name={ar ? (service.arSeoTitle ?? service.ar) : (service.seoTitle ?? service.en)}
+        serviceType={ar ? service.ar : service.en}
+        description={ar ? `${service.arLead} ${service.arBody}` : `${service.lead} ${service.body}`}
+        image={detail.hero.src}
+        lang={locale}
+      />
+      {detail.faqs && (
+        <FaqData
+          faqs={detail.faqs.map((faq) => (ar ? { q: faq.arQ, a: faq.arA } : { q: faq.q, a: faq.a }))}
+        />
+      )}
       <ServiceDetail
         service={service}
         detail={detail}

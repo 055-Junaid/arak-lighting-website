@@ -15,13 +15,24 @@ const SITE_LINKS = [
   { href: "/contact", en: "Contact", ar: "اتصل بنا" },
 ] as const;
 
-/** Plain text, not links: these name service lines rather than route to them. */
-const SERVICE_ITEMS = [
-  { en: "Indoor & outdoor lighting", ar: "الإضاءة الداخلية والخارجية" },
-  { en: "Lighting design", ar: "تصميم الإضاءة" },
-  { en: "Facade lighting", ar: "إضاءة الواجهات" },
-  { en: "KNX lighting controls", ar: "أنظمة التحكم KNX" },
-  { en: "Home automation", ar: "الأتمتة المنزلية" },
+/**
+ * Every service line, linked. These used to be plain text naming the lines
+ * rather than routing to them, which left the line pages with almost no
+ * internal links: on 2026-10-20 Google had not indexed lighting design,
+ * lighting controls, facade or outdoor lighting in either language. A footer
+ * link is on every page, so it is the strongest signal the site can give.
+ */
+const SERVICE_LINKS = [
+  { href: "/services/indoor-lighting", en: "Indoor lighting", ar: "الإضاءة الداخلية" },
+  { href: "/services/outdoor-lighting", en: "Outdoor lighting", ar: "الإضاءة الخارجية" },
+  { href: "/services/lighting-design", en: "Lighting design consultancy", ar: "استشارات تصميم الإضاءة" },
+  { href: "/services/facade-lighting", en: "Facade lighting", ar: "إضاءة الواجهات" },
+  { href: "/services/lighting-controls", en: "KNX lighting controls", ar: "أنظمة التحكم بالإضاءة KNX" },
+  { href: "/services/home-automation", en: "Home automation and GRMS", ar: "الأتمتة المنزلية وإدارة الغرف" },
+  { href: "/services/lighting-installation", en: "Lighting installation", ar: "تركيب الإضاءة" },
+  { href: "/services/project-management", en: "Project management", ar: "إدارة المشاريع" },
+  { href: "/services/projection-mapping", en: "3D projection mapping", ar: "الإسقاط الضوئي ثلاثي الأبعاد" },
+  { href: "/services/smart-poles", en: "Smart poles", ar: "الأعمدة الذكية" },
 ] as const;
 
 export function Footer() {
@@ -73,17 +84,14 @@ export function Footer() {
             ))}
           </nav>
 
-          <div className={styles.col}>
+          <nav className={styles.col} aria-label={ar ? "الخدمات" : "Services"}>
             <span className={styles.colHead}>{ar ? "الخدمات" : "Services"}</span>
-            {SERVICE_ITEMS.map((s) => (
-              <span key={s.en} className={styles.item}>
-                {ar ? s.ar : s.en}
-              </span>
+            {SERVICE_LINKS.map((l) => (
+              <Link key={l.href} href={localePath(l.href, lang)} className={styles.link}>
+                {ar ? l.ar : l.en}
+              </Link>
             ))}
-            <Link href={localePath("/services/smart-poles", lang)} className={styles.link}>
-              {ar ? "الأعمدة الذكية" : "Smart poles"}
-            </Link>
-          </div>
+          </nav>
 
           <div className={styles.col}>
             <span className={styles.colHead}>{ar ? "تواصل معنا" : "Contact"}</span>

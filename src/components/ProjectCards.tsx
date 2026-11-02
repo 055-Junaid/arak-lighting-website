@@ -18,10 +18,20 @@ export function ProjectCards({
   limit,
   imagesOnly,
   slugs,
+  columns,
+  eager,
 }: {
   limit?: number;
   imagesOnly?: boolean;
   slugs?: string[];
+  /** Wide-screen column count. Three by default; four suits a set of four. */
+  columns?: 3 | 4;
+  /**
+   * Load the first row's photos now. Only where the cards open the page (the
+   * projects index): lower down the home and service pages they used to load
+   * eagerly too, about 90 KB a visit for photos nobody had scrolled to.
+   */
+  eager?: boolean;
 }) {
   const { lang } = useLang();
   const selected = slugs
@@ -33,16 +43,16 @@ export function ProjectCards({
   const projects = limit ? pool.slice(0, limit) : pool;
 
   return (
-    <div className={styles.grid}>
+    <div className={`${styles.grid} ${columns === 4 ? styles.four : ""}`}>
       {projects.map((project, i) => (
         <Reveal key={project.slug} delay={(i % 3) * 70} className={styles.card}>
           {project.image ? (
             // Only projects with photography have a page worth opening.
             <Link href={localePath(`/projects/${project.slug}`, lang)} className={styles.link}>
-              <Card project={project} priority={i < 3} ar={lang === "ar"} />
+              <Card project={project} eager={!!eager && i < 3} ar={lang === "ar"} />
             </Link>
           ) : (
-            <Card project={project} priority={i < 3} ar={lang === "ar"} />
+            <Card project={project} eager={!!eager && i < 3} ar={lang === "ar"} />
           )}
         </Reveal>
       ))}
@@ -52,11 +62,11 @@ export function ProjectCards({
 
 function Card({
   project,
-  priority,
+  eager,
   ar,
 }: {
   project: FeaturedProject;
-  priority: boolean;
+  eager: boolean;
   ar: boolean;
 }) {
   const extras = project.gallery.length - 1;
@@ -68,8 +78,12 @@ function Card({
           <>
             <PhotoSlot
               src={project.image}
-              alt={ar ? `${project.arName}، ${project.arLoc}` : `${project.name}, ${project.loc}`}
-              priority={priority}
+              alt={
+                ar
+                  ? `${project.arName}، ${project.arLoc}: ${project.arScope} من أراك`
+                  : `${project.name}, ${project.loc}: ${project.scope.charAt(0).toLowerCase() + project.scope.slice(1)} by ARAK`
+              }
+              eager={eager}
             />
             {extras > 0 && <span className={styles.count}>+{extras}</span>}
           </>

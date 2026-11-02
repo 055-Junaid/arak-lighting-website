@@ -1,4 +1,5 @@
-import { Breadcrumbs } from "@/components/StructuredData";
+import { Breadcrumbs, ServiceData } from "@/components/StructuredData";
+import { SMART_POLES } from "@/lib/services-data";
 import { SmartPolesView } from "./SmartPolesView";
 
 /**
@@ -18,6 +19,14 @@ export default function SmartPolesPage() {
   return (
     <>
       <Breadcrumbs trail={TRAIL} lang="en" />
+      <ServiceData
+        slug={SMART_POLES.slug}
+        name={"Smart Poles and Smart Street Light Poles in Saudi Arabia"}
+        serviceType={SMART_POLES.en}
+        description={`${SMART_POLES.lead} ${SMART_POLES.body}`}
+        image="/smart-poles/hero.jpg"
+        lang="en"
+      />
       <SmartPolesView />
     </>
   );

@@ -534,6 +534,25 @@
   border-bottom-color: #111111;
 }
 
+.ctrlProof {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: 400 14px/1.7 var(--font-plex-sans), sans-serif;
+  color: rgba(17, 17, 17, 0.72);
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  padding-top: 20px;
+  margin: 40px 0 0;
+  max-width: 46ch;
+}
+
+.ctrlProof span {
+  font: 500 10px/1 var(--font-plex-sans), sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #6e6e6b;
+}
+
 @media (max-width: 900px) {
   .ctrlGrid {
     grid-template-columns: minmax(0, 1fr);

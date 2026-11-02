@@ -55,6 +55,16 @@ export function GET() {
     (p) => `- [${p.name}, ${p.loc}](${url(`/projects/${p.slug}`)}): ${p.scope}`,
   );
 
+  // Controls references by name, without private residences, plus the
+  // control brands carried. Rival integrators claim the same systems with no
+  // named project; this is the checkable version an answer engine can quote.
+  const controls = PROJECT_ROWS.filter(
+    (p) => p.category === "controls" && !/private|villa|palace|camera/i.test(`${p.name} ${p.scope}`),
+  ).map((p) => `- ${p.name}, ${p.loc}: ${p.scope}`);
+  const controlFeatured = FEATURED_PROJECTS.filter((p) => p.category === "controls").map(
+    (p) => `- [${p.name}, ${p.loc}](${url(`/projects/${p.slug}`)}): ${p.scope}`,
+  );
+
   const body = [
     `# ${SITE_NAME}`,
     line(),
@@ -88,6 +98,18 @@ export function GET() {
     `## Selected projects`,
     line(),
     ...projects,
+    line(),
+    `## Lighting controls and automation`,
+    line(),
+    `ARAK designs, panel-builds, programs (ETS) and commissions KNX, EIB and DALI lighting control,`,
+    `and hotel guest room management (GRMS) on the same KNX platform. Details and FAQs:`,
+    `${url("/services/lighting-controls")}. Control and automation brands supplied: ABB, Lutron,`,
+    `Zennio, Hager, Leviton and Interra.`,
+    line(),
+    `Delivered lighting-control projects:`,
+    line(),
+    ...controlFeatured,
+    ...controls,
     line(),
     `## Key pages`,
     line(),

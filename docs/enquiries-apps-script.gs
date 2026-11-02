@@ -45,6 +45,19 @@
  * received so far). Then Deploy -> Manage deployments -> pencil -> Version:
  * New version, as below.
  *
+ * PHONE NUMBERS SHOWING #ERROR!  (the 2026-10 fix)
+ *
+ * A number typed as "+966 55 123 4567" used to land in the Sheet as #ERROR!,
+ * and "+966551234567" as a bare 966551234567. Sheets reads a leading "+" as
+ * the start of a formula. This version writes every cell as plain text, so it
+ * cannot happen again. To fix the rows already received:
+ *   1. Paste this whole file over the old one and Save.
+ *   2. Run `repairPhones` once. It restores the number each broken cell was
+ *      sent with (the original is still inside the broken formula). Safe to
+ *      run twice.
+ *   3. Deploy -> Manage deployments -> pencil -> Version: New version, as below.
+ *      Until step 3 is done the live form keeps using the old script.
+ *
  * NOTE ON RE-DEPLOYING: if you ever edit this script, use
  * Deploy -> Manage deployments -> pencil -> Version: New version. Creating a
  * *new deployment* instead gives you a different URL and the form will keep
@@ -124,6 +137,67 @@ function addHeardAboutColumns() {
 }
 
 /**
+ * Repairs phone numbers that Sheets turned into formulas or numbers before
+ * this script wrote cells as text. Run once, by hand, after pasting this
+ * version in. Safe to run twice: a cell that is already text is left alone.
+ *
+ *   "+966 55 123 4567" became =+966 55 123 4567 and showed #ERROR!. The
+ *   number is still inside the formula, so it is restored exactly.
+ *   "+966551234567" became =+966551234567 and showed 966551234567. Same.
+ *   "0551234567" became the number 551234567. A nine-digit number starting
+ *   with 5 is a Saudi mobile that lost its leading zero, and gets it back.
+ *   Any other number is kept as its digits, now as text.
+ */
+function repairPhones() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  if (!sheet) return say('No "' + SHEET_NAME + '" tab yet. Nothing to repair.');
+
+  var col = columnOf(sheet, 'Phone');
+  if (!col) return say('No "Phone" column in row 1. Nothing to repair.');
+
+  var rows = sheet.getLastRow() - 1;
+  if (rows < 1) return say('No enquiries yet. Nothing to repair.');
+
+  var range = sheet.getRange(2, col, rows, 1);
+  var formulas = range.getFormulas();
+  var values = range.getValues();
+  var fixed = 0;
+  var out = values.map(function (row, i) {
+    var restored = restorePhone(formulas[i][0], row[0]);
+    if (restored !== null) {
+      fixed++;
+      return ["'" + restored];
+    }
+    // Every cell is written back, so the ones that were already right go
+    // through asText too: read back as "+966…" and written raw, they would
+    // be parsed as formulas all over again.
+    return [typeof row[0] === 'string' ? asText(row[0]) : row[0]];
+  });
+
+  range.setValues(out);
+  return say('Repaired ' + fixed + ' phone number' + (fixed === 1 ? '' : 's') + '.');
+}
+
+/**
+ * The phone number a cell was sent with, or null when the cell is fine as it
+ * is. Pure, so it can be checked outside Apps Script.
+ */
+function restorePhone(formula, value) {
+  if (formula && formula.charAt(0) === '=') return formula.slice(1);
+  if (typeof value === 'number') {
+    var digits = String(value);
+    return /^5\d{8}$/.test(digits) ? '0' + digits : digits;
+  }
+  return null;
+}
+
+/** 1-based index of the header cell holding `name`, or 0 when there is none. */
+function columnOf(sheet, name) {
+  var header = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  return header.indexOf(name) + 1;
+}
+
+/**
  * Prints to the Execution log as well as returning.
  *
  * The editor shows a function's logged output but never its return value, so a
@@ -171,18 +245,21 @@ function doPost(e) {
     // Riyadh time, so the timestamps read the way the office does.
     var received = Utilities.formatDate(new Date(), 'Asia/Riyadh', 'yyyy-MM-dd HH:mm:ss');
 
+    // Every visitor-typed value goes through asText. Without it a phone
+    // number typed "+966 …" is read as a formula and shows #ERROR!, and a
+    // brief that starts with "=" would run as one.
     sheet.appendRow([
       received,
-      clean(data.name),
-      clean(data.company),
-      clean(data.email),
-      clean(data.phone),
-      clean(data.projectType),
-      clean(data.brief),
-      clean(data.heardFrom),
-      clean(data.heardFromDetail),
-      clean(data.lang),
-      clean(data.source),
+      asText(data.name),
+      asText(data.company),
+      asText(data.email),
+      asText(data.phone),
+      asText(data.projectType),
+      asText(data.brief),
+      asText(data.heardFrom),
+      asText(data.heardFromDetail),
+      asText(data.lang),
+      asText(data.source),
     ]);
 
     notify(data, received);
@@ -205,6 +282,20 @@ function doGet() {
 /** Trims, and caps length so one bad actor cannot write a novel into a cell. */
 function clean(value) {
   return String(value == null ? '' : value).trim().slice(0, 5000);
+}
+
+/**
+ * clean(), made safe to write into a cell. Sheets treats a value that starts
+ * with = + - or @ as a formula, which is what turned "+966 55 123 4567" into
+ * #ERROR!. A leading apostrophe tells Sheets "this is text": it is not shown
+ * in the cell and not returned by getValue, so the Sheet reads "+966 55 123
+ * 4567" exactly as it was typed. Digits-only values such as "0551234567" are
+ * protected the same way, because Sheets would otherwise drop the leading zero.
+ * The notification email uses `data` directly and never sees the apostrophe.
+ */
+function asText(value) {
+  var text = clean(value);
+  return /^[=+\-@]/.test(text) || /^\d+$/.test(text) ? "'" + text : text;
 }
 
 /**

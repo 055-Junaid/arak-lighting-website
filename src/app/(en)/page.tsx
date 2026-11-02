@@ -41,6 +41,7 @@ const HOME_SERVICES: HomeService[] = [
   {
     no: "01",
     en: "Indoor Lighting",
+    href: "/services/indoor-lighting",
     ar: "الإضاءة الداخلية",
     enText: "Decorative and architectural fittings for residential, hospitality and commercial interiors.",
     arText: "وحدات إضاءة تجميلية ومعمارية للمساحات السكنية والفندقية والتجارية.",
@@ -51,6 +52,7 @@ const HOME_SERVICES: HomeService[] = [
   {
     no: "02",
     en: "Lighting Design",
+    href: "/services/lighting-design",
     ar: "تصميم الإضاءة",
     enText: "Photometric studies, layouts and fixture schedules developed with consultants and architects.",
     arText: "دراسات ضوئية ومخططات وجداول وحدات إضاءة، نُعدّها مع الاستشاريين والمعماريين.",
@@ -61,6 +63,7 @@ const HOME_SERVICES: HomeService[] = [
   {
     no: "03",
     en: "Facade and Outdoor Lighting",
+    href: "/services/facade-lighting",
     ar: "إضاءة الواجهات والإضاءة الخارجية",
     enText: "Night identity for a building's facade, and the streets, landscapes and car parks around it.",
     arText: "هويّة ليلية لواجهة المبنى، وللشوارع والمسطحات والمواقف من حوله.",
@@ -71,6 +74,7 @@ const HOME_SERVICES: HomeService[] = [
   {
     no: "04",
     en: "Lighting Controls",
+    href: "/services/lighting-controls",
     ar: "أنظمة التحكم بالإضاءة",
     enText: "KNX/EIB systems, scene control, daylight and presence sensing, energy management.",
     arText: "أنظمة KNX/EIB، والتحكم بالمشاهد، واستشعار الضوء والحركة، وإدارة الطاقة.",
@@ -81,6 +85,7 @@ const HOME_SERVICES: HomeService[] = [
   {
     no: "05",
     en: "Lighting Installation",
+    href: "/services/lighting-installation",
     ar: "تركيب الإضاءة",
     enText: "Site installation, commissioning and handover by our own technical crews.",
     arText: "التركيب في الموقع والتشغيل والتسليم عبر فرقنا الفنية.",
@@ -126,7 +131,7 @@ export default function HomePage() {
           {/* -v2 rather than a replacement of the original file: /home/* is
               served immutable (see public/_headers), so overwriting a path
               leaves anyone who already has it on the old picture forever. */}
-          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill priority quality={PHOTO_QUALITY} sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
+          <Image src="/home/riyadh-arterial-hero-v2.jpg" alt={ar ? "شارع في الرياض عند الشروق، أعمدته الذكية تحمل الإضاءة والكاميرات واللوحات" : "A Riyadh street at sunrise, its smart poles carrying light, cameras and signage"} fill loading="eager" fetchPriority="high" quality={PHOTO_QUALITY} sizes="100vw" style={{ objectFit: "cover", objectPosition: "72% 15%" }} />
         </div>
         <div className={styles.heroVeil}></div>
         <div style={{ position: "absolute", top: "0", insetInlineStart: "22%", width: "1px", height: "100%", background: "linear-gradient(180deg,rgba(17,17,17,0) 0%,rgba(17,17,17,.32) 45%,rgba(17,17,17,0) 100%)", animation: "beam 6s ease-in-out infinite", pointerEvents: "none" }}></div>
@@ -292,6 +297,10 @@ export default function HomePage() {
           </div>
           <div className={styles.svcGrid}>
             {HOME_SERVICES.map((service) => (
+              // Each card opens its own service page. They all used to open
+              // /services, which left the line pages with almost no internal
+              // links, and Google had not indexed lighting design, controls,
+              // facade or outdoor lighting in either language.
               <Link key={service.no} href={localePath(service.href ?? "/services", lang)} className={styles.svcCard}>
                 <div className={styles.svcFrame}>
                   <Image
@@ -351,6 +360,15 @@ export default function HomePage() {
                   <span aria-hidden="true">{ar ? "←" : "→"}</span>
                 </Link>
               </div>
+              {/* Named, because rival integrators now claim the same systems
+                  with no project behind the claim. Taken from the reference
+                  list; private residences stay out of it. */}
+              <p className={styles.ctrlProof}>
+                <span>{ar ? "نفّذناه في" : "Delivered at"}</span>
+                {ar
+                  ? "المقر الرئيسي لطيران الرياض · فور بوينتس باي شيراتون · مطعم دلفينو مايفير · شركة المطاحن الثانية MC-2 · مستشفى نبع"
+                  : "Riyadh Air Head Office · Four Points by Sheraton · Delfino Mayfair · Milling Company MC-2 · Naba Hospital"}
+              </p>
             </div>
             <div className={styles.ctrlList}>
               <div className={styles.ctrlItem}>

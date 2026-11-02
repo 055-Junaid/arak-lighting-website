@@ -64,6 +64,31 @@ const nextConfig: NextConfig = {
    * every route — a change with real breakage risk that should be made on
    * its own rather than folded into a headers pass.
    */
+  /**
+   * Addresses from the old WordPress site that Google still holds.
+   *
+   * Search Console still shows impressions on these, and each one answered
+   * 404, so whatever ranking they carried was thrown away. Permanent, so
+   * Google moves that ranking to the page that replaced them. Add to this
+   * list from Search Console's "Not found (404)" report rather than guessing.
+   */
+  async redirects() {
+    return [
+      { source: "/about-us", destination: "/about", permanent: true },
+      { source: "/ar/about-us", destination: "/ar/about", permanent: true },
+      // "Scope of work" (نطاق العمل) in Arabic presentation-form letters, which
+      // is how the old site spelled it in the URL. Matched percent-encoded,
+      // because that is the form the path is compared in; the same source
+      // written as Arabic letters never matches. Its replacement is the
+      // services page.
+      {
+        source: "/ar/%EF%BB%A7%EF%BB%84%EF%BA%8E%D9%82-%D8%A7%EF%BB%9F%EF%BB%8C%EF%BB%A4%EF%BB%9E",
+        destination: "/ar/services",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {

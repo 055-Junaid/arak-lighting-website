@@ -46,7 +46,7 @@ export function PoleDetail({
                   : `${pole.name} smart pole, ${pole.tagline.toLowerCase()}`
               }
               fill
-              priority
+              loading="eager" fetchPriority="high"
               sizes="(max-width: 900px) 100vw, 38vw"
               className={styles.artImg}
             />

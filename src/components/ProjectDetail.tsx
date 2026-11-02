@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/lib/lang";
 import { localePath } from "@/lib/site";
 import type { FeaturedProject } from "@/lib/projects-data";
+import type { ProjectMention } from "@/lib/project-mentions";
 import { ProjectGallery } from "@/components/ProjectGallery";
 import styles from "./ProjectDetail.module.css";
 
@@ -22,10 +23,13 @@ type Neighbour = { slug: string; name: string; arName: string } | undefined;
  */
 export function ProjectDetail({
   project,
+  mentions = [],
   previous,
   next,
 }: {
   project: FeaturedProject;
+  /** What the service pages say about this project, line by line. */
+  mentions?: ProjectMention[];
   previous: Neighbour;
   next: Neighbour;
 }) {
@@ -65,7 +69,16 @@ export function ProjectDetail({
           </div>
           <div>
             <span className={styles.factLabel}>{ar ? "التخصص" : "Discipline"}</span>
-            <span className={styles.factValue}>
+            {/* Linked to the service line it proves, so a project page passes
+                its weight to the page that sells the work, and a visitor who
+                liked the project can see the offer behind it. */}
+            <Link
+              href={localePath(
+                project.category === "controls" ? "/services/lighting-controls" : "/services/indoor-lighting",
+                lang
+              )}
+              className={`${styles.factValue} ${styles.factLink}`}
+            >
               {project.category === "controls"
                 ? ar
                   ? "أنظمة التحكم والأتمتة"
@@ -73,17 +86,52 @@ export function ProjectDetail({
                 : ar
                   ? "وحدات الإضاءة"
                   : "Light fittings"}
-            </span>
+            </Link>
           </div>
         </div>
       </section>
+
+      {/* What was lit and how, in the words the service pages already use for
+          these photographs, each linked to the service it proves. The page
+          was about 65 words before this, the thinnest kind on the site. */}
+      {mentions.length > 0 && (
+        <section className={`${styles.wrap} ${styles.detail}`}>
+          <h2 className={styles.detailTitle}>{ar ? "تفاصيل الإضاءة" : "The lighting in detail"}</h2>
+          <div className={styles.detailGrid}>
+            {mentions.map((m) => (
+              <div key={m.slug}>
+                <Link href={localePath(`/services/${m.slug}`, lang)} className={styles.detailService}>
+                  {ar ? m.ar : m.en}
+                </Link>
+                <ul className={styles.detailList}>
+                  {m.notes.map((n) => (
+                    <li key={n.en}>{ar ? n.ar : n.en}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className={`${styles.wrap} ${styles.gallerySection}`}>
         <div className={styles.galleryHead}>
           <span className={styles.galleryLabel}>{photographs}</span>
           <span className={styles.rule} />
         </div>
-        <ProjectGallery images={project.gallery} projectName={ar ? project.arName : project.name} />
+        {/* The alt text names the lighting work, not just the building. Image
+            search sends these photographs to people searching the building's
+            name ("riyadh air head office") and says nothing about who lit it;
+            naming the scope is what ties the result back to ARAK. */}
+        <ProjectGallery
+          eager
+          images={project.gallery}
+          projectName={
+            ar
+              ? `${project.arName}، ${project.arLoc}: ${project.arScope} من أراك`
+              : `${project.name}, ${project.loc}: ${project.scope.charAt(0).toLowerCase() + project.scope.slice(1)} by ARAK`
+          }
+        />
       </section>
 
       <section className={styles.wrap}>

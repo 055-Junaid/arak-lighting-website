@@ -10,8 +10,10 @@ import {
   TRAP_FIELD,
   mailtoFallback,
   sendEnquiry,
+  sendMarketingSignup,
   type Enquiry,
 } from "@/lib/enquiry";
+import { trackEvent } from "@/lib/analytics";
 import styles from "./ContactForm.module.css";
 
 /** The one field list on the site, in both languages. */
@@ -24,6 +26,22 @@ const PROJECT_TYPES: [string, string][] = [
   ["Outdoor / facade", "خارجي / واجهات"],
   ["Controls & automation only", "أنظمة تحكم وأتمتة فقط"],
 ];
+
+/**
+ * `?type=` values a page can link with to open the form on the right project
+ * type — "Request a controls proposal" lands on "Controls & automation only"
+ * rather than on "Hotel", which a visitor would then have to notice and change.
+ * Keys are English and stable; the index is into PROJECT_TYPES.
+ */
+const TYPE_PRESETS: Record<string, number> = {
+  hotel: 0,
+  villa: 1,
+  commercial: 2,
+  government: 3,
+  industrial: 4,
+  outdoor: 5,
+  controls: 6,
+};
 
 /**
  * Where the enquiry came from, as a channel the office can count.
@@ -134,9 +152,25 @@ export function ContactForm() {
    *  button keeps reporting what happened. */
   const [noticeOpen, setNoticeOpen] = useState(false);
 
+  /** Whether the small marketing-consent note under the brief is open. The
+   *  box inside it is ticked by default and is submitted whether the note is
+   *  open or not, so an enquiry joins the marketing list unless the visitor
+   *  opens the note and unticks it. */
+  const [consentOpen, setConsentOpen] = useState(false);
+
   useEffect(() => {
     mountedAt.current = Date.now();
   }, []);
+
+  // Read once on arrival rather than through useSearchParams, which would make
+  // the whole contact page wait on a Suspense boundary for one dropdown.
+  useEffect(() => {
+    const preset = TYPE_PRESETS[new URLSearchParams(window.location.search).get("type") ?? ""];
+    const select = formRef.current?.querySelector<HTMLSelectElement>('select[name="projectType"]');
+    if (preset === undefined || !select) return;
+    const [en, arabic] = PROJECT_TYPES[preset];
+    select.value = ar ? arabic : en;
+  }, [ar]);
 
   const closeNotice = useCallback(() => setNoticeOpen(false), []);
 
@@ -189,6 +223,10 @@ export function ContactForm() {
     // body that explains it in different words.
     failedTitle: ar ? "لم يُرسَل الطلب" : "Request not sent",
     dismiss: ar ? "إغلاق الإشعار" : "Dismiss notification",
+    consentInfo: ar ? "عن رسائلنا البريدية" : "About our emails",
+    consent: ar
+      ? "أرسلوا لي رسائل أراك البريدية من حين لآخر عن المشاريع والمنتجات الجديدة. يمكنني إلغاء الاشتراك في أي وقت."
+      : "Send me ARAK’s occasional emails about projects and new products. I can unsubscribe at any time.",
   };
 
   /** The one sentence that says an enquiry arrived. Written once: the notice
@@ -283,8 +321,22 @@ export function ContactForm() {
     };
 
     setStatus("sending");
+    // Read before the reset below puts the box back to ticked.
+    const marketing = data.get("marketingConsent") === "on";
+
     try {
       await sendEnquiry(enquiry);
+      // Only here, after the Sheet has accepted it: the trap and too-fast
+      // branches above show success to bots but must not count as leads.
+      // The project type and channel are categories picked from a list, not
+      // anything the visitor typed, so they are safe to send.
+      trackEvent("generate_lead", {
+        form_language: enquiry.lang,
+        project_type: enquiry.projectType,
+        heard_from: enquiry.heardFrom,
+        page_path: enquiry.source,
+      });
+      if (marketing) sendMarketingSignup(enquiry);
       setStatus("sent");
       formRef.current?.reset();
       // reset() empties the select; this is the mirror of it, and leaving it
@@ -478,6 +530,28 @@ export function ContactForm() {
             URL is truncated past roughly 2,000 and percent-encoding triples
             every space. Posting has no such ceiling, so the cap is gone and
             with it the counter that policed it. */}
+      </div>
+
+      {/* Marketing consent, deliberately quiet: a small "i" that opens one
+          line with the box, ticked by default. The input is always in the
+          form (only hidden while the note is shut), so the default holds for
+          a visitor who never opens it. */}
+      <div className={styles.consent}>
+        <button
+          type="button"
+          className={styles.consentToggle}
+          onClick={() => setConsentOpen((o) => !o)}
+          aria-expanded={consentOpen}
+          aria-controls={`${uid}-consent`}
+          aria-label={t.consentInfo}
+          title={t.consentInfo}
+        >
+          i
+        </button>
+        <label id={`${uid}-consent`} className={styles.consentNote} hidden={!consentOpen}>
+          <input type="checkbox" name="marketingConsent" defaultChecked />
+          <span>{t.consent}</span>
+        </label>
       </div>
 
       {/* Honeypot. Off-screen rather than display:none — some bots skip

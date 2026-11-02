@@ -118,7 +118,7 @@ export function SmartPolesView() {
           src="/smart-poles/hero.jpg"
           alt={ar ? "عمود إنارة ذكي مضاء منفردًا بين أبراج المدينة عند الغسق" : "A single lit smart light pole standing between city towers at dusk"}
           fill
-          priority
+          loading="eager" fetchPriority="high"
           sizes="100vw"
           className={styles.heroImg}
         />

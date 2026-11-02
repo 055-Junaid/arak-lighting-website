@@ -32,7 +32,7 @@ export default function ProjectsPage() {
           <h2 className={styles.eyebrow}>{ar ? "أبرز المشاريع" : "Top projects"}</h2>
           <span className={styles.rule} />
         </div>
-        <ProjectCards />
+        <ProjectCards eager />
       </section>
 
       <section className={`${styles.section} ${styles.sectionLast}`}>

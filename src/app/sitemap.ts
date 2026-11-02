@@ -13,7 +13,10 @@ import { SERVICES } from "@/lib/services-data";
  * whose translations live on separate URLs.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  // No lastModified. It was the build time on all 88 URLs, so every deploy
+  // claimed every page had just changed; Google treats a date that is always
+  // "now" as untrustworthy and ignores it for the whole sitemap. An absent
+  // date is honest, and leaves Google to its own crawl signals.
 
   /** The hreflang map for one route — the same for every locale's entry. */
   const languages = (route: string) =>
@@ -22,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entry = (route: string, priority: number, changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]) =>
     LOCALES.map((locale) => ({
       url: url(localePath(route, locale)),
-      lastModified,
       changeFrequency,
       priority,
       alternates: { languages: languages(route) },

@@ -309,3 +309,69 @@
     padding: 16px;
   }
 }
+
+/* The marketing-consent "i": small and faint on purpose, a footnote rather
+   than a question. It still has a real focus ring and a 24px hit area. */
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: -10px;
+}
+
+.consentToggle {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: italic 500 10px/1 Georgia, serif;
+  color: var(--faint);
+  opacity: 0.55;
+  touch-action: manipulation;
+  position: relative;
+}
+
+.consentToggle::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+.consentToggle:hover,
+.consentToggle[aria-expanded="true"] {
+  opacity: 1;
+}
+
+.consentToggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+.consentNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font: 400 12px/1.6 var(--font-plex-sans), sans-serif;
+  color: var(--muted);
+  max-width: 60ch;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+.consentNote[hidden] {
+  display: none;
+}
+
+.consentNote input {
+  margin: 3px 0 0;
+  accent-color: var(--ink);
+}

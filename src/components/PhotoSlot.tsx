@@ -5,12 +5,13 @@ import { PHOTO_QUALITY } from "@/lib/images";
 export function PhotoSlot({
   src,
   alt,
-  priority,
+  eager,
   sizes = "(max-width: 768px) 100vw, 50vw",
 }: {
   src: string;
   alt: string;
-  priority?: boolean;
+  /** Load now rather than on approach. Only for a photo above the fold. */
+  eager?: boolean;
   /**
    * How wide the slot actually is at a given viewport. The default assumes a
    * half-width column that goes full width at 768px, which is what most
@@ -28,7 +29,7 @@ export function PhotoSlot({
         fill
         sizes={sizes}
         style={{ objectFit: "cover" }}
-        priority={priority}
+        loading={eager ? "eager" : "lazy"}
       />
     </div>
   );
