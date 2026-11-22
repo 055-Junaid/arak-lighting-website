@@ -24,6 +24,21 @@ export function ArticleContents({ sections, articleId, ar, preview }: { sections
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(frame); };
   }, [articleId, ids]);
+  // Phones: floating controls step aside while reading down, and return on scroll up or at the end.
+  useEffect(() => {
+    if (preview) return;
+    const root = document.documentElement;
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const atEnd = y + window.innerHeight >= root.scrollHeight - 80;
+      if (y < 120 || atEnd || y < last - 6) delete root.dataset.articleReading;
+      else if (y > last + 6) root.dataset.articleReading = "true";
+      if (Math.abs(y - last) > 6) last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); delete root.dataset.articleReading; };
+  }, [preview]);
 
   if (!sections.length) return null;
   const current = sections.some(section => section.id === active) ? active : sections[0].id;

@@ -44,7 +44,7 @@
 .prose :is(h2,h3):focus { outline: none; }
 .prose ul { list-style: none; padding: 0; margin: 32px 0 42px; }
 .prose li { position: relative; padding-inline-start: 26px; margin-bottom: 16px; }
-.prose li::before { content: "—"; position: absolute; inset-inline-start: 0; color: var(--reading-muted); }
+.prose li::before { content: "•"; position: absolute; inset-inline-start: 0; color: var(--reading-muted); }
 .prose blockquote { font: 300 clamp(24px, 2.4vw, 34px)/1.65 var(--font-sora), sans-serif; text-transform: uppercase; letter-spacing: .035em; color: var(--reading-text); margin: 54px 0; padding-block: 32px; border-block: 1px solid var(--reading-rule); }
 .figure { margin: 46px 0; }
 .inlineImage { width: 100%; background: var(--reading-surface); }
@@ -98,7 +98,8 @@
   .cover { aspect-ratio: 1.6; }
   .prose { font-size: 17px; line-height: 1.9; }
   .prose h2 { margin-top: 48px; }
-  .mapButton { font-size: 10px; padding: 13px 15px; gap: 8px; }
+  .mapButton { font-size: 10px; padding: 13px 15px; gap: 8px; transition: translate .25s ease, visibility .25s; }
+  :global(html[data-article-reading="true"]) .mapButton:not(:focus-visible) { translate: 0 180px; visibility: hidden; }
   .mapDialog { padding: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .article { scroll-behavior: auto; } }
