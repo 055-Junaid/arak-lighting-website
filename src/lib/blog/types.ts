@@ -1,5 +1,8 @@
 import { blogBodyText } from "./rich-text";
 export const CATEGORIES = ["Lighting design", "Smart controls", "Project stories", "Company news"] as const;
+// Netlify rejects larger function requests, and uploads pass through a function.
+export const MAX_BLOG_IMAGE_BYTES = 4 * 1024 * 1024;
+export const MAX_BLOG_IMAGE_LABEL = "4 MB";
 export type BlogPost = {
   id: string;
   slug: string;

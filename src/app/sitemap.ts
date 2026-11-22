@@ -49,7 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // lighting Riyadh" — and each one is the page that should answer.
   const services = SERVICES.flatMap((s) => entry(`/services/${s.slug}`, 0.7, "monthly"));
 
-  const blogs = (await publishedPosts()).filter(post => !post.sample).map(post => ({ url: url(blogPath(post)), lastModified: post.updatedAt, changeFrequency: "monthly" as const, priority: 0.6 }));
+  // A storage outage must not take the other pages out of the sitemap.
+  const blogs = (await publishedPosts().catch(() => [])).filter(post => !post.sample).map(post => ({ url: url(blogPath(post)), lastModified: post.updatedAt, changeFrequency: "monthly" as const, priority: 0.6 }));
 
   return [...staticPages, ...services, ...projects, ...poles, ...blogs];
 }

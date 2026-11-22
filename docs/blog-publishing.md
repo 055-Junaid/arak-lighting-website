@@ -101,27 +101,26 @@ check, not a way to preview the local CMS; use `npm run dev` for that.
 private routes, draft and upload visibility, and signed/expired/tampered sessions.
 The integration check is read-only and restricted to localhost.
 
-## What is needed before going live
+## Going live on Netlify
 
-Keep this public design and employee workflow, and replace the local adapters in
-`src/lib/blog/storage.ts`, `auth.ts`, and the upload handling in `actions.ts`:
+Production stores posts and images in Netlify Blobs and signs staff in with
+Microsoft. A person must pass both checks: a work account in the company tenant,
+and an email listed in `BLOG_TEAM_EMAILS`. Guest accounts are refused.
 
-1. Connect the company's chosen identity provider, using its existing Google or
-   Microsoft accounts if available. Grant publishing only to an explicit employee
-   allowlist or group; an email domain alone should not grant access.
-2. Store articles in a shared database or managed CMS, and covers in object storage.
-   Preserve public/draft access checks and media visibility when moving to draft.
-3. Use the identity provider's session, account recovery, access revocation, and
-   rate limiting. Add an audit trail and content backups for shared team use.
-4. Migrate approved real content, verify permissions in a deployment preview, and
-   test publishing without redeploying the website.
+1. In Microsoft Entra, register a single-tenant app. Add the Web redirect URI
+   `https://arak-sa.com/team/auth/callback`, create a client secret, and record
+   its expiry. Under the Enterprise application, set **Assignment required** to
+   Yes and assign only the approved people.
+2. In Netlify, set the variables listed in `.env.example`. Give `BLOG_STORE` a
+   different value for Production and Deploy Previews.
+3. Changing `BLOG_TEAM_EMAILS` needs a new deploy to take effect.
+4. Test sign-in, upload, publish, and unpublish on a deploy preview before release.
 
-Those choices need the company's identity/hosting setup. No external service,
-subscription, company account, or live infrastructure was created for this work.
+Blobs are not backed up automatically. Export the store before relying on it for
+content that does not exist anywhere else.
 
-A concrete proposed backend and administrator/publisher access model is recorded
-in [the live storage and access plan](blog-production-plan.md). That document is a
-proposal; the local version has not been connected to a hosted service.
+[The earlier storage and access plan](blog-production-plan.md) proposed Supabase.
+It is kept for reference and is not what this branch implements.
 
 ## Article formatting
 

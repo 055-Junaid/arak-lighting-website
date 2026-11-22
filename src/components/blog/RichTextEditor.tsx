@@ -8,6 +8,7 @@ import { Table, TableCell, TableHeader, TableRow } from "@tiptap/extension-table
 import { uploadBlogImageAction } from "@/lib/blog/actions";
 import { editorDocument } from "@/lib/blog/editor-content";
 import { encodeRichBody, safeBlogLink } from "@/lib/blog/rich-text";
+import { MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL } from "@/lib/blog/types";
 import { CursorInsertMenu, type InsertBlock } from "./CursorInsertMenu";
 import { EditorIcon } from "./EditorIcon";
 import { EditorDialog } from "./EditorDialog";
@@ -76,7 +77,7 @@ export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, 
   async function uploadImage() {
     const upload = file.current?.files?.[0];
     if (!upload || !imageAlt.trim()) { setImageError("Choose an image and add a short description."); return; }
-    if (upload.size > 5 * 1024 * 1024) { setImageError("Choose an image smaller than 5 MB."); return; }
+    if (upload.size > MAX_BLOG_IMAGE_BYTES) { setImageError(`Choose an image smaller than ${MAX_BLOG_IMAGE_LABEL}.`); return; }
     setUploading(true); onBusyChange(true); setImageError("");
     try {
       const data = new FormData(); data.set("image", upload);

@@ -1,15 +1,14 @@
 "use server";
 import { randomUUID } from "node:crypto";
-import { rm } from "node:fs/promises";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireMember, signIn, signOut } from "./auth";
-import { assertLocalBlogs, postById, savePost } from "./storage";
-import { saveUploadedBlogImage } from "./media";
+import { assertBlogStorage, assertLocalBlogs, postById, savePost } from "./storage";
+import { removeBlogImage, saveUploadedBlogImage } from "./media";
 import { blogBodyText, decodeRichBody, RICH_BODY_PREFIX } from "./rich-text";
 import { CATEGORIES, type ActionResult, type BlogPost, blogPath } from "./types";
 
-// Local development has a single process. Production publishing is disabled.
+// Password sign-in exists only in local development. Production uses Microsoft.
 const attempts = new Map<string, { count: number; until: number }>();
 export async function loginAction(_: ActionResult, form: FormData): Promise<ActionResult> {
   assertLocalBlogs();
@@ -35,9 +34,9 @@ function text(form: FormData, key: string, max: number) {
 }
 export async function saveBlogAction(_: ActionResult, form: FormData): Promise<ActionResult> {
   const member = await requireMember();
-  assertLocalBlogs();
+  assertBlogStorage();
   let saved: BlogPost;
-  let uploadedPath: string | undefined;
+  let uploadedFilename: string | undefined;
   const isNew = !form.get("id");
   try {
     const id = text(form, "id", 80) || randomUUID();
@@ -60,19 +59,19 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
     const upload = form.get("coverFile");
     if (upload instanceof File && upload.size > 0) {
       const image = await saveUploadedBlogImage(upload);
-      uploadedPath = image.file;
+      uploadedFilename = image.filename;
       cover = image.url;
     }
     if (status === "published" && (!excerpt || !blogBodyText(body).trim() || !cover || !coverAlt)) throw new Error("Before publishing, add a summary, article text, cover image, and image description.");
     const now = new Date().toISOString();
     saved = { id, title, slug, excerpt, body, category, locale: locale as BlogPost["locale"], cover, coverAlt, author: existing?.sample ? member.name : existing?.author || member.name, status, createdAt: existing?.createdAt || now, updatedAt: now, publishedAt: status === "published" ? existing?.publishedAt || now : existing?.publishedAt };
     await savePost(saved, text(form, "updatedAt", 40) || undefined);
-    uploadedPath = undefined;
+    uploadedFilename = undefined;
     revalidatePath("/blogs"); revalidatePath("/ar/blogs"); revalidatePath("/team/blogs"); revalidatePath("/sitemap.xml");
     revalidatePath(blogPath(saved));
     if (existing) revalidatePath(blogPath(existing));
   } catch (error) {
-    if (uploadedPath) await rm(uploadedPath, { force: true });
+    if (uploadedFilename) await removeBlogImage(uploadedFilename).catch(() => {});
     return { error: error instanceof Error ? error.message : "The blog could not be saved. Try again." };
   }
   if (isNew) redirect(`/team/blogs/${saved.id}?saved=1`);
@@ -81,7 +80,7 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
 
 export async function uploadBlogImageAction(form: FormData): Promise<{ url?: string; error?: string }> {
   await requireMember();
-  assertLocalBlogs();
+  assertBlogStorage();
   try {
     const upload = form.get("image");
     if (!(upload instanceof File) || !upload.size) return { error: "Choose an image to insert." };

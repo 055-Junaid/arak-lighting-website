@@ -3,7 +3,7 @@ import { useActionState, useEffect, useLayoutEffect, useRef, useState } from "re
 import Image from "next/image";
 import Link from "next/link";
 import { saveBlogAction } from "@/lib/blog/actions";
-import { CATEGORIES, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
+import { CATEGORIES, MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
 import { blogBodyText } from "@/lib/blog/rich-text";
 import { BlogArticle } from "./BlogArticle";
 import { RichTextEditor } from "./RichTextEditor";
@@ -98,9 +98,9 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
   const coverFields = <>
           <label className={styles.field}>Cover photo<div className={styles.coverPicker}>{cover ? <div className={styles.coverPreview}><Image src={cover} alt={coverAlt || "Selected cover"} fill sizes="400px" unoptimized /></div> : <span className={styles.emptyCover}>+ Add a cover image</span>}<input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Choose cover photo" onChange={e => {
             const file = e.target.files?.[0]; if (!file) return;
-            if (file.size > 5 * 1024 * 1024 || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setFileError("Choose a JPG, PNG or WebP image smaller than 5 MB."); e.target.value = ""; return; }
+            if (file.size > MAX_BLOG_IMAGE_BYTES || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setFileError(`Choose a JPG, PNG or WebP image smaller than ${MAX_BLOG_IMAGE_LABEL}.`); e.target.value = ""; return; }
             setDirty(true); setFileError(""); fileRef.current = file; if (blobRef.current) URL.revokeObjectURL(blobRef.current); blobRef.current = URL.createObjectURL(file); setCover(blobRef.current);
-          }} /></div><small>JPG, PNG or WebP. Up to 5 MB. A wide image works best.</small></label>
+          }} /></div><small>JPG, PNG or WebP. Up to {MAX_BLOG_IMAGE_LABEL}. A wide image works best.</small></label>
           {fileError && <p className={styles.error} role="alert">{fileError}</p>}
           <label className={styles.field}>Cover description<input value={coverAlt} onChange={e => { setCoverAlt(e.target.value); setDirty(true); }} maxLength={240} placeholder="Describe what the cover image shows" dir="auto" /></label>
   </>;

@@ -12,6 +12,12 @@ if (!["add", "remove", "list"].includes(command) || (command !== "list" && !/^[^
   console.log('Usage: node scripts/blog-team.mjs add employee@company.com "Employee Name"\n       node scripts/blog-team.mjs remove employee@company.com\n       node scripts/blog-team.mjs list');
   process.exit(1);
 }
+try { process.loadEnvFile(".env.local"); } catch (error) { if (error.code !== "ENOENT") throw error; }
+const approved = (process.env.BLOG_TEAM_EMAILS || "").split(",").map(item => item.trim().toLowerCase()).filter(Boolean);
+if (command === "add" && !approved.includes(email)) {
+  console.error(`${email} is not in BLOG_TEAM_EMAILS, so it cannot be given publishing access.`);
+  process.exit(1);
+}
 await mkdir(directory, { recursive: true, mode: 0o700 });
 let team;
 try { team = JSON.parse(await readFile(file, "utf8")); } catch (error) { if (error.code !== "ENOENT") throw error; team = { secret: randomBytes(48).toString("hex"), members: [] }; }
