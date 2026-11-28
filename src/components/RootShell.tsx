@@ -1,14 +1,13 @@
 import type { ReactNode } from "react";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { LanguageProvider } from "@/lib/lang";
+import { BLOG_THEME_BOOT_SCRIPT } from "@/lib/blog/theme-config";
 import { COLOR_MODE_BOOT_SCRIPT } from "@/lib/color-mode";
 import { Header } from "@/components/Header";
 import { StructuredData } from "@/components/StructuredData";
 import { Footer } from "@/components/Footer";
 import { ColorToggle } from "@/components/ColorToggle";
 import type { Locale } from "@/lib/site";
-import { GA_MEASUREMENT_ID } from "@/lib/analytics";
-import { ContactClicks } from "@/components/ContactClicks";
+import { SiteAnalytics } from "@/components/SiteAnalytics";
 
 /**
  * The document both locales render.
@@ -39,7 +38,7 @@ export function RootShell({
      attributes only, not the tree beneath it. See the "Themes" section of
      node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md. */
   return (
-    <html lang={lang} dir={dir} data-color="on" data-scroll-behavior="smooth" className={fontClassName} suppressHydrationWarning>
+    <html lang={lang} dir={dir} data-color="on" data-blog-theme="light" data-scroll-behavior="smooth" className={fontClassName} suppressHydrationWarning>
       {/* next/head is the Pages Router API; a root layout renders <head>
           directly, which is what this component is standing in for. The rule
           cannot tell the difference from outside the app directory. */}
@@ -49,6 +48,7 @@ export function RootShell({
             returning visitor who chose black and white never sees a flash of
             colour. Everyone else gets data-color="on", rendered above. */}
         <script dangerouslySetInnerHTML={{ __html: COLOR_MODE_BOOT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: BLOG_THEME_BOOT_SCRIPT }} />
         <StructuredData lang={lang} />
       </head>
       <body>
@@ -67,19 +67,12 @@ export function RootShell({
           <Footer />
           <ColorToggle />
         </LanguageProvider>
-        {GA_MEASUREMENT_ID && <ContactClicks />}
+        {/* GA4: see SiteAnalytics and lib/analytics.ts. No consent gate yet, and
+            that is a decision rather than an oversight: the site has no cookie
+            banner, GA4 sets cookies, and Saudi PDPL is in force. A banner is
+            planned separately; whoever adds it should gate this on it. */}
+        <SiteAnalytics />
       </body>
-      {/* After </body>, which is where Next's own guide places it, so the tag
-          is fetched once hydration has happened rather than competing with
-          first paint. Rendered only when the id is set — see lib/analytics.ts
-          — so a developer's session and every deploy preview stay out of the
-          production numbers.
-
-          NOTE: there is no consent gate on this yet, and that is a decision
-          rather than an oversight. The site has no cookie banner, GA4 sets
-          cookies, and Saudi's PDPL is in force; the banner is planned
-          separately. Anyone adding one should gate this render on it. */}
-      {GA_MEASUREMENT_ID && <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />}
     </html>
   );
 }

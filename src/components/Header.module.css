@@ -44,7 +44,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(18px, 2vw, 34px);
+  gap: clamp(14px, 1.5vw, 24px);
   margin-inline-start: auto;
   min-width: 0;
 }
@@ -301,3 +301,23 @@
     transition: none;
   }
 }
+
+/* Article reading pages carry their dark palette through the site navigation. */
+:global([data-blog-theme="dark"]) .reading {
+  --ink: #e9e7e1;
+  --ink-hover: #ffffff;
+  --body: #bbbcb7;
+  --faint: #a1a39c;
+  --white: #101111;
+  --hair: #303330;
+  background: rgb(16 17 17 / .95);
+  color: var(--ink);
+  color-scheme: dark;
+}
+:global([data-blog-theme="dark"]) .reading :is(.langToggle, .burger) { border-color: #454943; }
+:global([data-blog-theme="dark"]) .reading :is(.langToggle, .burger):hover { border-color: #a1a39c; }
+:global([data-blog-theme="dark"]) .reading :is(.cta, .drawerCta) { color: var(--ink); border: 1px solid #454943; background: transparent; }
+:global([data-blog-theme="dark"]) .reading :is(.cta, .drawerCta):hover { background: #292d29; }
+:global([data-blog-theme="dark"]) .reading :is(a, button):focus-visible { outline-color: var(--ink); }
+
+:global([data-blog-theme="dark"]) .reading .logo img { filter: invert(1) !important; }

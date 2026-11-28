@@ -9,8 +9,18 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@netlify/blobs": "11.1.9",
+    "@netlify/cache": "4.2.1",
     "@next/third-parties": "^16.3.5",
+    "@tiptap/extension-image": "^3.32.0",
+    "@tiptap/extension-table": "^3.32.0",
+    "@tiptap/pm": "^3.32.0",
+    "@tiptap/react": "^3.32.0",
+    "@tiptap/starter-kit": "^3.32.0",
+    "fflate": "0.8.3",
+    "jose": "6.2.18",
     "next": "16.3.2",
+    "node-html-parser": "7.0.1",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

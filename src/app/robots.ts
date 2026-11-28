@@ -6,10 +6,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      // Nothing is disallowed. /_next/static/chunks/ used to be, to save crawl
-      // budget, but it holds the JavaScript and CSS Google needs to render a
-      // page the way a visitor sees it, and Google's guidance is never to
-      // block those. On an 88-page site crawl budget is not the constraint.
+      // /_next/static/chunks/ is NOT blocked: it holds the JavaScript and CSS
+      // Google renders pages with, and Google's guidance is never to block it.
+      // The blog's private publishing workspace is. Blog images stay crawlable:
+      // they are covers in link previews and image search, and a draft's
+      // images already return 404 to anyone outside the team.
+      disallow: ["/team/"],
     },
     sitemap: url("/sitemap.xml"),
     host: url("/"),

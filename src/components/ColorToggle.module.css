@@ -268,12 +268,30 @@
   }
 }
 
+/* Blog articles on phones: step aside while the visitor reads down the page.
+   Uses `translate` because the entrance animation owns `transform`. */
+@media (max-width: 680px) {
+  .dock,
+  .hint {
+    transition:
+      translate 0.25s ease,
+      visibility 0.25s;
+  }
+
+  :global(html[data-article-reading="true"]) .dock:not(:focus-visible),
+  :global(html[data-article-reading="true"]) .hint {
+    translate: 0 180px;
+    visibility: hidden;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dock,
   .dock[data-nudge="true"],
   .dock[data-nudge="true"] .bulb,
   .hint {
     animation: none;
+    transition: none;
   }
 
   .thumb,

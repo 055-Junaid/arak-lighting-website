@@ -1,0 +1,5 @@
+.switch { display: inline-flex; gap: 3px; flex-shrink: 0; padding: 3px; border: 1px solid var(--reading-rule, var(--hair)); color: var(--reading-text, var(--ink)); }
+.switch button { display: inline-flex; gap: 8px; align-items: center; justify-content: center; min-height: 38px; padding: 8px 12px; background: transparent; border: 1px solid transparent; color: inherit; font: 400 13px/1.4 var(--font-plex-sans), sans-serif; cursor: pointer; }
+.switch button:hover { background: var(--reading-panel, var(--paper)); }
+.switch button[aria-pressed="true"] { color: var(--reading-bg, var(--white)); background: var(--reading-text, var(--ink)); }
+.switch button:focus-visible { outline: 2px solid var(--reading-text, var(--ink)); outline-offset: 4px; }
