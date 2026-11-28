@@ -13,7 +13,8 @@ export function listingMetadata(locale: Locale): Metadata {
   return { title: { absolute: title }, description, alternates: { canonical: route, languages: { en: "/blogs", ar: "/ar/blogs" } }, openGraph: { title, description, url: route }, twitter: { title, description } };
 }
 export async function BlogsPage({ locale }: { locale: Locale }) {
-  const posts = (await publishedPosts(locale)).map(({ body, ...post }) => ({ ...post, minutes: readingMinutes(body) }));
+  // Every published article, whatever its language, so neither language page is empty.
+  const posts = (await publishedPosts()).map(({ body, ...post }) => ({ ...post, minutes: readingMinutes(body) }));
   return <BlogListing posts={posts} locale={locale} />;
 }
 export async function articleMetadata(slug: string, locale: Locale): Promise<Metadata> {

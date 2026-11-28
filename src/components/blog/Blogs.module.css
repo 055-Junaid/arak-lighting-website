@@ -29,7 +29,8 @@
 .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 30px; }
 .card { min-width: 0; }
 .cardImage { position: relative; aspect-ratio: 1.5; background: var(--paper); margin-bottom: 26px; overflow: hidden; }
-.card .category { margin-bottom: 12px; }
+.card .category { margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.languageTag { font-size: 11px; font-weight: 500; padding: 3px 8px; border: 1px solid var(--rule); color: var(--muted); }
 .card h3 { font: 500 var(--blog-card-title)/1.3 var(--font-sora), sans-serif; letter-spacing: -.03em; margin: 0; }
 .cardExcerpt { font-size: var(--blog-body); line-height: 1.7; color: var(--muted); margin: 16px 0 22px; }
 .empty { padding: 64px 24px; text-align: center; background: var(--paper); }
