@@ -13,7 +13,7 @@ import {
   sendMarketingSignup,
   type Enquiry,
 } from "@/lib/enquiry";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, LAST_ARTICLE_KEY } from "@/lib/analytics";
 import styles from "./ContactForm.module.css";
 
 /** The one field list on the site, in both languages. */
@@ -123,6 +123,11 @@ const NOTICE_MS = 8000;
  * still carries the same words afterwards: the notice is the announcement, the
  * line is the record that survives dismissing it.
  */
+// The last blog article read in this tab (set by BlogAnalytics), or "none".
+function lastArticle() {
+  try { return sessionStorage.getItem(LAST_ARTICLE_KEY) || "none"; } catch { return "none"; }
+}
+
 export function ContactForm() {
   const { lang } = useLang();
   const ar = lang === "ar";
@@ -335,6 +340,7 @@ export function ContactForm() {
         project_type: enquiry.projectType,
         heard_from: enquiry.heardFrom,
         page_path: enquiry.source,
+        from_article: lastArticle(),
       });
       if (marketing) sendMarketingSignup(enquiry);
       setStatus("sent");

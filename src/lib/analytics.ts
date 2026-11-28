@@ -52,7 +52,24 @@ export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
  */
 export type LeadEvent = "generate_lead" | "phone_click" | "email_click";
 
-export function trackEvent(name: LeadEvent, params: Record<string, string> = {}) {
+/**
+ * Blog events, on top of the page view GA4 records for every article.
+ *
+ * - `blog_read`: the reader reached the end of the article, so a view can be
+ *   told apart from a read.
+ * - `blog_contact_click`: a contact link inside an article was clicked, either
+ *   the button writers place in the text or the one at the end.
+ *
+ * Both carry `article` (the URL slug), `article_category` and
+ * `article_language`. The enquiry's `generate_lead` carries `from_article`:
+ * the last article read in that browser tab, or "none". Register the three
+ * `article…` names and `from_article` as event-scoped custom dimensions in
+ * GA4 (Admin -> Custom definitions) to use them in reports.
+ */
+export type BlogEvent = "blog_read" | "blog_contact_click";
+export const LAST_ARTICLE_KEY = "arak-last-article";
+
+export function trackEvent(name: LeadEvent | BlogEvent, params: Record<string, string> = {}) {
   // No id, no tag: nothing is listening, and sendGAEvent would only warn.
   if (!GA_MEASUREMENT_ID || typeof window === "undefined") return;
   sendGAEvent("event", name, params);

@@ -6,6 +6,7 @@ import { articleSections, parseBlogBody } from "@/lib/blog/content";
 import { BlogBody } from "./BlogBody";
 import { BlogThemeSwitch } from "./BlogThemeSwitch";
 import { ArticleContents } from "./ArticleContents";
+import { BlogAnalytics } from "./BlogAnalytics";
 import styles from "./Article.module.css";
 
 export function BlogArticle({ post, preview = false }: { post: BlogPost; preview?: boolean }) {
@@ -48,8 +49,9 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
       <ArticleContents sections={sections} articleId={articleId} ar={ar} preview={preview} />
       <div className={styles.body}>
         <BlogBody blocks={blocks} articleId={articleId} ar={ar} />
-        {!preview && <div className={styles.articleEnd}><p>{ar ? "لنناقش مشروعك القادم." : "A different perspective on your next project."}</p><Link href={ar ? "/ar/contact" : "/contact"}>{ar ? "تواصل مع الفريق" : "Talk to our team"}<span aria-hidden="true">↗</span></Link><Link className={styles.backLink} href={ar ? "/ar/blogs" : "/blogs"}>{ar ? "العودة إلى جميع المقالات" : "Back to all articles"}</Link></div>}
+        {!preview && <div className={styles.articleEnd} data-article-end=""><p>{ar ? "لنناقش مشروعك القادم." : "A different perspective on your next project."}</p><Link href={ar ? "/ar/contact" : "/contact"}>{ar ? "تواصل مع الفريق" : "Talk to our team"}<span aria-hidden="true">↗</span></Link><Link className={styles.backLink} href={ar ? "/ar/blogs" : "/blogs"}>{ar ? "العودة إلى جميع المقالات" : "Back to all articles"}</Link></div>}
       </div>
     </div>
+    {!preview && <BlogAnalytics articleId={articleId} slug={post.slug} category={post.category} locale={post.locale} />}
   </article>;
 }
