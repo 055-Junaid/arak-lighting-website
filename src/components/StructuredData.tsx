@@ -44,7 +44,10 @@ export function StructuredData({ lang }: { lang: Locale }) {
           "@type": "ImageObject",
           url: url("/arak-logo-black.png"),
         },
-        image: url("/opengraph-image"),
+        // A real file, not the generated share card: Next serves that at
+        // /opengraph-image-<hash>, and the bare /opengraph-image this used to
+        // name is a 404 (Search Console listed it under Not found).
+        image: url("/home/riyadh-arterial-hero-v2.jpg"),
         address: {
           "@type": "PostalAddress",
           streetAddress: COMPANY.street,
