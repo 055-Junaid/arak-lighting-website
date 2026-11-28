@@ -11,9 +11,12 @@ separate approval and the shared storage/company sign-in integration described b
 - `/ar/blogs` and `/ar/blogs/<slug>`: Arabic pages with right-to-left layout.
 - Blog links in the website header and footer, in both languages.
 
-An article belongs to its selected language. English articles are not automatically
-translated into Arabic. Switching language from an article opens the other
-language's listing, avoiding a link to a translation that does not exist.
+An article belongs to its selected language and is not translated automatically.
+Both blog pages list every published article: on `/ar/blogs` an English article
+is tagged "مقال بالإنجليزية" and opens in English, and the reverse on `/blogs`.
+Every filter uses the same card grid. On phones, article tables turn into one
+card per row, and the Content map button waits until the reader is past the
+introduction.
 
 The three design examples appear only in development. They are labeled as samples
 and excluded from the sitemap. Production has an honest empty state until a

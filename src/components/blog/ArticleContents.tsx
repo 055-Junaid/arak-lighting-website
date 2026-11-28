@@ -32,12 +32,15 @@ export function ArticleContents({ sections, articleId, ar, preview }: { sections
     const onScroll = () => {
       const y = window.scrollY;
       const atEnd = y + window.innerHeight >= root.scrollHeight - 80;
+      // Phones: keep the button off the title and introduction until the reader is into the article.
+      if (y < 480) root.dataset.articleTop = "true"; else delete root.dataset.articleTop;
       if (y < 120 || atEnd || y < last - 6) delete root.dataset.articleReading;
       else if (y > last + 6) root.dataset.articleReading = "true";
       if (Math.abs(y - last) > 6) last = y;
     };
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => { window.removeEventListener("scroll", onScroll); delete root.dataset.articleReading; };
+    return () => { window.removeEventListener("scroll", onScroll); delete root.dataset.articleReading; delete root.dataset.articleTop; };
   }, [preview]);
 
   if (!sections.length) return null;

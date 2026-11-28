@@ -30,7 +30,7 @@ export function BlogBody({ blocks, articleId, ar = false }: { blocks: BlogBlock[
       const caption = block.caption ?? block.alt;
       return <figure className={styles.figure} key={i}><div className={styles.inlineImage}><Image src={block.src} alt={block.alt} width={1600} height={1000} sizes="(max-width: 960px) 100vw, 850px" quality={60} unoptimized={block.src.startsWith("/blog-media/")} /></div>{caption && <figcaption>{caption}</figcaption>}</figure>;
     }
-    if (block.kind === "table") return <div className={styles.tableScroll} key={i} role="region" aria-label="Article table" tabIndex={0}><table><thead><tr>{block.headers.map((cell, j) => <th key={j} scope="col">{inline(cell, block.richHeaders?.[j])}</th>)}</tr></thead><tbody>{block.rows.map((row, j) => <tr key={j}>{row.map((cell, k) => <td key={k}>{inline(cell, block.richRows?.[j]?.[k])}</td>)}</tr>)}</tbody></table></div>;
+    if (block.kind === "table") return <div className={styles.tableScroll} key={i} role="region" aria-label="Article table" tabIndex={0}><table><thead><tr>{block.headers.map((cell, j) => <th key={j} scope="col">{inline(cell, block.richHeaders?.[j])}</th>)}</tr></thead><tbody>{block.rows.map((row, j) => <tr key={j}>{row.map((cell, k) => <td key={k} data-label={block.headers[k]}>{inline(cell, block.richRows?.[j]?.[k])}</td>)}</tr>)}</tbody></table></div>;
     return <p key={i}>{inline(block.text, block.inline)}</p>;
   })}</div>;
 }

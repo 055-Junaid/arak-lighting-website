@@ -112,7 +112,17 @@
   .prose { font-size: 17px; line-height: 1.9; }
   .prose h2 { margin-top: 48px; }
   .mapButton { font-size: 10px; padding: 13px 15px; gap: 8px; transition: translate .25s ease, visibility .25s; }
-  :global(html[data-article-reading="true"]) .mapButton:not(:focus-visible) { translate: 0 180px; visibility: hidden; }
+  :global(html[data-article-reading="true"]) .mapButton:not(:focus-visible),
+  :global(html[data-article-top="true"]) .mapButton:not(:focus-visible) { translate: 0 180px; visibility: hidden; }
+  /* Tables become one card per row, each value under its column name, so nothing is cut off. */
+  .tableScroll { padding: 0; border: 0; background: none; overflow: visible; }
+  .tableScroll table { min-width: 0; }
+  .tableScroll thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tableScroll :is(tbody, tr, td) { display: block; }
+  .tableScroll tr { border: 1px solid var(--reading-rule); background: var(--reading-panel); padding: 6px 18px; margin-bottom: 12px; }
+  .tableScroll td, .tableScroll tr:last-child td { border-bottom: 1px solid var(--reading-rule); padding: 12px 0; }
+  .tableScroll tr td:last-child { border-bottom: 0; }
+  .tableScroll td[data-label]::before { content: attr(data-label); display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .15em; color: var(--reading-muted); margin-bottom: 4px; }
   .mapDialog { padding: 24px; }
 }
 @media (prefers-reduced-motion: reduce) { .article { scroll-behavior: auto; } }
