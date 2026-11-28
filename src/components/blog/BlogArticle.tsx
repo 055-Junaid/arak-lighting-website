@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog/types";
-import { formatDate, readingMinutes } from "@/lib/blog/types";
+import { blogByline, formatDate, readingMinutes } from "@/lib/blog/types";
 import { articleSections, parseBlogBody } from "@/lib/blog/content";
 import { BlogBody } from "./BlogBody";
 import { BlogThemeSwitch } from "./BlogThemeSwitch";
@@ -31,7 +31,7 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
       <p className={styles.lead}>{post.excerpt}</p>
       <dl className={styles.metadata}>
         <div><dt>{ar ? "التصنيف" : "Category"}</dt><dd>{category}</dd></div>
-        <div><dt>{ar ? "الكاتب" : "Author"}</dt><dd>{post.author}</dd></div>
+        <div><dt>{ar ? "الكاتب" : "Author"}</dt><dd>{blogByline(post.locale)}</dd></div>
         <div><dt>{ar ? "تاريخ النشر" : post.status === "published" ? "Published" : "Draft updated"}</dt><dd><time dateTime={post.publishedAt || post.updatedAt}>{formatDate(post.publishedAt || post.updatedAt, post.locale)}</time></dd></div>
         <div><dt>{ar ? "وقت القراءة" : "Reading time"}</dt><dd>{readingMinutes(post.body)} {ar ? "دقائق" : "min read"}</dd></div>
       </dl>

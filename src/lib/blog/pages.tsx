@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { BlogListing } from "@/components/blog/BlogListing";
 import { BlogArticle } from "@/components/blog/BlogArticle";
 import { publishedPost, publishedPosts } from "./storage";
-import { blogPath, readingMinutes } from "./types";
+import { blogByline, blogPath, readingMinutes } from "./types";
 import { SITE_NAME, url, type Locale } from "@/lib/site";
 export function listingMetadata(locale: Locale): Metadata {
   const ar = locale === "ar";
@@ -19,11 +19,11 @@ export async function BlogsPage({ locale }: { locale: Locale }) {
 export async function articleMetadata(slug: string, locale: Locale): Promise<Metadata> {
   const post = await publishedPost(slug, locale);
   if (!post) return { title: "Blog not found", robots: { index: false, follow: false } };
-  return { title: { absolute: `${post.title} | ${SITE_NAME}` }, description: post.excerpt, alternates: { canonical: blogPath(post) }, robots: post.sample ? { index: false, follow: false } : undefined, openGraph: { type: "article", title: post.title, description: post.excerpt, url: blogPath(post), publishedTime: post.publishedAt, modifiedTime: post.updatedAt, authors: [post.author], images: post.cover ? [{ url: post.cover, alt: post.coverAlt }] : [] }, twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, images: post.cover ? [post.cover] : [] } };
+  return { title: { absolute: `${post.title} | ${SITE_NAME}` }, description: post.excerpt, alternates: { canonical: blogPath(post) }, robots: post.sample ? { index: false, follow: false } : undefined, openGraph: { type: "article", title: post.title, description: post.excerpt, url: blogPath(post), publishedTime: post.publishedAt, modifiedTime: post.updatedAt, authors: [blogByline(post.locale)], images: post.cover ? [{ url: post.cover, alt: post.coverAlt }] : [] }, twitter: { card: "summary_large_image", title: post.title, description: post.excerpt, images: post.cover ? [post.cover] : [] } };
 }
 export async function BlogArticlePage({ slug, locale }: { slug: string; locale: Locale }) {
   const post = await publishedPost(slug, locale);
   if (!post) notFound();
-  const schema = { "@context": "https://schema.org", "@type": "BlogPosting", headline: post.title, description: post.excerpt, datePublished: post.publishedAt, dateModified: post.updatedAt, inLanguage: post.locale, author: { "@type": "Person", name: post.author }, publisher: { "@id": url("/#organization") }, image: url(post.cover), mainEntityOfPage: url(blogPath(post)) };
+  const schema = { "@context": "https://schema.org", "@type": "BlogPosting", headline: post.title, description: post.excerpt, datePublished: post.publishedAt, dateModified: post.updatedAt, inLanguage: post.locale, author: { "@id": url("/#organization") }, publisher: { "@id": url("/#organization") }, image: url(post.cover), mainEntityOfPage: url(blogPath(post)) };
   return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} /><BlogArticle post={post} /></>;
 }

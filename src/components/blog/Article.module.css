@@ -46,7 +46,7 @@
 .withoutContents { grid-template-columns: minmax(0,850px); justify-content: center; }
 .prose { color: var(--reading-body); font-size: 18px; line-height: 1.95; overflow-wrap: anywhere; }
 .prose p { margin: 0 0 30px; white-space: pre-line; max-width: 72ch; }
-.prose strong { color: var(--reading-text); font-weight: 500; }
+.prose strong { color: var(--reading-text); font-weight: 600; }
 .prose :is(h2,h3) { font-family: var(--font-sora), sans-serif; font-weight: 300; color: var(--reading-text); text-transform: uppercase; letter-spacing: .08em; line-height: 1.45; scroll-margin-top: calc(var(--header-h) + 36px); }
 .prose h2 { font-size: clamp(23px, 2.1vw, 31px); border-top: 1px solid var(--reading-rule); margin: 64px 0 28px; padding-top: 24px; }
 .prose h3 { font-size: clamp(19px, 1.7vw, 24px); margin: 38px 0 20px; }
@@ -88,7 +88,11 @@
 .preview { --header-h: var(--editor-toolbar-height, 88px); }
 :global([data-color="off"]) :is(.cover,.portraitFrame,.inlineImage) img { filter: grayscale(1); }
 @media (max-width: 960px) {
-  .readingGrid { grid-template-columns: minmax(0,1fr); gap: 36px; padding-top: 40px; }
+  .readingGrid { grid-template-columns: minmax(150px, .55fr) minmax(0, 2fr); gap: 40px; }
+  .withoutContents { grid-template-columns: minmax(0,850px); }
+}
+@media (max-width: 760px) {
+  .readingGrid, .withoutContents { grid-template-columns: minmax(0,1fr); gap: 36px; padding-top: 40px; }
   .body { max-width: none; }
   .contents { position: static; }
   .desktopContents { display: none; }

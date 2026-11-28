@@ -10,7 +10,7 @@ export function BlogListing({ posts, locale }: { posts: BlogSummary[]; locale: "
   const ar = locale === "ar";
   const [category, setCategory] = useState("All articles");
   const [query, setQuery] = useState("");
-  const filtered = posts.filter(post => (category === "All articles" || post.category === category) && `${post.title} ${post.excerpt} ${post.author} ${post.category}`.toLowerCase().includes(query.toLowerCase().trim()));
+  const filtered = posts.filter(post => (category === "All articles" || post.category === category) && `${post.title} ${post.excerpt} ${post.category}`.toLowerCase().includes(query.toLowerCase().trim()));
   const featured = !query && category === "All articles" ? filtered[0] : undefined;
   const cards = featured ? filtered.slice(1) : filtered;
   return <div className={styles.page}>

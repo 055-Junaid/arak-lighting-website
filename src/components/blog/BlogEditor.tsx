@@ -3,7 +3,7 @@ import { useActionState, useEffect, useLayoutEffect, useRef, useState } from "re
 import Image from "next/image";
 import Link from "next/link";
 import { saveBlogAction } from "@/lib/blog/actions";
-import { CATEGORIES, MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
+import { blogByline, CATEGORIES, MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
 import { blogBodyText } from "@/lib/blog/rich-text";
 import { BlogArticle } from "./BlogArticle";
 import { RichTextEditor } from "./RichTextEditor";
@@ -135,7 +135,7 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
           <label className={styles.srOnly} htmlFor="story-title">Article title</label><textarea ref={titleRef} id="story-title" className={styles.title} value={title} onChange={e => { setTitle(e.target.value); setDirty(true); if (!manualSlug) setSlug(slugify(e.target.value)); }} maxLength={160} rows={1} placeholder={locale === "ar" ? "عنوان المقال" : "Your story starts here"} dir="auto" />
           <label className={styles.srOnly} htmlFor="story-intro">Short introduction</label><textarea ref={introRef} id="story-intro" className={styles.intro} value={excerpt} onChange={e => { setExcerpt(e.target.value); setDirty(true); }} maxLength={320} rows={1} placeholder={locale === "ar" ? "مقدمة قصيرة تجذب القارئ…" : "Add a short introduction that draws your reader in…"} dir="auto" />
           <RichTextEditor initialBody={body} onChange={value => { setBody(value); setDirty(true); }} onBusyChange={setUploading} disabled={pending || preview} locale={locale} />
-          <footer className={styles.canvasFooter}><span>{wordCount} {wordCount === 1 ? "word" : "words"} · {readingMinutes(body)} min read</span><span>By {draft.author}</span></footer>
+          <footer className={styles.canvasFooter}><span>{wordCount} {wordCount === 1 ? "word" : "words"} · {readingMinutes(body)} min read</span><span>Published as {blogByline(locale)}</span></footer>
         </fieldset>
       </div>
       {preview && <div ref={previewRef} className={styles.preview}><BlogArticle post={draft} preview /></div>}
