@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { BlogPost } from "@/lib/blog/types";
-import { blogByline, formatDate, readingMinutes } from "@/lib/blog/types";
+import { blogByline, categoryLabel, formatDate, readingMinutes } from "@/lib/blog/types";
 import { articleSections, parseBlogBody } from "@/lib/blog/content";
 import { BlogBody } from "./BlogBody";
 import { BlogThemeSwitch } from "./BlogThemeSwitch";
@@ -11,8 +11,7 @@ import styles from "./Article.module.css";
 
 export function BlogArticle({ post, preview = false }: { post: BlogPost; preview?: boolean }) {
   const ar = post.locale === "ar";
-  const categoryAr: Record<string, string> = { "Lighting design": "تصميم الإضاءة", "Smart controls": "التحكم الذكي", "Project stories": "قصص المشاريع", "Company news": "أخبار الشركة" };
-  const category = ar ? categoryAr[post.category] : post.category;
+  const category = categoryLabel(post.category, post.locale);
   const articleId = `blog-${post.id}`;
   const blocks = parseBlogBody(post.body);
   const sections = articleSections(blocks);

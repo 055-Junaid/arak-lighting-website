@@ -2,8 +2,8 @@
 import { useActionState, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { saveBlogAction } from "@/lib/blog/actions";
-import { blogByline, CATEGORIES, MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
+import { deleteBlogAction, saveBlogAction } from "@/lib/blog/actions";
+import { blogByline, CATEGORIES, isCategory, MAX_BLOG_IMAGE_BYTES, MAX_BLOG_IMAGE_LABEL, blogPath, readingMinutes, type BlogPost } from "@/lib/blog/types";
 import { blogBodyText } from "@/lib/blog/rich-text";
 import { BlogArticle } from "./BlogArticle";
 import { RichTextEditor } from "./RichTextEditor";
@@ -16,7 +16,11 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
   const [manualSlug, setManualSlug] = useState(!!post);
   const [body, setBody] = useState(post?.body || "");
   const [excerpt, setExcerpt] = useState(post?.excerpt || "");
-  const [category, setCategory] = useState(post?.category || CATEGORIES[0]);
+  // A draft from the import, or from before the three categories, starts with none chosen.
+  const [category, setCategory] = useState(post && isCategory(post.category) ? post.category : "");
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
   const [locale, setLocale] = useState(post?.locale || "en");
   const [coverAlt, setCoverAlt] = useState(post?.coverAlt || "");
   const [coverCaption, setCoverCaption] = useState(post?.coverCaption || "");
@@ -95,7 +99,7 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
   useEffect(() => () => { if (blobRef.current) URL.revokeObjectURL(blobRef.current); }, []);
   const draft: BlogPost = { id: post?.id || "preview", title, slug, body, excerpt, category, locale, author: post?.author || author, cover, coverAlt, coverCaption, ...coverSize, status: publishState, createdAt: post?.createdAt || new Date().toISOString(), updatedAt: state.updatedAt || post?.updatedAt || new Date().toISOString(), publishedAt: post?.publishedAt };
   const wordCount = blogBodyText(body).trim().split(/\s+/).filter(Boolean).length;
-  const missing = [!title.trim() && "Title", !slug && "Blog URL", !excerpt.trim() && "Introduction", !wordCount && "Article text", !cover && "Cover image", !coverAlt.trim() && "Cover description"].filter(Boolean);
+  const missing = [!isCategory(category) && "Category", !title.trim() && "Title", !slug && "Blog URL", !excerpt.trim() && "Introduction", !wordCount && "Article text", !cover && "Cover image", !coverAlt.trim() && "Cover description"].filter(Boolean);
   function openCover() { setSettings(false); setCoverDialog(true); }
   const coverFields = <>
           <label className={styles.field}>Cover photo<div className={styles.coverPicker}>{cover ? <div className={styles.coverPreview}><Image src={cover} alt={coverAlt || "Selected cover"} fill sizes="400px" unoptimized /></div> : <span className={styles.emptyCover}>+ Add a cover image</span>}<input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Choose cover photo" onChange={e => {
@@ -146,22 +150,42 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
           <button type="button" className={styles.primary} disabled={pending} onClick={() => setCoverDialog(false)}>Done</button>
         </fieldset>
       </EditorDialog>}
-      {settings && <EditorDialog title={publishing ? "Ready to publish?" : "Post settings"} side dismissible={!pending} onClose={() => { if (!pending) setSettings(false); }}>
+      {settings && <EditorDialog title={publishing ? "Publish this article?" : "Post settings"} side dismissible={!pending} onClose={() => { if (!pending) setSettings(false); }}>
         <fieldset className={styles.settingsFields} disabled={pending || uploading} onChange={() => setDirty(true)}>
           {publishing && <p className={styles.panelIntro}>Publishing makes this article visible to everyone on the website.</p>}
+          <fieldset className={styles.categoryChoice}><legend>Category</legend>
+            {CATEGORIES.map(item => <label key={item} className={category === item ? styles.categoryChosen : ""}><input type="radio" name="category-choice" value={item} checked={category === item} onChange={() => setCategory(item)} /><span>{item}</span></label>)}
+            {!isCategory(category) && <small>Choose where this article appears on the blog page.</small>}
+          </fieldset>
           {coverFields}
-          <div className={styles.settingPair}><label className={styles.field}>Category<select value={category} onChange={e => setCategory(e.target.value as typeof category)}>{CATEGORIES.map(item => <option key={item}>{item}</option>)}</select></label><label className={styles.field}>Language<select value={locale} onChange={e => setLocale(e.target.value as "en" | "ar")}><option value="en">English</option><option value="ar">العربية</option></select></label></div>
+          <div className={styles.settingPair}><label className={styles.field}>Language<select value={locale} onChange={e => setLocale(e.target.value as "en" | "ar")}><option value="en">English</option><option value="ar">العربية</option></select></label></div>
           <label className={styles.field}>Blog URL<input value={slug} onChange={e => { setManualSlug(true); setSlug(e.target.value); }} maxLength={100} placeholder="your-story" /><small>{locale === "ar" ? "/ar" : ""}/blogs/{slug || "your-story"}{publishState === "published" ? " · Changing this changes the public link." : ""}</small></label>
-          {publishing && <div className={styles.publishCheck}>{missing.length ? <><strong>A few details to finish</strong><p>{missing.join(", ")}. You can save a draft at any time.</p></> : <><strong>Everything is ready</strong><p>Your article has its title, introduction, text and cover.</p></>}</div>}
+          {publishing && <div className={styles.publishCheck}>{missing.length ? <><strong>A few details to finish</strong><p>{missing.join(", ")}. You can save a draft at any time.</p></> : <><strong>Publish in {category}?</strong><p>Everyone will see this article on the blog page under <b>{category}</b>, at {locale === "ar" ? "/ar" : ""}/blogs/{slug}.</p></>}</div>}
           {state.error && <p className={styles.error} role="alert">{state.error}</p>}
           <div className={styles.panelActions}>
-            {publishing ? <button type="submit" name="intent" value="publish" className={styles.primary} disabled={!!missing.length}>{pending ? "Publishing…" : "Publish article"}</button> : <button type="button" className={styles.primary} onClick={() => setSettings(false)}>Done</button>}
+            {publishing ? <button type="submit" name="intent" value="publish" className={styles.primary} disabled={!!missing.length}>{pending ? "Publishing…" : isCategory(category) ? `Yes, publish in ${category}` : "Publish article"}</button>
+              : publishState === "published" ? <button type="submit" name="intent" value="save" className={styles.primary}>{pending ? "Saving…" : "Save changes"}</button>
+              : <button type="button" className={styles.primary} onClick={() => setSettings(false)}>Done</button>}
             {publishState === "published" && <button type="submit" name="intent" value="unpublish" className={styles.quietButton}>Move to draft</button>}
           </div>
           {publishState === "published" && <Link className={styles.publicLink} href={blogPath(draft)} target="_blank" rel="noopener noreferrer">Open published article ↗</Link>}
+          {post && !post.sample && !publishing && <button type="button" className={styles.deleteLink} onClick={() => { setDeleteError(""); setSettings(false); setDeleteOpen(true); }}>Delete this article</button>}
         </fieldset>
       </EditorDialog>}
     </form>
+    {deleteOpen && post && <EditorDialog title="Delete this article?" dismissible={!deleting} onClose={() => { if (!deleting) setDeleteOpen(false); }}><div className={styles.dialogFields}>
+      <p><strong>{title || "Untitled article"}</strong> and its images will be deleted permanently. This cannot be undone.{publishState === "published" ? " It will also be removed from the website straight away." : ""}</p>
+      {deleteError && <p className={styles.error} role="alert">{deleteError}</p>}
+      <div className={styles.buttons}>
+        <button type="button" className={styles.dangerButton} disabled={deleting} onClick={async () => {
+          setDeleting(true); setDeleteError(""); setDirty(false);
+          // On success the action redirects to the blog list.
+          const result = await deleteBlogAction(post.id, state.updatedAt || post.updatedAt);
+          if (result?.error) { setDeleteError(result.error); setDeleting(false); }
+        }}>{deleting ? "Deleting…" : "Delete permanently"}</button>
+        <button type="button" className={styles.quietButton} disabled={deleting} onClick={() => setDeleteOpen(false)}>Keep it</button>
+      </div>
+    </div></EditorDialog>}
     {leaveOpen && <EditorDialog title="Leave this story?" onClose={() => setLeaveOpen(false)}><div className={styles.dialogFields}><p>Your latest changes haven’t been saved.</p><div className={styles.buttons}><button type="button" className={styles.primary} onClick={() => setLeaveOpen(false)}>Keep writing</button><Link href="/team/blogs" className={styles.quietButton} onClick={() => setDirty(false)}>Leave without saving</Link></div></div></EditorDialog>}
   </main>;
 }

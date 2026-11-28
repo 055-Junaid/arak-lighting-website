@@ -2,7 +2,7 @@ import type { BlogPost } from "./types";
 // Design examples are available only in local development, never on the live site.
 const common = { author: "ARAK Editorial", status: "published" as const, locale: "en" as const, sample: true, createdAt: "2026-10-20T09:00:00.000Z", updatedAt: "2026-10-20T09:00:00.000Z", publishedAt: "2026-10-20T09:00:00.000Z" };
 export const SAMPLE_POSTS: BlogPost[] = [
-  { ...common, id: "sample-light", slug: "designing-with-light-after-dark", title: "Designing with light, after dark.", excerpt: "How a thoughtful lighting approach gives architecture a second life when the sun goes down.", category: "Lighting design", cover: "/home/solitaire-entrance-dusk.jpg", coverAlt: "Illuminated architecture at the Solitaire entrance at dusk", body: `A building changes character after sunset. Materials become quieter, edges soften, and light begins to decide what we see. The opportunity is to reveal the architecture with the same care that went into designing it.
+  { ...common, id: "sample-light", slug: "designing-with-light-after-dark", title: "Designing with light, after dark.", excerpt: "How a thoughtful lighting approach gives architecture a second life when the sun goes down.", category: "Media façade", cover: "/home/solitaire-entrance-dusk.jpg", coverAlt: "Illuminated architecture at the Solitaire entrance at dusk", body: `A building changes character after sunset. Materials become quieter, edges soften, and light begins to decide what we see. The opportunity is to reveal the architecture with the same care that went into designing it.
 
 ## Start with what deserves attention
 
@@ -39,7 +39,7 @@ A short design review helps the team see how the different decisions support the
 Drawings and calculations provide a starting point. Aiming, dimming, and reviewing the installation after dark allow the design team to respond to the real material, the surrounding light, and the way people use the space.
 
 The result is an environment with a clear visual rhythm: enough light to welcome people, enough restraint to let the architecture speak.` },
-  { ...common, id: "sample-controls", slug: "a-better-brief-for-smart-lighting", title: "A better brief for smart lighting.", excerpt: "Start with the daily experience. Build the control strategy around the people who use the space.", category: "Smart controls", cover: "/services/lighting-controls.jpg", coverAlt: "A lighting control interface for connected spaces", body: `A control system is most useful when the people in the building understand what it does. A good brief begins with everyday routines and turns those routines into clear, manageable lighting scenes.
+  { ...common, id: "sample-controls", slug: "a-better-brief-for-smart-lighting", title: "A better brief for smart lighting.", excerpt: "Start with the daily experience. Build the control strategy around the people who use the space.", category: "Smart poles", cover: "/services/lighting-controls.jpg", coverAlt: "A lighting control interface for connected spaces", body: `A control system is most useful when the people in the building understand what it does. A good brief begins with everyday routines and turns those routines into clear, manageable lighting scenes.
 
 ## Describe the day before the system
 
@@ -52,7 +52,7 @@ Give scenes names that reflect their purpose. Agree how manual adjustments inter
 ## Plan for handover
 
 Allow time for demonstrations, documentation, and feedback from the people who will use the building. The handover is part of the design.` },
-  { ...common, id: "sample-materials", slug: "seeing-materials-in-the-right-light", title: "Seeing materials in the right light.", excerpt: "Why testing light on the actual finish belongs early in the design conversation.", category: "Lighting design", cover: "/projects/ritz-carlton/01.jpg", coverAlt: "Architectural lighting at the Ritz-Carlton", body: `Stone, timber, metal, and fabric respond differently to light. A finish that looks restrained in daylight may become the most prominent element in a night-time scene.
+  { ...common, id: "sample-materials", slug: "seeing-materials-in-the-right-light", title: "Seeing materials in the right light.", excerpt: "Why testing light on the actual finish belongs early in the design conversation.", category: "Media façade", cover: "/projects/ritz-carlton/01.jpg", coverAlt: "Architectural lighting at the Ritz-Carlton", body: `Stone, timber, metal, and fabric respond differently to light. A finish that looks restrained in daylight may become the most prominent element in a night-time scene.
 
 ## Bring the material into the conversation
 

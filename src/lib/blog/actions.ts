@@ -4,10 +4,10 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireMember, signIn, signOut } from "./auth";
 import { postMediaUrls, postUsesMedia } from "./content";
-import { assertBlogStorage, assertLocalBlogs, postById, publishedPosts, savePost } from "./storage";
+import { allPosts, assertBlogStorage, assertLocalBlogs, deletePost, postById, publishedPosts, savePost } from "./storage";
 import { purgeBlogImages, removeBlogImage, saveUploadedBlogImage } from "./media";
 import { blogBodyText, decodeRichBody, RICH_BODY_PREFIX } from "./rich-text";
-import { CATEGORIES, type ActionResult, type BlogPost, blogPath } from "./types";
+import { isCategory, type ActionResult, type BlogPost, blogPath } from "./types";
 
 // Password sign-in exists only in local development. Production uses Microsoft.
 const attempts = new Map<string, { count: number; until: number }>();
@@ -51,12 +51,12 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
     const slug = text(form, "slug", 100);
     const coverAlt = text(form, "coverAlt", 240);
     const coverCaption = text(form, "coverCaption", 240);
-    const category = text(form, "category", 40) as BlogPost["category"];
+    const category = text(form, "category", 40);
     const locale = text(form, "locale", 2);
     const intent = form.get("intent");
     if (!title || !slug) return { error: "Add a title and a blog URL before saving." };
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return { error: "Use lowercase English letters, numbers, and single hyphens for the URL." };
-    if (!CATEGORIES.includes(category) || !["en", "ar"].includes(locale)) return { error: "Choose a valid category and language." };
+    if ((category && !isCategory(category)) || !["en", "ar"].includes(locale)) return { error: "Choose a valid category and language." };
     const status = intent === "publish" ? "published" : intent === "unpublish" ? "draft" : existing?.status || "draft";
     let cover = existing?.cover || "";
     let coverSize = { coverWidth: existing?.coverWidth, coverHeight: existing?.coverHeight };
@@ -67,6 +67,7 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
       cover = image.url;
       coverSize = { coverWidth: image.width, coverHeight: image.height };
     }
+    if (status === "published" && !isCategory(category)) throw new Error("Choose a category before publishing: Media façade, Smart poles or Maintenance.");
     if (status === "published" && (!excerpt || !blogBodyText(body).trim() || !cover || !coverAlt)) throw new Error("Before publishing, add a summary, article text, cover image, and image description.");
     const now = new Date().toISOString();
     saved = { id, title, slug, excerpt, body, category, locale: locale as BlogPost["locale"], cover, coverAlt, ...(coverCaption ? { coverCaption } : {}), ...coverSize, author: existing?.sample ? member.name : existing?.author || member.name, status, createdAt: existing?.createdAt || now, updatedAt: now, publishedAt: status === "published" ? existing?.publishedAt || now : existing?.publishedAt };
@@ -87,6 +88,25 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
   if (isNew) redirect(`/team/blogs/${saved.id}?saved=1`);
   const saveMessage = saved.status === "published" ? "Published. Your changes are now visible on the website." : "Draft saved. Only the team can see it.";
   return { success: cacheWarning ? `${saveMessage} A removed photo may stay available by direct link for up to 24 hours.` : saveMessage, id: saved.id, updatedAt: saved.updatedAt, status: saved.status, cover: saved.cover, coverWidth: saved.coverWidth, coverHeight: saved.coverHeight };
+}
+
+// Removes the article and every image only it used. Published articles leave the website at once.
+export async function deleteBlogAction(id: string, expectedUpdatedAt: string): Promise<{ error?: string }> {
+  await requireMember();
+  try {
+    assertBlogStorage();
+    const post = await postById(String(id).slice(0, 80));
+    if (!post) return { error: "This blog no longer exists." };
+    if (post.sample) return { error: "Design samples cannot be deleted." };
+    await deletePost(post.id, String(expectedUpdatedAt || ""));
+    const remaining = await allPosts();
+    const orphaned = postMediaUrls(post).filter(url => !remaining.some(other => postUsesMedia(other, url)));
+    // The article is already gone; a leftover image file is only wasted storage, never public.
+    for (const url of orphaned) await removeBlogImage(url.replace("/blog-media/", "")).catch(error => console.error("Blog image delete failed", error));
+    if (post.status === "published") await purgeBlogImages(orphaned).catch(error => console.error("Blog image cache purge failed", error));
+    revalidatePath("/blogs"); revalidatePath("/ar/blogs"); revalidatePath("/team/blogs"); revalidatePath("/sitemap.xml"); revalidatePath(blogPath(post));
+  } catch (error) { return { error: error instanceof Error ? error.message : "The blog could not be deleted. Try again." }; }
+  redirect("/team/blogs?deleted=1");
 }
 
 export async function uploadBlogImageAction(form: FormData): Promise<{ url?: string; error?: string }> {

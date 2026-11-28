@@ -7,7 +7,7 @@ import { convertGoogleDocHtml, googleDocId, GOOGLE_IMAGE_PREFIX, isGoogleDocImag
 import { storeBlogImage } from "./media";
 import { decodeRichBody, encodeRichBody } from "./rich-text";
 import { allPosts, assertBlogStorage, savePost } from "./storage";
-import { CATEGORIES, type BlogPost } from "./types";
+import type { BlogPost } from "./types";
 
 // Import runs as several short requests (the doc, then one per image) so no
 // single request comes near the hosting platform's function time limit.
@@ -94,7 +94,7 @@ export async function createImportedDraftAction(input: ImportedDraft): Promise<{
     const size = (value: unknown) => Number.isInteger(value) && (value as number) > 0 && (value as number) <= 10000 ? value as number : undefined;
     const now = new Date().toISOString();
     const post: BlogPost = {
-      id: randomUUID(), title, slug, excerpt: String(input.excerpt || "").trim().slice(0, 320), body: encodeRichBody(doc), category: CATEGORIES[0], locale,
+      id: randomUUID(), title, slug, excerpt: String(input.excerpt || "").trim().slice(0, 320), body: encodeRichBody(doc), category: "", locale,
       cover: input.cover || "", coverAlt: String(input.coverAlt || "").trim().slice(0, 240),
       ...(input.coverCaption?.trim() ? { coverCaption: input.coverCaption.trim().slice(0, 240) } : {}),
       coverWidth: size(input.coverWidth), coverHeight: size(input.coverHeight),
