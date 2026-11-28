@@ -11,7 +11,7 @@
   "dependencies": {
     "@netlify/blobs": "11.1.9",
     "@netlify/cache": "4.2.1",
-    "@next/third-parties": "^16.3.5",
+    "@next/third-parties": "^16.4.6",
     "@tiptap/extension-image": "^3.32.0",
     "@tiptap/extension-table": "^3.32.0",
     "@tiptap/pm": "^3.32.0",
@@ -19,7 +19,7 @@
     "@tiptap/starter-kit": "^3.32.0",
     "fflate": "0.8.3",
     "jose": "6.2.18",
-    "next": "16.3.2",
+    "next": "16.4.6",
     "node-html-parser": "7.0.1",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -30,7 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.2",
+    "eslint-config-next": "16.4.6",
     "sharp": "^0.35.3",
     "tailwindcss": "^4",
     "typescript": "^5"
