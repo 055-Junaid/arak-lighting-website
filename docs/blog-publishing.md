@@ -31,6 +31,13 @@ production content provider is connected.
 6. **Save draft** keeps the article private. **Publish article** makes it public.
 7. Published articles can be edited with **Save changes**, or removed from the
    public website with **Move to draft**.
+8. **Delete this article** at the bottom of Post settings removes an article and
+   the images only it used, after a confirmation. It cannot be undone.
+
+Every article belongs to one of three categories: **Media façade**, **Smart poles**
+or **Maintenance**. A new or imported draft has none until the writer picks one;
+publishing requires it, and the confirmation names the category. The category,
+like everything else, can be changed after publishing with **Save changes**.
 
 Approved members publish directly. There is no approval queue or public sign-up.
 The visual editor supports paragraphs, headings, bold/italic text, links, bullet lists, pull quotes,
