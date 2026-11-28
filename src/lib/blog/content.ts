@@ -5,7 +5,8 @@ export type BlogBlock =
   | { kind: "heading"; level: 2 | 3; text: string; inline?: BlogInline[]; id: string }
   | { kind: "paragraph" | "quote"; text: string; inline?: BlogInline[] }
   | { kind: "list"; items: string[]; richItems?: BlogInline[][] }
-  | { kind: "image"; src: string; alt: string }
+  | { kind: "image"; src: string; alt: string; caption?: string }
+  | { kind: "contact" }
   | { kind: "table"; headers: string[]; rows: string[][]; richHeaders?: BlogInline[][]; richRows?: BlogInline[][][] };
 export type BlogSection = { id: string; text: string };
 
@@ -17,8 +18,10 @@ function richBlocks(doc: RichNode): BlogBlock[] {
     if (node.type === "heading") return [{ kind: "heading", level: node.attrs?.level === 3 ? 3 : 2, text, inline: richInline(node.content), id: `section-${index + 1}` }];
     if (node.type === "image") {
       const src = node.attrs?.src;
-      return typeof src === "string" && isBlogImagePath(src) ? [{ kind: "image", src, alt: typeof node.attrs?.alt === "string" ? node.attrs.alt : "" }] : [];
+      const caption = node.attrs?.caption;
+      return typeof src === "string" && isBlogImagePath(src) ? [{ kind: "image", src, alt: typeof node.attrs?.alt === "string" ? node.attrs.alt : "", ...(typeof caption === "string" ? { caption } : {}) }] : [];
     }
+    if (node.type === "contactButton") return [{ kind: "contact" }];
     if (node.type === "bulletList") return [{ kind: "list", items: (node.content || []).map(richNodeText), richItems: (node.content || []).map(item => richInline(item.content)) }];
     if (node.type === "table") {
       const rows = (node.content || []).map(row => row.content || []);
@@ -54,4 +57,8 @@ export function articleSections(blocks: BlogBlock[]): BlogSection[] {
 }
 export function postUsesMedia(post: { cover: string; body: string }, url: string) {
   return post.cover === url || parseBlogBody(post.body).some(block => block.kind === "image" && block.src === url);
+}
+export function postMediaUrls(post: { cover: string; body: string }) {
+  const images = parseBlogBody(post.body).flatMap(block => block.kind === "image" ? [block.src] : []);
+  return [...new Set([post.cover, ...images])].filter(url => url.startsWith("/blog-media/"));
 }

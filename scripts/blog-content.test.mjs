@@ -86,3 +86,14 @@ test('multiple paragraphs in quotes and table cells retain their line breaks', (
   const body = encodeRichBody({type:'doc',content:[{type:'blockquote',content:[paragraph('First'),paragraph('Second')]}]});
   assert.equal(parseBlogBody(body)[0].inline.map(part => part.text).join(''), 'First\nSecond');
 });
+
+test('image captions are separate from descriptions; older images keep showing their description', () => {
+  const src = '/blog-media/00000000-0000-0000-0000-000000000000.webp';
+  const body = encodeRichBody({ type: 'doc', content: [{ type: 'image', attrs: { src, alt: 'Old', caption: null } }, { type: 'image', attrs: { src, alt: 'Described', caption: '' } }, { type: 'contactButton' }] });
+  const blocks = parseBlogBody(body);
+  assert.equal(blocks[0].caption, undefined);
+  assert.equal(blocks[1].caption, '');
+  assert.equal(blocks[2].kind, 'contact');
+  const reopened = parseBlogBody(encodeRichBody(editorDocument(body)));
+  assert.deepEqual(reopened, blocks);
+});

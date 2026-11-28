@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ComponentProps } from "react";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, Node, useEditor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
 import StarterKit from "@tiptap/starter-kit";
 import ImageExtension from "@tiptap/extension-image";
@@ -16,11 +16,24 @@ import styles from "./Editor.module.css";
 
 
 const appendMenuToBody = () => document.body;
+// Caption is separate from the description; images saved before it existed have none and show their description.
+const CaptionedImage = ImageExtension.extend({
+  addAttributes() {
+    return { ...this.parent?.(), caption: { default: null, parseHTML: element => element.getAttribute("data-caption"), renderHTML: attributes => attributes.caption == null ? {} : { "data-caption": attributes.caption } } };
+  },
+});
+// A placeholder in the editor; the article renders it as a button to the contact page.
+const ContactButton = Node.create({
+  name: "contactButton", group: "block", atom: true, selectable: true, draggable: true,
+  parseHTML() { return [{ tag: "div[data-contact-button]" }]; },
+  renderHTML() { return ["div", { "data-contact-button": "", class: styles.contactNode, contenteditable: "false" }, "Contact button · links readers to the contact page"]; },
+});
 
 export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, locale }: { initialBody: string; onChange: (body: string) => void; onBusyChange: (busy: boolean) => void; disabled: boolean; locale: "en" | "ar" }) {
   const [initialDocument] = useState(() => editorDocument(initialBody));
   const [imageOpen, setImageOpen] = useState(false);
   const [imageAlt, setImageAlt] = useState("");
+  const [imageCaption, setImageCaption] = useState("");
   const [imageError, setImageError] = useState("");
   const [formattingFocused, setFormattingFocused] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -55,7 +68,7 @@ export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, 
     shouldRerenderOnTransaction: true,
     extensions: [
       StarterKit.configure({ heading: { levels: [2, 3] }, code: false, codeBlock: false, strike: false, underline: false, orderedList: false, horizontalRule: false, link: { openOnClick: false, autolink: false, isAllowedUri: url => safeBlogLink(url) } }),
-      ImageExtension.configure({ allowBase64: false }),
+      CaptionedImage.configure({ allowBase64: false }), ContactButton,
       Table.configure({ resizable: false }), TableRow, TableCell.extend({content: "paragraph+"}), TableHeader.extend({content: "paragraph+"}),
     ],
     content: initialDocument,
@@ -87,10 +100,10 @@ export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, 
         const position = editor.state.selection.$from;
         if (position.depth > 1) {
           const after = position.after(1);
-          editor.chain().insertContentAt(after, [{type: "image", attrs: {src: result.url, alt: imageAlt.trim()}}, {type: "paragraph"}]).focus(after).run();
-        } else editor.chain().focus().setImage({src: result.url, alt: imageAlt.trim()}).run();
+          editor.chain().insertContentAt(after, [{type: "image", attrs: {src: result.url, alt: imageAlt.trim(), caption: imageCaption.trim()}}, {type: "paragraph"}]).focus(after).run();
+        } else editor.chain().focus().insertContent({type: "image", attrs: {src: result.url, alt: imageAlt.trim(), caption: imageCaption.trim()}}).run();
       }
-      setImageOpen(false); setImageAlt("");
+      setImageOpen(false); setImageAlt(""); setImageCaption("");
     } catch { setImageError("The image could not be uploaded. Try again."); }
     finally { setUploading(false); onBusyChange(false); }
   }
@@ -103,10 +116,18 @@ export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, 
       editor.chain().insertContentAt(after, [{type: "table", content}, {type: "paragraph"}]).focus(after).run();
     } else editor.chain().focus().insertTable({rows: 3, cols: 2, withHeaderRow: true}).run();
   }
+  function insertContactButton() {
+    if (!editor) return;
+    const position = editor.state.selection.$from;
+    const empty = position.depth === 1 && !position.parent.textContent.trim();
+    const at = empty ? position.before(1) : position.after(1);
+    editor.chain().insertContentAt(empty ? {from: at, to: position.after(1)} : at, [{type: "contactButton"}, {type: "paragraph"}]).run();
+  }
   function openLink() { setHref(editor?.getAttributes("link").href || ""); setLinkError(""); setLinkOpen(true); }
   return <div className={styles.bodyEditor} data-locale={locale}>
     <CursorInsertMenu editor={editor} disabled={disabled || uploading} onInsert={(kind: InsertBlock) => {
-      if (kind === "image") { setImageError(""); setImageAlt(""); setImageOpen(true); }
+      if (kind === "image") { setImageError(""); setImageAlt(""); setImageCaption(""); setImageOpen(true); }
+      if (kind === "contact") insertContactButton();
       if (kind === "heading") editor.chain().focus().toggleHeading({level: 2}).run();
       if (kind === "subheading") editor.chain().focus().toggleHeading({level: 3}).run();
       if (kind === "list") editor.chain().focus().toggleBulletList().run();
@@ -128,14 +149,16 @@ export function RichTextEditor({ initialBody, onChange, onBusyChange, disabled, 
     {editor.isActive("table") && <div className={styles.contextTools} role="group" aria-label="Table options">
       <button type="button" onClick={() => editor.chain().focus().addRowAfter().run()}>+ Row</button><button type="button" disabled={(() => { const pos = editor.state.selection.$from; for (let depth = pos.depth; depth > 0; depth--) if (pos.node(depth).type.name === "tableRow") return pos.node(depth).childCount >= 8; return true; })()} onClick={() => editor.chain().focus().addColumnAfter().run()}>+ Column</button><button type="button" onClick={() => editor.chain().focus().deleteRow().run()}>Remove row</button><button type="button" disabled={(() => { const pos = editor.state.selection.$from; for (let depth = pos.depth; depth > 0; depth--) if (pos.node(depth).type.name === "tableRow") return pos.node(depth).childCount <= 2; return true; })()} onClick={() => editor.chain().focus().deleteColumn().run()}>Remove column</button><button type="button" onClick={() => editor.chain().focus().deleteTable().run()}>Delete table</button>
     </div>}
-    {editor.isActive("image") && <div className={styles.contextTools}><button type="button" onClick={() => { setImageAlt(editor.getAttributes("image").alt || ""); setImageError(""); setImageOpen(true); }}>Edit image description</button><button type="button" onClick={() => editor.chain().focus().deleteSelection().run()}>Remove image</button></div>}
+    {editor.isActive("contactButton") && <div className={styles.contextTools}><button type="button" onClick={() => editor.chain().focus().deleteSelection().run()}>Remove contact button</button></div>}
+    {editor.isActive("image") && <div className={styles.contextTools}><button type="button" onClick={() => { const attributes = editor.getAttributes("image"); setImageAlt(attributes.alt || ""); setImageCaption(attributes.caption ?? attributes.alt ?? ""); setImageError(""); setImageOpen(true); }}>Edit image</button><button type="button" onClick={() => editor.chain().focus().deleteSelection().run()}>Remove image</button></div>}
     <EditorContent editor={editor} className={styles.richText} />
-    {imageOpen && <EditorDialog returnFocusTo={editor.view.dom} title={editor.isActive("image") ? "Image description" : "Add an image"} dismissible={!uploading} onClose={() => { if (!uploading) setImageOpen(false); }}>
+    {imageOpen && <EditorDialog returnFocusTo={editor.view.dom} title={editor.isActive("image") ? "Edit image" : "Add an image"} dismissible={!uploading} onClose={() => { if (!uploading) setImageOpen(false); }}>
       <div className={styles.dialogFields}>
         {!editor.isActive("image") && <label className={styles.field}>Choose image<input ref={file} type="file" accept="image/jpeg,image/png,image/webp" disabled={uploading} /><small>JPG, PNG or WebP, up to 5 MB.</small></label>}
-        <label className={styles.field}>Image description<input value={imageAlt} onChange={e => setImageAlt(e.target.value)} maxLength={240} disabled={uploading} placeholder="What does this image show?" /><small>Used as the caption and for readers using screen readers.</small></label>
+        <label className={styles.field}>Image description<input value={imageAlt} onChange={e => setImageAlt(e.target.value)} maxLength={240} disabled={uploading} placeholder="What does this image show?" /><small>Read by screen readers and search engines. Not shown on the page.</small></label>
+        <label className={styles.field}>Caption (optional)<input value={imageCaption} onChange={e => setImageCaption(e.target.value)} maxLength={240} disabled={uploading} placeholder="Shown under the image" /><small>Leave empty for no caption.</small></label>
         {imageError && <p className={styles.error} role="alert">{imageError}</p>}
-        <button type="button" className={styles.primary} disabled={uploading} onClick={() => { if (editor.isActive("image")) { editor.chain().focus().updateAttributes("image", {alt: imageAlt}).run(); setImageOpen(false); } else void uploadImage(); }}>{uploading ? "Uploading…" : editor.isActive("image") ? "Save description" : "Insert image"}</button>
+        <button type="button" className={styles.primary} disabled={uploading} onClick={() => { if (editor.isActive("image")) { editor.chain().focus().updateAttributes("image", {alt: imageAlt, caption: imageCaption.trim()}).run(); setImageOpen(false); } else void uploadImage(); }}>{uploading ? "Uploading…" : editor.isActive("image") ? "Save" : "Insert image"}</button>
       </div>
     </EditorDialog>}
     {linkOpen && <EditorDialog returnFocusTo={editor.view.dom} title="Add a link" onClose={() => setLinkOpen(false)}><div className={styles.dialogFields}>

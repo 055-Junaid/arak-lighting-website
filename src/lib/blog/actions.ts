@@ -3,8 +3,9 @@ import { randomUUID } from "node:crypto";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireMember, signIn, signOut } from "./auth";
-import { assertBlogStorage, assertLocalBlogs, postById, savePost } from "./storage";
-import { removeBlogImage, saveUploadedBlogImage } from "./media";
+import { postMediaUrls, postUsesMedia } from "./content";
+import { assertBlogStorage, assertLocalBlogs, postById, publishedPosts, savePost } from "./storage";
+import { purgeBlogImages, removeBlogImage, saveUploadedBlogImage } from "./media";
 import { blogBodyText, decodeRichBody, RICH_BODY_PREFIX } from "./rich-text";
 import { CATEGORIES, type ActionResult, type BlogPost, blogPath } from "./types";
 
@@ -37,6 +38,7 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
   assertBlogStorage();
   let saved: BlogPost;
   let uploadedFilename: string | undefined;
+  let cacheWarning = false;
   const isNew = !form.get("id");
   try {
     const id = text(form, "id", 80) || randomUUID();
@@ -48,6 +50,7 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
     if (body.startsWith(RICH_BODY_PREFIX) && !decodeRichBody(body)) return { error: "The article format could not be read. Reopen the editor and try again." };
     const slug = text(form, "slug", 100);
     const coverAlt = text(form, "coverAlt", 240);
+    const coverCaption = text(form, "coverCaption", 240);
     const category = text(form, "category", 40) as BlogPost["category"];
     const locale = text(form, "locale", 2);
     const intent = form.get("intent");
@@ -56,17 +59,24 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
     if (!CATEGORIES.includes(category) || !["en", "ar"].includes(locale)) return { error: "Choose a valid category and language." };
     const status = intent === "publish" ? "published" : intent === "unpublish" ? "draft" : existing?.status || "draft";
     let cover = existing?.cover || "";
+    let coverSize = { coverWidth: existing?.coverWidth, coverHeight: existing?.coverHeight };
     const upload = form.get("coverFile");
     if (upload instanceof File && upload.size > 0) {
       const image = await saveUploadedBlogImage(upload);
       uploadedFilename = image.filename;
       cover = image.url;
+      coverSize = { coverWidth: image.width, coverHeight: image.height };
     }
     if (status === "published" && (!excerpt || !blogBodyText(body).trim() || !cover || !coverAlt)) throw new Error("Before publishing, add a summary, article text, cover image, and image description.");
     const now = new Date().toISOString();
-    saved = { id, title, slug, excerpt, body, category, locale: locale as BlogPost["locale"], cover, coverAlt, author: existing?.sample ? member.name : existing?.author || member.name, status, createdAt: existing?.createdAt || now, updatedAt: now, publishedAt: status === "published" ? existing?.publishedAt || now : existing?.publishedAt };
+    saved = { id, title, slug, excerpt, body, category, locale: locale as BlogPost["locale"], cover, coverAlt, ...(coverCaption ? { coverCaption } : {}), ...coverSize, author: existing?.sample ? member.name : existing?.author || member.name, status, createdAt: existing?.createdAt || now, updatedAt: now, publishedAt: status === "published" ? existing?.publishedAt || now : existing?.publishedAt };
     await savePost(saved, text(form, "updatedAt", 40) || undefined);
     uploadedFilename = undefined;
+    if (existing?.status === "published") {
+      const stillPublic = await publishedPosts();
+      const noLongerPublic = postMediaUrls(existing).filter(url => !stillPublic.some(post => postUsesMedia(post, url)));
+      await purgeBlogImages(noLongerPublic).catch(error => { console.error("Blog image cache purge failed", error); cacheWarning = true; });
+    }
     revalidatePath("/blogs"); revalidatePath("/ar/blogs"); revalidatePath("/team/blogs"); revalidatePath("/sitemap.xml");
     revalidatePath(blogPath(saved));
     if (existing) revalidatePath(blogPath(existing));
@@ -75,7 +85,8 @@ export async function saveBlogAction(_: ActionResult, form: FormData): Promise<A
     return { error: error instanceof Error ? error.message : "The blog could not be saved. Try again." };
   }
   if (isNew) redirect(`/team/blogs/${saved.id}?saved=1`);
-  return { success: saved.status === "published" ? "Published. Your changes are now visible on the website." : "Draft saved. Only the team can see it.", id: saved.id, updatedAt: saved.updatedAt, status: saved.status, cover: saved.cover };
+  const saveMessage = saved.status === "published" ? "Published. Your changes are now visible on the website." : "Draft saved. Only the team can see it.";
+  return { success: cacheWarning ? `${saveMessage} A removed photo may stay available by direct link for up to 24 hours.` : saveMessage, id: saved.id, updatedAt: saved.updatedAt, status: saved.status, cover: saved.cover, coverWidth: saved.coverWidth, coverHeight: saved.coverHeight };
 }
 
 export async function uploadBlogImageAction(form: FormData): Promise<{ url?: string; error?: string }> {

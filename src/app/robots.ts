@@ -8,8 +8,10 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       // /_next/static/chunks/ is NOT blocked: it holds the JavaScript and CSS
       // Google renders pages with, and Google's guidance is never to block it.
-      // The blog's private publishing workspace and its upload route are.
-      disallow: ["/team/", "/blog-media/"],
+      // The blog's private publishing workspace is. Blog images stay crawlable:
+      // they are covers in link previews and image search, and a draft's
+      // images already return 404 to anyone outside the team.
+      disallow: ["/team/"],
     },
     sitemap: url("/sitemap.xml"),
     host: url("/"),

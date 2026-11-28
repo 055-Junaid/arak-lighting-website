@@ -19,6 +19,8 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
   const [category, setCategory] = useState(post?.category || CATEGORIES[0]);
   const [locale, setLocale] = useState(post?.locale || "en");
   const [coverAlt, setCoverAlt] = useState(post?.coverAlt || "");
+  const [coverCaption, setCoverCaption] = useState(post?.coverCaption || "");
+  const [coverSize, setCoverSize] = useState({ coverWidth: post?.coverWidth, coverHeight: post?.coverHeight });
   const [cover, setCover] = useState(post?.cover || "");
   const [preview, setPreview] = useState(false);
   const [settings, setSettings] = useState(false);
@@ -41,12 +43,12 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
   const introRef = useRef<HTMLTextAreaElement>(null);
   const [publishState, setPublishState] = useState(post?.status || "draft");
   const [state, action, pending] = useActionState(async (previous: import("@/lib/blog/types").ActionResult, form: FormData) => {
-    for (const [key, value] of Object.entries({title, slug, body, excerpt, category, locale, coverAlt})) form.set(key, value);
+    for (const [key, value] of Object.entries({title, slug, body, excerpt, category, locale, coverAlt, coverCaption})) form.set(key, value);
     if (fileRef.current) form.set("coverFile", fileRef.current);
     const result = await saveBlogAction(previous, form);
     setCoverDialog(false);
     if (result.error) { setPreview(false); setPublishing(false); setSettings(true); }
-    else { setDirty(false); fileRef.current = null; if (result.cover) setCover(result.cover); if (result.status) setPublishState(result.status); setSettings(false); }
+    else { setDirty(false); fileRef.current = null; if (result.cover) setCover(result.cover); if (result.coverWidth) setCoverSize({ coverWidth: result.coverWidth, coverHeight: result.coverHeight }); if (result.status) setPublishState(result.status); setSettings(false); }
     return result;
   }, {});
   // Preview uses the current unsaved draft and starts at the article's beginning.
@@ -91,7 +93,7 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
     return () => { observer.disconnect(); window.removeEventListener("resize", fit); };
   }, [title, excerpt, preview]);
   useEffect(() => () => { if (blobRef.current) URL.revokeObjectURL(blobRef.current); }, []);
-  const draft: BlogPost = { id: post?.id || "preview", title, slug, body, excerpt, category, locale, author: post?.author || author, cover, coverAlt, status: publishState, createdAt: post?.createdAt || new Date().toISOString(), updatedAt: state.updatedAt || post?.updatedAt || new Date().toISOString(), publishedAt: post?.publishedAt };
+  const draft: BlogPost = { id: post?.id || "preview", title, slug, body, excerpt, category, locale, author: post?.author || author, cover, coverAlt, coverCaption, ...coverSize, status: publishState, createdAt: post?.createdAt || new Date().toISOString(), updatedAt: state.updatedAt || post?.updatedAt || new Date().toISOString(), publishedAt: post?.publishedAt };
   const wordCount = blogBodyText(body).trim().split(/\s+/).filter(Boolean).length;
   const missing = [!title.trim() && "Title", !slug && "Blog URL", !excerpt.trim() && "Introduction", !wordCount && "Article text", !cover && "Cover image", !coverAlt.trim() && "Cover description"].filter(Boolean);
   function openCover() { setSettings(false); setCoverDialog(true); }
@@ -99,10 +101,11 @@ export function BlogEditor({ post, author }: { post?: BlogPost; author: string }
           <label className={styles.field}>Cover photo<div className={styles.coverPicker}>{cover ? <div className={styles.coverPreview}><Image src={cover} alt={coverAlt || "Selected cover"} fill sizes="400px" unoptimized /></div> : <span className={styles.emptyCover}>+ Add a cover image</span>}<input type="file" accept="image/jpeg,image/png,image/webp" aria-label="Choose cover photo" onChange={e => {
             const file = e.target.files?.[0]; if (!file) return;
             if (file.size > MAX_BLOG_IMAGE_BYTES || !["image/jpeg", "image/png", "image/webp"].includes(file.type)) { setFileError(`Choose a JPG, PNG or WebP image smaller than ${MAX_BLOG_IMAGE_LABEL}.`); e.target.value = ""; return; }
-            setDirty(true); setFileError(""); fileRef.current = file; if (blobRef.current) URL.revokeObjectURL(blobRef.current); blobRef.current = URL.createObjectURL(file); setCover(blobRef.current);
+            setDirty(true); setFileError(""); fileRef.current = file; setCoverSize({ coverWidth: undefined, coverHeight: undefined }); if (blobRef.current) URL.revokeObjectURL(blobRef.current); blobRef.current = URL.createObjectURL(file); setCover(blobRef.current);
           }} /></div><small>JPG, PNG or WebP. Up to {MAX_BLOG_IMAGE_LABEL}. A wide image works best.</small></label>
           {fileError && <p className={styles.error} role="alert">{fileError}</p>}
-          <label className={styles.field}>Cover description<input value={coverAlt} onChange={e => { setCoverAlt(e.target.value); setDirty(true); }} maxLength={240} placeholder="Describe what the cover image shows" dir="auto" /></label>
+          <label className={styles.field}>Cover description<input value={coverAlt} onChange={e => { setCoverAlt(e.target.value); setDirty(true); }} maxLength={240} placeholder="Describe what the cover image shows" dir="auto" /><small>Read by screen readers and search engines.</small></label>
+          <label className={styles.field}>Cover caption (optional)<input value={coverCaption} onChange={e => { setCoverCaption(e.target.value); setDirty(true); }} maxLength={240} placeholder="Shown under the cover photo" dir="auto" /></label>
   </>;
   return <main ref={rootRef} id="main" tabIndex={-1} className={styles.editorShell}>
     <form ref={formRef} action={action} noValidate>

@@ -3,6 +3,8 @@
 export type RichMark = { type: string; attrs?: { href?: string } };
 export type RichNode = { type: string; text?: string; attrs?: Record<string, unknown>; marks?: RichMark[]; content?: RichNode[] };
 export const RICH_BODY_PREFIX = "ARAK-DOCUMENT-1\n";
+// Marks an image still waiting to be copied from a Google Doc during import.
+export const GOOGLE_IMAGE_PREFIX = "google-doc:";
 export function isBlogImagePath(src: string) { return /^\/((blog-media|home|projects|services|generated)\/[a-zA-Z0-9/_-]+\.(jpg|jpeg|png|webp))$/.test(src); }
 export function safeBlogLink(href: string) {
   if (/^\/(?!\/)[^\s\\]*$/.test(href) || /^#[a-zA-Z0-9_-]+$/.test(href)) return true;

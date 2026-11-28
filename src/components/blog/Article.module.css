@@ -31,6 +31,15 @@
 .sample { color: var(--reading-muted); font-size: 12px; margin: 24px 0 0; }
 .cover { position: relative; width: 100%; max-width: 1600px; aspect-ratio: 2.6; margin: 0 auto; background: var(--reading-surface); }
 .cover img { object-fit: cover; }
+.coverFigure { margin: 0; }
+.coverFigure figcaption { max-width: var(--shell-max); margin: 14px auto 0; padding: 0 var(--gutter); color: var(--reading-muted); font-size: 13px; line-height: 1.7; font-style: italic; }
+.portraitCover { padding: 0 var(--gutter); }
+.portraitCover figcaption { text-align: center; padding: 0; }
+.portraitFrame { width: fit-content; max-width: min(640px, 100%); margin: 0 auto; }
+.portraitFrame img { display: block; width: auto; height: auto; max-width: 100%; max-height: 86vh; }
+.contactBlock { margin: 8px 0 40px; }
+.prose .contactBlock a { display: inline-flex; align-items: center; gap: 22px; padding: 15px 26px; border: 1px solid var(--reading-text); color: var(--reading-text); text-decoration: none; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
+.prose .contactBlock a:hover { background: var(--reading-text); color: var(--reading-bg); }
 .placeholder { padding: 100px 24px; background: var(--reading-surface); color: var(--reading-muted); text-align: center; }
 .readingGrid { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 2fr); gap: clamp(60px, 8vw, 140px); align-items: start; max-width: var(--shell-max); margin: 0 auto; padding: clamp(64px, 8vw, 110px) var(--gutter) 0; }
 .body { min-width: 0; max-width: 850px; }
@@ -52,7 +61,7 @@
 .figure figcaption { color: var(--reading-muted); font-size: 13px; line-height: 1.7; margin-top: 12px; }
 .tableScroll { border: 1px solid var(--reading-rule); background: var(--reading-panel); padding: clamp(16px, 2.5vw, 32px); overflow-x: auto; margin: 40px 0; }
 .tableScroll table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7; text-align: start; min-width: 420px; }
-.tableScroll :is(th,td) { border-bottom: 1px solid var(--reading-rule); padding: 17px 20px 17px 0; padding-inline-end: 20px; vertical-align: top; }
+.tableScroll :is(th,td) { border-bottom: 1px solid var(--reading-rule); padding: 17px 20px 17px 0; padding-inline-end: 20px; vertical-align: top; overflow-wrap: break-word; }
 .tableScroll th { text-align: start; font-size: 11px; text-transform: uppercase; letter-spacing: .15em; color: var(--reading-muted); font-weight: 500; }
 .tableScroll tr:last-child td { border-bottom: 0; }
 .contents { position: sticky; top: calc(var(--header-h) + 44px); }
@@ -77,7 +86,7 @@
 .articleEnd .backLink { color: var(--reading-muted); font-size: 13px; border: 0; margin-top: 20px; }
 .preview .introduction { padding-top: 48px; }
 .preview { --header-h: var(--editor-toolbar-height, 88px); }
-:global([data-color="off"]) :is(.cover,.inlineImage) img { filter: grayscale(1); }
+:global([data-color="off"]) :is(.cover,.portraitFrame,.inlineImage) img { filter: grayscale(1); }
 @media (max-width: 960px) {
   .readingGrid { grid-template-columns: minmax(0,1fr); gap: 36px; padding-top: 40px; }
   .body { max-width: none; }

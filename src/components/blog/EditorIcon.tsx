@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-export type EditorIconName = "plus" | "close" | "image" | "heading" | "subheading" | "list" | "quote" | "table" | "link";
+export type EditorIconName = "plus" | "close" | "image" | "heading" | "subheading" | "list" | "quote" | "table" | "link" | "button";
 export function EditorIcon({ name }: {name: EditorIconName}) {
   const paths: Record<EditorIconName, ReactNode> = {
     plus: <path d="M12 5v14M5 12h14" />,
@@ -10,6 +10,7 @@ export function EditorIcon({ name }: {name: EditorIconName}) {
     list: <><path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4" cy="6" r=".8"/><circle cx="4" cy="12" r=".8"/><circle cx="4" cy="18" r=".8"/></>,
     quote: <><path d="M10 6C5 7 3 11 3 17h7v-7H6M21 6c-5 1-7 5-7 11h7v-7h-4"/></>,
     table: <><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M3 15h18M10 4v16"/></>,
+    button: <><rect x="2.5" y="7" width="19" height="10" rx="1.5"/><path d="M9 12h6M13 10l2 2-2 2"/></>,
     link: <><path d="m10 14 4-4M9 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M15 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0"/></>,
   };
   return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>;

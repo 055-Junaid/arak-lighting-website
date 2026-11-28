@@ -14,7 +14,8 @@ export function editorDocument(body: string): RichNode {
     if (block.kind === "heading") return {type: "heading", attrs: {level: block.level}, content: text(block.text)};
     if (block.kind === "quote") return {type: "blockquote", content: [paragraph(block.text)]};
     if (block.kind === "list") return {type: "bulletList", content: block.items.map(item => ({type: "listItem", content: [paragraph(item)]}))};
-    if (block.kind === "image") return {type: "image", attrs: {src: block.src, alt: block.alt}};
+    if (block.kind === "image") return {type: "image", attrs: {src: block.src, alt: block.alt, caption: block.caption}};
+    if (block.kind === "contact") return {type: "contactButton"};
     if (block.kind === "table") return {type: "table", content: [block.headers, ...block.rows].map((row, i) => ({type: "tableRow", content: row.map(cell => ({type: i ? "tableCell" : "tableHeader", content: [paragraph(cell)]}))}))};
     return paragraph(block.text);
   }).concat(body.trim() ? [] : [paragraph("")]) };

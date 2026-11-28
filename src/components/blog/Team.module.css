@@ -56,6 +56,13 @@
 .coverPreview img { object-fit: cover; }
 .preview { margin-top: 24px; border: 1px solid var(--hair); }
 .setupCode { overflow-wrap: anywhere; font-size: var(--blog-small); background: white; padding: 16px; line-height: 1.8; }
+.importPanel { max-width: 760px; display: grid; gap: 22px; }
+.importPanel h2 { font: 500 var(--blog-subheading)/1.3 var(--font-sora), sans-serif; letter-spacing: -.025em; margin: 0; }
+.importPanel h3 { font: 500 18px/1.4 var(--font-sora), sans-serif; margin: 8px 0 0; }
+.importNotes { margin: 0; padding-inline-start: 20px; display: grid; gap: 10px; font-size: var(--blog-ui); line-height: 1.7; color: var(--muted); }
+.importGuide { font-size: var(--blog-small); line-height: 1.7; color: var(--muted); border-top: 1px solid var(--hair); padding-top: 18px; }
+.importGuide summary { cursor: pointer; color: var(--ink); }
+.importGuide ul { padding-inline-start: 20px; }
 @media (max-width:1080px) { .editor { grid-template-columns: minmax(0,1fr) 280px; gap: 24px; } }
 @media (max-width:960px) { .editor { grid-template-columns: 1fr; } .sidebar { grid-template-columns: repeat(2,minmax(0,1fr)); } .sidebar h2 { grid-column: 1 / -1; } .row { grid-template-columns: 66px minmax(0,1fr) 80px; gap: 16px; } .thumbnail { width: 66px; height: 60px; } .rowActions { grid-column: 2 / -1; justify-content: flex-start; } }
 @media (max-width:680px) { .login { grid-template-columns: 1fr; margin-top: 28px; } .loginIntro { min-height: 300px; } .top, .heading { flex-direction: column; align-items: flex-start; } .account { justify-content: flex-start; } .sidebar { grid-template-columns: 1fr; } .row { grid-template-columns: minmax(0,1fr) 80px; } .thumbnail { display: none; } .rowActions { grid-column: 1 / -1; } }

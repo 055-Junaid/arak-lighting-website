@@ -14,6 +14,10 @@ export type BlogPost = {
   author: string;
   cover: string;
   coverAlt: string;
+  // Optional text shown under the cover. Size lets portrait photos show uncropped.
+  coverCaption?: string;
+  coverWidth?: number;
+  coverHeight?: number;
   status: "draft" | "published";
   createdAt: string;
   updatedAt: string;
@@ -21,7 +25,7 @@ export type BlogPost = {
   sample?: boolean;
 };
 export type BlogSummary = Omit<BlogPost, "body"> & { minutes: number };
-export type ActionResult = { error?: string; success?: string; id?: string; updatedAt?: string; status?: "draft" | "published"; cover?: string };
+export type ActionResult = { error?: string; success?: string; id?: string; updatedAt?: string; status?: "draft" | "published"; cover?: string; coverWidth?: number; coverHeight?: number };
 export function readingMinutes(body: string) { return Math.max(1, Math.ceil(blogBodyText(body).trim().split(/\s+/).length / 200)); }
 export function blogPath(post: Pick<BlogPost, "locale" | "slug">) { return `${post.locale === "ar" ? "/ar" : ""}/blogs/${post.slug}`; }
 export function formatDate(value: string, locale = "en") { return new Intl.DateTimeFormat(locale === "ar" ? "ar-SA" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Riyadh" }).format(new Date(value)); }

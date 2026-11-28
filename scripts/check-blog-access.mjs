@@ -9,7 +9,7 @@ const get = (route, cookie) => fetch(new URL(route, origin), { redirect: "manual
 const listing = await get("/blogs");
 assert.equal(listing.status, 200, "Public blog listing loads");
 assert.equal((await get("/ar/blogs")).status, 200, "Arabic blog listing loads");
-for (const route of ["/team/blogs", "/team/blogs/new", "/team/blogs/unknown/preview"]) {
+for (const route of ["/team/blogs", "/team/blogs/new", "/team/blogs/import", "/team/blogs/unknown/preview"]) {
   const response = await get(route);
   assert.equal(response.status, 307, `${route} requires sign-in`);
   assert.equal(response.headers.get("location"), "/team/login");

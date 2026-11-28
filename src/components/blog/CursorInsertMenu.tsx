@@ -3,7 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useId, useRef, useState } from
 import type { Editor } from "@tiptap/react";
 import { EditorIcon, type EditorIconName } from "./EditorIcon";
 import styles from "./Editor.module.css";
-export type InsertBlock = "image" | "heading" | "subheading" | "list" | "quote" | "table";
+export type InsertBlock = "image" | "heading" | "subheading" | "list" | "quote" | "table" | "contact";
 const tools: {kind: InsertBlock; label: string; icon: EditorIconName}[] = [
   {kind: "image", label: "Insert image", icon: "image"},
   {kind: "heading", label: "Insert heading", icon: "heading"},
@@ -11,6 +11,7 @@ const tools: {kind: InsertBlock; label: string; icon: EditorIconName}[] = [
   {kind: "list", label: "Insert bullet list", icon: "list"},
   {kind: "quote", label: "Insert quote", icon: "quote"},
   {kind: "table", label: "Insert table", icon: "table"},
+  {kind: "contact", label: "Insert contact button", icon: "button"},
 ];
 export function CursorInsertMenu({editor, disabled, onInsert}: {editor: Editor; disabled: boolean; onInsert: (kind: InsertBlock) => void}) {
   const [anchor, setAnchor] = useState({top: 0, visible: false});

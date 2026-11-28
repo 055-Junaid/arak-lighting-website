@@ -132,3 +132,5 @@
 .bubble button { font-family: var(--font-plex-sans), sans-serif; }
 
 .selectionPopover[hidden] { display: none !important; }
+.contactNode { display: inline-flex; margin: 8px 0 32px; padding: 14px 22px; border: 1px dashed #8b8f86; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: #3d403b; cursor: default; user-select: none; }
+.richText :global(.ProseMirror-selectednode).contactNode, .richText :global(.ProseMirror-selectednode) { outline: 2px solid #4a6fa5; outline-offset: 3px; }

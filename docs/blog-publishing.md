@@ -40,7 +40,35 @@ the default; a Light/Dark control remembers each visitor's preference.
 Formatting is visible while writing. Font sizes and colours follow the article design,
 so employees do not need to style each post. Undo/redo and normal editing shortcuts work.
 Drafts save explicitly with **Save draft** or Cmd/Ctrl+S; the header shows unsaved changes.
-Publishing opens a final details check. It is not a Word or PDF importer.
+Publishing opens a final details check.
+
+## Import from Google Docs
+
+**Import from Google Docs** in `/team/blogs` turns a finished Google Doc into a
+private draft. The doc must be shared as "Anyone with the link" (Viewer); the
+website downloads Google's own "Web page" export once. Later edits in the doc are
+not synced: import again or edit the draft.
+
+- The image above the title becomes the cover. An italic line directly under an
+  image becomes its caption. Portrait covers are shown whole instead of cropped.
+- Heading 1 is the title; the first paragraph under it (up to 320 characters) is
+  the introduction. Heading 2 and 3 become sections and subheadings. Large bold
+  lines that were not styled as headings are promoted and reported.
+- Bold, italic, links, bullet lists, tables and images are kept. Fonts, sizes and
+  colours follow the website design. Numbered and nested lists become bullets.
+- A line reading "(add contact button)" becomes a contact button. Writers can
+  also insert one from the **+** menu in the editor.
+- After the import, a checklist names anything to fix before publishing: missing
+  image descriptions, em dashes, leftover notes such as "(add map here)".
+
+The import runs as one short request for the text and one per image, so no
+request comes near Netlify's function time limit. Images go through the same
+decode, resize and WebP re-encode as uploads. Only `docs.google.com` document
+links are accepted; the server builds the download address itself.
+
+Each image has a **description** (alt text, not shown) and an optional
+**caption** (shown under it). Images saved before captions existed keep showing
+their description as the caption.
 
 ## Run locally and add employees
 
