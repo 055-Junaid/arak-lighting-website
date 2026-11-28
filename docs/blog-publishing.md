@@ -15,8 +15,7 @@ An article belongs to its selected language and is not translated automatically.
 Both blog pages list every published article: on `/ar/blogs` an English article
 is tagged "مقال بالإنجليزية" and opens in English, and the reverse on `/blogs`.
 Every filter uses the same card grid. On phones, article tables turn into one
-card per row, and the Content map button waits until the reader is past the
-introduction.
+card per row.
 
 The three design examples appear only in development. They are labeled as samples
 and excluded from the sitemap. Production has an honest empty state until a
@@ -189,8 +188,7 @@ The private preview renders the same article design as the public page. Articles
 without section headings use a centred reading column; articles with headings
 include the contents navigation. Inline images retain their natural proportions. Desktop
 readers get a sticky contents column; phone readers get a collapsible contents
-list. The public content-map button opens the complete section list with keyboard
-support. Navigation, footer, and the logo follow the selected blog appearance on public blog pages.
+list. Navigation, footer, and the logo follow the selected blog appearance on public blog pages.
 The Light/Dark appearance control is separate from the existing Lights on/off
 photography colour switch; it does not change image saturation.
 
